@@ -1,0 +1,42 @@
+<zk>
+	<window width="40em" closable="false" id="wdwMarca"
+		apply="controlador.maestros.CMarca">
+		<caption label="Marca"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div>
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="25%" />
+					<column label="" width="45%" />
+					<column label="" width="30%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Codigo:" />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtCodigoMarca" hflex="1" maxlength="50"
+							tooltiptext="Ingrese el Nombre de la Marca" />
+						<button id="btnBuscarMarcas" label="Buscar" tooltiptext="Catalogo Marcas"
+							image="/public/imagenes/botones/buscar.png" />
+					</row>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Descripcion: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtDescripcionMarca" hflex="1" maxlength="500" multiline="true" class="multilinea"
+							tooltiptext="Ingrese el Nombre de la Marca" />
+						<hbox/>
+					</row>
+				</rows>
+			</grid>
+			<separator />
+			<div id="botoneraMarca" />
+			<div id="DivCatalogoMarca" />
+		</div>
+	</window>
+</zk>

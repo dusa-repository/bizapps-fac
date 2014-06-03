@@ -1,0 +1,127 @@
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
+<zk>
+	<style src="../public/Estilo.css" />
+	<script src="/public/progress.js" />
+	<window id="wdwInicio" title="" border="0" height="100%"
+		contentStyle="overflow:auto" apply="controlador.portal.CInicio">
+		<borderlayout height="100%">
+			<north height="4,5em">
+				<div style="background:#500101">
+					<hbox hflex="1">
+						<vbox>
+							<separator />
+							<image src="../public/imagenes/generales/LogoDusa.png"
+								height="3em" width="13em" />
+						</vbox>
+						<div align="center" width="35em">
+							<separator />
+							<separator />
+							<hbox>
+								<label style="font-size:30px;color:white;font-weight: bold"
+									value="FAC" />
+							</hbox>
+						</div>
+						<vbox>
+							<separator />
+							<!-- <image src="../public/imagenes/generales/banner.png" height="3em" 
+								width="7em" /> -->
+						</vbox>
+						<div align="center" width="100%">
+							<hbox>
+								<vbox>
+									<separator />
+									<image id="imagenes" width="60px" height="55px" />
+								</vbox>
+								<vbox>
+									<separator />
+									<label style="color:#DAD3D3"
+										value="Usuario: ${desktop.execution.userPrincipal.name}" />
+									<a href="../j_spring_security_logout" style="color:white">
+										<space />
+										<label value="Cerrar Sesion" />
+									</a>
+									<a style="color:white">
+										<space />
+										<label id="lblEditarCuenta" value="Editar Cuenta" />
+										<!-- onClick='contenido.src="../vistas/seguridad/VEditarUsuario.zul"' -->
+									</a>
+								</vbox>
+							</hbox>
+						</div>
+					</hbox>
+				</div>
+			</north>
+			<center border="none">
+				<div height="100%" width="100%" style="background:#500101">
+					<hbox align="center" pack="center" height="100%" width="100%">
+						<groupbox closable="false" height="45%" mold="3d">
+							<caption label="Formatos Disponibles"
+								style="color:blue; font-size: 14px; font-weight:bold" />
+							<vbox pack="center">
+								<separator />
+								<separator />
+								<hbox>
+									<button id="btnEvento" class="btn" label="Eventos Especiales"
+										orient="vertical" visible="false" />
+									<button id="btnUniforme" class="btn" label="Uniformes"
+										orient="vertical" visible="false" />
+									<button id="btnPromocion" class="btn" label="Promociones de Marca"
+										orient="vertical" visible="false" />
+									<button id="btnSolicitudArte" class="btn"
+										label="Solicitud de Arte y Publicaciones" orient="vertical"
+										visible="false" />
+								</hbox>
+								<separator />
+								<separator />
+								<separator />
+								<hbox>
+									<button id="btnCataInduccion" class="btn" label="Cata Induccion"
+										orient="vertical" visible="false" />
+									<button id="btnFachada" class="btn" label="Fachadas y Decoraciones"
+										orient="vertical" visible="false" />
+									<button id="btnMarca" class="btn" label="Marca" orient="vertical"
+										visible="false" />
+								</hbox>
+							</vbox>
+						</groupbox>
+						<groupbox closable="false" height="45%" mold="3d">
+							<caption label="Acciones"
+								style="color:blue; font-size: 14px; font-weight:bold" />
+							<vbox pack="center">
+								<separator />
+								<separator />
+								<button id="btnInBox" class="btn" label="Inbox" orient="vertical"
+									visible="false" />
+								<separator />
+								<separator />
+								<separator />
+								<zk if="${sec:isAllGranted('admin')}">
+									<button id="botoncito" class="btn" label="Botoncito"
+										orient="vertical" />
+								</zk>
+								<button id="btnCruds" class="btn" label="Admin" orient="vertical"
+									visible="false" />
+							</vbox>
+						</groupbox>
+					</hbox>
+				</div>
+			</center>
+			<south vflex="2" border="0" height="2em" collapsible="false">
+				<div style="background:#500101">
+					<div align="center" sclass="footer">
+						<a href="../j_spring_security_logout">
+							<label style="color:white; font-size: 16px; font-weight:bold;"
+								value="INICIO">
+							</label>
+						</a>
+						<separator />
+						<label
+							style="color:#DAD3D3; font-size: 14px; font-weight:bold;padding-center:35%; "
+							value="© 2014 Elaborado por BIZAPPS,C.A. All Rights Reserved. Terms Privacy">
+						</label>
+					</div>
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

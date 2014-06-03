@@ -1,0 +1,101 @@
+<zk>
+	<window id="wdwInbox" title="" border="0" height="100%" width="100%"
+		contentStyle="overflow:auto" apply="controlador.portal.CInbox">
+		<borderlayout height="100%">
+			<north height="4,5em">
+				<div style="background:#500101">
+					<hbox hflex="1">
+						<vbox>
+							<separator />
+							<image src="../public/imagenes/generales/LogoDusa.png"
+								height="3em" width="13em" />
+						</vbox>
+						<div align="center" width="35em">
+							<separator />
+							<separator />
+							<hbox>
+								<label style="font-size:30px;color:white;font-weight: bold"
+									value="FAC" />
+							</hbox>
+						</div>
+						<vbox>
+							<separator />
+							<!-- <image src="../public/imagenes/generales/banner.png" height="3em" 
+								width="7em" /> -->
+						</vbox>
+						<div align="center" width="100%">
+							<hbox>
+								<vbox>
+									<separator />
+									<image id="imagenes" width="60px" height="55px" />
+								</vbox>
+								<vbox>
+									<separator />
+									<label style="color:#DAD3D3"
+										value="Usuario: ${desktop.execution.userPrincipal.name}" />
+									<a href="../j_spring_security_logout" style="color:white">
+										<space />
+										<label value="Cerrar Sesion" />
+									</a>
+									<a style="color:white">
+										<space />
+										<label id="lblEditarCuenta" value="Editar Cuenta" />
+										<!-- onClick='contenido.src="../vistas/seguridad/VEditarUsuario.zul"' -->
+									</a>
+								</vbox>
+							</hbox>
+						</div>
+					</hbox>
+				</div>
+			</north>
+			<center border="none">
+				<div height="100%" width="100%" style="background:#500101">
+					<hbox align="center" pack="center" height="100%" width="100%">
+						<groupbox closable="false" height="45%" mold="3d">
+							<caption label="Inbox, Solicitudes"
+								style="color:blue; font-size: 14px; font-weight:bold" />
+							<vbox pack="center">
+								<separator />
+								<separator />
+								<hbox>
+									<button id="btnPendiente" class="btn" label="Pendientes por Aprobacion"
+										orient="vertical" visible="false" />
+									<button id="btnProcesada" class="btn" label="Procesadas"
+										orient="vertical" visible="false" />
+								</hbox>
+								<separator />
+								<separator />
+								<separator />
+								<hbox>
+									<button id="btnRechazada" class="btn" label="Rechazadas (${$composer.rechazada})" orient="vertical"
+										visible="false" />
+									<button id="btnCancelada" class="btn" label="Canceladas" orient="vertical"
+										visible="false" />
+
+								</hbox>
+								<button id="btnCerrar" class="btn" label="Salir" orient="vertical"
+									visible="true" />
+							</vbox>
+						</groupbox>
+					</hbox>
+				</div>
+			</center>
+			<south vflex="2" border="0" height="2em" collapsible="false">
+				<div style="background:#500101">
+					<div align="center" sclass="footer">
+						<a href="../j_spring_security_logout">
+							<label style="color:white; font-size: 16px; font-weight:bold;"
+								value="INICIO">
+							</label>
+						</a>
+						<separator />
+						<label
+							style="color:#DAD3D3; font-size: 14px; font-weight:bold;padding-center:35%; "
+							value="© 2014 Elaborado por BIZAPPS,C.A. All Rights Reserved. Terms Privacy">
+						</label>
+					</div>
+				</div>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

@@ -1,0 +1,85 @@
+<zk>
+	<window width="40em" closable="false" id="wdwUsuario"
+		apply="controlador.maestros.CUsuario">
+		<caption label="Usuario"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div>
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="25%" />
+					<column label="" width="45%" />
+					<column label="" width="30%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Usuario: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtCodigoUsuario" hflex="1" maxlength="50"
+							tooltiptext="Ingrese el Login del Usuario" />
+						<button id="btnBuscarUsuarios" label="Buscar" tooltiptext="Catalogo Usuarios"
+							image="/public/imagenes/botones/buscar.png" />
+					</row>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Nombre: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtNombreUsuario" hflex="1" maxlength="50"
+							tooltiptext="Ingrese el Nombre del Usuario" />
+						<hbox />
+					</row>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Contraseña: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtPasswordUsuario" hflex="1" maxlength="50"
+							tooltiptext="Ingrese la contraseña del Usuario" />
+						<hbox />
+					</row>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="E-Mail: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtEmailUsuario" hflex="1" maxlength="50"
+							tooltiptext="Ingrese el E-Mail del Usuario" />
+						<hbox />
+					</row>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Zona: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtZonaUsuario" hflex="1" maxlength="50"
+							tooltiptext="Ingrese la Zona del Usuario" />
+						<button id="btnBuscarZonas" label="Buscar" tooltiptext="Catalogo Zonas"
+							image="/public/imagenes/botones/buscar.png" />
+					</row>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Supervisor: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtSupervisorUsuario" hflex="1" maxlength="50"
+							tooltiptext="Ingrese el Supervisor del Usuario" />
+						<button id="btnBuscarSupervisores" label="Buscar" tooltiptext="Catalogo Supervisores"
+							image="/public/imagenes/botones/buscar.png" />
+					</row>
+				</rows>
+			</grid>
+			<separator />
+			<div id="botoneraUsuario" />
+			<div id="catalogoUsuario" />
+			<div id="catalogoZona" />
+		</div>
+	</window>
+</zk>

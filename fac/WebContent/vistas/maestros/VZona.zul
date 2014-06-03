@@ -1,0 +1,42 @@
+<zk>
+	<window width="40em" closable="false" id="wdwZona"
+		apply="controlador.maestros.CZona">
+		<caption label="Zona"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div>
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="25%" />
+					<column label="" width="45%" />
+					<column label="" width="30%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Codigo:" />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtCodigoZona" hflex="1" maxlength="50"
+							tooltiptext="Ingrese el Nombre de la Zona" />
+						<button id="btnBuscarZonas" label="Buscar" tooltiptext="Catalogo Zonas"
+							image="/public/imagenes/botones/buscar.png" />
+					</row>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Descripcion: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtDescripcionZona" hflex="1" maxlength="500"
+							multiline="true" class="multilinea" tooltiptext="Ingrese la descripcion de la Zona" />
+						<hbox />
+					</row>
+				</rows>
+			</grid>
+			<separator />
+			<div id="botoneraZona" />
+			<div id="catalogoZona" />
+		</div>
+	</window>
+</zk>
