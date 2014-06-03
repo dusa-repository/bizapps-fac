@@ -1,0 +1,293 @@
+<zk>
+	<window width="60em" closable="false" id="wdwSolicitudUniforme"
+		apply="controlador.transacciones.CUniforme">
+		<caption label="Formato de Solicitud de Uniformes"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div>
+			<separator />
+			<tabbox height="auto" orient="horizontal">
+				<tabs id="tbsConsulta" width="auto">
+					<tab label="Datos del Evento" id="tabDatos" />
+					<tab label="Informacion de los Uniformes" id="tabUniforme" />
+					<tab label="Justificacion de Contrato" id="tabJustificacion" />
+				</tabs>
+				<tabpanels>
+					<tabpanel>
+						<grid width="100%">
+							<columns visible="false">
+								<column label="" width="20%" />
+								<column label="" width="30%" />
+								<column label="" width="20%" />
+								<column label="" width="30%" />
+							</columns>
+							<rows>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Nombre Actividad: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtNombreActividad" multiline="true"
+										hflex="1" maxlength="500" tooltiptext="Ingrese el Nombre de la Actividad" />
+									<hbox />
+									<hbox />
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Resp. Actividad: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtRespActividad" hflex="1" maxlength="50"
+										readonly="true" />
+									<hbox>
+										<label class="etiqueta" value="Resp. Zona: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtRespZona" hflex="1" maxlength="50"
+										readonly="true" />
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Tipo Actividad: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<combobox tooltiptext="Seleccione un Tipo de Actividad"
+										placeholder="Seleccione un Tipo de Actividad" id="cmbActividad"
+										readonly="true" width="100%">
+										<template name="model">
+											<comboitem label="${each.nombre}" context="${each.idAccidente}" />
+										</template>
+									</combobox>
+									<hbox />
+									<hbox />
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Fecha de Entrega: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<datebox readonly="true" width="100%" id="dtbEntrega"
+										onCreate="self.value = new Date()" />
+									<hbox>
+										<label class="etiqueta" value="Ciudad del PDV: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtCiudad" hflex="1" multiline="true"
+										maxlength="500" tooltiptext="Ingrese la Ciudad del PDV" />
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Marca Sugerida: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<combobox tooltiptext="Seleccione una Marca"
+										placeholder="Seleccione una Marca" id="cmbMarca" readonly="true"
+										width="100%">
+										<template name="model">
+											<comboitem label="${each.nombre}" context="${each.idMarca}" />
+										</template>
+									</combobox>
+									<hbox />
+									<hbox />
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Nombre del PDV: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtNombrePdv" hflex="1" multiline="true"
+										maxlength="500" tooltiptext="Ingrese el Nombre del PDV" />
+									<hbox>
+										<label class="etiqueta" value="RIF del PDV: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtRifPdv" hflex="1" multiline="true"
+										maxlength="500" tooltiptext="Ingrese el Rif del PDV" />
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="¿Posee Logo?: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<combobox tooltiptext="Indique si Posee Logo"
+										placeholder="Seleccione una Opcion" id="cmbLogo" readonly="true"
+										width="100%">
+										<template name="model">
+											<comboitem label="${each.nombre}" context="${each.id}" />
+										</template>
+									</combobox>
+									<hbox>
+										<label class="etiqueta" value="E-Mail PDV: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtEMailPdv" hflex="1" multiline="true"
+										maxlength="500" tooltiptext="Ingrese el E-Mail del PDV" />
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Nombre del Cliente: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtCliente" hflex="1" multiline="true"
+										maxlength="500" tooltiptext="Ingrese el Nombre del Cliente" />
+									<hbox>
+										<label class="etiqueta" value="Telefono PDV: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtTelefono" hflex="1" multiline="true"
+										maxlength="500" tooltiptext="Ingrese el Numero Telefonico del PDV" />
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Direccion PDV: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtDireccion" disabled="true" hflex="1"
+										maxlength="500" tooltiptext="Ingrese la Direccion del PDV" />
+									<hbox />
+									<hbox />
+								</row>
+								<row>
+									<label class="etiqueta" value="Costo Real: " />
+									<textbox id="txtCosto" disabled="true" hflex="1"
+										maxlength="500" tooltiptext="Ingrese el RIF del PDV" />
+									<hbox />
+									<hbox />
+								</row>
+							</rows>
+						</grid>
+					</tabpanel>
+					<tabpanel>
+						<hbox>
+							<listbox id="ltbUniformes" height="280px" width="220px"
+								emptyMessage="No hay Uniformes Registrados">
+								<listhead>
+									<listheader label="Uniforme" width="100%" />
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell label="${each.descripcion}">
+										</listcell>
+										<listcell>
+											<combobox model="${$composer.generos}" width="100%"
+												readonly="true">
+												<template name="model">
+													<comboitem label="${each.nombre}" context="${each.id}" />
+												</template>
+											</combobox>
+										</listcell>
+										<listcell>
+											<combobox model="${$composer.tallas}" width="100%"
+												readonly="true">
+												<template name="model">
+													<comboitem label="${each.nombre}" context="${each.id}" />
+												</template>
+											</combobox>
+										</listcell>
+										<listcell>
+											<spinner constraint="min 0 max 10000"
+												tooltiptext="Ingrese la Cantidad Solicitada de Recursos"
+												step="1" width="98%" />
+										</listcell>
+										<listcell>
+											<spinner constraint="min 0 max 10000"
+												tooltiptext="Ingrese la Cantidad Aprobada de Recursos" step="1"
+												width="98%" />
+										</listcell>
+										<listcell>
+											<spinner inplace="true" width="98%" value="${each.idUniforme}"
+												visible="false" disabled="true" />
+										</listcell>
+									</listitem>
+								</template>
+							</listbox>
+							<vbox>
+								<button id="pasar1Recurso" image="/public/imagenes/botones/adelante.png"
+									tooltiptext="Agregar Producto" width="30px" />
+								<separator />
+								<button id="pasar2Recurso" image="/public/imagenes/botones/atras.png"
+									tooltiptext="Quitar Recurso" width="30px" />
+							</vbox>
+							<listbox id="ltbRecursosAgregados" height="280px"
+								emptyMessage="No ha Seleccionado ningun Recurso">
+								<listhead>
+									<listheader label="Uniforme" width="35%" />
+									<listheader label="Genero" width="15%" />
+									<listheader label="Talla" width="5%" />
+									<listheader label="Solicitado" width="25%" />
+									<listheader label="Aprobado" width="25%" />
+									<listheader label="id" visible="false" />
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell label="${each.}">
+										</listcell>
+										<listcell>
+											<combobox value="${each.unidadMedicina.nombre}"
+												model="${$composer.generos}" width="100%" readonly="true">
+												<template name="model">
+													<comboitem label="${each.nombre}" context="${each.id}" />
+												</template>
+											</combobox>
+										</listcell>
+										<listcell>
+											<combobox value="${each.unidadMedicina.nombre}"
+												model="${$composer.tallas}" width="100%" readonly="true">
+												<template name="model">
+													<comboitem label="${each.nombre}" context="${each.id}" />
+												</template>
+											</combobox>
+										</listcell>
+										<listcell>
+											<spinner value="${each.valor}" constraint="min 0 max 10000"
+												tooltiptext="Ingrese la Cantidad Solicitada de Recursos"
+												step="1" width="98%" />
+										</listcell>
+										<listcell>
+											<spinner value="${each.valor}" constraint="min 0 max 10000"
+												tooltiptext="Ingrese la Cantidad Aprobada de Recursos" step="1"
+												width="98%" />
+										</listcell>
+										<listcell>
+											<spinner value="${each.idUniforme}" width="98%"
+												visible="false" disabled="true" />
+										</listcell>
+									</listitem>
+								</template>
+							</listbox>
+						</hbox>
+					</tabpanel>
+					<tabpanel>
+						<vbox height="100%" width="100%" align="start">
+							<hbox>
+								<label class="etiqueta" value="¿Contrato condicionado? " />
+								<radiogroup id="rdbJustificacion">
+									<radio id="rdoSi" label="Si" />
+									<radio id="rdoNo" label="No" />
+								</radiogroup>
+							</hbox>
+							<ckeditor id="cdtJustificacion" width="100%" height="100%">
+								<attribute name="value" />
+							</ckeditor>
+						</vbox>
+					</tabpanel>
+				</tabpanels>
+			</tabbox>
+			<separator />
+			<div id="botoneraPromocion" />
+		</div>
+	</window>
+</zk>

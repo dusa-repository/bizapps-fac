@@ -1,0 +1,208 @@
+<zk>
+	<window width="60em" closable="false" id="wdwArte"
+		apply="controlador.transacciones.CSolicitudArte">
+		<caption label="Formato de Solicitud de Arte y Publicaciones"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div>
+			<separator />
+			<tabbox height="auto" orient="horizontal">
+				<tabs id="tbsConsulta" width="auto">
+					<tab label="Datos del Evento" id="tabDatos" />
+					<tab label="Lineamientos" id="tabLineamientos" />
+					<tab label="Imagenes" id="tabImagenes" />
+				</tabs>
+				<tabpanels>
+					<tabpanel>
+						<grid width="100%">
+							<columns visible="false">
+								<column label="" width="20%" />
+								<column label="" width="30%" />
+								<column label="" width="20%" />
+								<column label="" width="30%" />
+							</columns>
+							<rows>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Nombre Actividad: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtNombreActividad" multiline="true"
+										hflex="1" maxlength="500" tooltiptext="Ingrese el Nombre de la Actividad" />
+									<hbox />
+									<hbox />
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Resp. Actividad: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtRespActividad" hflex="1" maxlength="50"
+										readonly="true" />
+									<hbox>
+										<label class="etiqueta" value="Resp. Zona: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtRespZona" hflex="1" maxlength="50"
+										readonly="true" />
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Marca: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<combobox tooltiptext="Seleccione una Marca"
+										placeholder="Seleccione una Marca" id="cmbMarca" readonly="true"
+										width="100%">
+										<template name="model">
+											<comboitem label="${each.nombre}" context="${each.idMarca}" />
+										</template>
+									</combobox>
+									<hbox>
+										<label class="etiqueta" value="Tipo de Arte: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<combobox tooltiptext="Seleccione un Tipo de Arte"
+										placeholder="Seleccione una Tipo de Arte" id="cmbArte"
+										readonly="true" width="100%">
+										<template name="model">
+											<comboitem label="${each.nombre}" context="${each.idMarca}" />
+										</template>
+									</combobox>
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Formato de Entrega: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<combobox tooltiptext="Seleccione un Formato de Entrega"
+										placeholder="Seleccione un Formato de Entrega" id="cmbFormato"
+										readonly="true" width="100%">
+										<template name="model">
+											<comboitem label="${each.nombre}" context="${each.idMarca}" />
+										</template>
+									</combobox>
+									<label class="etiqueta" value="Medidas: " />
+									<hbox />
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Nombre del Local: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtNombreLocal" hflex="1" multiline="true"
+										maxlength="500" tooltiptext="Ingrese el Nombre del Local" />
+									<hbox>
+										<label class="etiqueta" value="1.-Alto(Vertical): " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<hbox>
+										<doublespinner id="dspAlto" value="0"
+											constraint="min 0 max 10000" tooltiptext="Ingrese la Altura del Arte"
+											step="1.0" format="#.#" width="98%" />
+										<space />
+										<label class="etiqueta" value="cms" />
+									</hbox>
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="RIF: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtRif" hflex="1" multiline="true"
+										maxlength="500" tooltiptext="Ingrese el RIF del Local" />
+									<hbox>
+										<label class="etiqueta" value="2.-Largo(Horizontal): " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<hbox>
+										<doublespinner id="dspLargo" value="0"
+											constraint="min 0 max 10000" tooltiptext="Ingrese los centimetros de largo del Arte"
+											step="1.0" format="#.#" width="98%" />
+										<space />
+										<label class="etiqueta" value="cms" />
+									</hbox>
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Numero de Patente: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<textbox id="txtPatente" hflex="1" multiline="true"
+										maxlength="500" tooltiptext="Ingrese el Numero de Patente" />
+									<hbox>
+										<label class="etiqueta" value="3.-Ancho(Profundidad): " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<hbox>
+										<doublespinner id="dspAncho" value="0"
+											constraint="min 0 max 10000" tooltiptext="Ingrese los centimetros de profundidad del Arte"
+											step="1.0" format="#.#" width="98%" />
+										<space />
+										<label class="etiqueta" value="cms" />
+									</hbox>
+								</row>
+							</rows>
+						</grid>
+						<hbox>
+							<label value="**" style="font-weight:bold;color:red" />
+							<space />
+							<label style="font-weight:bold;color:red"
+								value="Luego de procesar la solicitud, el Arte sera enviado en un periodo de 2 a 7 dias" />
+						</hbox>
+					</tabpanel>
+					<tabpanel>
+						<ckeditor id="cdtLineamiento" width="100%">
+							<attribute name="value" />
+						</ckeditor>
+						<hbox>
+							<button id="btnModeloArte" label="Ver modelo de elaboracion de Arte"
+								tooltiptext="Presione para ver el modelo de elaboracion de Arte" />
+						</hbox>
+					</tabpanel>
+					<tabpanel>
+						<hbox align="center" pack="center" height="100%" width="100%">
+							<vbox>
+								<image id="imagen1" width="80px" height="50px" />
+								<fileupload image="/public/imagenes/botones/cargar.png"
+									id="fudImagen1" label="Cargar Imagen">
+								</fileupload>
+							</vbox>
+							<vbox>
+								<image id="imagen2" width="80px" height="50px" />
+								<fileupload image="/public/imagenes/botones/cargar.png"
+									id="fudImagen2" label="Cargar Imagen">
+								</fileupload>
+							</vbox>
+							<vbox>
+								<image id="imagen3" width="80px" height="50px" />
+								<fileupload image="/public/imagenes/botones/cargar.png"
+									id="fudImagen3" label="Cargar Imagen">
+								</fileupload>
+							</vbox>
+							<vbox>
+								<image id="imagen4" width="80px" height="50px" />
+								<fileupload image="/public/imagenes/botones/cargar.png"
+									id="fudImagen4" label="Cargar Imagen">
+								</fileupload>
+							</vbox>
+						</hbox>
+					</tabpanel>
+				</tabpanels>
+			</tabbox>
+			<separator />
+			<div id="botoneraSolicitudArte" />
+		</div>
+	</window>
+</zk>

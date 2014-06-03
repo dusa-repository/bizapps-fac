@@ -1,0 +1,72 @@
+<zk>
+	<window width="40em" closable="false" id="wdwF0004"
+		apply="controlador.maestros.CF0004">
+		<caption label="Tipos de Codigos Definido por el Usuario (F0004)"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div>
+		<grid width="100%">
+					<columns visible="false">
+						<column label="" width="25%" />
+						<column label="" width="45%" />
+						<column label="" width="30%" />
+					</columns>
+					<rows>
+						<row>
+							<hbox>
+								<label class="etiqueta" value="Cd Producto:" />
+								<space />
+								<label value="*" style="font-weight:bold;color:red">
+								</label>
+							</hbox>
+							<textbox id="txtSYF0004" hflex="1" maxlength="4"
+								tooltiptext="Ingrese el Codigo Principal del Sistema" />
+						</row>
+						<row>
+							<hbox>
+								<label class="etiqueta" value="Tipos de Codigos:" />
+								<space />
+								<label value="*" style="font-weight:bold;color:red">
+								</label>
+							</hbox>
+							<textbox id="txtRTF0004" hflex="1" maxlength="2"
+								tooltiptext="Ingrese el Codigo Secundario del Sistema" />
+							<hbox />
+						</row>
+						<row>
+							<hbox>
+								<label class="etiqueta" value="Descripcion:" />
+								<space />
+								<label value="*" style="font-weight:bold;color:red">
+								</label>
+							</hbox>
+							<textbox id="txtDL01F0004" hflex="1" maxlength="30"
+								tooltiptext="Ingrese la Descripcion del Tipo de Codigo"
+								multiline="true" class="multilinea" />
+							<hbox />
+						</row>
+						<row>
+							<label class="etiqueta" value="Long Codigo:" />
+							<doublespinner id="dblCDLF0004" constraint="min 0 max 100"
+								tooltiptext="Ingrese el Codigo del Tipo de Codigo" step="0.1"
+								format="#.##" width="98%" value="0" />
+						</row>
+						<row>
+							<label class="etiqueta" value="2da Linea (Y/N):" />
+							<textbox id="txtLNF0004" hflex="1" maxlength="1"
+								tooltiptext="Ingrese la Segunda Linea del Tipo de Codigo" />
+							<hbox />
+						</row>
+						<row>
+							<label class="etiqueta" value="Numerico (Y/N):" />
+							<textbox id="txtNUMF0004" hflex="1" maxlength="1"
+								tooltiptext="Ingrese el valor Numerico del Tipo de Codigo" />
+							<hbox />
+						</row>
+					</rows>
+				</grid>
+				<separator/>
+				<div id="botoneraF0004" />
+			<div id="DivCatalogoF0004" />
+		</div>
+	</window>
+</zk>
