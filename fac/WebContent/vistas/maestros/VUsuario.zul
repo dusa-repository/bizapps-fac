@@ -78,8 +78,8 @@
 			</grid>
 			<separator />
 			<div id="botoneraUsuario" />
-			<div id="catalogoUsuario" />
-			<div id="catalogoZona" />
+			<div id="DivCatalogoUsuario" />
+			<div id="DivCatalogoZona" />
 		</div>
 	</window>
 </zk>

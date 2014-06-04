@@ -36,7 +36,7 @@
 			</grid>
 			<separator />
 			<div id="botoneraZona" />
-			<div id="catalogoZona" />
+			<div id="DivCatalogoZona" />
 		</div>
 	</window>
 </zk>

@@ -2,13 +2,19 @@ package modelo.maestros;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import modelo.transacciones.RecursoPlanillaCata;
+import modelo.transacciones.RecursoPlanillaEvento;
+import modelo.transacciones.RecursoPlanillaFachada;
 
 @Entity
 @Table(name = "recurso")
@@ -32,6 +38,15 @@ public class Recurso implements Serializable {
 
 	@Column(name = "usuario_auditoria", length = 50)
 	private String usuarioAuditoria;
+	
+	@OneToMany(mappedBy="recurso")
+	private Set<RecursoPlanillaEvento> recursos;
+	
+	@OneToMany(mappedBy="recurso")
+	private Set<RecursoPlanillaCata> recursosCatas;
+	
+	@OneToMany(mappedBy="recurso")
+	private Set<RecursoPlanillaFachada> recursosFachadas;
 
 	public Recurso() {
 		super();
@@ -87,6 +102,30 @@ public class Recurso implements Serializable {
 
 	public void setUsuarioAuditoria(String usuarioAuditoria) {
 		this.usuarioAuditoria = usuarioAuditoria;
+	}
+
+	public Set<RecursoPlanillaEvento> getRecursos() {
+		return recursos;
+	}
+
+	public void setRecursos(Set<RecursoPlanillaEvento> recursos) {
+		this.recursos = recursos;
+	}
+
+	public Set<RecursoPlanillaCata> getRecursosCatas() {
+		return recursosCatas;
+	}
+
+	public void setRecursosCatas(Set<RecursoPlanillaCata> recursosCatas) {
+		this.recursosCatas = recursosCatas;
+	}
+
+	public Set<RecursoPlanillaFachada> getRecursosFachadas() {
+		return recursosFachadas;
+	}
+
+	public void setRecursosFachadas(Set<RecursoPlanillaFachada> recursosFachadas) {
+		this.recursosFachadas = recursosFachadas;
 	}
 	
 	

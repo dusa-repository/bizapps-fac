@@ -10,6 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import modelo.transacciones.PlanillaArte;
+import modelo.transacciones.PlanillaCata;
+import modelo.transacciones.PlanillaEvento;
+import modelo.transacciones.PlanillaFachada;
+import modelo.transacciones.PlanillaPromocion;
+import modelo.transacciones.PlanillaUniforme;
+
 @Entity
 @Table(name = "marca")
 public class Marca implements Serializable {
@@ -31,6 +38,27 @@ public class Marca implements Serializable {
 
 	@Column(name = "usuario_auditoria", length = 50)
 	private String usuarioAuditoria;
+	
+	@OneToMany(mappedBy="marca")
+	private Set<PlanillaArte> planillasArte;
+	
+	@OneToMany(mappedBy="marca")
+	private Set<PlanillaCata> planillasCata;
+	
+	@OneToMany(mappedBy="marca")
+	private Set<PlanillaEvento> planillasEvento;
+	
+	@OneToMany(mappedBy="marca")
+	private Set<PlanillaFachada> planillasFachada;
+	
+	@OneToMany(mappedBy="marcaA")
+	private Set<PlanillaPromocion> planillasPromocionA;
+	
+	@OneToMany(mappedBy="marcaB")
+	private Set<PlanillaPromocion> planillasPromocionB;
+	
+	@OneToMany(mappedBy="marca")
+	private Set<PlanillaUniforme> planillasUniforme;
 	
 	@OneToMany(mappedBy="marca")
 	private Set<Sku> items;
@@ -96,6 +124,62 @@ public class Marca implements Serializable {
 
 	public void setItems(Set<Sku> items) {
 		this.items = items;
+	}
+
+	public Set<PlanillaArte> getPlanillasArte() {
+		return planillasArte;
+	}
+
+	public void setPlanillasArte(Set<PlanillaArte> planillasArte) {
+		this.planillasArte = planillasArte;
+	}
+
+	public Set<PlanillaCata> getPlanillasCata() {
+		return planillasCata;
+	}
+
+	public void setPlanillasCata(Set<PlanillaCata> planillasCata) {
+		this.planillasCata = planillasCata;
+	}
+
+	public Set<PlanillaEvento> getPlanillasEvento() {
+		return planillasEvento;
+	}
+
+	public void setPlanillasEvento(Set<PlanillaEvento> planillasEvento) {
+		this.planillasEvento = planillasEvento;
+	}
+
+	public Set<PlanillaFachada> getPlanillasFachada() {
+		return planillasFachada;
+	}
+
+	public void setPlanillasFachada(Set<PlanillaFachada> planillasFachada) {
+		this.planillasFachada = planillasFachada;
+	}
+
+	public Set<PlanillaUniforme> getPlanillasUniforme() {
+		return planillasUniforme;
+	}
+
+	public void setPlanillasUniforme(Set<PlanillaUniforme> planillasUniforme) {
+		this.planillasUniforme = planillasUniforme;
+	}
+
+	public Set<PlanillaPromocion> getPlanillasPromocionA() {
+		return planillasPromocionA;
+	}
+
+	public void setPlanillasPromocionA(Set<PlanillaPromocion> planillasPromocionA) {
+		this.planillasPromocionA = planillasPromocionA;
+	}
+
+	public Set<PlanillaPromocion> getPlanillasPromocionB() {
+		return planillasPromocionB;
+	}
+
+	public void setPlanillasPromocionB(Set<PlanillaPromocion> planillasPromocionB) {
+		this.planillasPromocionB = planillasPromocionB;
 	}
 	
 	

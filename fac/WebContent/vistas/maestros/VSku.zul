@@ -47,8 +47,8 @@
 			</grid>
 			<separator />
 			<div id="botoneraSku" />
-			<div id="catalogoMarca" />
-			<div id="catalogoSku" />
+			<div id="DivCatalogoMarca" />
+			<div id="DivCatalogoSku" />
 		</div>
 	</window>
 </zk>
