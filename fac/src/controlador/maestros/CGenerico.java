@@ -28,6 +28,19 @@ import servicio.maestros.SZona;
 import servicio.seguridad.SArbol;
 import servicio.seguridad.SGrupo;
 import servicio.seguridad.SUsuario;
+import servicio.transacciones.SItemDegustacionPlanillaEvento;
+import servicio.transacciones.SItemEstimadoPlanillaEvento;
+import servicio.transacciones.SItemPlanillaCata;
+import servicio.transacciones.SPlanillaArte;
+import servicio.transacciones.SPlanillaCata;
+import servicio.transacciones.SPlanillaEvento;
+import servicio.transacciones.SPlanillaFachada;
+import servicio.transacciones.SPlanillaPromocion;
+import servicio.transacciones.SPlanillaUniforme;
+import servicio.transacciones.SRecursoPlanillaCata;
+import servicio.transacciones.SRecursoPlanillaEvento;
+import servicio.transacciones.SRecursoPlanillaFachada;
+import servicio.transacciones.SUniformePlanillaUniforme;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public abstract class CGenerico extends SelectorComposer<Component> {
@@ -39,14 +52,40 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SArbol servicioArbol;
 	@WireVariable("SGrupo")
 	protected SGrupo servicioGrupo;
+	@WireVariable("SItemDegustacionPlanillaEvento")
+	protected SItemDegustacionPlanillaEvento servicioItemDegustacionPlanillaEvento;
+	@WireVariable("SItemEstimadoPlanillaEvento")
+	protected SItemEstimadoPlanillaEvento servicioItemEstimadoPlanillaEvento;
+	@WireVariable("SItemPlanillaCata")
+	protected SItemPlanillaCata servicioItemPlanillaCata;
 	@WireVariable("SMarca")
 	protected SMarca servicioMarca;
+	@WireVariable("SPlanillaArte")
+	protected SPlanillaArte servicioPlanillaArte;
+	@WireVariable("SPlanillaCata")
+	protected SPlanillaCata servicioPlanillaCata;
+	@WireVariable("SPlanillaEvento")
+	protected SPlanillaEvento servicioPlanillaEvento;
+	@WireVariable("SPlanillaFachada")
+	protected SPlanillaFachada servicioPlanillaFachada;
+	@WireVariable("SPlanillaPromocion")
+	protected SPlanillaPromocion servicioPlanillaPromocion;
+	@WireVariable("SPlanillaUniforme")
+	protected SPlanillaUniforme servicioPlanillaUniforme;
 	@WireVariable("SRecurso")
 	protected SRecurso servicioRecurso;
+	@WireVariable("SRecursoPlanillaCata")
+	protected SRecursoPlanillaCata servicioRecursoPlanillaCata;
+	@WireVariable("SRecursoPlanillaEvento")
+	protected SRecursoPlanillaEvento servicioRecursoPlanillaEvento;
+	@WireVariable("SRecursoPlanillaFachada")
+	protected SRecursoPlanillaFachada servicioRecursoPlanillaFachada;
 	@WireVariable("SSku")
 	protected SSku servicioSku;
 	@WireVariable("SUniforme")
 	protected SUniforme servicioUniforme;
+	@WireVariable("SUniformePlanillaUniforme")
+	protected SUniformePlanillaUniforme servicioUniformePlanillaUniforme;
 	@WireVariable("SUsuario")
 	protected SUsuario servicioUsuario;
 	@WireVariable("SZona")
