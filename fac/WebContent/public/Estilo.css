@@ -1,0 +1,55 @@
+@CHARSET "UTF-8";
+
+.z-window
+	{
+	background-image: none;
+	background-color: #661313;
+}
+.z-borderlayout
+	{
+	background-image: none;
+	background-color: #661313;
+}
+.etiqueta {
+	font-weight: bold;
+	font-family: arial;
+	color: #771313;
+}
+
+.z-groupbox-3d {
+	background: #FFFFFF;
+}
+
+.z-groupbox-3d-hm {
+	background: #DDECFD;
+}
+
+.btn {
+	font-size: 10px;
+	cursor: pointer;
+	width: 85px;
+	height: 60px;
+}
+
+.multilinea {
+	height: 35px;
+}
+
+.multilineaTab {
+	height: 250px;
+}
+
+.z-loading {
+	background-color: #DDECFD;
+	border: 1px outset #A0A0A0;
+	font-weight: bold;
+	font-size: 18px;
+	cursor: wait;
+	width: 250px;
+	height: 45px;
+}
+
+.z-loading-indicator {
+	color: gray;
+	border: 0 none;
+}
