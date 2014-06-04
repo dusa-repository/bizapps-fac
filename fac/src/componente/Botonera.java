@@ -23,8 +23,8 @@ public abstract class Botonera extends Hbox {
 		this.appendChild(btnGuardar);
 		this.appendChild(btnLimpiar);
 		this.appendChild(btnEliminar);
-		this.appendChild(btnAdelante);
 		this.appendChild(btnAtras);
+		this.appendChild(btnAdelante);
 		this.appendChild(btnReporte);
 		this.appendChild(btnSalir);
 
