@@ -2,13 +2,17 @@ package modelo.maestros;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import modelo.transacciones.UniformePlanillaUniforme;
 
 @Entity
 @Table(name = "uniforme")
@@ -32,6 +36,9 @@ public class Uniforme implements Serializable {
 
 	@Column(name = "usuario_auditoria", length = 50)
 	private String usuarioAuditoria;
+	
+	@OneToMany(mappedBy="uniforme")
+	private Set<UniformePlanillaUniforme> uniformePlanillas;
 
 	public Uniforme() {
 		super();
@@ -87,6 +94,14 @@ public class Uniforme implements Serializable {
 
 	public void setUsuarioAuditoria(String usuarioAuditoria) {
 		this.usuarioAuditoria = usuarioAuditoria;
+	}
+
+	public Set<UniformePlanillaUniforme> getUniformePlanillas() {
+		return uniformePlanillas;
+	}
+
+	public void setUniformePlanillas(Set<UniformePlanillaUniforme> uniformePlanillas) {
+		this.uniformePlanillas = uniformePlanillas;
 	}
 	
 }

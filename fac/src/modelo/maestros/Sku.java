@@ -2,6 +2,7 @@ package modelo.maestros;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +10,12 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import modelo.transacciones.ItemDegustacionPlanillaEvento;
+import modelo.transacciones.ItemEstimadoPlanillaEvento;
+import modelo.transacciones.ItemPlanillaCata;
 
 @Entity
 @Table(name = "item")
@@ -36,6 +42,15 @@ public class Sku implements Serializable {
 
 	@Column(name = "usuario_auditoria", length = 50)
 	private String usuarioAuditoria;
+	
+	@OneToMany(mappedBy="sku")
+	private Set<ItemEstimadoPlanillaEvento> itemsEstimados;
+	
+	@OneToMany(mappedBy="sku")
+	private Set<ItemDegustacionPlanillaEvento> itemsDegustados;
+	
+	@OneToMany(mappedBy="sku")
+	private Set<ItemPlanillaCata> itemsCatas;
 
 	public Sku() {
 		super();
@@ -100,6 +115,31 @@ public class Sku implements Serializable {
 
 	public void setUsuarioAuditoria(String usuarioAuditoria) {
 		this.usuarioAuditoria = usuarioAuditoria;
+	}
+
+	public Set<ItemEstimadoPlanillaEvento> getItemsEstimados() {
+		return itemsEstimados;
+	}
+
+	public void setItemsEstimados(Set<ItemEstimadoPlanillaEvento> itemsEstimados) {
+		this.itemsEstimados = itemsEstimados;
+	}
+
+	public Set<ItemDegustacionPlanillaEvento> getItemsDegustados() {
+		return itemsDegustados;
+	}
+
+	public void setItemsDegustados(
+			Set<ItemDegustacionPlanillaEvento> itemsDegustados) {
+		this.itemsDegustados = itemsDegustados;
+	}
+
+	public Set<ItemPlanillaCata> getItemsCatas() {
+		return itemsCatas;
+	}
+
+	public void setItemsCatas(Set<ItemPlanillaCata> itemsCatas) {
+		this.itemsCatas = itemsCatas;
 	}
 	
 	

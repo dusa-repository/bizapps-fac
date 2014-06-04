@@ -13,9 +13,16 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import modelo.maestros.Zona;
+import modelo.transacciones.PlanillaArte;
+import modelo.transacciones.PlanillaCata;
+import modelo.transacciones.PlanillaEvento;
+import modelo.transacciones.PlanillaFachada;
+import modelo.transacciones.PlanillaPromocion;
+import modelo.transacciones.PlanillaUniforme;
 
 import org.hibernate.annotations.Type;
 
@@ -69,6 +76,24 @@ public class Usuario implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "grupo_usuario", joinColumns = { @JoinColumn(name = "id_usuario", nullable = false) }, inverseJoinColumns = { @JoinColumn(name = "id_grupo", nullable = false) })
 	private Set<Grupo> grupos;
+	
+	@OneToMany(mappedBy="usuario")
+	private Set<PlanillaArte> planillasArte;
+	
+	@OneToMany(mappedBy="usuario")
+	private Set<PlanillaCata> planillasCata;
+	
+	@OneToMany(mappedBy="usuario")
+	private Set<PlanillaEvento> planillasEvento;
+	
+	@OneToMany(mappedBy="usuario")
+	private Set<PlanillaFachada> planillasFachada;
+	
+	@OneToMany(mappedBy="usuario")
+	private Set<PlanillaPromocion> planillasPromocion;
+	
+	@OneToMany(mappedBy="usuario")
+	private Set<PlanillaUniforme> planillasUniforme;
 
 	public Usuario() {
 		super();
@@ -207,6 +232,53 @@ public class Usuario implements Serializable {
 	public void setGrupos(Set<Grupo> grupos) {
 		this.grupos = grupos;
 	}
-		
+
+	public Set<PlanillaArte> getPlanillasArte() {
+		return planillasArte;
+	}
+
+	public void setPlanillasArte(Set<PlanillaArte> planillasArte) {
+		this.planillasArte = planillasArte;
+	}
+
+	public Set<PlanillaCata> getPlanillasCata() {
+		return planillasCata;
+	}
+
+	public void setPlanillasCata(Set<PlanillaCata> planillasCata) {
+		this.planillasCata = planillasCata;
+	}
+
+	public Set<PlanillaEvento> getPlanillasEvento() {
+		return planillasEvento;
+	}
+
+	public void setPlanillasEvento(Set<PlanillaEvento> planillasEvento) {
+		this.planillasEvento = planillasEvento;
+	}
+
+	public Set<PlanillaFachada> getPlanillasFachada() {
+		return planillasFachada;
+	}
+
+	public void setPlanillasFachada(Set<PlanillaFachada> planillasFachada) {
+		this.planillasFachada = planillasFachada;
+	}
+
+	public Set<PlanillaPromocion> getPlanillasPromocion() {
+		return planillasPromocion;
+	}
+
+	public void setPlanillasPromocion(Set<PlanillaPromocion> planillasPromocion) {
+		this.planillasPromocion = planillasPromocion;
+	}
+
+	public Set<PlanillaUniforme> getPlanillasUniforme() {
+		return planillasUniforme;
+	}
+
+	public void setPlanillasUniforme(Set<PlanillaUniforme> planillasUniforme) {
+		this.planillasUniforme = planillasUniforme;
+	}
 	
 }

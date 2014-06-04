@@ -26,7 +26,7 @@
 			</grid>
 			<separator />
 			<div id="botoneraUniforme" />
-			<div id="catalogoUniforme" />
+			<div id="DivCatalogoUniforme" />
 		</div>
 	</window>
 </zk>
