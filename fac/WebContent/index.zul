@@ -1,9 +1,5 @@
 <zk>
 	<style src="public/Estilo.css" />
-	
-	<style>
-		.z-groupbox-hr { background: #EFF5F5 }
-	</style>
 	<zscript>
 		String variable = execution.getParameter("respuesta");
 		String
@@ -16,84 +12,93 @@
 		execution.getParameter("respuesta");
 	</zscript>
 	<window title="" border="0" height="100%" contentStyle="overflow:auto">
-	<borderlayout height="100%">
-		<!-- style="background-image: url('public/imagenes/generales/fondo.png'); background-repeat:no-repeat;height=100%; width=100%" -->
-		
-
-		<north border="none">
-			<div align="center">
-			</div>
-		</north>
-		<west border="none">
-			<borderlayout style="overflow-y:scroll;">
-				<center border="none">
-					<div align="center">
+		<borderlayout height="100%">
+			<north height="6em">
+				<div width="100%" height="100%" style="background:#500101">
+					<hbox hflex="1">
+						<vbox>
+							<separator />
+							<image src="/public/imagenes/generales/LogoDusa.png"
+								height="4em" width="20em" />
+						</vbox>
+						<div align="center" width="35em">
+							<separator />
+							<separator />
+							<separator />
+							<separator />
+							<hbox>
+								<label style="font-size:30px;color:white;font-weight: bold"
+									value="Formato de Actividades" />
+							</hbox>
+						</div>
+					</hbox>
+				</div>
+			</north>
+			<center border="none">
+				<div align="center" height="100%" width="100%" style="background:#500101">
+					<div align="right">
+						<hbox >
+							<image src="/public/imagenes/generales/1.png"
+								height="7em" width="9em" />
+							<image src="/public/imagenes/generales/2.png"
+								height="7em" width="9em" />
+							<image src="/public/imagenes/generales/3.png"
+								height="7em" width="9em" />
+							<image src="/public/imagenes/generales/4.png"
+								height="7em" width="9em" />
+						</hbox>
 					</div>
-				</center>
-			</borderlayout>
-		</west>
-		<east width="60%" border="none">
-			<vlayout>
-				<div align="center">
-					<separator />
-					<separator />
-					<image src="/public/imagenes/generales/LogoDusa.png" height="4em"
-						width="15em" />
+					<hbox style="border: none" align="center" pack="center"
+						height="75%" width="100%">
+						<groupbox width="25em" height="50%" mold="3d">
+							<caption label="${a}"
+								style="color:white; font-size: 18px; font-weight:bold" />
+							<separator></separator>
+							<separator></separator>
+							<hlayout width="100%">
+								<h:form id="inicioSesion" action="j_spring_security_check"
+									method="POST" xmlns:h="native">
+									<hlayout width="100%">
+										<label class="etiqueta" height="20px"
+											style="font-size:18px; font-weight: bold" value="Nombre de Usuario :" />
+										<textbox placeholder="Usuario" height="22px" id="log_usuario"
+											name="j_username" hflex="1" />
+									</hlayout>
+									<separator />
+									<separator />
+									<separator />
+									<hlayout width="100%">
+										<label class="etiqueta" height="20px"
+											style="font-size:18px; font-weight: bold" value="Contraseña :" />
+										<textbox placeholder="Contraseña" height="22px" id="log_clave"
+											hflex="1" type="password" name="j_password" />
+									</hlayout>
+									<separator />
+									<separator />
+									<separator />
+									<div align="center">
+										<button type="submit" class="btn-salir" label="Entrar"
+											image="/public/imagenes/botones/entrar.png" />
+									</div>
+									<separator></separator>
+									<separator></separator>
+								</h:form>
+							</hlayout>
+						</groupbox>
+					</hbox>
 				</div>
-				<div height="240px" align="rigth">
-					<separator />
-					<separator />
-					<separator />
-					<separator />
-					<separator />
+			</center>
+			<south vflex="2" border="0" height="4em" collapsible="false">
+				<div width="100%" height="100%" style="background:#500101">
+					<div align="center" sclass="footer">
+						<separator />
+						<label
+							style="color:#DAD3D3; font-size: 14px; font-weight:bold;padding-center:35%; "
+							value="© 2014 Elaborado por BIZAPPS,C.A. All Rights Reserved. Terms Privacy">
+						</label>
+					</div>
 				</div>
-				<div align="center">
-					<groupbox width="25em" height="12em">
-						<caption label="${a}"
-							style="color:blue; font-size: 14px; font-weight:bold; background-color:red" />
-						<separator></separator>
-						<separator></separator>
-						<hlayout width="100%">
-							<h:form id="inicioSesion" action="j_spring_security_check"
-								method="POST" xmlns:h="native">
-								<hlayout width="100%">
-
-									<label class="etiqueta" height="20px" style="font-size:12px"
-										value="Nombre de Usuario :" />
-									<textbox placeholder="Usuario" height="18px" id="log_usuario"
-										name="j_username" hflex="1" />
-								</hlayout>
-								<separator></separator>
-								<hlayout width="100%">
-									<label class="etiqueta" height="20px" style="font-size:12px"
-										value="Contraseña :" />
-									<textbox placeholder="Contraseña" height="18px" id="log_clave"
-										hflex="1" type="password" name="j_password" />
-								</hlayout>
-								<separator></separator>
-								<separator></separator>
-								<separator></separator>
-								<hlayout width="100%">
-									<button type="submit" class="btn" label="Entrar"
-										image="/public/imagenes/botones/entrar.png" />
-								</hlayout>
-								<separator></separator>
-								<separator></separator>
-							</h:form>
-						</hlayout>
-					</groupbox>
-				</div>
-			</vlayout>
-		</east>
-		<south vflex="2" border="0" height="3em"
-			collapsible="false">
-			<div align="center">
-				<separator></separator>
-				<label style="padding-center:35%;"
-					value="© 2014 Elaborado por BIZAPPS,C.A.  All Rights Reserved. Terms Privacy">
-				</label>
-			</div>
-		</south>
-	</borderlayout>
+			</south>
+		</borderlayout>
 	</window>
 </zk>

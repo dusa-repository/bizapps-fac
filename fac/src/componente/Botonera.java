@@ -36,13 +36,13 @@ public abstract class Botonera extends Hbox {
 		btnReporte.setSrc("/public/imagenes/botones/reporte.png");
 		btnSalir.setSrc("/public/imagenes/botones/salir.png");
 	
-		btnAtras.setStyle("font-size: 11px ;width: 87px; height: 25px");
-		btnEliminar.setStyle("font-size: 11px ;width: 87px; height: 25px");
-		btnAdelante.setStyle("font-size: 11px ;width: 87px; height: 25px");
-		btnGuardar.setStyle("font-size: 11px ;width: 87px; height: 25px");
-		btnLimpiar.setStyle("font-size: 11px ;width: 87px; height: 25px");
-		btnSalir.setStyle("font-size: 11px ;width: 87px; height: 25px");
-		btnReporte.setStyle("font-size: 11px ;width: 87px; height: 25px");
+		btnAtras.setStyle("font-size: 12px ;width: 93px; height: 30px");
+		btnEliminar.setStyle("font-size: 12px ;width: 93px; height: 30px");
+		btnAdelante.setStyle("font-size: 12px ;width: 93px; height: 30px");
+		btnGuardar.setStyle("font-size: 12px ;width: 93px; height: 30px");
+		btnLimpiar.setStyle("font-size: 12px ;width: 93px; height: 30px");
+		btnSalir.setStyle("font-size: 12px ;width: 93px; height: 30px");
+		btnReporte.setStyle("font-size: 12px ;width: 93px; height: 30px");
 		
 		btnAdelante.setLabel("Siguiente");
 		btnAtras.setLabel("Anterior");

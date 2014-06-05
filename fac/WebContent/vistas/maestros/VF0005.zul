@@ -1,7 +1,7 @@
 <zk>
 	<window width="40em" closable="false" id="wdwF0005"
 		apply="controlador.maestros.CF0005">
-		<caption label="Codigos Definido por el Usuario (F0005)"
+		<caption label="Codigos Definido por el Usuario"
 			style="color:white; font-size: 16px; font-weight:bold; " />
 		<div>
 			<grid width="100%">

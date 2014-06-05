@@ -19,9 +19,9 @@
 						<grid width="100%">
 							<columns visible="false">
 								<column label="" width="20%" />
-								<column label="" width="30%" />
-								<column label="" width="20%" />
-								<column label="" width="30%" />
+								<column label="" width="31%" />
+								<column label="" width="17%" />
+								<column label="" width="32%" />
 							</columns>
 							<rows>
 								<row>
@@ -30,10 +30,10 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtNombreActividad" multiline="true"
-										hflex="1" maxlength="500" tooltiptext="Ingrese el Nombre de la Actividad" />
-									<hbox />
-									<hbox />
+									<cell colspan="3">
+										<textbox id="txtNombreActividad" multiline="true"
+											hflex="1" maxlength="500" tooltiptext="Ingrese el Nombre de la Actividad" />
+									</cell>
 								</row>
 								<row>
 									<hbox>
@@ -57,20 +57,22 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<combobox tooltiptext="Seleccione un Tipo de Actividad"
-										placeholder="Seleccione un Tipo de Actividad" id="cmbActividad"
-										readonly="true" width="100%">
-										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.id}" />
-										</template>
-									</combobox>
+									<cell colspan="2">
+										<combobox tooltiptext="Seleccione un Tipo de Actividad"
+											placeholder="Seleccione un Tipo de Actividad" id="cmbActividad"
+											readonly="true" width="100%">
+											<template name="model">
+												<comboitem label="${each.nombre}" context="${each.id}" />
+											</template>
+										</combobox>
+									</cell>
 									<hbox>
 										<label class="etiqueta" value="Fecha Actividad: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
+										<datebox readonly="true" width="100%" id="dtbActividad"
+											onCreate="self.value = new Date()" />
 									</hbox>
-									<datebox readonly="true" width="100%" id="dtbActividad"
-										onCreate="self.value = new Date()" />
 								</row>
 								<row>
 									<hbox>
@@ -78,45 +80,36 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtNombre" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el nombre del PDV" />
-									<hbox>
-										<label class="etiqueta" value="RIF PDV: " />
-										<space />
-										<label value="*" style="font-weight:bold;color:red" />
-									</hbox>
-									<textbox id="txtRif" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el RIF del PDV" />
-								</row>
-								<row>
+									<textbox id="txtNombre" hflex="1" maxlength="500"
+										tooltiptext="Ingrese el nombre del PDV" />
 									<hbox>
 										<label class="etiqueta" value="Ciudad Actual: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtCiudad" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese la Ciudad Actual" />
+									<textbox id="txtCiudad" hflex="1" maxlength="500"
+										tooltiptext="Ingrese la Ciudad Actual" />
+								</row>
+								<row>
 									<hbox>
 										<label class="etiqueta" value="Direccion: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtDireccion" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese la Direccion Actual" />
+									<cell colspan="2">
+										<textbox id="txtDireccion" hflex="1" multiline="true"
+											maxlength="500" tooltiptext="Ingrese la Direccion Actual" />
+									</cell>
+									<hbox />
 								</row>
 								<row>
 									<hbox>
-										<label class="etiqueta" value="Marca Sugerida: " />
+										<label class="etiqueta" value="RIF PDV: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<combobox tooltiptext="Seleccione la Marca Sugerida"
-										placeholder="Seleccione una Marca" id="cmbMarcaSugerida"
-										readonly="true" width="100%">
-										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.idMarca}" />
-										</template>
-									</combobox>
+									<textbox id="txtRif" hflex="1" maxlength="500"
+										tooltiptext="Ingrese el RIF del PDV" />
 									<hbox>
 										<label class="etiqueta" value="Nro Personas: " />
 										<space />
@@ -127,19 +120,36 @@
 								</row>
 								<row>
 									<hbox>
+										<label class="etiqueta" value="Marca Sugerida: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<cell colspan="2">
+										<combobox tooltiptext="Seleccione la Marca Sugerida"
+											placeholder="Seleccione una Marca" id="cmbMarcaSugerida"
+											readonly="true" width="100%">
+											<template name="model">
+												<comboitem label="${each.nombre}" context="${each.idMarca}" />
+											</template>
+										</combobox>
+									</cell>
+									<hbox />
+								</row>
+								<row>
+									<hbox>
 										<label class="etiqueta" value="Contacto Actividad: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtContacto" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el nombre del Contacto de la Actividad" />
+									<textbox id="txtContacto" hflex="1" maxlength="500"
+										tooltiptext="Ingrese el nombre del Contacto de la Actividad" />
 									<hbox>
 										<label class="etiqueta" value="Telefono: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtTelefono" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el Telefono" />
+									<textbox id="txtTelefono" hflex="1" maxlength="500"
+										tooltiptext="Ingrese el Telefono" />
 								</row>
 								<row>
 									<hbox>
@@ -159,8 +169,8 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtDuracion" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese la Duracion del contrato" />
+									<textbox id="txtDuracion" hflex="1" maxlength="500"
+										tooltiptext="Ingrese la Duracion del contrato" />
 								</row>
 								<row>
 									<hbox>
@@ -168,11 +178,11 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtPatente" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el Numero de Patente" />
+									<textbox id="txtPatente" hflex="1" maxlength="500"
+										tooltiptext="Ingrese el Numero de Patente" />
 									<label class="etiqueta" value="Costo Real: " />
-									<textbox id="txtCosto" disabled="true" hflex="1"
-										maxlength="500" tooltiptext="Costo real de la Cata o Induccion" />
+									<textbox id="txtCosto" hflex="1" maxlength="500"
+										tooltiptext="Costo real de la Cata o Induccion" />
 								</row>
 							</rows>
 						</grid>
@@ -240,8 +250,8 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtEmail" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el E-Mail del Contacto" />
+									<textbox id="txtEmail" hflex="1" maxlength="500"
+										tooltiptext="Ingrese el E-Mail del Contacto" />
 								</row>
 								<row>
 									<label class="etiqueta" value="Medidas: " />
@@ -262,7 +272,10 @@
 										<space />
 										<label class="etiqueta" value="cms" />
 									</hbox>
-									<hbox />
+									<cell rowspan="3" style="background:white">
+										<image src="../public/imagenes/generales/cubo.png"
+											height="10em" width="12em" />
+									</cell>
 									<hbox />
 								</row>
 								<row>
@@ -277,8 +290,7 @@
 											step="1.0" format="#.#" width="98%" />
 										<space />
 										<label class="etiqueta" value="cms" />
-									</hbox>
-									<hbox />
+									</hbox>								
 									<hbox />
 								</row>
 								<row>
@@ -294,7 +306,6 @@
 										<space />
 										<label class="etiqueta" value="cms" />
 									</hbox>
-									<hbox />
 									<hbox />
 								</row>
 							</rows>

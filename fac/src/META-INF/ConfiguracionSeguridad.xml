@@ -10,7 +10,7 @@
 		<intercept-url pattern="/vistas/**" access="isAuthenticated()" />
 		<form-login login-page="/index.zul"
 			login-processing-url="/j_spring_security_check" default-target-url="/vistas/inicio.zul"
-			authentication-failure-url="/index.zul?respuesta=Usuario o Contraseña Incorrectos" />
+			authentication-failure-url="/index.zul?respuesta=USUARIO O CONTRASEÑA INCORRECTOS" />
 		<logout logout-success-url="/index.zul" delete-cookies="JSESSIONID" />
 		<session-management>
 			<concurrency-control max-sessions="1"

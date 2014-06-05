@@ -11,8 +11,8 @@
 					<tab label="Informacion de las Marcas Sugeridas" id="tabInformacion" />
 				</tabs>
 				<tabpanels>
-					<tabpanel>
-						<grid width="100%">
+					<tabpanel  height="auto">
+						<grid width="100%" height="auto">
 							<columns visible="false">
 								<column label="" width="20%" />
 								<column label="" width="30%" />
@@ -26,10 +26,10 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtNombreActividad" multiline="true"
-										hflex="1" maxlength="500" tooltiptext="Ingrese el Nombre de la Actividad" />
-									<hbox />
-									<hbox />
+									<cell colspan="3">
+										<textbox id="txtNombreActividad" multiline="true"
+											hflex="1" maxlength="500" tooltiptext="Ingrese el Nombre de la Actividad" />
+									</cell>
 								</row>
 								<row>
 									<hbox>
@@ -53,20 +53,22 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<combobox tooltiptext="Seleccione un Tipo de Actividad"
-										placeholder="Seleccione un Tipo de Actividad" id="cmbActividad"
-										readonly="true" width="100%">
-										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.idAccidente}" />
-										</template>
-									</combobox>
+									<cell colspan="2">
+										<combobox tooltiptext="Seleccione un Tipo de Actividad"
+											placeholder="Seleccione un Tipo de Actividad" id="cmbActividad"
+											readonly="true" width="100%">
+											<template name="model">
+												<comboitem label="${each.nombre}" context="${each.idAccidente}" />
+											</template>
+										</combobox>
+									</cell>
 									<hbox>
 										<label class="etiqueta" value="Tipo de Local: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
+										<textbox id="txtLocal" hflex="1" maxlength="500"
+											tooltiptext="Ingrese un Tipo de Local" />
 									</hbox>
-									<textbox id="txtLocal" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese un Tipo de Local" />
 								</row>
 								<row>
 									<hbox>
@@ -74,15 +76,15 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtCiudad" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese la Ciudad del PDV" />
+									<textbox id="txtCiudad" hflex="1" maxlength="500"
+										tooltiptext="Ingrese la Ciudad del PDV" />
 									<hbox>
 										<label class="etiqueta" value="Estado: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtEstado" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el Estado" />
+									<textbox id="txtEstado" hflex="1" maxlength="500"
+										tooltiptext="Ingrese el Estado" />
 								</row>
 								<row>
 									<hbox>
@@ -90,15 +92,17 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtNombreLocal" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el Nombre del Local" />
-									<hbox>
+									<cell colspan="2">
+										<textbox id="txtNombreLocal" hflex="1" multiline="true"
+											maxlength="500" tooltiptext="Ingrese el Nombre del Local" />
+									</cell>
+									<hbox align="end">
 										<label class="etiqueta" value="RIF PDV: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
+										<textbox id="txtRif" hflex="1" maxlength="500"
+											tooltiptext="Ingrese el RIF del PDV" />
 									</hbox>
-									<textbox id="txtRif" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el RIF del PDV" />
 								</row>
 								<row>
 									<hbox>
@@ -106,15 +110,17 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtDireccion" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el RIF del PDV" />
+									<cell colspan="2">
+										<textbox id="txtDireccion" hflex="1" multiline="true"
+											maxlength="500" tooltiptext="Ingrese el RIF del PDV" />
+									</cell>
 									<hbox>
 										<label class="etiqueta" value="Telefono: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
+										<textbox id="txtTelefono" hflex="1" maxlength="500"
+											tooltiptext="Ingrese el Telefono" />
 									</hbox>
-									<textbox id="txtTelefono" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el Telefono" />
 								</row>
 								<row>
 									<hbox>
@@ -138,15 +144,15 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtResponsablePDV" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el Nombre del Responsable del PDV" />
+									<textbox id="txtResponsablePDV" hflex="1" maxlength="500"
+										tooltiptext="Ingrese el Nombre del Responsable del PDV" />
 									<hbox>
 										<label class="etiqueta" value="E-Mail: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtEMail" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el E-Mail del Responsable del PDV" />
+									<textbox id="txtEMail" hflex="1" maxlength="500"
+										tooltiptext="Ingrese el E-Mail del Responsable del PDV" />
 								</row>
 								<row>
 									<hbox>
@@ -202,7 +208,7 @@
 								</row>
 								<row>
 									<label class="etiqueta" value="Costo Real: " />
-									<textbox id="txtCosto" disabled="true" hflex="1"
+									<textbox id="txtCosto"  hflex="1"
 										maxlength="500" tooltiptext="Ingrese el RIF del PDV" />
 									<hbox />
 									<hbox />
@@ -212,6 +218,7 @@
 					</tabpanel>
 					<tabpanel>
 						<vbox height="100%" width="100%" align="start">
+						<separator/>
 							<hbox>
 								<label class="etiqueta" value="Marca Sugerida: " />
 								<combobox tooltiptext="Seleccione la Marca Sugerida"
@@ -222,9 +229,11 @@
 									</template>
 								</combobox>
 							</hbox>
-							<ckeditor id="cdtMarca1" width="100%" height="auto">
+								<separator/>
+							<ckeditor id="cdtMarca1" width="99%" height="60px">
 								<attribute name="value" />
 							</ckeditor>
+							<separator/>
 							<hbox>
 								<label class="etiqueta" value="Marca Sugerida: " />
 								<combobox tooltiptext="Seleccione la Marca Sugerida"
@@ -235,7 +244,8 @@
 									</template>
 								</combobox>
 							</hbox>
-							<ckeditor id="cdtMarca2" width="100%" height="auto">
+							<separator/>
+							<ckeditor id="cdtMarca2" width="99%" height="60px">
 								<attribute name="value" />
 							</ckeditor>
 						</vbox>

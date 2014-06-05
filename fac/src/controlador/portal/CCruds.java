@@ -103,14 +103,15 @@ public class CCruds extends CGenerico {
 						final int j = i;
 						botones.get(i).setVisible(true);
 						botones.get(i).setSrc(
-								"/public/imagenes/botones/adelante.png");
+								"/public/imagenes/botones/crudP.png");
 						botones.get(i).addEventListener(Events.ON_MOUSE_OVER,
 								new EventListener<Event>() {
 									@Override
 									public void onEvent(Event arg0)
 											throws Exception {
 										botones.get(j)
-												.setSrc("/public/imagenes/botones/agregar.png");
+												.setSrc("/public/imagenes/botones/crudG.png");
+										botones.get(j).setStyle("color:black; font-weight: bold");
 									}
 								});
 						botones.get(i).addEventListener(Events.ON_MOUSE_OUT,
@@ -119,7 +120,8 @@ public class CCruds extends CGenerico {
 									public void onEvent(Event arg0)
 											throws Exception {
 										botones.get(j)
-												.setSrc("/public/imagenes/botones/adelante.png");
+												.setSrc("/public/imagenes/botones/crudP.png");
+										botones.get(j).setStyle("color:white; font-weight: normal");
 									}
 								});
 						botones.get(i).addEventListener(Events.ON_CLICK,
