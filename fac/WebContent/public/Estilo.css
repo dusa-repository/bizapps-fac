@@ -5,6 +5,12 @@
 	background-color: #661313;
 }
 
+.z-window-header {
+	color: white;
+	font-size: 16px;
+	font-weight: normal;
+}
+
 .z-borderlayout {
 	background-image: none;
 	background-color: #661313;
@@ -53,7 +59,6 @@
 	border: none;
 	color: white;
 	white-space: pre-line;
-
 }
 
 .btn-salir {
