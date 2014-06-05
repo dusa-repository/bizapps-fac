@@ -27,10 +27,10 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtNombreActividad" multiline="true"
-										hflex="1" maxlength="500" tooltiptext="Ingrese el Nombre de la Actividad" />
-									<hbox />
-									<hbox />
+									<cell colspan="3">
+										<textbox id="txtNombreActividad" multiline="true"
+											hflex="1" maxlength="500" tooltiptext="Ingrese el Nombre de la Actividad" />
+									</cell>
 								</row>
 								<row>
 									<hbox>
@@ -54,14 +54,15 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<combobox tooltiptext="Seleccione un Tipo de Actividad"
-										placeholder="Seleccione un Tipo de Actividad" id="cmbActividad"
-										readonly="true" width="100%">
-										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.idAccidente}" />
-										</template>
-									</combobox>
-									<hbox />
+									<cell colspan="2">
+										<combobox tooltiptext="Seleccione un Tipo de Actividad"
+											placeholder="Seleccione un Tipo de Actividad" id="cmbActividad"
+											readonly="true" width="100%">
+											<template name="model">
+												<comboitem label="${each.nombre}" context="${each.idAccidente}" />
+											</template>
+										</combobox>
+									</cell>
 									<hbox />
 								</row>
 								<row>
@@ -77,7 +78,7 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtCiudad" hflex="1" multiline="true"
+									<textbox id="txtCiudad" hflex="1" 
 										maxlength="500" tooltiptext="Ingrese la Ciudad del PDV" />
 								</row>
 								<row>
@@ -86,14 +87,15 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<combobox tooltiptext="Seleccione una Marca"
-										placeholder="Seleccione una Marca" id="cmbMarca" readonly="true"
-										width="100%">
-										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.idMarca}" />
-										</template>
-									</combobox>
-									<hbox />
+									<cell colspan="2">
+										<combobox tooltiptext="Seleccione una Marca"
+											placeholder="Seleccione una Marca" id="cmbMarca" readonly="true"
+											width="100%">
+											<template name="model">
+												<comboitem label="${each.nombre}" context="${each.idMarca}" />
+											</template>
+										</combobox>
+									</cell>
 									<hbox />
 								</row>
 								<row>
@@ -102,14 +104,14 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtNombrePdv" hflex="1" multiline="true"
+									<textbox id="txtNombrePdv" hflex="1" 
 										maxlength="500" tooltiptext="Ingrese el Nombre del PDV" />
 									<hbox>
 										<label class="etiqueta" value="RIF del PDV: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtRifPdv" hflex="1" multiline="true"
+									<textbox id="txtRifPdv" hflex="1"
 										maxlength="500" tooltiptext="Ingrese el Rif del PDV" />
 								</row>
 								<row>
@@ -130,7 +132,7 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtEMailPdv" hflex="1" multiline="true"
+									<textbox id="txtEMailPdv" hflex="1" 
 										maxlength="500" tooltiptext="Ingrese el E-Mail del PDV" />
 								</row>
 								<row>
@@ -139,14 +141,14 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtCliente" hflex="1" multiline="true"
+									<textbox id="txtCliente" hflex="1"
 										maxlength="500" tooltiptext="Ingrese el Nombre del Cliente" />
 									<hbox>
 										<label class="etiqueta" value="Telefono PDV: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtTelefono" hflex="1" multiline="true"
+									<textbox id="txtTelefono" hflex="1"
 										maxlength="500" tooltiptext="Ingrese el Numero Telefonico del PDV" />
 								</row>
 								<row>
@@ -155,15 +157,15 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtDireccion" disabled="true" hflex="1"
-										maxlength="500" tooltiptext="Ingrese la Direccion del PDV" />
-									<hbox />
-									<hbox />
+									<cell colspan="3">
+										<textbox id="txtDireccion" hflex="1" maxlength="500"
+											tooltiptext="Ingrese la Direccion del PDV" multiline="true" />
+									</cell>
 								</row>
 								<row>
 									<label class="etiqueta" value="Costo Real: " />
-									<textbox id="txtCosto" disabled="true" hflex="1"
-										maxlength="500" tooltiptext="Ingrese el RIF del PDV" />
+									<textbox id="txtCosto" hflex="1" maxlength="500"
+										tooltiptext="Ingrese el RIF del PDV" />
 									<hbox />
 									<hbox />
 								</row>
@@ -272,13 +274,15 @@
 					</tabpanel>
 					<tabpanel>
 						<vbox height="100%" width="100%" align="start">
+							<separator />
 							<hbox>
-								<label class="etiqueta" value="¿Contrato condicionado? " />
+								<label class="etiqueta" value="¿Contrato Condicionado? " />
 								<radiogroup id="rdbJustificacion">
 									<radio id="rdoSi" label="Si" />
 									<radio id="rdoNo" label="No" />
 								</radiogroup>
 							</hbox>
+							<separator />
 							<ckeditor id="cdtJustificacion" width="100%" height="100%">
 								<attribute name="value" />
 							</ckeditor>

@@ -15,10 +15,11 @@
 					<tabpanel>
 						<grid width="100%">
 							<columns visible="false">
+								<column label="" width="19%" />
+								<column label="" width="25%" />
 								<column label="" width="20%" />
-								<column label="" width="30%" />
 								<column label="" width="20%" />
-								<column label="" width="30%" />
+								<column label="" width="17%" />
 							</columns>
 							<rows>
 								<row>
@@ -27,10 +28,10 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtNombreActividad" multiline="true"
-										hflex="1" maxlength="500" tooltiptext="Ingrese el Nombre de la Actividad" />
-									<hbox />
-									<hbox />
+									<cell colspan="4">
+										<textbox id="txtNombreActividad" multiline="true"
+											hflex="1" maxlength="500" tooltiptext="Ingrese el Nombre de la Actividad" />
+									</cell>
 								</row>
 								<row>
 									<hbox>
@@ -47,6 +48,7 @@
 									</hbox>
 									<textbox id="txtRespZona" hflex="1" maxlength="50"
 										readonly="true" />
+									<hbox />
 								</row>
 								<row>
 									<hbox>
@@ -54,25 +56,33 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<combobox tooltiptext="Seleccione una Marca"
-										placeholder="Seleccione una Marca" id="cmbMarca" readonly="true"
-										width="100%">
-										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.idMarca}" />
-										</template>
-									</combobox>
+									<cell colspan="3">
+										<combobox tooltiptext="Seleccione una Marca"
+											placeholder="Seleccione una Marca" id="cmbMarca" readonly="true"
+											width="100%">
+											<template name="model">
+												<comboitem label="${each.nombre}" context="${each.idMarca}" />
+											</template>
+										</combobox>
+									</cell>
+									<hbox />
+								</row>
+								<row>
 									<hbox>
 										<label class="etiqueta" value="Tipo de Arte: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<combobox tooltiptext="Seleccione un Tipo de Arte"
-										placeholder="Seleccione una Tipo de Arte" id="cmbArte"
-										readonly="true" width="100%">
-										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.idMarca}" />
-										</template>
-									</combobox>
+									<cell colspan="3">
+										<combobox tooltiptext="Seleccione un Tipo de Arte"
+											placeholder="Seleccione una Tipo de Arte" id="cmbArte"
+											readonly="true" width="100%">
+											<template name="model">
+												<comboitem label="${each.nombre}" context="${each.idMarca}" />
+											</template>
+										</combobox>
+									</cell>
+									<hbox />
 								</row>
 								<row>
 									<hbox>
@@ -80,14 +90,17 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<combobox tooltiptext="Seleccione un Formato de Entrega"
-										placeholder="Seleccione un Formato de Entrega" id="cmbFormato"
-										readonly="true" width="100%">
-										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.idMarca}" />
-										</template>
-									</combobox>
+									<cell colspan="1">
+										<combobox tooltiptext="Seleccione un Formato de Entrega"
+											placeholder="Seleccione un Formato de Entrega" id="cmbFormato"
+											readonly="true" width="100%">
+											<template name="model">
+												<comboitem label="${each.nombre}" context="${each.idMarca}" />
+											</template>
+										</combobox>
+									</cell>
 									<label class="etiqueta" value="Medidas: " />
+									<hbox />
 									<hbox />
 								</row>
 								<row>
@@ -96,8 +109,8 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtNombreLocal" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el Nombre del Local" />
+									<textbox id="txtNombreLocal" hflex="1" maxlength="500"
+										tooltiptext="Ingrese el Nombre del Local" />
 									<hbox>
 										<label class="etiqueta" value="1.-Alto(Vertical): " />
 										<space />
@@ -110,6 +123,10 @@
 										<space />
 										<label class="etiqueta" value="cms" />
 									</hbox>
+									<cell rowspan="3" style="background:white">
+										<image src="../public/imagenes/generales/cubo.png"
+											height="10em" width="12em" />
+									</cell>
 								</row>
 								<row>
 									<hbox>
@@ -117,8 +134,8 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtRif" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el RIF del Local" />
+									<textbox id="txtRif" hflex="1" maxlength="500"
+										tooltiptext="Ingrese el RIF del Local" />
 									<hbox>
 										<label class="etiqueta" value="2.-Largo(Horizontal): " />
 										<space />
@@ -138,8 +155,8 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtPatente" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese el Numero de Patente" />
+									<textbox id="txtPatente" hflex="1" maxlength="500"
+										tooltiptext="Ingrese el Numero de Patente" />
 									<hbox>
 										<label class="etiqueta" value="3.-Ancho(Profundidad): " />
 										<space />
@@ -155,6 +172,9 @@
 								</row>
 							</rows>
 						</grid>
+						<separator />
+						<separator />
+						<separator />
 						<hbox>
 							<label value="**" style="font-weight:bold;color:red" />
 							<space />
@@ -166,10 +186,12 @@
 						<ckeditor id="cdtLineamiento" width="100%">
 							<attribute name="value" />
 						</ckeditor>
+						<separator />
 						<hbox>
 							<button id="btnModeloArte" label="Ver modelo de elaboracion de Arte"
 								tooltiptext="Presione para ver el modelo de elaboracion de Arte" />
 						</hbox>
+						<separator />
 					</tabpanel>
 					<tabpanel>
 						<hbox align="center" pack="center" height="100%" width="100%">

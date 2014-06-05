@@ -1,7 +1,7 @@
 <zk>
 	<window width="40em" closable="false" id="wdwF0004"
 		apply="controlador.maestros.CF0004">
-		<caption label="Tipos de Codigos Definido por el Usuario (F0004)"
+		<caption label="Tipos de Codigos Definido por el Usuario"
 			style="color:white; font-size: 16px; font-weight:bold; " />
 		<div>
 		<grid width="100%">
@@ -49,6 +49,7 @@
 							<doublespinner id="dblCDLF0004" constraint="min 0 max 100"
 								tooltiptext="Ingrese el Codigo del Tipo de Codigo" step="0.1"
 								format="#.##" width="98%" value="0" />
+								<hbox />
 						</row>
 						<row>
 							<label class="etiqueta" value="2da Linea (Y/N):" />

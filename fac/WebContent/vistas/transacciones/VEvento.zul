@@ -20,8 +20,8 @@
 							<columns visible="false">
 								<column label="" width="20%" />
 								<column label="" width="30%" />
-								<column label="" width="25%" />
-								<column label="" width="25%" />
+								<column label="" width="20%" />
+								<column label="" width="30%" />
 							</columns>
 							<rows>
 								<row>
@@ -30,10 +30,10 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtNombreActividad" multiline="true"
-										hflex="1" maxlength="500" tooltiptext="Ingrese el Nombre de la Actividad" />
-									<hbox />
-									<hbox />
+									<cell colspan="3">
+										<textbox id="txtNombreActividad" multiline="true"
+											hflex="1" maxlength="500" tooltiptext="Ingrese el Nombre de la Actividad" />
+									</cell>
 								</row>
 								<row>
 									<hbox>
@@ -73,30 +73,20 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtCiudad" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese la Ciudad Actual" />
+									<textbox id="txtCiudad" hflex="1" maxlength="500"
+										tooltiptext="Ingrese la Ciudad Actual" />
 									<hbox>
-										<hbox>
-											<label class="etiqueta" value="Region Actual: " />
-											<space />
-											<label value="*" style="font-weight:bold;color:red" />
-										</hbox>
-										<combobox tooltiptext="Seleccione la Region Actual"
-											placeholder="Seleccione una Region" id="cmbRegion" readonly="true"
-											width="100%">
-											<template name="model">
-												<comboitem label="${each.nombre}" context="${each.id}" />
-											</template>
-										</combobox>
+										<label class="etiqueta" value="Region Actual: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<hbox>
-										<hbox>
-											<label class="etiqueta" value="Hora Act: " />
-											<space />
-											<label value="*" style="font-weight:bold;color:red" />
-										</hbox>
-										<timebox id="tmbHora" format="a hh:mm:ss" onCreate="self.value = new Date()" />
-									</hbox>
+									<combobox tooltiptext="Seleccione la Region Actual"
+										placeholder="Seleccione una Region" id="cmbRegion" readonly="true"
+										width="100%">
+										<template name="model">
+											<comboitem label="${each.nombre}" context="${each.id}" />
+										</template>
+									</combobox>
 								</row>
 								<row>
 									<hbox>
@@ -104,10 +94,16 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtDireccion" hflex="1" multiline="true"
-										maxlength="500" tooltiptext="Ingrese la Direccion Actual" />
-									<hbox />
-									<hbox />
+									<cell colspan="2">
+										<textbox id="txtDireccion" hflex="1" multiline="true"
+											maxlength="500" tooltiptext="Ingrese la Direccion Actual" />
+									</cell>
+									<hbox>
+										<label class="etiqueta" value="Hora Act: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+										<timebox id="tmbHora" format="a hh:mm:ss" onCreate="self.value = new Date()" />
+									</hbox>
 								</row>
 								<row>
 									<hbox>
@@ -115,20 +111,22 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<combobox tooltiptext="Seleccione la Marca Sugerida"
-										placeholder="Seleccione una Marca" id="cmbMarcaSugerida"
-										readonly="true" width="100%">
-										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.idMarca}" />
-										</template>
-									</combobox>
+									<cell colspan="2">
+										<combobox tooltiptext="Seleccione la Marca Sugerida"
+											placeholder="Seleccione una Marca" id="cmbMarcaSugerida"
+											readonly="true" width="100%">
+											<template name="model">
+												<comboitem label="${each.nombre}" context="${each.idMarca}" />
+											</template>
+										</combobox>
+									</cell>
 									<hbox>
 										<label class="etiqueta" value="Nro Personas: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
+										<spinner id="spnPersonas" value="0" constraint="min 0 max 10000"
+											tooltiptext="Ingrese la cantidad de Personas" step="1" width="90%" />
 									</hbox>
-									<spinner id="spnPersonas" value="0" constraint="min 0 max 10000"
-										tooltiptext="Ingrese la cantidad de Personas" step="1" width="90%" />
 								</row>
 								<row>
 									<hbox>
@@ -136,14 +134,14 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtContacto" hflex="1" multiline="true"
+									<textbox id="txtContacto" hflex="1" 
 										maxlength="500" tooltiptext="Ingrese el nombre del Contacto de la Actividad" />
 									<hbox>
 										<label class="etiqueta" value="Telefono: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtTelefono" hflex="1" multiline="true"
+									<textbox id="txtTelefono" hflex="1" 
 										width="90%" maxlength="500" tooltiptext="Ingrese el Telefono" />
 								</row>
 								<row>
@@ -179,8 +177,8 @@
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
 									<combobox tooltiptext="Seleccione un Medio"
-										placeholder="Seleccione un Medio" id="cmbMedio"
-										readonly="true" width="100%">
+										placeholder="Seleccione un Medio" id="cmbMedio" readonly="true"
+										width="100%">
 										<template name="model">
 											<comboitem label="${each.nombre}" context="${each.id}" />
 										</template>
@@ -191,8 +189,8 @@
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
 									<combobox tooltiptext="Indique si es una venta directa"
-										placeholder="Seleccione una Opcion" id="cmbVenta"
-										readonly="true" width="100%">
+										placeholder="Seleccione una Opcion" id="cmbVenta" readonly="true"
+										width="100%">
 										<template name="model">
 											<comboitem label="${each.nombre}" context="${each.id}" />
 										</template>
@@ -200,8 +198,8 @@
 								</row>
 								<row>
 									<label class="etiqueta" value="Costo Real: " />
-									<textbox id="txtCosto" disabled="true" hflex="1"
-										maxlength="500" tooltiptext="Costo real del Evento" />
+									<textbox id="txtCosto" hflex="1" maxlength="500"
+										tooltiptext="Costo real del Evento" />
 									<hbox />
 									<hbox />
 								</row>
@@ -220,8 +218,8 @@
 					</tabpanel>
 					<tabpanel>
 						<hbox>
-							<listbox id="ltbProductosDegustacion" height="280px" width="220px"
-								emptyMessage="No hay Productos Registrados">
+							<listbox id="ltbProductosDegustacion" height="280px"
+								width="220px" emptyMessage="No hay Productos Registrados">
 								<listhead>
 									<listheader label="PT" width="100%" />
 								</listhead>
@@ -285,7 +283,7 @@
 						</hbox>
 					</tabpanel>
 					<tabpanel>
-					<hbox>
+						<hbox>
 							<listbox id="ltbProductosVenta" height="280px" width="220px"
 								emptyMessage="No hay Productos Registrados">
 								<listhead>

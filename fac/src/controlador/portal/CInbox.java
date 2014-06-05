@@ -46,13 +46,28 @@ public class CInbox extends CGenerico {
 	private Image imagenes;
 	URL url = getClass().getResource("/controlador/maestros/usuario.png");
 	String rechazada = "";
-	
+
 	public String getRechazada() {
 		return rechazada = "4";
 	}
-	
+
 	@Override
 	public void inicializar() throws IOException {
+
+		btnPendiente.setSrc("/public/imagenes/botones/pendiente.png");
+		btnProcesada.setSrc("/public/imagenes/botones/procesada.png");
+		btnCancelada.setSrc("/public/imagenes/botones/cancelada.png");
+		btnRechazada.setSrc("/public/imagenes/botones/rechazada.png");
+
+		Over(btnCancelada, "canceladaG");
+		Out(btnCancelada, "cancelada");
+		Over(btnPendiente, "pendienteG");
+		Out(btnPendiente, "pendiente");
+		Over(btnProcesada, "procesadaG");
+		Out(btnProcesada, "procesada");
+		Over(btnRechazada, "rechazadaG");
+		Out(btnRechazada, "rechazada");
+
 		Authentication authe = SecurityContextHolder.getContext()
 				.getAuthentication();
 
@@ -88,26 +103,6 @@ public class CInbox extends CGenerico {
 							.getId())) {
 						final int j = i;
 						botones.get(i).setVisible(true);
-						botones.get(i).setSrc(
-								"/public/imagenes/botones/adelante.png");
-						botones.get(i).addEventListener(Events.ON_MOUSE_OVER,
-								new EventListener<Event>() {
-									@Override
-									public void onEvent(Event arg0)
-											throws Exception {
-										botones.get(j)
-												.setSrc("/public/imagenes/botones/agregar.png");
-									}
-								});
-						botones.get(i).addEventListener(Events.ON_MOUSE_OUT,
-								new EventListener<Event>() {
-									@Override
-									public void onEvent(Event arg0)
-											throws Exception {
-										botones.get(j)
-												.setSrc("/public/imagenes/botones/adelante.png");
-									}
-								});
 						botones.get(i).addEventListener(Events.ON_CLICK,
 								new EventListener<Event>() {
 									@Override
@@ -127,7 +122,29 @@ public class CInbox extends CGenerico {
 	}
 
 	@Listen("onClick = #btnCerrar")
-	public void cerrar(){
+	public void cerrar() {
 		cerrarVentana(wdwInbox);
+	}
+
+	public void Over(final Button boton, final String imagen) {
+		boton.addEventListener(Events.ON_MOUSE_OVER,
+				new EventListener<Event>() {
+					@Override
+					public void onEvent(Event arg0) throws Exception {
+						boton.setSrc("/public/imagenes/botones/" + imagen
+								+ ".png");
+						boton.setStyle("color:black; font-weight: bold");
+					}
+				});
+	}
+
+	public void Out(final Button boton, final String imagen) {
+		boton.addEventListener(Events.ON_MOUSE_OUT, new EventListener<Event>() {
+			@Override
+			public void onEvent(Event arg0) throws Exception {
+				boton.setSrc("/public/imagenes/botones/" + imagen + ".png");
+				boton.setStyle("color:white; font-weight: normal");
+			}
+		});
 	}
 }

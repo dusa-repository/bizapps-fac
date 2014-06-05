@@ -27,6 +27,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Include;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Window;
 
 import componente.Validador;
@@ -83,6 +84,7 @@ public class CInicio extends CGenerico {
 				e.printStackTrace();
 			}
 		}
+
 		final List<Button> botones = new ArrayList<Button>();
 		botones.add(btnEvento);
 		botones.add(btnUniforme);
@@ -109,14 +111,15 @@ public class CInicio extends CGenerico {
 						final int j = i;
 						botones.get(i).setVisible(true);
 						botones.get(i).setSrc(
-								"/public/imagenes/botones/adelante.png");
+								"/public/imagenes/botones/planillaP.png");
 						botones.get(i).addEventListener(Events.ON_MOUSE_OVER,
 								new EventListener<Event>() {
 									@Override
 									public void onEvent(Event arg0)
 											throws Exception {
 										botones.get(j)
-												.setSrc("/public/imagenes/botones/agregar.png");
+												.setSrc("/public/imagenes/botones/planillaG.png");
+										botones.get(j).setStyle("color:black; font-weight: bold");
 									}
 								});
 						botones.get(i).addEventListener(Events.ON_MOUSE_OUT,
@@ -125,7 +128,8 @@ public class CInicio extends CGenerico {
 									public void onEvent(Event arg0)
 											throws Exception {
 										botones.get(j)
-												.setSrc("/public/imagenes/botones/adelante.png");
+												.setSrc("/public/imagenes/botones/planillaP.png");
+										botones.get(j).setStyle("color:white; font-weight: normal");
 									}
 								});
 						botones.get(i).addEventListener(Events.ON_CLICK,
