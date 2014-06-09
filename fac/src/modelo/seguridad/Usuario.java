@@ -62,7 +62,7 @@ public class Usuario implements Serializable {
 	private byte[] imagen;
 
 	@Type(type = "org.hibernate.type.NumericBooleanType")
-	private boolean estado;
+	private Boolean estado;
 
 	@Column(name = "fecha_auditoria")
 	private Timestamp fechaAuditoria;
@@ -102,7 +102,7 @@ public class Usuario implements Serializable {
 
 	public Usuario(String idUsuario, Zona zona, String nombre, String mail,
 			String password, String supervisor, String soloLectura,
-			String envioCorreo, byte[] imagen, boolean estado,
+			String envioCorreo, byte[] imagen, Boolean estado,
 			Timestamp fechaAuditoria, String horaAuditoria,
 			String usuarioAuditoria) {
 		super();
@@ -193,11 +193,11 @@ public class Usuario implements Serializable {
 		this.imagen = imagen;
 	}
 
-	public boolean isEstado() {
+	public Boolean isEstado() {
 		return estado;
 	}
 
-	public void setEstado(boolean estado) {
+	public void setEstado(Boolean estado) {
 		this.estado = estado;
 	}
 

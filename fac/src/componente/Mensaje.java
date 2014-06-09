@@ -19,6 +19,7 @@ public class Mensaje {
 	public static String exportar = "¿Desea exportar los datos de la lista a formato CSV?";
 	public static String enUso = "La interfaz esta siendo usada";
 	public static String articuloNoExiste = "El Codigo del Articulo no Existe.";
+	public static String enviado = "La solicitud ha sido enviada Correctamente";
 	
 	
 	public void mensajeInformacion(String msj) {

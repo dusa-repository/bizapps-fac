@@ -5,6 +5,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Hbox;
+import org.zkoss.zul.Space;
 
 public abstract class Botonera extends Hbox {
 	
@@ -19,6 +20,7 @@ public abstract class Botonera extends Hbox {
 		Button btnSalir = new Button();
 		Button btnAdelante = new Button();
 		Button btnAtras = new Button();
+		Button btnEnviar = new Button();
 
 		this.appendChild(btnGuardar);
 		this.appendChild(btnLimpiar);
@@ -27,6 +29,10 @@ public abstract class Botonera extends Hbox {
 		this.appendChild(btnAdelante);
 		this.appendChild(btnReporte);
 		this.appendChild(btnSalir);
+		Space espacio = new Space();
+		espacio.setSpacing("125%");
+		this.appendChild(espacio);
+		this.appendChild(btnEnviar);
 
 		btnAdelante.setSrc("/public/imagenes/botones/adelante.png");
 		btnAtras.setSrc("/public/imagenes/botones/atras.png");
@@ -35,6 +41,7 @@ public abstract class Botonera extends Hbox {
 		btnLimpiar.setSrc("/public/imagenes/botones/limpiar.png");
 		btnReporte.setSrc("/public/imagenes/botones/reporte.png");
 		btnSalir.setSrc("/public/imagenes/botones/salir.png");
+		btnEnviar.setSrc("/public/imagenes/botones/guardar.png");
 	
 		btnAtras.setStyle("font-size: 12px ;width: 93px; height: 30px");
 		btnEliminar.setStyle("font-size: 12px ;width: 93px; height: 30px");
@@ -43,6 +50,7 @@ public abstract class Botonera extends Hbox {
 		btnLimpiar.setStyle("font-size: 12px ;width: 93px; height: 30px");
 		btnSalir.setStyle("font-size: 12px ;width: 93px; height: 30px");
 		btnReporte.setStyle("font-size: 12px ;width: 93px; height: 30px");
+		btnEnviar.setStyle("font-size: 12px ;width: 93px; height: 30px");
 		
 		btnAdelante.setLabel("Siguiente");
 		btnAtras.setLabel("Anterior");
@@ -51,6 +59,7 @@ public abstract class Botonera extends Hbox {
 		btnLimpiar.setLabel("Limpiar");
 		btnReporte.setLabel("Reporte");
 		btnSalir.setLabel("Salir");
+		btnEnviar.setLabel("Enviar");
 
 		btnAtras.setTooltiptext("Pestaña Anterior");
 		btnAdelante.setTooltiptext("Pestaña Siguiente");
@@ -59,6 +68,7 @@ public abstract class Botonera extends Hbox {
 		btnLimpiar.setTooltiptext("Limpiar");
 		btnReporte.setTooltiptext("Reporte");
 		btnSalir.setTooltiptext("Salir");
+		btnEnviar.setTooltiptext("Enviar Solicitud");
 
 
 		btnAtras.addEventListener(Events.ON_CLICK,
@@ -111,7 +121,16 @@ public abstract class Botonera extends Hbox {
 				salir();
 			}
 		});
+		
+		btnEnviar.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+			@Override
+			public void onEvent(Event arg0) throws Exception {
+				enviar();
+			}
+		});
 	}
+
+	public abstract void enviar();
 
 	/**
 	 * Metodo que guarda un registro nuevo si no a sido guardado con

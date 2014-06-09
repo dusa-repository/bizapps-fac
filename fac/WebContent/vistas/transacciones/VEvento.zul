@@ -25,6 +25,15 @@
 							</columns>
 							<rows>
 								<row>
+									<cell colspan="3" align="end">
+										<label class="etiqueta"
+											value="Presione el boton para modificar alguna planilla en edicion: " />
+									</cell>
+									<button id="btnBuscarPlanillas" label=""
+										tooltiptext="Catalogo de Planillas de Eventos Especiales"
+										image="/public/imagenes/botones/buscar.png" />
+								</row>
+								<row>
 									<hbox>
 										<label class="etiqueta" value="Nombre Actividad: " />
 										<space />
@@ -84,7 +93,7 @@
 										placeholder="Seleccione una Region" id="cmbRegion" readonly="true"
 										width="100%">
 										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.id}" />
+											<comboitem label="${each.drdl01}" context="${each.id.drky}" />
 										</template>
 									</combobox>
 								</row>
@@ -113,10 +122,10 @@
 									</hbox>
 									<cell colspan="2">
 										<combobox tooltiptext="Seleccione la Marca Sugerida"
-											placeholder="Seleccione una Marca" id="cmbMarcaSugerida"
-											readonly="true" width="100%">
+											model="${$composer.marcas}" placeholder="Seleccione una Marca"
+											id="cmbMarcaSugerida" readonly="true" width="100%">
 											<template name="model">
-												<comboitem label="${each.nombre}" context="${each.idMarca}" />
+												<comboitem label="${each.descripcion}" context="${each.idMarca}" />
 											</template>
 										</combobox>
 									</cell>
@@ -134,15 +143,15 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtContacto" hflex="1" 
-										maxlength="500" tooltiptext="Ingrese el nombre del Contacto de la Actividad" />
+									<textbox id="txtContacto" hflex="1" maxlength="500"
+										tooltiptext="Ingrese el nombre del Contacto de la Actividad" />
 									<hbox>
 										<label class="etiqueta" value="Telefono: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtTelefono" hflex="1" 
-										width="90%" maxlength="500" tooltiptext="Ingrese el Telefono" />
+									<textbox id="txtTelefono" hflex="1" width="90%"
+										maxlength="500" tooltiptext="Ingrese el Telefono" />
 								</row>
 								<row>
 									<hbox>
@@ -154,7 +163,7 @@
 										placeholder="Seleccione un Nivel Socioeconomico" id="cmbNivelEconomico"
 										readonly="true" width="100%">
 										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.id}" />
+											<comboitem label="${each.drdl01}" context="${each.id.drky}" />
 										</template>
 									</combobox>
 									<hbox>
@@ -165,9 +174,12 @@
 									<combobox tooltiptext="Seleccione una Edad Target"
 										placeholder="Seleccione una Edad Target" id="cmbTarget"
 										readonly="true" width="100%">
-										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.id}" />
-										</template>
+										<comboitem label="0-10" />
+										<comboitem label="11-20" />
+										<comboitem label="21-30" />
+										<comboitem label="31-40" />
+										<comboitem label="41-50" />
+										<comboitem label="mas de 51" />
 									</combobox>
 								</row>
 								<row>
@@ -180,7 +192,7 @@
 										placeholder="Seleccione un Medio" id="cmbMedio" readonly="true"
 										width="100%">
 										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.id}" />
+											<comboitem label="${each.drdl01}" context="${each.id.drky}" />
 										</template>
 									</combobox>
 									<hbox>
@@ -191,14 +203,13 @@
 									<combobox tooltiptext="Indique si es una venta directa"
 										placeholder="Seleccione una Opcion" id="cmbVenta" readonly="true"
 										width="100%">
-										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.id}" />
-										</template>
+										<comboitem label="Si" />
+										<comboitem label="No" />
 									</combobox>
 								</row>
 								<row>
 									<label class="etiqueta" value="Costo Real: " />
-									<textbox id="txtCosto" hflex="1" maxlength="500"
+									<doublebox id="txtCosto" hflex="1" maxlength="500"
 										tooltiptext="Costo real del Evento" />
 									<hbox />
 									<hbox />
@@ -238,7 +249,7 @@
 												step="1" width="98%" />
 										</listcell>
 										<listcell>
-											<spinner inplace="true" width="98%" value="${each.idSku}"
+											<textbox inplace="true" width="98%" value="${each.idSku}"
 												visible="false" disabled="true" />
 										</listcell>
 									</listitem>
@@ -261,20 +272,20 @@
 								</listhead>
 								<template name="model">
 									<listitem>
-										<listcell label="${each.}">
+										<listcell label="${each.sku.descripcion}">
 										</listcell>
 										<listcell>
-											<spinner value="${each.valor}" constraint="min 0 max 10000"
+											<spinner value="${each.solicitado}" constraint="min 0 max 10000"
 												tooltiptext="Ingrese la Cantidad Solicitada de Productos"
 												step="1" width="98%" />
 										</listcell>
 										<listcell>
-											<spinner value="${each.valor}" constraint="min 0 max 10000"
+											<spinner value="${each.aprobado}" constraint="min 0 max 10000"
 												tooltiptext="Ingrese la Cantidad Aprobada de Productos"
 												step="1" width="98%" />
 										</listcell>
 										<listcell>
-											<spinner value="${each.id.producto}" width="98%"
+											<textbox value="${each.sku.idSku}" width="98%"
 												visible="false" disabled="true" />
 										</listcell>
 									</listitem>
@@ -299,7 +310,7 @@
 												step="1" width="98%" />
 										</listcell>
 										<listcell>
-											<spinner inplace="true" width="98%" value="${each.idSku}"
+											<textbox inplace="true" width="98%" value="${each.idSku}"
 												visible="false" disabled="true" />
 										</listcell>
 									</listitem>
@@ -321,15 +332,15 @@
 								</listhead>
 								<template name="model">
 									<listitem>
-										<listcell label="${each.}">
+										<listcell label="${each.sku.descripcion}">
 										</listcell>
 										<listcell>
-											<spinner value="${each.valor}" constraint="min 0 max 10000"
-												tooltiptext="Ingrese la Cantidad Estimada de Productos"
+											<spinner value="${each.estimado}" constraint="min 0 max 10000"
+												tooltiptext="Ingrese la Cantidad Aprobada de Productos"
 												step="1" width="98%" />
 										</listcell>
 										<listcell>
-											<spinner value="${each.id.producto}" width="98%"
+											<textbox value="${each.sku.idSku}" width="98%"
 												visible="false" disabled="true" />
 										</listcell>
 									</listitem>
@@ -347,6 +358,14 @@
 								<template name="model">
 									<listitem>
 										<listcell label="${each.descripcion}">
+										</listcell>
+										<listcell>
+											<combobox model="${$composer.marcas}" width="100%"
+												readonly="true">
+												<template name="model">
+													<comboitem label="${each.descripcion}" context="${each.idMarca}" />
+												</template>
+											</combobox>
 										</listcell>
 										<listcell>
 											<spinner constraint="min 0 max 10000"
@@ -376,26 +395,36 @@
 								emptyMessage="No ha Seleccionado ningun Recurso">
 								<listhead>
 									<listheader label="Recurso" width="35%" />
-									<listheader label="Solicitado" width="32%" />
-									<listheader label="Aprobado" width="33%" />
+									<listheader label="Marca" width="35%" />
+									<listheader label="Solicitado" width="15%" />
+									<listheader label="Aprobado" width="15%" />
 									<listheader label="id" visible="false" />
 								</listhead>
 								<template name="model">
 									<listitem>
-										<listcell label="${each.}">
+										<listcell label="${each.recurso.descripcion}">
 										</listcell>
 										<listcell>
-											<spinner value="${each.valor}" constraint="min 0 max 10000"
+											<combobox value="${each.marca.descripcion}" model="${$composer.marcas}"
+												width="100%" readonly="true">
+												<template name="model">
+													<comboitem label="${each.descripcion}"
+														context="${each.idMarca}" />
+												</template>
+											</combobox>
+										</listcell>
+										<listcell>
+											<spinner value="${each.solicitado}" constraint="min 0 max 10000"
 												tooltiptext="Ingrese la Cantidad Solicitada de Recursos"
 												step="1" width="98%" />
 										</listcell>
 										<listcell>
-											<spinner value="${each.valor}" constraint="min 0 max 10000"
+											<spinner value="${each.aprobado}" constraint="min 0 max 10000"
 												tooltiptext="Ingrese la Cantidad Aprobada de Recursos" step="1"
 												width="98%" />
 										</listcell>
 										<listcell>
-											<spinner value="${each.id.Recurso}" width="98%"
+											<spinner value="${each.recurso.idRecurso}" width="98%"
 												visible="false" disabled="true" />
 										</listcell>
 									</listitem>
@@ -407,6 +436,7 @@
 			</tabbox>
 			<separator />
 			<div id="botoneraEvento" />
+			<div id="catalogoEvento" />
 		</div>
 	</window>
 </zk>

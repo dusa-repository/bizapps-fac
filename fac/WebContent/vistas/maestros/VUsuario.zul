@@ -23,6 +23,13 @@
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
+						<fileupload image="/public/imagenes/botones/cargar.png"
+							id="fudImagenUsuario" label="Foto">
+						</fileupload>
+						<image id="imagen" width="50px" height="50px" />
+						<hbox />
+					</row>
+					<row>
 						<hbox>
 							<label class="etiqueta" value="Nombre: " />
 							<space />
@@ -58,18 +65,12 @@
 							<space />
 							<label value="*" style="font-weight:bold;color:red" />
 						</hbox>
-						<combobox tooltiptext="Seleccione una Zona"
-							placeholder="Seleccione una Zona" id="cmbZona"
-							readonly="true" width="100%">
-							<template name="model">
-								<comboitem label="${each.nombre}" context="${each.id}" />
-							</template>
-						</combobox>
-						<hbox/>
-<!-- 						<textbox id="txtZonaUsuario" hflex="1" maxlength="50"
-							tooltiptext="Ingrese la Zona del Usuario" />
-						<button id="btnBuscarZonas" label="Buscar" tooltiptext="Catalogo Zonas"
-							image="/public/imagenes/botones/buscar.png" /> -->
+						<textbox id="txtZonaUsuario" hflex="1" maxlength="50"
+							tooltiptext="Ingrese 
+							la Zona del Usuario" />
+						<button id="btnBuscarZonas" label="Buscar" tooltiptext="Catalogo 
+							Zonas"
+							image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
 						<hbox>
@@ -77,18 +78,10 @@
 							<space />
 							<label value="*" style="font-weight:bold;color:red" />
 						</hbox>
-						<combobox tooltiptext="Seleccione un Supervisor"
-							placeholder="Seleccione un Supervisor" id="cmbSupervisor"
-							readonly="true" width="100%">
-							<template name="model">
-								<comboitem label="${each.nombre}" context="${each.id}" />
-							</template>
-						</combobox>
-							<hbox/>
-<!-- 						<textbox id="txtSupervisorUsuario" hflex="1" maxlength="50"
+						<textbox id="txtSupervisorUsuario" hflex="1" maxlength="50"
 							tooltiptext="Ingrese el Supervisor del Usuario" />
 						<button id="btnBuscarSupervisores" label="Buscar"
-							tooltiptext="Catalogo Supervisores" image="/public/imagenes/botones/buscar.png" /> -->
+							tooltiptext="Catalogo Supervisores" image="/public/imagenes/botones/buscar.png" />
 					</row>
 				</rows>
 			</grid>

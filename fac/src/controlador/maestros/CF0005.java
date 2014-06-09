@@ -46,7 +46,7 @@ public class CF0005 extends CGenerico {
 	@Wire
 	private Div botoneraF0005;
 	@Wire
-	private Div DivCatalogoF0005;
+	private Div divCatalogoF0005;
 	@Wire
 	private Div divCatalogoF0004;
 	@Wire
@@ -109,10 +109,8 @@ public class CF0005 extends CGenerico {
 					fooo5.setFechaAuditoria(fechaHora);
 					fooo5.setHoraAuditoria(horaAuditoria);
 					servicioF0005.guardar(fooo5);
-//					msj.mensajeInformacion(Mensaje.guardado);
+					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
-					catalogo.actualizarLista(servicioF0005
-							.buscarTodosOrdenados());
 				}
 
 			}
@@ -133,10 +131,8 @@ public class CF0005 extends CGenerico {
 														.equals("onOK")) {
 													servicioF0005
 															.eliminarUno(clave);
-//													msj.mensajeInformacion(Mensaje.eliminado);
+													msj.mensajeInformacion(Mensaje.eliminado);
 													limpiar();
-													catalogo.actualizarLista(servicioF0005
-															.buscarTodosOrdenados());
 												}
 											}
 										});
@@ -155,10 +151,18 @@ public class CF0005 extends CGenerico {
 				
 			}
 
+			@Override
+			public void enviar() {
+				// TODO Auto-generated method stub
+				
+			}
+
 		};
 		botonera.getChildren().get(3).setVisible(false);
 		botonera.getChildren().get(4).setVisible(false);
 		botonera.getChildren().get(5).setVisible(false);
+		botonera.getChildren().get(7).setVisible(false);
+		botonera.getChildren().get(8).setVisible(false);
 		botoneraF0005.appendChild(botonera);
 
 	}
@@ -192,7 +196,7 @@ public class CF0005 extends CGenerico {
 			return false;
 		} else {
 			if (!camposLLenos()) {
-//				msj.mensajeError(Mensaje.camposVacios);
+				msj.mensajeError(Mensaje.camposVacios);
 				return false;
 			} else
 				return true;
@@ -202,14 +206,14 @@ public class CF0005 extends CGenerico {
 	@Listen("onChange = #txtSYF0005")
 	public boolean claveSYExiste() {
 		if (servicioF0004.buscarSY(txtSYF0005.getValue()).isEmpty()) {
-//			msj.mensajeAlerta(Mensaje.claveSYNoEsta);
+			msj.mensajeAlerta(Mensaje.claveSYNoEsta);
 			txtSYF0005.setFocus(true);
 			return true;
 		} else {
 			if (txtRTF0005.getText().compareTo("") != 0) {
 				if (servicioF0004.buscar(txtSYF0005.getValue(),
 						txtRTF0005.getValue()) == null) {
-//					msj.mensajeAlerta(Mensaje.claveRTNoEsta);
+					msj.mensajeAlerta(Mensaje.claveRTNoEsta);
 					lblDescripcionF0004.setValue("");
 					txtRTF0005.setFocus(true);
 					return true;
@@ -226,7 +230,7 @@ public class CF0005 extends CGenerico {
 		if (txtSYF0005.getText().compareTo("") != 0) {
 			if (servicioF0004.buscar(txtSYF0005.getValue(),
 					txtRTF0005.getValue()) == null) {
-//				msj.mensajeAlerta(Mensaje.claveRTNoEsta);
+				msj.mensajeAlerta(Mensaje.claveRTNoEsta);
 				txtRTF0005.setFocus(true);
 				lblDescripcionF0004.setValue("");
 				return true;
@@ -243,7 +247,7 @@ public class CF0005 extends CGenerico {
 			if (txtSYF0005.getText().compareTo("") == 0) {
 				if (servicioF0005.buscar(txtSYF0005.getValue(),
 						txtRTF0005.getValue(), txtKYF0005.getValue()) != null) {
-//					msj.mensajeAlerta(Mensaje.claveUsada);
+					msj.mensajeAlerta(Mensaje.claveUsada);
 					txtKYF0005.setFocus(true);
 					return true;
 				}
@@ -275,9 +279,10 @@ public class CF0005 extends CGenerico {
 			return false;
 	}
 
+	@Listen("onClick = #btnBuscarF0005")
 	public void mostrarCatalogo() {
 		final List<F0005> listF0005 = servicioF0005.buscarTodosOrdenados();
-		catalogo = new Catalogo<F0005>(DivCatalogoF0005, "F0005", listF0005,true, "SY",
+		catalogo = new Catalogo<F0005>(divCatalogoF0005, "F0005", listF0005,true, "SY",
 				"RT", "KY", "Descripcion 01", "Descripcion 02",
 				"Gestion Especial", "Codificacion Fija") {
 
@@ -320,7 +325,8 @@ public class CF0005 extends CGenerico {
 				return registros;
 			}
 		};
-		catalogo.setParent(DivCatalogoF0005);
+		catalogo.setParent(divCatalogoF0005);
+		catalogo.doModal();
 	}
 	
 
@@ -366,9 +372,9 @@ public class CF0005 extends CGenerico {
 				return registros;
 			}
 		};
-		catalogoF0004.setClosable(true);
-		catalogoF0004.setWidth("80%");
-		catalogoF0004.setTitle("Registros");
+//		catalogoF0004.setClosable(true);
+//		catalogoF0004.setWidth("80%");
+//		catalogoF0004.setTitle("Registros");
 		catalogoF0004.setParent(divCatalogoF0004);
 		catalogoF0004.doModal();
 	}
@@ -380,5 +386,25 @@ public class CF0005 extends CGenerico {
 		txtRTF0005.setValue(f0004.getId().getDtrt());
 		lblDescripcionF0004.setValue(servicioF0004.buscar(f0004.getId().getDtsy(),f0004.getId().getDtrt()).getDtdl01());
 		catalogoF0004.setParent(null);
+	}
+	
+	@Listen("onSeleccion = #divCatalogoF0005")
+	public void seleccionPropia() {
+		F0005 f05 = catalogo.objetoSeleccionadoDelCatalogo();				
+		clave = f05.getId();			
+		F0004 f04 = servicioF0004.buscar(f05.getId().getDrsy(), f05.getId().getDrrt());
+		txtRTF0005.setValue(f05.getId().getDrrt());
+		txtRTF0005.setDisabled(true);
+		txtSYF0005.setValue(f05.getId().getDrsy());
+		txtSYF0005.setDisabled(true);
+		txtKYF0005.setValue(f05.getId().getDrky());
+		txtKYF0005.setDisabled(true);
+		txtDL01F0005.setValue(f05.getDrdl01());
+		txtSPHDF0005.setValue(f05.getDrsphd());
+		txtHRDCF0005.setValue(f05.getDrhrdc());
+		txtDL02F0005.setValue(f05.getDrdl02());
+		lblDescripcionF0004.setValue(f04.getDtdl01());
+		txtDL01F0005.setFocus(true);
+		catalogo.setParent(null);
 	}
 }

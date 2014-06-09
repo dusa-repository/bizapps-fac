@@ -16,6 +16,7 @@ import modelo.transacciones.PlanillaEvento;
 import modelo.transacciones.PlanillaFachada;
 import modelo.transacciones.PlanillaPromocion;
 import modelo.transacciones.PlanillaUniforme;
+import modelo.transacciones.RecursoPlanillaEvento;
 
 @Entity
 @Table(name = "marca")
@@ -59,6 +60,9 @@ public class Marca implements Serializable {
 	
 	@OneToMany(mappedBy="marca")
 	private Set<PlanillaUniforme> planillasUniforme;
+	
+	@OneToMany(mappedBy="marca")
+	private Set<RecursoPlanillaEvento> recursosPlanillasEvento;
 	
 	@OneToMany(mappedBy="marca")
 	private Set<Sku> items;
@@ -180,6 +184,15 @@ public class Marca implements Serializable {
 
 	public void setPlanillasPromocionB(Set<PlanillaPromocion> planillasPromocionB) {
 		this.planillasPromocionB = planillasPromocionB;
+	}
+
+	public Set<RecursoPlanillaEvento> getRecursosPlanillasEvento() {
+		return recursosPlanillasEvento;
+	}
+
+	public void setRecursosPlanillasEvento(
+			Set<RecursoPlanillaEvento> recursosPlanillasEvento) {
+		this.recursosPlanillasEvento = recursosPlanillasEvento;
 	}
 	
 	

@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import modelo.estado.BitacoraCata;
+import modelo.estado.BitacoraEvento;
 import modelo.maestros.Marca;
 import modelo.seguridad.Usuario;
 
@@ -109,6 +111,12 @@ public class PlanillaEvento implements Serializable {
 	@OneToMany(mappedBy="planillaEvento")
 	private Set<RecursoPlanillaEvento> recursos;
 	
+	@Column(name="id_zona",length = 500)
+	private String zona;
+	
+	@OneToMany(mappedBy="planillaEvento")
+	private Set<BitacoraEvento> bitacoras;
+	
 	public PlanillaEvento() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -121,7 +129,7 @@ public class PlanillaEvento implements Serializable {
 			String nivel, String edadTarget, String medio, String venta,
 			Double costo, String descripcion, String mecanica,
 			Timestamp fechaAuditoria, String horaAuditoria,
-			String usuarioAuditoria, String estado) {
+			String usuarioAuditoria, String estado,String zona) {
 		super();
 		this.idPlanillaEvento = idPlanillaEvento;
 		this.usuario = usuario;
@@ -147,6 +155,7 @@ public class PlanillaEvento implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 		this.usuarioAuditoria = usuarioAuditoria;
 		this.estado = estado;
+		this.zona = zona;
 	}
 
 	public long getIdPlanillaEvento() {
@@ -364,6 +373,22 @@ public class PlanillaEvento implements Serializable {
 
 	public void setRecursos(Set<RecursoPlanillaEvento> recursos) {
 		this.recursos = recursos;
+	}
+
+	public String getZona() {
+		return zona;
+	}
+
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
+
+	public Set<BitacoraEvento> getBitacoras() {
+		return bitacoras;
+	}
+
+	public void setBitacoras(Set<BitacoraEvento> bitacoras) {
+		this.bitacoras = bitacoras;
 	}
 	
 	

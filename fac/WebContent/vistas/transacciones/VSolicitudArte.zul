@@ -23,6 +23,14 @@
 							</columns>
 							<rows>
 								<row>
+									<cell colspan="3" align="end">
+										<label class="etiqueta" value="Presione el boton para modificar alguna planilla en edicion: " />
+									</cell>
+									<button id="btnBuscarPlanillas" label=""
+										tooltiptext="Catalogo de Planillas de Artes"
+										image="/public/imagenes/botones/buscar.png" />
+								</row>
+								<row>
 									<hbox>
 										<label class="etiqueta" value="Nombre Actividad: " />
 										<space />
@@ -57,11 +65,11 @@
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
 									<cell colspan="3">
-										<combobox tooltiptext="Seleccione una Marca"
-											placeholder="Seleccione una Marca" id="cmbMarca" readonly="true"
+										<combobox tooltiptext="Seleccione una Marca" model="${$composer.marcas}"
+											placeholder="Seleccione una Marca" id="cmbMarcaSugerida" readonly="true"
 											width="100%">
 											<template name="model">
-												<comboitem label="${each.nombre}" context="${each.idMarca}" />
+												<comboitem label="${each.descripcion}" context="${each.idMarca}" />
 											</template>
 										</combobox>
 									</cell>
@@ -78,7 +86,7 @@
 											placeholder="Seleccione una Tipo de Arte" id="cmbArte"
 											readonly="true" width="100%">
 											<template name="model">
-												<comboitem label="${each.nombre}" context="${each.idMarca}" />
+												<comboitem label="${each.drdl01}" context="${each.id.drky}" />
 											</template>
 										</combobox>
 									</cell>
@@ -95,7 +103,7 @@
 											placeholder="Seleccione un Formato de Entrega" id="cmbFormato"
 											readonly="true" width="100%">
 											<template name="model">
-												<comboitem label="${each.nombre}" context="${each.idMarca}" />
+												<comboitem label="${each.drdl01}" context="${each.id.drky}" />
 											</template>
 										</combobox>
 									</cell>
@@ -225,6 +233,7 @@
 			</tabbox>
 			<separator />
 			<div id="botoneraSolicitudArte" />
+			<div id="catalogoSolicitudArte" />
 		</div>
 	</window>
 </zk>
