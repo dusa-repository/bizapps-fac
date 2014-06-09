@@ -26,4 +26,12 @@ public class SZona {
 	public Zona buscarPorDescripcion(String value) {
 		return zonaDAO.findByDescripcion(value);
 	}
+
+	public void guardar(Zona zona) {
+		zonaDAO.saveAndFlush(zona);
+	}
+
+	public void eliminar(String id) {
+		zonaDAO.delete(id);
+	}
 }

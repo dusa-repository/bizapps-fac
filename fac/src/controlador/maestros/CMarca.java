@@ -107,10 +107,18 @@ public class CMarca extends CGenerico {
 				// TODO Auto-generated method stub
 				
 			}
+
+			@Override
+			public void enviar() {
+				// TODO Auto-generated method stub
+				
+			}
 		};
 		botonera.getChildren().get(3).setVisible(false);
 		botonera.getChildren().get(4).setVisible(false);
 		botonera.getChildren().get(5).setVisible(false);
+		botonera.getChildren().get(7).setVisible(false);
+		botonera.getChildren().get(8).setVisible(false);
 		botoneraMarca.appendChild(botonera);
 	}
 

@@ -41,7 +41,7 @@ public class CF0004 extends CGenerico {
 	@Wire
 	private Div botoneraF0004;
 	@Wire
-	private Div DivCatalogoF0004;
+	private Div divCatalogoF0004;
 	Catalogo<F0004> catalogo;
 	F0004PK clave = null;
 
@@ -95,12 +95,10 @@ public class CF0004 extends CGenerico {
 					fooo4.setFechaAuditoria(fechaHora);
 					fooo4.setHoraAuditoria(horaAuditoria);
 					// fooo4.setDtupmj(dtupmj); //Fecha
-					fooo4.setDtupmt(Double.parseDouble(horaAuditoria));
+//					fooo4.setDtupmt(Double.parseDouble(horaAuditoria));
 					servicioF0004.guardar(fooo4);
-//					msj.mensajeInformacion(Mensaje.guardado);
+					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
-					catalogo.actualizarLista(servicioF0004
-							.buscarTodosOrdenados());
 				}
 
 			}
@@ -120,7 +118,7 @@ public class CF0004 extends CGenerico {
 														.equals("onOK")) {
 													servicioF0004
 															.eliminarUno(clave);
-//													msj.mensajeInformacion(Mensaje.eliminado);
+													msj.mensajeInformacion(Mensaje.eliminado);
 													limpiar();
 													catalogo.actualizarLista(servicioF0004
 															.buscarTodosOrdenados());
@@ -144,10 +142,18 @@ public class CF0004 extends CGenerico {
 				// TODO Auto-generated method stub
 				
 			}
+
+			@Override
+			public void enviar() {
+				// TODO Auto-generated method stub
+				
+			}
 		};
 		botonera.getChildren().get(3).setVisible(false);
 		botonera.getChildren().get(4).setVisible(false);
 		botonera.getChildren().get(5).setVisible(false);
+		botonera.getChildren().get(7).setVisible(false);
+		botonera.getChildren().get(8).setVisible(false);
 		botoneraF0004.appendChild(botonera);
 
 	}
@@ -175,7 +181,7 @@ public class CF0004 extends CGenerico {
 			return false;
 		} else {
 			if (!camposLLenos()) {
-//				msj.mensajeError(Mensaje.camposVacios);
+				msj.mensajeError(Mensaje.camposVacios);
 				return false;
 			} else
 				return true;
@@ -185,7 +191,7 @@ public class CF0004 extends CGenerico {
 	@Listen("onChange = #txtSYF0004")
 	public boolean claveSYExiste() {
 		if (servicioF0004.buscar(txtSYF0004.getValue(), txtRTF0004.getValue()) != null) {
-//			msj.mensajeAlerta(Mensaje.claveUsada);
+			msj.mensajeAlerta(Mensaje.claveUsada);
 			txtSYF0004.setFocus(true);
 			return true;
 		} else
@@ -195,7 +201,7 @@ public class CF0004 extends CGenerico {
 	@Listen("onChange = #txtRTF0004")
 	public boolean claveRTExiste() {
 		if (servicioF0004.buscar(txtSYF0004.getValue(), txtRTF0004.getValue()) != null) {
-//			msj.mensajeAlerta(Mensaje.claveUsada);
+			msj.mensajeAlerta(Mensaje.claveUsada);
 			txtRTF0004.setFocus(true);
 			return true;
 		} else
@@ -211,9 +217,10 @@ public class CF0004 extends CGenerico {
 			return true;
 	}
 
+	@Listen("onClick = #btnBuscarF0004")
 	public void mostrarCatalogo() {
 		final List<F0004> listF0004 = servicioF0004.buscarTodosOrdenados();
-		catalogo = new Catalogo<F0004>(DivCatalogoF0004, "F0004", listF0004,true, "SY",
+		catalogo = new Catalogo<F0004>(divCatalogoF0004, "F0004", listF0004,true, "SY",
 				"RT", "Descripcion", "Codigo", "2 Linea", "Numerico") {
 
 			@Override
@@ -252,6 +259,23 @@ public class CF0004 extends CGenerico {
 				return registros;
 			}
 		};
-		catalogo.setParent(DivCatalogoF0004);
+		catalogo.setParent(divCatalogoF0004);
+		catalogo.doModal();
+	}
+	
+	@Listen("onSeleccion = #divCatalogoF0004")
+	public void seleccion() {
+		F0004 f04 = catalogo.objetoSeleccionadoDelCatalogo();
+		clave = f04.getId();
+		txtRTF0004.setValue(f04.getId().getDtrt());
+		txtRTF0004.setDisabled(true);
+		txtSYF0004.setValue(f04.getId().getDtsy());
+		txtSYF0004.setDisabled(true);
+		txtDL01F0004.setValue(f04.getDtdl01());
+		txtLNF0004.setValue(f04.getDtln2());
+		txtNUMF0004.setValue(f04.getDtcnum());
+		dblCDLF0004.setValue(f04.getDtcdl());
+		txtDL01F0004.setFocus(true);
+		catalogo.setParent(null);
 	}
 }

@@ -1,17 +1,37 @@
 package controlador.maestros;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.imageio.ImageIO;
+
+import modelo.maestros.Marca;
+import modelo.maestros.Sku;
 import modelo.maestros.Zona;
 import modelo.seguridad.Usuario;
 
+import org.zkoss.image.AImage;
+import org.zkoss.util.media.Media;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.UploadEvent;
+import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Div;
+import org.zkoss.zul.Fileupload;
+import org.zkoss.zul.Image;
+import org.zkoss.zul.Longbox;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import componente.Botonera;
 import componente.Catalogo;
+import componente.Mensaje;
 
 public class CUsuario extends CGenerico {
 
@@ -36,50 +56,132 @@ public class CUsuario extends CGenerico {
 	private Div DivCatalogoZona;
 	@Wire
 	private Div DivCatalogoUsuario;
+	@Wire
+	private Image imagen;
+	@Wire
+	private Fileupload fudImagenUsuario;
+	@Wire
+	private Media media;
+	URL url = getClass().getResource("usuario.png");
+
 	Catalogo<Usuario> catalogoUsuario;
 	Catalogo<Zona> catalogo;
 	String id = "";
+	String idBoton = "";
+	String idZona = "";
+
 	@Override
 	public void inicializar() throws IOException {
+		try {
+			imagen.setContent(new AImage(url));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		Botonera botonera = new Botonera() {
-			
+
 			@Override
 			public void salir() {
 				cerrarVentana(wdwUsuario);
 			}
-			
+
 			@Override
 			public void reporte() {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void limpiar() {
-				// TODO Auto-generated method stub
-				
+				txtCodigoUsuario.setValue("");
+				txtEmailUsuario.setValue("");
+				txtNombreUsuario.setValue("");
+				txtPasswordUsuario.setValue("");
+				txtSupervisorUsuario.setValue("");
+				txtZonaUsuario.setValue("");
+				try {
+					imagen.setContent(new AImage(url));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				id = "";
+				idZona = "";
+				idBoton = "";
 			}
-			
+
 			@Override
 			public void guardar() {
-				// TODO Auto-generated method stub
-				
+				if (validar()) {
+					String login = txtCodigoUsuario.getValue();
+					String nombre = txtNombreUsuario.getValue();
+					String email = txtEmailUsuario.getValue();
+					String password = txtPasswordUsuario.getValue();
+					String supervisor = txtSupervisorUsuario.getValue();
+					Zona zona = servicioZona.buscar(idZona);
+					byte[] imagenUsuario = null;
+					if (media instanceof org.zkoss.image.Image) {
+						imagenUsuario = imagen.getContent().getByteData();
+
+					} else {
+						try {
+							imagen.setContent(new AImage(url));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						imagenUsuario = imagen.getContent().getByteData();
+					}
+					Usuario usuario = new Usuario(login, zona, nombre, email,
+							password, supervisor, "1", "Envio", imagenUsuario,
+							true, fechaHora, horaAuditoria,
+							nombreUsuarioSesion());
+					servicioUsuario.guardar(usuario);
+					Messagebox.show("Registro Guardado Exitosamente",
+							"Informacion", Messagebox.OK,
+							Messagebox.INFORMATION);
+
+					limpiar();
+				}
 			}
-			
+
 			@Override
 			public void eliminar() {
-				// TODO Auto-generated method stub
-				
+				if (!id.equals("")) {
+					Messagebox.show("¿Esta Seguro de Eliminar el Usuario?",
+							"Alerta", Messagebox.OK | Messagebox.CANCEL,
+							Messagebox.QUESTION,
+							new org.zkoss.zk.ui.event.EventListener<Event>() {
+								public void onEvent(Event evt)
+										throws InterruptedException {
+									if (evt.getName().equals("onOK")) {
+										servicioUsuario.eliminar(id);
+										limpiar();
+										Messagebox
+												.show("Registro Eliminado Exitosamente",
+														"Informacion",
+														Messagebox.OK,
+														Messagebox.INFORMATION);
+									}
+								}
+							});
+				} else {
+					Messagebox.show("No ha Seleccionado Ningun Registro",
+							"Alerta", Messagebox.OK, Messagebox.EXCLAMATION);
+				}
 			}
-			
+
 			@Override
 			public void atras() {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void adelante() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void enviar() {
 				// TODO Auto-generated method stub
 				
 			}
@@ -87,7 +189,209 @@ public class CUsuario extends CGenerico {
 		botonera.getChildren().get(3).setVisible(false);
 		botonera.getChildren().get(4).setVisible(false);
 		botonera.getChildren().get(5).setVisible(false);
+		botonera.getChildren().get(7).setVisible(false);
+		botonera.getChildren().get(8).setVisible(false);
 		botoneraUsuario.appendChild(botonera);
 	}
 
+	protected boolean validar() {
+		if (txtCodigoUsuario.getText().compareTo("") == 0
+				|| txtEmailUsuario.getText().compareTo("") == 0
+				|| txtNombreUsuario.getText().compareTo("") == 0
+				|| txtPasswordUsuario.getText().compareTo("") == 0
+				|| txtSupervisorUsuario.getText().compareTo("") == 0
+				|| txtZonaUsuario.getText().compareTo("") == 0) {
+			Messagebox.show("Debe Llenar Todos los Campos", "Informacion",
+					Messagebox.OK, Messagebox.INFORMATION);
+			return false;
+		} else
+			return true;
+	}
+
+	@Listen("onUpload = #fudImagenUsuario")
+	public void processMedia(UploadEvent event) {
+		media = event.getMedia();
+		imagen.setContent((org.zkoss.image.Image) media);
+	}
+
+	@Listen("onClick = #btnBuscarUsuarios, #btnBuscarSupervisores")
+	public void buscarCatalogoPropio(Event e) {
+		Button boton = (Button) e.getTarget();
+		idBoton = boton.getId();
+		final List<Usuario> listUsuario = servicioUsuario
+				.buscarTodosOrdenados();
+		catalogoUsuario = new Catalogo<Usuario>(DivCatalogoUsuario, "Usuario",
+				listUsuario, true, "Codigo", "Nombre", "Email", "Supervisor",
+				"Zona") {
+
+			@Override
+			protected List<Usuario> buscar(List<String> valores) {
+
+				List<Usuario> lista = new ArrayList<Usuario>();
+
+				for (Usuario usuario : listUsuario) {
+					if (usuario.getIdUsuario().toLowerCase()
+							.startsWith(valores.get(0))
+							&& usuario.getNombre().toLowerCase()
+									.startsWith(valores.get(1))
+							&& usuario.getMail().toLowerCase()
+									.startsWith(valores.get(2))
+							&& usuario.getSupervisor().toLowerCase()
+									.startsWith(valores.get(3))
+							&& usuario.getZona().getDescripcion().toLowerCase()
+									.startsWith(valores.get(4))) {
+						lista.add(usuario);
+					}
+				}
+				return lista;
+			}
+
+			@Override
+			protected String[] crearRegistros(Usuario usuario) {
+				String[] registros = new String[5];
+				registros[0] = usuario.getIdUsuario();
+				registros[1] = usuario.getNombre();
+				registros[2] = usuario.getMail();
+				registros[3] = usuario.getSupervisor();
+				registros[4] = usuario.getZona().getDescripcion();
+				return registros;
+			}
+		};
+		catalogoUsuario.setParent(DivCatalogoUsuario);
+		catalogoUsuario.doModal();
+	}
+
+	@Listen("onChange = #txtCodigoUsuario, #txtSupervisorUsuario")
+	public void buscarNombre(Event evento) {
+		Usuario usuario1 = servicioUsuario.buscar(txtCodigoUsuario.getValue());
+		Usuario usuario2 = servicioUsuario.buscar(txtSupervisorUsuario
+				.getValue());
+		Textbox txt = (Textbox) evento.getTarget();
+		switch (txt.getId()) {
+		case "txtCodigoUsuario":
+			if (usuario1 != null)
+				setearUsuario(usuario1);
+			else {
+				txtCodigoUsuario.setFocus(true);
+				// msj.mensajeAlerta(Mensaje.noHayRegistros);
+				txtCodigoUsuario.setValue("");
+				txtEmailUsuario.setValue("");
+				txtNombreUsuario.setValue("");
+				txtPasswordUsuario.setValue("");
+				txtSupervisorUsuario.setValue("");
+				txtZonaUsuario.setValue("");
+				id = "";
+				idZona = "";
+				idBoton = "";
+			}
+			break;
+		case "txtSupervisorUsuario":
+			if (usuario2 != null)
+				setearUsuario(usuario2);
+			else {
+				txtSupervisorUsuario.setFocus(true);
+				txtSupervisorUsuario.setValue("");
+				// msj.mensajeAlerta(Mensaje.noHayRegistros);
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Listen("onSeleccion = #DivCatalogoUsuario")
+	public void seleccionarCatalogo() {
+		Usuario usuario = catalogoUsuario.objetoSeleccionadoDelCatalogo();
+		switch (idBoton) {
+		case "btnBuscarSupervisores":
+			setearSupervisor(usuario);
+			break;
+		case "btnBuscarUsuarios":
+			setearUsuario(usuario);
+			break;
+		default:
+			break;
+		}
+		catalogoUsuario.setParent(null);
+	}
+
+	public void setearUsuario(Usuario usuario) {
+		txtCodigoUsuario.setValue(usuario.getIdUsuario());
+		txtEmailUsuario.setValue(usuario.getMail());
+		txtNombreUsuario.setValue(usuario.getNombre());
+		txtPasswordUsuario.setValue(usuario.getPassword());
+		txtSupervisorUsuario.setValue(usuario.getSupervisor());
+		txtZonaUsuario.setValue(usuario.getZona().getDescripcion());
+		BufferedImage imag;
+		if (usuario.getImagen() != null) {
+			try {
+				imag = ImageIO.read(new ByteArrayInputStream(usuario
+						.getImagen()));
+				imagen.setContent(imag);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		idZona = usuario.getZona().getIdZona();
+		id = usuario.getIdUsuario();
+	}
+
+	public void setearSupervisor(Usuario usuario) {
+		txtSupervisorUsuario.setValue(usuario.getIdUsuario());
+	}
+
+	@Listen("onClick = #btnBuscarZonas")
+	public void buscarCatalogoAjeno() {
+		final List<Zona> listZona = servicioZona.buscarTodosOrdenados();
+		catalogo = new Catalogo<Zona>(DivCatalogoZona, "Zona", listZona, true,
+				"Id", "Descripcion") {
+
+			@Override
+			protected List<Zona> buscar(List<String> valores) {
+
+				List<Zona> lista = new ArrayList<Zona>();
+
+				for (Zona zona : listZona) {
+					if (zona.getIdZona().toLowerCase()
+							.startsWith(valores.get(0))
+							&& zona.getDescripcion().toLowerCase()
+									.startsWith(valores.get(2))) {
+						lista.add(zona);
+					}
+				}
+				return lista;
+			}
+
+			@Override
+			protected String[] crearRegistros(Zona zona) {
+				String[] registros = new String[2];
+				registros[0] = zona.getIdZona();
+				registros[1] = zona.getDescripcion();
+				return registros;
+			}
+		};
+		catalogo.setParent(DivCatalogoZona);
+		catalogo.doModal();
+	}
+
+	@Listen("onSeleccion = #DivCatalogoZona")
+	public void seleccionAjena() {
+		Zona zona = catalogo.objetoSeleccionadoDelCatalogo();
+		txtZonaUsuario.setValue(zona.getDescripcion());
+		idZona = zona.getIdZona();
+		catalogo.setParent(null);
+	}
+
+	@Listen("onChange = #txtZonaUsuario")
+	public void buscarPorNombreAjeno() {
+		Zona zona = servicioZona.buscarPorDescripcion(txtZonaUsuario.getValue());
+		if (zona != null) {
+			txtZonaUsuario.setValue(zona.getDescripcion());
+			idZona = zona.getIdZona();
+		}else{
+			txtZonaUsuario.setValue("");
+			idZona = "";
+			txtZonaUsuario.setFocus(true);
+		}
+	}
 }

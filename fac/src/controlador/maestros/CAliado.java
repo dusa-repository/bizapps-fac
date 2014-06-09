@@ -110,10 +110,18 @@ public class CAliado extends CGenerico {
 			@Override
 			public void adelante() {
 			}
+
+			@Override
+			public void enviar() {
+				// TODO Auto-generated method stub
+				
+			}
 		};
 		botonera.getChildren().get(3).setVisible(false);
 		botonera.getChildren().get(4).setVisible(false);
 		botonera.getChildren().get(5).setVisible(false);
+		botonera.getChildren().get(7).setVisible(false);
+		botonera.getChildren().get(8).setVisible(false);
 		botoneraAliado.appendChild(botonera);
 	}
 

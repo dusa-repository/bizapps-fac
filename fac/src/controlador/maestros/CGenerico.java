@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import modelo.seguridad.Usuario;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.Component;
@@ -17,6 +19,14 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Window;
 
+import componente.Mensaje;
+
+import servicio.estado.SBitacoraArte;
+import servicio.estado.SBitacoraCata;
+import servicio.estado.SBitacoraEvento;
+import servicio.estado.SBitacoraFachada;
+import servicio.estado.SBitacoraPromocion;
+import servicio.estado.SBitacoraUniforme;
 import servicio.maestros.SAliado;
 import servicio.maestros.SF0004;
 import servicio.maestros.SF0005;
@@ -50,6 +60,18 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SAliado servicioAliado;
 	@WireVariable("SArbol")
 	protected SArbol servicioArbol;
+	@WireVariable("SBitacoraArte")
+	protected SBitacoraArte servicioBitacoraArte;
+	@WireVariable("SBitacoraCata")
+	protected SBitacoraCata servicioBitacoraCata;
+	@WireVariable("SBitacoraEvento")
+	protected SBitacoraEvento servicioBitacoraEvento;
+	@WireVariable("SBitacoraFachada")
+	protected SBitacoraFachada servicioBitacoraFachada;
+	@WireVariable("SBitacoraPromocion")
+	protected SBitacoraPromocion servicioBitacoraPromocion;
+	@WireVariable("SBitacoraUniforme")
+	protected SBitacoraUniforme servicioBitacoraUniforme;
 	@WireVariable("SGrupo")
 	protected SGrupo servicioGrupo;
 	@WireVariable("SItemDegustacionPlanillaEvento")
@@ -94,7 +116,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SF0004 servicioF0004;
 	@WireVariable("SF0005")
 	protected SF0005 servicioF0005;
-	
+
 	protected DateFormat df = new SimpleDateFormat("HH:mm:ss");
 	public final Calendar calendario = Calendar.getInstance();
 	public String horaAuditoria = String.valueOf(calendario
@@ -105,22 +127,27 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			+ String.valueOf(calendario.get(Calendar.SECOND));
 	public java.util.Date fecha = new Date();
 	public Timestamp fechaHora = new Timestamp(fecha.getTime());
+	public Mensaje msj = new Mensaje();
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
-//		Selectors.wireComponents( comp, this, false );
+		// Selectors.wireComponents( comp, this, false );
 		inicializar();
 	}
 
 	public abstract void inicializar() throws IOException;
-	
+
 	public void cerrarVentana(Window win) {
 		win.onClose();
 	}
-	
+
 	public String nombreUsuarioSesion() {
 		Authentication sesion = SecurityContextHolder.getContext()
 				.getAuthentication();
 		return sesion.getName();
+	}
+
+	public Usuario usuarioSesion(String valor) {
+		return servicioUsuario.buscar(valor);
 	}
 }

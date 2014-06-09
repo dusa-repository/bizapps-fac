@@ -43,7 +43,8 @@
 						</hbox>
 						<textbox id="txtKYF0005" hflex="1" maxlength="10"
 							tooltiptext="Ingrese el Codigo" />
-						<hbox />
+						<button id="btnBuscarF0005" label=""
+							tooltiptext="Catalogo de Codigos de Producto" image="/public/imagenes/botones/buscar.png" />
 					</row>
 					<row>
 						<hbox>
@@ -80,8 +81,8 @@
 			</grid>
 			<separator />
 			<div id="botoneraF0005" />
-			<div id="DivCatalogoF0005" />
-			<div id="DivCatalogoF0004" />
+			<div id="divCatalogoF0005" />
+			<div id="divCatalogoF0004" />
 		</div>
 	</window>
 </zk>

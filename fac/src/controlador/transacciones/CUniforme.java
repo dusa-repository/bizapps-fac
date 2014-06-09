@@ -64,6 +64,12 @@ public class CUniforme extends CGenerico {
 				// TODO Auto-generated method stub
 				
 			}
+
+			@Override
+			public void enviar() {
+				// TODO Auto-generated method stub
+				
+			}
 		};
 		botonera.getChildren().get(2).setVisible(false);
 		botoneraUniformes.appendChild(botonera);

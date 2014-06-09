@@ -22,6 +22,14 @@
 							</columns>
 							<rows>
 								<row>
+									<cell colspan="3" align="end">
+										<label class="etiqueta" value="Presione el boton para modificar alguna planilla en edicion: " />
+									</cell>
+									<button id="btnBuscarPlanillas" label=""
+										tooltiptext="Catalogo de Planillas de Solicitud de Uniformes"
+										image="/public/imagenes/botones/buscar.png" />
+								</row>
+								<row>
 									<hbox>
 										<label class="etiqueta" value="Nombre Actividad: " />
 										<space />
@@ -88,7 +96,7 @@
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
 									<cell colspan="2">
-										<combobox tooltiptext="Seleccione una Marca"
+										<combobox tooltiptext="Seleccione una Marca" model="${$composer.marcas}"
 											placeholder="Seleccione una Marca" id="cmbMarca" readonly="true"
 											width="100%">
 											<template name="model">
@@ -292,6 +300,7 @@
 			</tabbox>
 			<separator />
 			<div id="botoneraUniformes" />
+			<div id="catalogoUniformes" />
 		</div>
 	</window>
 </zk>

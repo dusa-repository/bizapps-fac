@@ -14,5 +14,7 @@ public interface IRecursoDAO extends JpaRepository<Recurso, Long> {
 	List<Recurso> findAllOrderByDescripcion();
 
 	Recurso findByDescripcion(String value);
+
+	List<Recurso> findByIdRecursoNotIn(List<Long> ids);
 	
 }

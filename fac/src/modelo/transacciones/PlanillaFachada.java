@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import modelo.estado.BitacoraCata;
+import modelo.estado.BitacoraFachada;
 import modelo.maestros.Marca;
 import modelo.seguridad.Usuario;
 
@@ -134,6 +136,12 @@ public class PlanillaFachada implements Serializable {
 	@OneToMany(mappedBy="planillaFachada")
 	private Set<RecursoPlanillaFachada> recursosFachadas;
 
+	@Column(name="id_zona",length = 500)
+	private String zona;
+	
+	@OneToMany(mappedBy="planillaFachada")
+	private Set<BitacoraFachada> bitacoras;
+	
 	public PlanillaFachada() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -149,7 +157,7 @@ public class PlanillaFachada implements Serializable {
 			String formato, String arte, Double alto, Double largo,
 			Double ancho, byte[] imagenA, byte[] imagenB, byte[] imagenC,
 			byte[] imagenD, Timestamp fechaAuditoria, String horaAuditoria,
-			String usuarioAuditoria, String estado) {
+			String usuarioAuditoria, String estado, String zona) {
 		super();
 		this.idPlanillaFachada = idPlanillaFachada;
 		this.usuario = usuario;
@@ -185,6 +193,7 @@ public class PlanillaFachada implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 		this.usuarioAuditoria = usuarioAuditoria;
 		this.estado = estado;
+		this.zona = zona;
 	}
 
 	public long getIdPlanillaFachada() {
@@ -465,6 +474,22 @@ public class PlanillaFachada implements Serializable {
 
 	public void setRecursosFachadas(Set<RecursoPlanillaFachada> recursosFachadas) {
 		this.recursosFachadas = recursosFachadas;
+	}
+
+	public String getZona() {
+		return zona;
+	}
+
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
+
+	public Set<BitacoraFachada> getBitacoras() {
+		return bitacoras;
+	}
+
+	public void setBitacoras(Set<BitacoraFachada> bitacoras) {
+		this.bitacoras = bitacoras;
 	}
 	
 	

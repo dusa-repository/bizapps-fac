@@ -2,6 +2,7 @@ package modelo.transacciones;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,9 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import modelo.estado.BitacoraArte;
 import modelo.maestros.Marca;
+import modelo.maestros.Sku;
 import modelo.seguridad.Usuario;
 
 @Entity
@@ -90,6 +94,12 @@ public class PlanillaArte implements Serializable {
 	@Column(name="estado_planilla",length = 500)
 	private String estado;
 
+	@Column(name="id_zona",length = 500)
+	private String zona;
+	
+	@OneToMany(mappedBy="planillaArte")
+	private Set<BitacoraArte> bitacoras;
+	
 	public PlanillaArte() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -101,7 +111,7 @@ public class PlanillaArte implements Serializable {
 			Double largo, Double ancho, byte[] imagenA, byte[] imagenB,
 			byte[] imagenC, byte[] imagenD, String lineamiento,
 			Timestamp fechaAuditoria, String horaAuditoria,
-			String usuarioAuditoria, String estado) {
+			String usuarioAuditoria, String estado, String zona) {
 		super();
 		this.idPlanillaArte = idPlanillaArte;
 		this.usuario = usuario;
@@ -124,6 +134,7 @@ public class PlanillaArte implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 		this.usuarioAuditoria = usuarioAuditoria;
 		this.estado = estado;
+		this.zona = zona;
 	}
 
 	public long getIdPlanillaArte() {
@@ -292,6 +303,22 @@ public class PlanillaArte implements Serializable {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public String getZona() {
+		return zona;
+	}
+
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
+
+	public Set<BitacoraArte> getBitacoras() {
+		return bitacoras;
+	}
+
+	public void setBitacoras(Set<BitacoraArte> bitacoras) {
+		this.bitacoras = bitacoras;
 	}
 	
 	

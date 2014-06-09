@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import modelo.maestros.Marca;
 import modelo.maestros.Recurso;
 import modelo.pk.RecursoPlanillaEventoId;
 
@@ -27,6 +28,10 @@ public class RecursoPlanillaEvento {
 	@JoinColumn(name = "id_planilla_evento", referencedColumnName = "id_planilla_evento")
 	private PlanillaEvento planillaEvento;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="id_marca")
+	private Marca marca;
+	
 	@Column(name = "solicitado")
 	private Integer solicitado;
 	
@@ -39,10 +44,11 @@ public class RecursoPlanillaEvento {
 	}
 
 	public RecursoPlanillaEvento(Recurso recurso,
-			PlanillaEvento planillaEvento, Integer solicitado, Integer aprobado) {
+			PlanillaEvento planillaEvento, Marca marca, Integer solicitado, Integer aprobado) {
 		super();
 		this.recurso = recurso;
 		this.planillaEvento = planillaEvento;
+		this.marca = marca;
 		this.solicitado = solicitado;
 		this.aprobado = aprobado;
 	}
@@ -61,6 +67,14 @@ public class RecursoPlanillaEvento {
 
 	public void setPlanillaEvento(PlanillaEvento planillaEvento) {
 		this.planillaEvento = planillaEvento;
+	}
+	
+	public Marca getMarca() {
+		return marca;
+	}
+
+	public void setMarca(Marca marca) {
+		this.marca = marca;
 	}
 
 	public Integer getSolicitado() {

@@ -12,5 +12,7 @@ public interface IUniformeDAO extends JpaRepository<Uniforme, Long> {
 
 	@Query("Select a from Uniforme a order by a.descripcion asc")
 	List<Uniforme> findAllOrderByDescripcion();
+
+	Uniforme findByDescripcion(String value);
 	
 }

@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import modelo.estado.BitacoraPromocion;
+import modelo.estado.BitacoraUniforme;
 import modelo.maestros.Marca;
 import modelo.seguridad.Usuario;
 
@@ -93,6 +95,12 @@ public class PlanillaUniforme implements Serializable {
 	
 	@OneToMany(mappedBy="planillaUniforme")
 	private Set<UniformePlanillaUniforme> uniformePlanillas;
+	
+	@Column(name="id_zona",length = 500)
+	private String zona;
+	
+	@OneToMany(mappedBy="planillaUniforme")
+	private Set<BitacoraUniforme> bitacoras;
 
 	public PlanillaUniforme() {
 		super();
@@ -105,7 +113,7 @@ public class PlanillaUniforme implements Serializable {
 			String nombrePdv, String rifPdv, String telefonoPdv,
 			String correoPdv, String direccionPdv, String logo, Double costo,
 			String justificacion, String contrato, Timestamp fechaAuditoria,
-			String horaAuditoria, String usuarioAuditoria, String estado) {
+			String horaAuditoria, String usuarioAuditoria, String estado, String zona) {
 		super();
 		this.idPlanillaUniforme = idPlanillaUniforme;
 		this.usuario = usuario;
@@ -128,6 +136,7 @@ public class PlanillaUniforme implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 		this.usuarioAuditoria = usuarioAuditoria;
 		this.estado = estado;
+		this.zona = zona;
 	}
 
 	public long getIdPlanillaUniforme() {
@@ -304,6 +313,22 @@ public class PlanillaUniforme implements Serializable {
 
 	public void setUniformePlanillas(Set<UniformePlanillaUniforme> uniformePlanillas) {
 		this.uniformePlanillas = uniformePlanillas;
+	}
+
+	public String getZona() {
+		return zona;
+	}
+
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
+
+	public Set<BitacoraUniforme> getBitacoras() {
+		return bitacoras;
+	}
+
+	public void setBitacoras(Set<BitacoraUniforme> bitacoras) {
+		this.bitacoras = bitacoras;
 	}
 	
 	

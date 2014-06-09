@@ -2,6 +2,7 @@ package modelo.transacciones;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import modelo.estado.BitacoraArte;
+import modelo.estado.BitacoraPromocion;
 import modelo.maestros.Marca;
 import modelo.seguridad.Usuario;
 
@@ -111,6 +115,12 @@ public class PlanillaPromocion implements Serializable {
 	@Column(name="estado_planilla",length = 500)
 	private String estado;
 
+	@Column(name="id_zona",length = 500)
+	private String zona;
+	
+	@OneToMany(mappedBy="planillaPromocion")
+	private Set<BitacoraPromocion> bitacoras;
+	
 	public PlanillaPromocion() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -125,7 +135,7 @@ public class PlanillaPromocion implements Serializable {
 			String modalidad_Pago, String frecuenciaPago, String material,
 			String comunicacion, Double costo, String descripcionMarcaA,
 			String descripcionMarcaB, Timestamp fechaAuditoria,
-			String horaAuditoria, String usuarioAuditoria, String estado) {
+			String horaAuditoria, String usuarioAuditoria, String estado, String zo) {
 		super();
 		this.idPlanillaPromocion = idPlanillaPromocion;
 		this.usuario = usuario;
@@ -155,6 +165,7 @@ public class PlanillaPromocion implements Serializable {
 		this.horaAuditoria = horaAuditoria;
 		this.usuarioAuditoria = usuarioAuditoria;
 		this.estado = estado;
+		this.zona = zo;
 	}
 
 	public long getIdPlanillaPromocion() {
@@ -219,14 +230,6 @@ public class PlanillaPromocion implements Serializable {
 
 	public void setCiudad(String ciudad) {
 		this.ciudad = ciudad;
-	}
-
-	public String getEstadoPdv() {
-		return estadoPdv;
-	}
-
-	public void setEstado_pdv(String estado_pdv) {
-		this.estadoPdv = estado_pdv;
 	}
 
 	public String getNombreCliente() {
@@ -379,6 +382,30 @@ public class PlanillaPromocion implements Serializable {
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public String getZona() {
+		return zona;
+	}
+
+	public void setZona(String zona) {
+		this.zona = zona;
+	}
+
+	public String getEstadoPdv() {
+		return estadoPdv;
+	}
+
+	public void setEstadoPdv(String estadoPdv) {
+		this.estadoPdv = estadoPdv;
+	}
+
+	public Set<BitacoraPromocion> getBitacoras() {
+		return bitacoras;
+	}
+
+	public void setBitacoras(Set<BitacoraPromocion> bitacoras) {
+		this.bitacoras = bitacoras;
 	}
 	
 	
