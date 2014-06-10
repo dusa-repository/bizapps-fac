@@ -173,7 +173,7 @@
 								<row>
 									<label class="etiqueta" value="Costo Real: " />
 									<doublebox id="txtCosto" hflex="1"
-										tooltiptext="Ingrese el RIF del PDV" />
+										tooltiptext="Ingrese el RIF del PDV" disabled="true" />
 									<hbox />
 									<hbox />
 								</row>
@@ -246,7 +246,7 @@
 									<listheader label="Sub-Total" width="20%" />
 									<listheader label="id" visible="false" />
 								</listhead>
-								<template name="model">
+								<template id="template" name="model">
 									<listitem>
 										<listcell label="${each.uniforme.descripcion}">
 										</listcell>
@@ -267,12 +267,16 @@
 											</combobox>
 										</listcell>
 										<listcell>
-											<spinner value="${each.cantidad}" constraint="min 0 max 1000000"
+											<!-- onClick="ltbUniformesAgregados.onSelect", onChange='$composer.cambio', 
+												onChanging='test()' -->
+											<spinner onChanging='$composer.cambio' onChange='$composer.cambio'
+												value="${each.cantidad}" constraint="min 0 max 1000000"
 												tooltiptext="Ingrese la Cantidad Solicitada de Recursos"
 												step="1" width="98%" />
 										</listcell>
 										<listcell>
-											<doublespinner value="${each.precioUnitario}"
+											<doublespinner onChanging='$composer.cambio'
+												onChange='$composer.cambio' value="${each.precioUnitario}"
 												constraint="min 0 max 1000000" tooltiptext="Ingrese el Precio Individual por recurso"
 												step="1" width="98%" />
 										</listcell>
