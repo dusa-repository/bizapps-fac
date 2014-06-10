@@ -24,6 +24,7 @@ import modelo.transacciones.UniformePlanillaUniforme;
 
 import org.zkforge.ckez.CKeditor;
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.event.MouseEvent;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -106,6 +107,7 @@ public class CUniforme extends CGenerico {
 	Catalogo<PlanillaUniforme> catalogo;
 	ListModelList<Marca> marcas;
 	ListModelList<F0005> tallas;
+	int cambio;
 	List<Uniforme> uniformes = new ArrayList<Uniforme>();
 	List<UniformePlanillaUniforme> uniformesAgregados = new ArrayList<UniformePlanillaUniforme>();
 	List<Listbox> listas = new ArrayList<Listbox>();
@@ -489,9 +491,9 @@ public class CUniforme extends CGenerico {
 		catalogo.setParent(null);
 	}
 
-	@Listen("onSelect = #ltbUniformesAgregados")
-	public void click(Event event) {
+	public int getCambio() {
 		if (ltbUniformesAgregados.getItemCount() != 0) {
+			double total = 0;
 			for (int i = 0; i < ltbUniformesAgregados.getItemCount(); i++) {
 				Listitem listItem = ltbUniformesAgregados.getItemAtIndex(i);
 				int cantidad = ((Spinner) ((listItem.getChildren().get(3)))
@@ -500,17 +502,11 @@ public class CUniforme extends CGenerico {
 						.getChildren().get(4))).getFirstChild()).getValue();
 				((Doublespinner) ((listItem.getChildren().get(5)))
 						.getFirstChild()).setValue(precioUnitario * cantidad);
+				total = total + (precioUnitario * cantidad);
 			}
+			txtCosto.setValue(total);
 		}
-		// called when onClick is received on any Row directly under the Grid of
-		// id myGrid
-	}
-
-	@Listen("onClick = listbox#ltbUniformesAgregados > listitem")
-	public void click3(Event event) {
-		System.out.println("seguyndo" + event.getName());
-		// called when onClick is received on any Row directly under the Grid of
-		// id myGrid
+		return cambio;
 	}
 
 }
