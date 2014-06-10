@@ -14,5 +14,7 @@ public interface IUniformeDAO extends JpaRepository<Uniforme, Long> {
 	List<Uniforme> findAllOrderByDescripcion();
 
 	Uniforme findByDescripcion(String value);
+
+	List<Uniforme> findByIdUniformeNotIn(List<Long> ids);
 	
 }

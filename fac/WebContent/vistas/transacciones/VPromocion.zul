@@ -66,7 +66,7 @@
 											placeholder="Seleccione un Tipo de Actividad" id="cmbActividad"
 											readonly="true" width="100%">
 											<template name="model">
-												<comboitem label="${each.nombre}" context="${each.idAccidente}" />
+												<comboitem label="${each.drdl01}" context="${each.id.drky}" />
 											</template>
 										</combobox>
 									</cell>
@@ -172,7 +172,7 @@
 										placeholder="Seleccione una Frecuencia de Pago" id="cmbFrecuencia"
 										readonly="true" width="100%">
 										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.idAccidente}" />
+											<comboitem label="${each.drdl01}" context="${each.id.drky}" />
 										</template>
 									</combobox>
 									<hbox>
@@ -184,7 +184,7 @@
 										placeholder="Seleccione una Modalidad de Pago" id="cmbModalidad"
 										readonly="true" width="100%">
 										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.idAccidente}" />
+											<comboitem label="${each.drdl01}" context="${each.id.drky}" />
 										</template>
 									</combobox>
 								</row>
@@ -198,7 +198,7 @@
 										placeholder="Seleccione un Material" id="cmbPop" readonly="true"
 										width="100%">
 										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.idAccidente}" />
+											<comboitem label="${each.drdl01}" context="${each.id.drky}" />
 										</template>
 									</combobox>
 									<hbox>
@@ -210,13 +210,13 @@
 										placeholder="Seleccione una Comunicacion Extra" id="cmbExtra"
 										readonly="true" width="100%">
 										<template name="model">
-											<comboitem label="${each.nombre}" context="${each.idAccidente}" />
+											<comboitem label="${each.drdl01}" context="${each.id.drky}" />
 										</template>
 									</combobox>
 								</row>
 								<row>
 									<label class="etiqueta" value="Costo Real: " />
-									<textbox id="txtCosto"  hflex="1"
+									<doublebox id="txtCosto"  hflex="1"
 										maxlength="500" tooltiptext="Ingrese el RIF del PDV" />
 									<hbox />
 									<hbox />
@@ -233,7 +233,7 @@
 									placeholder="Seleccione una Marca" id="cmbMarca1" readonly="true"
 									width="100%">
 									<template name="model">
-										<comboitem label="${each.nombre}" context="${each.idMarca}" />
+										<comboitem label="${each.descripcion}" context="${each.idMarca}" />
 									</template>
 								</combobox>
 							</hbox>
@@ -248,7 +248,7 @@
 									placeholder="Seleccione una Marca" id="cmbMarca2" readonly="true"
 									width="100%">
 									<template name="model">
-										<comboitem label="${each.nombre}" context="${each.idMarca}" />
+										<comboitem label="${each.descripcion}" context="${each.idMarca}" />
 									</template>
 								</combobox>
 							</hbox>

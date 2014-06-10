@@ -83,7 +83,7 @@ public class PlanillaPromocion implements Serializable {
 	private Timestamp fechaHasta;
 	
 	@Column(name="modalidad_pago",length = 500)
-	private String modalidad_Pago;
+	private String modalidadPago;
 	
 	@Column(name="frecuencia_pago",length = 500)
 	private String frecuenciaPago;
@@ -154,7 +154,7 @@ public class PlanillaPromocion implements Serializable {
 		this.direccionPdv = direccionPdv;
 		this.fechaDesde = fechaDesde;
 		this.fechaHasta = fechaHasta;
-		this.modalidad_Pago = modalidad_Pago;
+		this.modalidadPago = modalidad_Pago;
 		this.frecuenciaPago = frecuenciaPago;
 		this.material = material;
 		this.comunicacion = comunicacion;
@@ -296,12 +296,12 @@ public class PlanillaPromocion implements Serializable {
 		this.fechaHasta = fechaHasta;
 	}
 
-	public String getModalidad_Pago() {
-		return modalidad_Pago;
+	public String getModalidadPago() {
+		return modalidadPago;
 	}
 
-	public void setModalidad_Pago(String modalidad_Pago) {
-		this.modalidad_Pago = modalidad_Pago;
+	public void setModalidadPago(String modalidadPago) {
+		this.modalidadPago = modalidadPago;
 	}
 
 	public String getFrecuenciaPago() {

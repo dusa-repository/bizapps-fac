@@ -34,7 +34,7 @@ public class UniformePlanillaUniforme {
 	private String talla;
 	
 	@Column(name = "cantidad")
-	private Integer personas;
+	private Integer cantidad;
 	
 	@Column(name="precio_unitario")
 	private Double precioUnitario;
@@ -52,7 +52,7 @@ public class UniformePlanillaUniforme {
 		this.planillaUniforme = planillaUniforme;
 		this.genero = genero;
 		this.talla = talla;
-		this.personas = personas;
+		this.cantidad = personas;
 		this.precioUnitario = precioUnitario;
 	}
 
@@ -88,12 +88,12 @@ public class UniformePlanillaUniforme {
 		this.talla = talla;
 	}
 
-	public Integer getPersonas() {
-		return personas;
+	public Integer getCantidad() {
+		return cantidad;
 	}
 
-	public void setPersonas(Integer personas) {
-		this.personas = personas;
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
 	}
 
 	public Double getPrecioUnitario() {
