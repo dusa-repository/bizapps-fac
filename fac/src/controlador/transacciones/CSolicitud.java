@@ -1,30 +1,431 @@
 package controlador.transacciones;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
+import modelo.estado.BitacoraArte;
+import modelo.estado.BitacoraCata;
+import modelo.estado.BitacoraEvento;
+import modelo.estado.BitacoraFachada;
+import modelo.estado.BitacoraPromocion;
+import modelo.estado.BitacoraUniforme;
+import modelo.generico.PlanillaGenerica;
+import modelo.transacciones.PlanillaArte;
+import modelo.transacciones.PlanillaCata;
+import modelo.transacciones.PlanillaEvento;
+import modelo.transacciones.PlanillaFachada;
+import modelo.transacciones.PlanillaPromocion;
+import modelo.transacciones.PlanillaUniforme;
+
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Div;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
-import componente.Botonera;
+import componente.Catalogo;
+import componente.Mensaje;
 
 import controlador.maestros.CGenerico;
+import controlador.portal.CInbox;
 
 public class CSolicitud extends CGenerico {
 
+	private static final long serialVersionUID = 1572485553927529288L;
 	@Wire
 	private Window wdwSolicitud;
+	@Wire
+	private Div catalogoSolicitud;
+	Catalogo<PlanillaGenerica> catalogo;
+	String titulo = "";
+	CInbox controlador = new CInbox();
+
+	final List<PlanillaGenerica> listPlanilla = new ArrayList<PlanillaGenerica>();
+
+	public String getTitulo() {
+		switch (variable) {
+		case "Aprobada":
+			titulo = "Aprobadas";
+			break;
+		case "Cancelada":
+			titulo = "Canceladas";
+			break;
+		case "Rechazada":
+			titulo = "Rechazadas";
+			break;
+		case "Pendiente":
+			titulo = "Pendientes por Aprobar";
+			break;
+
+		default:
+			break;
+		}
+		return titulo;
+	}
 
 	@Override
 	public void inicializar() throws IOException {
+		buscarCatalogoPropio();
 
-		
+	}
+
+	public void buscarCatalogoPropio() {
+		cargarLista();
+		System.out.println(listPlanilla.size());
+		catalogo = new Catalogo<PlanillaGenerica>(catalogoSolicitud,
+				"PlanillaCata", listPlanilla, false, "Usuario", "Estado",
+				"Fecha", "Marca", "Nombre Actividad", "Tipo Planilla") {
+
+			@Override
+			protected List<PlanillaGenerica> buscar(List<String> valores) {
+
+				List<PlanillaGenerica> lista = new ArrayList<PlanillaGenerica>();
+
+				for (PlanillaGenerica planilla : listPlanilla) {
+					if (planilla.getUsuario().toLowerCase()
+							.startsWith(valores.get(0))
+							&& planilla.getEstado().toLowerCase()
+									.startsWith(valores.get(1))
+							&& String.valueOf(planilla.getFecha())
+									.toLowerCase().startsWith(valores.get(2))
+							&& planilla.getMarca().toLowerCase()
+									.startsWith(valores.get(3))
+							&& planilla.getNombreActividad().toLowerCase()
+									.startsWith(valores.get(4))
+							&& planilla.getTipoPlanilla().toLowerCase()
+									.startsWith(valores.get(5))) {
+						lista.add(planilla);
+					}
+				}
+				return lista;
+			}
+
+			@Override
+			protected String[] crearRegistros(PlanillaGenerica planilla) {
+				String[] registros = new String[6];
+				registros[0] = planilla.getUsuario();
+				registros[1] = planilla.getEstado();
+				registros[2] = String.valueOf(planilla.getFecha());
+				registros[3] = planilla.getMarca();
+				registros[4] = planilla.getNombreActividad();
+				registros[5] = planilla.getTipoPlanilla();
+				return registros;
+			}
+		};
+		catalogo.setParent(catalogoSolicitud);
 	}
 
 	@Listen("onClick= #btnCerrar")
-	public void salir ()
-	{
+	public void salir() {
 		cerrarVentana(wdwSolicitud);
+	}
+
+	@Listen("onClick= #btnProcesar")
+	public void procesar() {
+		final List<PlanillaGenerica> procesadas = catalogo
+				.obtenerSeleccionados();
+		if (validarSeleccion(procesadas)) {
+			Messagebox.show("¿Desea Aprobar las " + procesadas.size()
+					+ " Planillas?", "Alerta", Messagebox.OK
+					| Messagebox.CANCEL, Messagebox.QUESTION,
+					new org.zkoss.zk.ui.event.EventListener<Event>() {
+						public void onEvent(Event evt)
+								throws InterruptedException {
+							if (evt.getName().equals("onOK")) {
+								cambiarEstado(procesadas, "Aprobada");
+								cargarLista();
+								catalogo.actualizarLista(listPlanilla);
+							}
+						}
+					});
+		}
+	}
+
+	@Listen("onClick= #btnCancelar")
+	public void cancelar() {
+		final List<PlanillaGenerica> procesadas = catalogo
+				.obtenerSeleccionados();
+		if (validarSeleccion(procesadas)) {
+			Messagebox.show("¿Desea Cancelar las " + procesadas.size()
+					+ " Planillas?", "Alerta", Messagebox.OK
+					| Messagebox.CANCEL, Messagebox.QUESTION,
+					new org.zkoss.zk.ui.event.EventListener<Event>() {
+						public void onEvent(Event evt)
+								throws InterruptedException {
+							if (evt.getName().equals("onOK")) {
+								cambiarEstado(procesadas, "Cancelada");
+								cargarLista();
+								catalogo.actualizarLista(listPlanilla);
+							}
+						}
+					});
+		}
+
+	}
+
+	@Listen("onClick= #btnRechazar")
+	public void rechazar() {
+		final List<PlanillaGenerica> procesadas = catalogo
+				.obtenerSeleccionados();
+		if (validarSeleccion(procesadas)) {
+			Messagebox.show("¿Desea Rechazar las " + procesadas.size()
+					+ " Planillas?", "Alerta", Messagebox.OK
+					| Messagebox.CANCEL, Messagebox.QUESTION,
+					new org.zkoss.zk.ui.event.EventListener<Event>() {
+						public void onEvent(Event evt)
+								throws InterruptedException {
+							if (evt.getName().equals("onOK")) {
+								cambiarEstado(procesadas, "Rechazada");
+								cargarLista();
+								catalogo.actualizarLista(listPlanilla);
+							}
+						}
+					});
+		}
+
+	}
+
+	@Listen("onClick= #btnFinalizar")
+	public void finalizar() {
+		final List<PlanillaGenerica> procesadas = catalogo
+				.obtenerSeleccionados();
+		if (validarSeleccion(procesadas)) {
+			Messagebox.show("¿Desea Finalizar las " + procesadas.size()
+					+ " Planillas?", "Alerta", Messagebox.OK
+					| Messagebox.CANCEL, Messagebox.QUESTION,
+					new org.zkoss.zk.ui.event.EventListener<Event>() {
+						public void onEvent(Event evt)
+								throws InterruptedException {
+							if (evt.getName().equals("onOK")) {
+								cambiarEstado(procesadas, "Finalizada");
+								cargarLista();
+								catalogo.actualizarLista(listPlanilla);
+							}
+						}
+					});
+		}
+
+	}
+
+	public boolean validarSeleccion(List<PlanillaGenerica> procesadas) {
+		if (procesadas == null) {
+			msj.mensajeAlerta(Mensaje.noHayRegistros);
+			return false;
+		} else {
+			if (procesadas.isEmpty()) {
+				msj.mensajeAlerta(Mensaje.noSeleccionoItem);
+				return false;
+			} else {
+				return true;
+			}
+		}
+	}
+
+	public void cambiarEstado(List<PlanillaGenerica> procesadas, String estado) {
+		List<PlanillaCata> listCata = new ArrayList<PlanillaCata>();
+		List<PlanillaFachada> listFachada = new ArrayList<PlanillaFachada>();
+		List<PlanillaPromocion> listPromocion = new ArrayList<PlanillaPromocion>();
+		List<PlanillaEvento> listEvento = new ArrayList<PlanillaEvento>();
+		List<PlanillaArte> listArte = new ArrayList<PlanillaArte>();
+		List<PlanillaUniforme> listUniforme = new ArrayList<PlanillaUniforme>();
+		for (int i = 0; i < procesadas.size(); i++) {
+			switch (procesadas.get(i).getTipoPlanilla()) {
+			case "Eventos Especiales":
+				PlanillaEvento planillaEvento = servicioPlanillaEvento
+						.buscar(procesadas.get(i).getId());
+				planillaEvento.setEstado(estado);
+				BitacoraEvento bitacoraEvento = new BitacoraEvento(0,
+						planillaEvento, estado, fechaHora, fechaHora,
+						horaAuditoria, nombreUsuarioSesion());
+				servicioBitacoraEvento.guardar(bitacoraEvento);
+				listEvento.add(planillaEvento);
+				break;
+
+			case "Uniformes":
+				PlanillaUniforme planillaUniforme = servicioPlanillaUniforme
+						.buscar(procesadas.get(i).getId());
+				planillaUniforme.setEstado(estado);
+				BitacoraUniforme bitacoraUniforme = new BitacoraUniforme(0,
+						planillaUniforme, estado, fechaHora, fechaHora,
+						horaAuditoria, nombreUsuarioSesion());
+				servicioBitacoraUniforme.guardar(bitacoraUniforme);
+				listUniforme.add(planillaUniforme);
+				break;
+
+			case "Promociones de Marca":
+				PlanillaPromocion planillaPromocion = servicioPlanillaPromocion
+						.buscar(procesadas.get(i).getId());
+				planillaPromocion.setEstado(estado);
+				BitacoraPromocion bitacora = new BitacoraPromocion(0,
+						planillaPromocion, estado, fechaHora, fechaHora,
+						horaAuditoria, nombreUsuarioSesion());
+				servicioBitacoraPromocion.guardar(bitacora);
+				listPromocion.add(planillaPromocion);
+				break;
+
+			case "Solicitud de Arte y Publicaciones":
+				PlanillaArte planillaArte = servicioPlanillaArte
+						.buscar(procesadas.get(i).getId());
+				planillaArte.setEstado(estado);
+				BitacoraArte bitacoraArte = new BitacoraArte(0, planillaArte,
+						estado, fechaHora, fechaHora, horaAuditoria,
+						nombreUsuarioSesion());
+				servicioBitacoraArte.guardar(bitacoraArte);
+				listArte.add(planillaArte);
+				break;
+
+			case "Cata Induccion":
+				PlanillaCata planillaCata = servicioPlanillaCata
+						.buscar(procesadas.get(i).getId());
+				planillaCata.setEstado(estado);
+				BitacoraCata bitacoraCata = new BitacoraCata(0, planillaCata,
+						estado, fechaHora, fechaHora, horaAuditoria,
+						nombreUsuarioSesion());
+				servicioBitacoraCata.guardar(bitacoraCata);
+				listCata.add(planillaCata);
+				break;
+
+			case "Fachada y Decoraciones":
+				PlanillaFachada planillaFachada = servicioPlanillaFachada
+						.buscar(procesadas.get(i).getId());
+				planillaFachada.setEstado(estado);
+				BitacoraFachada bitacoraFachada = new BitacoraFachada(0,
+						planillaFachada, estado, fechaHora, fechaHora,
+						horaAuditoria, nombreUsuarioSesion());
+				servicioBitacoraFachada.guardar(bitacoraFachada);
+				listFachada.add(planillaFachada);
+				break;
+
+			default:
+				break;
+			}
+		}
+		if (!listArte.isEmpty())
+			servicioPlanillaArte.guardarVarias(listArte);
+		if (!listCata.isEmpty())
+			servicioPlanillaCata.guardarVarias(listCata);
+		if (!listEvento.isEmpty())
+			servicioPlanillaEvento.guardarVarias(listEvento);
+		if (!listFachada.isEmpty())
+			servicioPlanillaFachada.guardarVarias(listFachada);
+		if (!listPromocion.isEmpty())
+			servicioPlanillaPromocion.guardarVarias(listPromocion);
+		if (!listUniforme.isEmpty())
+			servicioPlanillaUniforme.guardarVarias(listUniforme);
+	}
+
+	public void cargarLista() {
+		listPlanilla.clear();
+//		List<PlanillaCata> listCata3 = servicioPlanillaCata
+//		.buscarAdminEstado(variable);
+//		List<PlanillaCata> listCata2 = servicioPlanillaCata
+//				.buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
+		List<PlanillaCata> listCata = servicioPlanillaCata
+				.buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()), variable);
+		for (int i = 0; i < listCata.size(); i++) {
+			long id = listCata.get(i).getIdPlanillaCata();
+			String usuario = listCata.get(i).getUsuario().getNombre();
+			String marca = listCata.get(i).getMarca().getDescripcion();
+			String nombreActividad = listCata.get(i).getNombreActividad();
+			String estado = listCata.get(i).getEstado();
+			String tipoPlanilla = "Cata Induccion";
+			Timestamp fecha = listCata.get(i).getFechaAuditoria();
+			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
+					nombreActividad, fecha, estado, tipoPlanilla);
+			listPlanilla.add(plani);
+		}
+//		List<PlanillaEvento> listEvento = servicioPlanillaEvento
+//				.buscarAdminEstado(variable);
+//		List<PlanillaEvento> listEvento = servicioPlanillaEvento
+//				.buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
+		List<PlanillaEvento> listEvento = servicioPlanillaEvento
+				.buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()), variable);
+		for (int i = 0; i < listEvento.size(); i++) {
+			long id = listEvento.get(i).getIdPlanillaEvento();
+			String usuario = listEvento.get(i).getUsuario().getNombre();
+			String marca = listEvento.get(i).getMarca().getDescripcion();
+			String nombreActividad = listEvento.get(i).getNombreActividad();
+			String estado = listEvento.get(i).getEstado();
+			String tipoPlanilla = "Eventos Especiales";
+			Timestamp fecha = listEvento.get(i).getFechaAuditoria();
+			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
+					nombreActividad, fecha, estado, tipoPlanilla);
+			listPlanilla.add(plani);
+		}
+//		List<PlanillaPromocion> listPromocion = servicioPlanillaPromocion
+//				.buscarAdminEstado(variable);
+//		List<PlanillaPromocion> listPromocion = servicioPlanillaPromocion
+//				.buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
+		List<PlanillaPromocion> listPromocion = servicioPlanillaPromocion
+				.buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()), variable);
+		for (int i = 0; i < listPromocion.size(); i++) {
+			long id = listPromocion.get(i).getIdPlanillaPromocion();
+			String usuario = listPromocion.get(i).getUsuario().getNombre();
+			String marca = listPromocion.get(i).getMarcaA().getDescripcion();
+			String nombreActividad = listPromocion.get(i).getNombreActividad();
+			String estado = listPromocion.get(i).getEstado();
+			String tipoPlanilla = "Promociones de Marca";
+			Timestamp fecha = listPromocion.get(i).getFechaAuditoria();
+			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
+					nombreActividad, fecha, estado, tipoPlanilla);
+			listPlanilla.add(plani);
+		}
+//		List<PlanillaArte> listArte = servicioPlanillaArte
+//				.buscarAdminEstado(variable);
+//		List<PlanillaArte> listArte = servicioPlanillaArte
+//				.buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
+		List<PlanillaArte> listArte = servicioPlanillaArte
+				.buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()), variable);
+		for (int i = 0; i < listArte.size(); i++) {
+			long id = listArte.get(i).getIdPlanillaArte();
+			String usuario = listArte.get(i).getUsuario().getNombre();
+			String marca = listArte.get(i).getMarca().getDescripcion();
+			String nombreActividad = listArte.get(i).getNombreActividad();
+			String estado = listArte.get(i).getEstado();
+			String tipoPlanilla = "Solicitud de Arte y Publicaciones";
+			Timestamp fecha = listArte.get(i).getFechaAuditoria();
+			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
+					nombreActividad, fecha, estado, tipoPlanilla);
+			listPlanilla.add(plani);
+		}
+//		List<PlanillaUniforme> listUniforme = servicioPlanillaUniforme
+//				.buscarAdminEstado(variable);
+//		List<PlanillaUniforme> listUniforme = servicioPlanillaUniforme
+//				.buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
+		List<PlanillaUniforme> listUniforme = servicioPlanillaUniforme
+				.buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()), variable);
+		for (int i = 0; i < listUniforme.size(); i++) {
+			long id = listUniforme.get(i).getIdPlanillaUniforme();
+			String usuario = listUniforme.get(i).getUsuario().getNombre();
+			String marca = listUniforme.get(i).getMarca().getDescripcion();
+			String nombreActividad = listUniforme.get(i).getNombreActividad();
+			String estado = listUniforme.get(i).getEstado();
+			String tipoPlanilla = "Uniformes";
+			Timestamp fecha = listUniforme.get(i).getFechaAuditoria();
+			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
+					nombreActividad, fecha, estado, tipoPlanilla);
+			listPlanilla.add(plani);
+		}
+//		List<PlanillaFachada> listFachada = servicioPlanillaFachada
+//				.buscarAdminEstado(variable);
+//		List<PlanillaFachada> listFachada = servicioPlanillaFachada
+//				.buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
+		List<PlanillaFachada> listFachada = servicioPlanillaFachada
+				.buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()), variable);
+		for (int i = 0; i < listFachada.size(); i++) {
+			long id = listFachada.get(i).getIdPlanillaFachada();
+			String usuario = listFachada.get(i).getUsuario().getNombre();
+			String marca = listFachada.get(i).getMarca().getDescripcion();
+			String nombreActividad = listFachada.get(i).getNombreActividad();
+			String estado = listFachada.get(i).getEstado();
+			String tipoPlanilla = "Fachada y Decoraciones";
+			Timestamp fecha = listFachada.get(i).getFechaAuditoria();
+			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
+					nombreActividad, fecha, estado, tipoPlanilla);
+			listPlanilla.add(plani);
+		}
 	}
 }

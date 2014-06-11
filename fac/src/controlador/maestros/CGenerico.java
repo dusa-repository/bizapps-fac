@@ -35,6 +35,7 @@ import servicio.estado.SBitacoraEvento;
 import servicio.estado.SBitacoraFachada;
 import servicio.estado.SBitacoraPromocion;
 import servicio.estado.SBitacoraUniforme;
+import servicio.generico.SPlanillaGenerica;
 import servicio.maestros.SAliado;
 import servicio.maestros.SF0004;
 import servicio.maestros.SF0005;
@@ -124,7 +125,9 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SF0004 servicioF0004;
 	@WireVariable("SF0005")
 	protected SF0005 servicioF0005;
-
+	@WireVariable("SPlanillaGenerica")
+	protected SPlanillaGenerica servicioPlanillaGenerica;
+	static public String variable = "";
 	protected DateFormat df = new SimpleDateFormat("HH:mm:ss");
 	public final Calendar calendario = Calendar.getInstance();
 	public String horaAuditoria = String.valueOf(calendario

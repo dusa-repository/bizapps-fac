@@ -32,10 +32,31 @@ public class SPlanillaArte {
 	}
 
 	public List<PlanillaArte> buscarTodosOrdenados(Usuario usuarioSesion) {
-		return planillaArteDAO.findByUsuarioAndEstado(usuarioSesion, "En Edicion");
+		return planillaArteDAO.findByUsuarioAndEstado(usuarioSesion,
+				"En Edicion");
 	}
 
 	public void eliminar(long id) {
 		planillaArteDAO.delete(id);
+	}
+
+	public void guardarVarias(List<PlanillaArte> listArte) {
+		planillaArteDAO.save(listArte);
+	}
+
+	public List<PlanillaArte> buscarUsuarioSessionYEstado(
+			Usuario usuarioSesion, String variable) {
+		return planillaArteDAO.findByUsuarioAndEstado(usuarioSesion,
+				variable);
+	}
+
+	public List<PlanillaArte> buscarSupervisorYEstado(
+			String nombreUsuarioSesion, String variable) {
+		return planillaArteDAO.findByUsuarioSupervisorAndEstado(nombreUsuarioSesion,
+				variable);
+	}
+
+	public List<PlanillaArte> buscarAdminEstado(String variable) {
+		return planillaArteDAO.findByEstado(variable);
 	}
 }

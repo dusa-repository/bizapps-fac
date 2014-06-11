@@ -26,17 +26,38 @@ public class SPlanillaUniforme {
 	}
 
 	public PlanillaUniforme buscarUltima() {
-			long id = planillaUniformeDAO.findMaxId();
-			if (id != 0)
-				return planillaUniformeDAO.findOne(id);
-			return null;
-		}
+		long id = planillaUniformeDAO.findMaxId();
+		if (id != 0)
+			return planillaUniformeDAO.findOne(id);
+		return null;
+	}
 
 	public void eliminar(long id) {
 		planillaUniformeDAO.delete(id);
 	}
 
 	public List<PlanillaUniforme> buscarTodosOrdenados(Usuario usuarioSesion) {
-		return planillaUniformeDAO.findByUsuarioAndEstado(usuarioSesion,"En Edicion");
+		return planillaUniformeDAO.findByUsuarioAndEstado(usuarioSesion,
+				"En Edicion");
+	}
+
+	public void guardarVarias(List<PlanillaUniforme> listUniforme) {
+		planillaUniformeDAO.save(listUniforme);
+	}
+
+	public List<PlanillaUniforme> buscarUsuarioSessionYEstado(
+			Usuario usuarioSesion, String variable) {
+		return planillaUniformeDAO.findByUsuarioAndEstado(usuarioSesion,
+				variable);
+	}
+
+	public List<PlanillaUniforme> buscarSupervisorYEstado(
+			String nombreUsuarioSesion, String variable) {
+		return planillaUniformeDAO.findByUsuarioSupervisorAndEstado(nombreUsuarioSesion,
+				variable);
+	}
+
+	public List<PlanillaUniforme> buscarAdminEstado(String variable) {
+		return planillaUniformeDAO.findByEstado(variable);
 	}
 }

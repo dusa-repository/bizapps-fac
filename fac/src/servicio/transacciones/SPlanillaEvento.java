@@ -40,4 +40,24 @@ public class SPlanillaEvento {
 		return planillaEventoDAO.findByUsuarioAndEstado(usuarioSesion,
 				"En Edicion");
 	}
+
+	public void guardarVarias(List<PlanillaEvento> listEvento) {
+		planillaEventoDAO.save(listEvento);
+	}
+
+	public List<PlanillaEvento> buscarUsuarioSessionYEstado(
+			Usuario usuarioSesion, String variable) {
+		return planillaEventoDAO.findByUsuarioAndEstado(usuarioSesion,
+				variable);
+	}
+
+	public List<PlanillaEvento> buscarSupervisorYEstado(
+			String nombreUsuarioSesion, String variable) {
+		return planillaEventoDAO.findByUsuarioSupervisorAndEstado(nombreUsuarioSesion,
+				variable);
+	}
+
+	public List<PlanillaEvento> buscarAdminEstado(String variable) {
+		return planillaEventoDAO.findByEstado(variable);
+	}
 }
