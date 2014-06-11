@@ -32,12 +32,13 @@ import controlador.maestros.CGenerico;
 
 public class CInbox extends CGenerico {
 
+	private static final long serialVersionUID = 8456820954892688693L;
 	@Wire
 	private Window wdwInbox;
 	@Wire
 	private Button btnPendiente;
 	@Wire
-	private Button btnProcesada;
+	private Button btnAprobada;
 	@Wire
 	private Button btnRechazada;
 	@Wire
@@ -45,17 +46,48 @@ public class CInbox extends CGenerico {
 	@Wire
 	private Image imagenes;
 	URL url = getClass().getResource("/controlador/maestros/usuario.png");
-	String rechazada = "";
+	int pendiente = 0;
+	int aprobada = 0;
+	int cancelada = 0;
+	int finalizada = 0;
+	int rechazada = 0;
+	
+	
+	public int getRechazada() {
+		rechazada = servicioPlanillaGenerica.buscarCantidadPorUsuarioYEstado(
+				usuarioSesion(nombreUsuarioSesion()), "Rechazada");
+		return rechazada;
+	}
 
-	public String getRechazada() {
-		return rechazada = "4";
+	public int getAprobada() {
+		aprobada = servicioPlanillaGenerica.buscarCantidadPorUsuarioYEstado(
+				usuarioSesion(nombreUsuarioSesion()), "Aprobada");
+		return aprobada;
+	}
+
+	public int getCancelada() {
+		cancelada = servicioPlanillaGenerica.buscarCantidadPorUsuarioYEstado(
+				usuarioSesion(nombreUsuarioSesion()), "Cancelada");
+		return cancelada;
+	}
+
+	public int getFinalizada() {
+		finalizada = servicioPlanillaGenerica.buscarCantidadPorUsuarioYEstado(
+				usuarioSesion(nombreUsuarioSesion()), "Finalizada");
+		return finalizada;
+	}
+
+	public int getPendiente() {
+		pendiente = servicioPlanillaGenerica.buscarCantidadPorUsuarioYEstado(
+				usuarioSesion(nombreUsuarioSesion()), "Pendiente");
+		return pendiente;
 	}
 
 	@Override
 	public void inicializar() throws IOException {
 
 		btnPendiente.setSrc("/public/imagenes/botones/pendiente.png");
-		btnProcesada.setSrc("/public/imagenes/botones/procesada.png");
+		btnAprobada.setSrc("/public/imagenes/botones/procesada.png");
 		btnCancelada.setSrc("/public/imagenes/botones/cancelada.png");
 		btnRechazada.setSrc("/public/imagenes/botones/rechazada.png");
 
@@ -63,8 +95,8 @@ public class CInbox extends CGenerico {
 		Out(btnCancelada, "cancelada");
 		Over(btnPendiente, "pendienteG");
 		Out(btnPendiente, "pendiente");
-		Over(btnProcesada, "procesadaG");
-		Out(btnProcesada, "procesada");
+		Over(btnAprobada, "procesadaG");
+		Out(btnAprobada, "procesada");
 		Over(btnRechazada, "rechazadaG");
 		Out(btnRechazada, "rechazada");
 
@@ -87,7 +119,7 @@ public class CInbox extends CGenerico {
 		final List<Button> botones = new ArrayList<Button>();
 		botones.add(btnCancelada);
 		botones.add(btnPendiente);
-		botones.add(btnProcesada);
+		botones.add(btnAprobada);
 		botones.add(btnRechazada);
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
@@ -108,6 +140,8 @@ public class CInbox extends CGenerico {
 									@Override
 									public void onEvent(Event arg0)
 											throws Exception {
+
+										variable = arbol.getNombre();
 										Window window = (Window) Executions
 												.createComponents("/vistas/"
 														+ arbol.getUrl()
@@ -146,5 +180,12 @@ public class CInbox extends CGenerico {
 				boton.setStyle("color:white");
 			}
 		});
+	}
+	
+	public void actualizar(){
+		getAprobada();
+		getCancelada();
+		getPendiente();
+		getRechazada();
 	}
 }

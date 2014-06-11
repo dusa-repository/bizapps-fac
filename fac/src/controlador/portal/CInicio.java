@@ -75,9 +75,10 @@ public class CInicio extends CGenerico {
 
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(authe.getName());
 		
-		Set<Grupo> roles;
-		roles =  u.getGrupos();
-		ltbRoles.setModel(new ListModelList<Grupo>(roles));
+//		Set<Grupo> roles;
+//		roles =  u.getGrupos();
+		List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
+		ltbRoles.setModel(new ListModelList<Grupo>(grupos));
 		
 		btnCataInduccion.setSrc("/public/imagenes/botones/planillaP.png");
 		btnEvento.setSrc("/public/imagenes/botones/planillaP.png");

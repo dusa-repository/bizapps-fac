@@ -53,7 +53,8 @@
 			<center border="none">
 				<div height="100%" width="100%" style="background:#500101">
 					<hbox align="center" pack="center" height="100%" width="100%">
-						<groupbox closable="false" height="85%" width="370px" mold="3d">
+						<groupbox closable="false" height="85%" width="370px"
+							mold="3d">
 							<caption label="INBOX"
 								style="color:white; font-size: 17px; font-weight:bold; background: #3A0202" />
 							<vbox pack="center">
@@ -61,9 +62,11 @@
 								<separator />
 								<hbox>
 									<button id="btnPendiente" class="btn"
-										label="Pendientes por Aprobacion" orient="vertical" visible="false" />
-									<button id="btnProcesada" class="btn" label="Procesadas"
+										label="Pendientes por Aprobacion (${$composer.pendiente})"
 										orient="vertical" visible="false" />
+									<button id="btnAprobada" class="btn"
+										label="Procesadas (${$composer.aprobada})" orient="vertical"
+										visible="false" />
 								</hbox>
 								<separator />
 								<separator />
@@ -72,8 +75,9 @@
 									<button id="btnRechazada" class="btn"
 										label="Rechazadas (${$composer.rechazada})" orient="vertical"
 										visible="false" />
-									<button id="btnCancelada" class="btn" label="Canceladas"
-										orient="vertical" visible="false" />
+									<button id="btnCancelada" class="btn"
+										label="Canceladas (${$composer.cancelada})" orient="vertical"
+										visible="false" />
 
 								</hbox>
 								<div align="right" style="float: right;">

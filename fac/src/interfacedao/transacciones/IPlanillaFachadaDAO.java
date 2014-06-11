@@ -16,4 +16,9 @@ public interface IPlanillaFachadaDAO extends JpaRepository<PlanillaFachada, Long
 	List<PlanillaFachada> findByUsuarioAndEstado(Usuario usuarioSesion,
 			String string);
 
+	List<PlanillaFachada> findByUsuarioSupervisorAndEstado(
+			String nombreUsuarioSesion, String variable);
+
+	List<PlanillaFachada> findByEstado(String variable);
+
 }

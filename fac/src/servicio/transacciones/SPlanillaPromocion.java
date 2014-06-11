@@ -36,6 +36,27 @@ public class SPlanillaPromocion {
 	}
 
 	public List<PlanillaPromocion> buscarTodosOrdenados(Usuario usuarioSesion) {
-		return planillaPromocionDAO.findByUsuarioAndEstado(usuarioSesion,"En Edicion");
+		return planillaPromocionDAO.findByUsuarioAndEstado(usuarioSesion,
+				"En Edicion");
+	}
+
+	public void guardarVarias(List<PlanillaPromocion> listPromocion) {
+		planillaPromocionDAO.save(listPromocion);
+	}
+
+	public List<PlanillaPromocion> buscarAdminEstado(String variable) {
+		return planillaPromocionDAO.findByEstado(variable);
+	}
+
+	public List<PlanillaPromocion> buscarSupervisorYEstado(
+			String nombreUsuarioSesion, String variable) {
+		return planillaPromocionDAO.findByUsuarioSupervisorAndEstado(nombreUsuarioSesion,
+				variable);
+	}
+
+	public List<PlanillaPromocion> buscarUsuarioSessionYEstado(
+			Usuario usuarioSesion, String variable) {
+		return planillaPromocionDAO.findByUsuarioAndEstado(usuarioSesion,
+				variable);
 	}
 }

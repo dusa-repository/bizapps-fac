@@ -39,4 +39,25 @@ public class SPlanillaCata {
 		return planillaCataDAO.findByUsuarioAndEstado(usuarioSesion,
 				"En Edicion");
 	}
+
+	public void guardarVarias(List<PlanillaCata> listCata) {
+		planillaCataDAO.save(listCata);
+	}
+
+	public List<PlanillaCata> buscarUsuarioSessionYEstado(
+			Usuario usuarioSesion, String variable) {
+		return planillaCataDAO.findByUsuarioAndEstado(usuarioSesion,
+				variable);
+	}
+
+	public List<PlanillaCata> buscarSupervisorYEstado(
+			String nombreUsuarioSesion, String variable) {
+		return planillaCataDAO.findByUsuarioSupervisorAndEstado(nombreUsuarioSesion,
+				variable);
+	}
+
+	public List<PlanillaCata> buscarAdminEstado(String variable) {
+		// TODO Auto-generated method stub
+		return planillaCataDAO.findByEstado(variable);
+	}
 }

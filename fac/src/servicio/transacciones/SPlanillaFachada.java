@@ -39,4 +39,24 @@ public class SPlanillaFachada {
 		return planillaFachadaDAO.findByUsuarioAndEstado(usuarioSesion,
 				"En Edicion");
 	}
+
+	public void guardarVarias(List<PlanillaFachada> listFachada) {
+		planillaFachadaDAO.save(listFachada);
+	}
+
+	public List<PlanillaFachada> buscarAdminEstado(String variable) {
+		return planillaFachadaDAO.findByEstado(variable);
+	}
+
+	public List<PlanillaFachada> buscarSupervisorYEstado(
+			String nombreUsuarioSesion, String variable) {
+		return planillaFachadaDAO.findByUsuarioSupervisorAndEstado(nombreUsuarioSesion,
+				variable);
+	}
+
+	public List<PlanillaFachada> buscarUsuarioSessionYEstado(
+			Usuario usuarioSesion, String variable) {
+		return planillaFachadaDAO.findByUsuarioAndEstado(usuarioSesion,
+				variable);
+	}
 }
