@@ -17,6 +17,6 @@ public class SGrupo {
 	private IGrupoDAO grupoDAO;
 
 	public List<Grupo> buscarGruposUsuario(Usuario u) {
-		return grupoDAO.findByUsuarios(u);
+		return grupoDAO.findByUsuariosOrderByNombreAsc(u);
 	}
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import modelo.seguridad.Arbol;
+import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 
 import org.springframework.security.core.Authentication;
@@ -24,6 +25,8 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Image;
+import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Window;
 
 import componente.Validador;
@@ -45,6 +48,9 @@ public class CInbox extends CGenerico {
 	private Button btnCancelada;
 	@Wire
 	private Image imagenes;
+	@Wire
+	private Listbox ltbRoles;
+	
 	URL url = getClass().getResource("/controlador/maestros/usuario.png");
 	int pendiente = 0;
 	int aprobada = 0;
@@ -104,7 +110,10 @@ public class CInbox extends CGenerico {
 				.getAuthentication();
 
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(authe.getName());
-
+		
+		List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
+		ltbRoles.setModel(new ListModelList<Grupo>(grupos));
+		
 		if (u.getImagen() == null) {
 			imagenes.setContent(new AImage(url));
 		} else {

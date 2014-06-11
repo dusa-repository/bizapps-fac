@@ -58,6 +58,6 @@ public class SPlanillaUniforme {
 	}
 
 	public List<PlanillaUniforme> buscarAdminEstado(String variable) {
-		return planillaUniformeDAO.findByEstado(variable);
+		return planillaUniformeDAO.findByEstadoNot(variable);
 	}
 }

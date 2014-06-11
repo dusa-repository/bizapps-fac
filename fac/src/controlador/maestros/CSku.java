@@ -52,7 +52,7 @@ public class CSku extends CGenerico {
 			}
 
 			@Override
-			public void reporte() {
+			public void buscar() {
 			}
 
 			@Override

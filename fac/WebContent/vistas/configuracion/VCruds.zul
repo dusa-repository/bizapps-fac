@@ -45,6 +45,22 @@
 										<!-- onClick='contenido.src="../vistas/seguridad/VEditarUsuario.zul"' -->
 									</a>
 								</vbox>
+								<separator />
+								<separator />
+								<separator />
+								<separator />
+								<separator />
+								<vbox>
+									<listbox style="border:none" width="150px" id="ltbRoles">
+										<template name="model">
+											<listitem>
+												<listcell style="color:white;font-weight: bold; background:#500101"
+													label="${each.nombre}">
+												</listcell>
+											</listitem>
+										</template>
+									</listbox>
+								</vbox>
 							</hbox>
 						</div>
 					</hbox>

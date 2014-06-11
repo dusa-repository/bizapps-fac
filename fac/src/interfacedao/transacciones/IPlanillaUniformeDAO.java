@@ -16,9 +16,9 @@ public interface IPlanillaUniformeDAO extends JpaRepository<PlanillaUniforme, Lo
 	List<PlanillaUniforme> findByUsuarioAndEstado(Usuario usuarioSesion,
 			String string);
 
-	List<PlanillaUniforme> findByEstado(String variable);
-
 	List<PlanillaUniforme> findByUsuarioSupervisorAndEstado(
 			String nombreUsuarioSesion, String variable);
+
+	List<PlanillaUniforme> findByEstadoNot(String variable);
 
 }

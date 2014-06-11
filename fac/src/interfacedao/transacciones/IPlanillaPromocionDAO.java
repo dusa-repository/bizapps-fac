@@ -16,9 +16,9 @@ public interface IPlanillaPromocionDAO extends JpaRepository<PlanillaPromocion, 
 	List<PlanillaPromocion> findByUsuarioAndEstado(Usuario usuarioSesion,
 			String string);
 
-	List<PlanillaPromocion> findByEstado(String variable);
-
 	List<PlanillaPromocion> findByUsuarioSupervisorAndEstado(
 			String nombreUsuarioSesion, String variable);
+
+	List<PlanillaPromocion> findByEstadoNot(String variable);
 
 }

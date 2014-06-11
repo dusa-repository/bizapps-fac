@@ -58,6 +58,6 @@ public class SPlanillaCata {
 
 	public List<PlanillaCata> buscarAdminEstado(String variable) {
 		// TODO Auto-generated method stub
-		return planillaCataDAO.findByEstado(variable);
+		return planillaCataDAO.findByEstadoNot(variable);
 	}
 }

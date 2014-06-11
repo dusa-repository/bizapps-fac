@@ -58,6 +58,6 @@ public class SPlanillaEvento {
 	}
 
 	public List<PlanillaEvento> buscarAdminEstado(String variable) {
-		return planillaEventoDAO.findByEstado(variable);
+		return planillaEventoDAO.findByEstadoNot(variable);
 	}
 }

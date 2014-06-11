@@ -42,7 +42,7 @@ public class CRecurso extends CGenerico {
 			}
 			
 			@Override
-			public void reporte() {
+			public void buscar() {
 				// TODO Auto-generated method stub
 				
 			}

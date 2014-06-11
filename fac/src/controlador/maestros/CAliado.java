@@ -48,7 +48,7 @@ public class CAliado extends CGenerico {
 			}
 
 			@Override
-			public void reporte() {
+			public void buscar() {
 			}
 
 			@Override

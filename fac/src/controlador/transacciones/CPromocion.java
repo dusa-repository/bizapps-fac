@@ -119,7 +119,7 @@ public class CPromocion extends CGenerico {
 			}
 
 			@Override
-			public void reporte() {
+			public void buscar() {
 				// TODO Auto-generated method stub
 
 			}
