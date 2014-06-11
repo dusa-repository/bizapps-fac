@@ -59,7 +59,7 @@ public class CF0004 extends CGenerico {
 			}
 
 			@Override
-			public void reporte() {
+			public void buscar() {
 			}
 
 			@Override

@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -63,23 +64,41 @@ public class CInicio extends CGenerico {
 	private Image imagenes;
 	@Wire
 	private Listbox ltbRoles;
-//	@Wire
-//	private Include include;
+	boolean admin = false;
+	// @Wire
+	// private Include include;
 	URL url = getClass().getResource("/controlador/maestros/usuario.png");
 
 	@Override
 	public void inicializar() throws IOException {
-		
+
 		Authentication authe = SecurityContextHolder.getContext()
 				.getAuthentication();
 
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(authe.getName());
-		
-//		Set<Grupo> roles;
-//		roles =  u.getGrupos();
+
+		// Set<Grupo> roles;
+		// roles = u.getGrupos();
 		List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
+		for (int i = 0; i < grupos.size(); i++) {
+			if (grupos.get(i).getNombre().equals("Administrador")) {
+				admin = true;
+				grupoDominante = grupos.get(i).getNombre();
+				i = grupos.size();
+			} else {
+				if (grupos.get(i).getNombre().equals("Coordinador")) {
+					grupoDominante = grupos.get(i).getNombre();
+					i = grupos.size();
+				} else {
+					if (grupos.get(i).getNombre().equals("Supervisor")) {
+						grupoDominante = grupos.get(i).getNombre();
+						i = grupos.size();
+					}
+				}
+			}
+		}
 		ltbRoles.setModel(new ListModelList<Grupo>(grupos));
-		
+
 		btnCataInduccion.setSrc("/public/imagenes/botones/planillaP.png");
 		btnEvento.setSrc("/public/imagenes/botones/planillaP.png");
 		btnFachada.setSrc("/public/imagenes/botones/planillaP.png");
@@ -94,13 +113,13 @@ public class CInicio extends CGenerico {
 		Over(btnInBox, "inboxG");
 		Out(btnInBox, "inboxP");
 		Over(btnCataInduccion, "planillaG");
-		Out(btnCataInduccion, "planillaP");		
+		Out(btnCataInduccion, "planillaP");
 		Over(btnEvento, "planillaG");
-		Out(btnEvento, "planillaP");		
+		Out(btnEvento, "planillaP");
 		Over(btnFachada, "planillaG");
-		Out(btnFachada, "planillaP");		
+		Out(btnFachada, "planillaP");
 		Over(btnPromocion, "planillaG");
-		Out(btnPromocion, "planillaP");		
+		Out(btnPromocion, "planillaP");
 		Over(btnSolicitudArte, "planillaG");
 		Out(btnSolicitudArte, "planillaP");
 		Over(btnUniforme, "planillaG");
@@ -108,10 +127,8 @@ public class CInicio extends CGenerico {
 
 		// String ruta = "/vistas/componentes/VPrincipal.zul";
 		// include.setSrc(null);
-		
-//		include.setSrc("/vistas/componentes/VPrincipal.zul");
-		
 
+		// include.setSrc("/vistas/componentes/VPrincipal.zul");
 
 		if (u.getImagen() == null) {
 			imagenes.setContent(new AImage(url));
@@ -134,9 +151,9 @@ public class CInicio extends CGenerico {
 		botones.add(btnSolicitudArte);
 		botones.add(btnInBox);
 		botones.add(btnCruds);
-		
-//		if (SecurityUtil.isAllGranted("ROLE_SUPERVISOR")) {
-//		}
+
+		// if (SecurityUtil.isAllGranted("ROLE_SUPERVISOR")) {
+		// }
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(
@@ -156,11 +173,21 @@ public class CInicio extends CGenerico {
 									@Override
 									public void onEvent(Event arg0)
 											throws Exception {
-										Window window = (Window) Executions
-												.createComponents("/vistas/"
-														+ arbol.getUrl()
-														+ ".zul", null, null);
-										window.doModal();
+										if (arbol.getNombre().equals("InBox")
+												&& admin) {
+											variable = "En Edicion";
+											Window window = (Window) Executions
+													.createComponents(
+															"/vistas/transacciones/VSolicitud.zul",
+															null, null);
+											window.doModal();
+										} else {
+											Window window = (Window) Executions.createComponents(
+													"/vistas/" + arbol.getUrl()
+															+ ".zul", null,
+													null);
+											window.doModal();
+										}
 									}
 								});
 					}
@@ -168,7 +195,6 @@ public class CInicio extends CGenerico {
 			}
 		}
 	}
-	
 
 	public void Over(final Button boton, final String imagen) {
 		boton.addEventListener(Events.ON_MOUSE_OVER,

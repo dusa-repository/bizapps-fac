@@ -57,6 +57,6 @@ public class SPlanillaArte {
 	}
 
 	public List<PlanillaArte> buscarAdminEstado(String variable) {
-		return planillaArteDAO.findByEstado(variable);
+		return planillaArteDAO.findByEstadoNot(variable);
 	}
 }

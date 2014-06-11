@@ -16,7 +16,7 @@ public abstract class Botonera extends Hbox {
 		Button btnGuardar = new Button();
 		Button btnEliminar = new Button();
 		Button btnLimpiar = new Button();
-		Button btnReporte = new Button();
+		Button btnBuscar = new Button();
 		Button btnSalir = new Button();
 		Button btnAdelante = new Button();
 		Button btnAtras = new Button();
@@ -27,7 +27,7 @@ public abstract class Botonera extends Hbox {
 		this.appendChild(btnEliminar);
 		this.appendChild(btnAtras);
 		this.appendChild(btnAdelante);
-		this.appendChild(btnReporte);
+		this.appendChild(btnBuscar);
 		this.appendChild(btnSalir);
 		Space espacio = new Space();
 		espacio.setSpacing("150%");
@@ -39,7 +39,7 @@ public abstract class Botonera extends Hbox {
 		btnGuardar.setSrc("/public/imagenes/botones/guardar.png");
 		btnEliminar.setSrc("/public/imagenes/botones/eliminar.png");
 		btnLimpiar.setSrc("/public/imagenes/botones/limpiar.png");
-		btnReporte.setSrc("/public/imagenes/botones/reporte.png");
+		btnBuscar.setSrc("/public/imagenes/botones/buscar.png");
 		btnSalir.setSrc("/public/imagenes/botones/salir.png");
 		btnEnviar.setSrc("/public/imagenes/botones/guardar.png");
 	
@@ -49,7 +49,7 @@ public abstract class Botonera extends Hbox {
 		btnGuardar.setStyle("font-size: 12px ;width: 93px; height: 30px");
 		btnLimpiar.setStyle("font-size: 12px ;width: 93px; height: 30px");
 		btnSalir.setStyle("font-size: 12px ;width: 93px; height: 30px");
-		btnReporte.setStyle("font-size: 12px ;width: 93px; height: 30px");
+		btnBuscar.setStyle("font-size: 12px ;width: 93px; height: 30px");
 		btnEnviar.setStyle("font-size: 12px ;width: 93px; height: 30px");
 		
 		btnAdelante.setLabel("Siguiente");
@@ -57,7 +57,7 @@ public abstract class Botonera extends Hbox {
 		btnGuardar.setLabel("Guardar");
 		btnEliminar.setLabel("Eliminar");
 		btnLimpiar.setLabel("Limpiar");
-		btnReporte.setLabel("Reporte");
+		btnBuscar.setLabel("Buscar");
 		btnSalir.setLabel("Salir");
 		btnEnviar.setLabel("Enviar");
 
@@ -66,7 +66,7 @@ public abstract class Botonera extends Hbox {
 		btnGuardar.setTooltiptext("Guardar");
 		btnEliminar.setTooltiptext("Eliminar");
 		btnLimpiar.setTooltiptext("Limpiar");
-		btnReporte.setTooltiptext("Reporte");
+		btnBuscar.setTooltiptext("Buscar");
 		btnSalir.setTooltiptext("Salir");
 		btnEnviar.setTooltiptext("Enviar Solicitud");
 
@@ -108,11 +108,11 @@ public abstract class Botonera extends Hbox {
 						limpiar();
 					}
 				});
-		btnReporte.addEventListener(Events.ON_CLICK,
+		btnBuscar.addEventListener(Events.ON_CLICK,
 				new EventListener<Event>() {
 					@Override
 					public void onEvent(Event arg0) throws Exception {
-						reporte();
+						buscar();
 					}
 				});
 		btnSalir.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
@@ -149,7 +149,7 @@ public abstract class Botonera extends Hbox {
 	 */
 	public abstract void limpiar();
 
-	public abstract void reporte();
+	public abstract void buscar();
 
 	/**
 	 * Metodo que permite cerrar el div que se genera al entrar a la vista

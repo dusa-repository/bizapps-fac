@@ -128,6 +128,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	@WireVariable("SPlanillaGenerica")
 	protected SPlanillaGenerica servicioPlanillaGenerica;
 	static public String variable = "";
+	static public String grupoDominante = "";
 	protected DateFormat df = new SimpleDateFormat("HH:mm:ss");
 	public final Calendar calendario = Calendar.getInstance();
 	public String horaAuditoria = String.valueOf(calendario

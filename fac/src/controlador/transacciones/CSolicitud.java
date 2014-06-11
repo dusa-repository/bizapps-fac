@@ -68,6 +68,7 @@ public class CSolicitud extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
+		System.out.println("Grupo" + grupoDominante + "  Variable" + variable);
 		buscarCatalogoPropio();
 
 	}
@@ -319,12 +320,65 @@ public class CSolicitud extends CGenerico {
 
 	public void cargarLista() {
 		listPlanilla.clear();
-//		List<PlanillaCata> listCata3 = servicioPlanillaCata
-//		.buscarAdminEstado(variable);
-//		List<PlanillaCata> listCata2 = servicioPlanillaCata
-//				.buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
-		List<PlanillaCata> listCata = servicioPlanillaCata
-				.buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()), variable);
+		List<PlanillaCata> listCata = new ArrayList<PlanillaCata>();
+		List<PlanillaEvento> listEvento = new ArrayList<PlanillaEvento>();
+		List<PlanillaPromocion> listPromocion = new ArrayList<PlanillaPromocion>();
+		List<PlanillaArte> listArte = new ArrayList<PlanillaArte>();
+		List<PlanillaUniforme> listUniforme = new ArrayList<PlanillaUniforme>();
+		List<PlanillaFachada> listFachada = new ArrayList<PlanillaFachada>();
+		switch (grupoDominante) {
+		case "Administrador":
+			listCata = servicioPlanillaCata.buscarAdminEstado(variable);
+			listEvento = servicioPlanillaEvento.buscarAdminEstado(variable);
+			listPromocion = servicioPlanillaPromocion
+					.buscarAdminEstado(variable);
+			listArte = servicioPlanillaArte.buscarAdminEstado(variable);
+			listUniforme = servicioPlanillaUniforme.buscarAdminEstado(variable);
+			listFachada = servicioPlanillaFachada.buscarAdminEstado(variable);
+			break;
+
+		case "Coordinador":
+			listCata = servicioPlanillaCata.buscarSupervisorYEstado(
+					nombreUsuarioSesion(), variable);
+			listEvento = servicioPlanillaEvento.buscarSupervisorYEstado(
+					nombreUsuarioSesion(), variable);
+			listPromocion = servicioPlanillaPromocion.buscarSupervisorYEstado(
+					nombreUsuarioSesion(), variable);
+			listArte = servicioPlanillaArte.buscarSupervisorYEstado(
+					nombreUsuarioSesion(), variable);
+			listUniforme = servicioPlanillaUniforme.buscarSupervisorYEstado(
+					nombreUsuarioSesion(), variable);
+			listFachada = servicioPlanillaFachada.buscarSupervisorYEstado(
+					nombreUsuarioSesion(), variable);
+			break;
+
+		case "Supervisor":
+			listCata = servicioPlanillaCata.buscarUsuarioSessionYEstado(
+					usuarioSesion(nombreUsuarioSesion()), variable);
+			listEvento = servicioPlanillaEvento.buscarUsuarioSessionYEstado(
+					usuarioSesion(nombreUsuarioSesion()), variable);
+			listPromocion = servicioPlanillaPromocion
+					.buscarUsuarioSessionYEstado(
+							usuarioSesion(nombreUsuarioSesion()), variable);
+			listArte = servicioPlanillaArte.buscarUsuarioSessionYEstado(
+					usuarioSesion(nombreUsuarioSesion()), variable);
+			listUniforme = servicioPlanillaUniforme
+					.buscarUsuarioSessionYEstado(
+							usuarioSesion(nombreUsuarioSesion()), variable);
+			listFachada = servicioPlanillaFachada.buscarUsuarioSessionYEstado(
+					usuarioSesion(nombreUsuarioSesion()), variable);
+			break;
+
+		default:
+			break;
+		}
+		// listCata = servicioPlanillaCata.buscarAdminEstado(variable);
+		// List<PlanillaCata> listCata2 =
+		// servicioPlanillaCata.buscarSupervisorYEstado(nombreUsuarioSesion(),
+		// variable);
+		// List<PlanillaCata> listCata = servicioPlanillaCata
+		// .buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()),
+		// variable);
 		for (int i = 0; i < listCata.size(); i++) {
 			long id = listCata.get(i).getIdPlanillaCata();
 			String usuario = listCata.get(i).getUsuario().getNombre();
@@ -337,12 +391,13 @@ public class CSolicitud extends CGenerico {
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
 		}
-//		List<PlanillaEvento> listEvento = servicioPlanillaEvento
-//				.buscarAdminEstado(variable);
-//		List<PlanillaEvento> listEvento = servicioPlanillaEvento
-//				.buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
-		List<PlanillaEvento> listEvento = servicioPlanillaEvento
-				.buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()), variable);
+		// List<PlanillaEvento> listEvento = servicioPlanillaEvento
+		// .buscarAdminEstado(variable);
+		// List<PlanillaEvento> listEvento = servicioPlanillaEvento
+		// .buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
+		// List<PlanillaEvento> listEvento = servicioPlanillaEvento
+		// .buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()),
+		// variable);
 		for (int i = 0; i < listEvento.size(); i++) {
 			long id = listEvento.get(i).getIdPlanillaEvento();
 			String usuario = listEvento.get(i).getUsuario().getNombre();
@@ -355,12 +410,13 @@ public class CSolicitud extends CGenerico {
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
 		}
-//		List<PlanillaPromocion> listPromocion = servicioPlanillaPromocion
-//				.buscarAdminEstado(variable);
-//		List<PlanillaPromocion> listPromocion = servicioPlanillaPromocion
-//				.buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
-		List<PlanillaPromocion> listPromocion = servicioPlanillaPromocion
-				.buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()), variable);
+		// List<PlanillaPromocion> listPromocion = servicioPlanillaPromocion
+		// .buscarAdminEstado(variable);
+		// List<PlanillaPromocion> listPromocion = servicioPlanillaPromocion
+		// .buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
+		// List<PlanillaPromocion> listPromocion = servicioPlanillaPromocion
+		// .buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()),
+		// variable);
 		for (int i = 0; i < listPromocion.size(); i++) {
 			long id = listPromocion.get(i).getIdPlanillaPromocion();
 			String usuario = listPromocion.get(i).getUsuario().getNombre();
@@ -373,12 +429,13 @@ public class CSolicitud extends CGenerico {
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
 		}
-//		List<PlanillaArte> listArte = servicioPlanillaArte
-//				.buscarAdminEstado(variable);
-//		List<PlanillaArte> listArte = servicioPlanillaArte
-//				.buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
-		List<PlanillaArte> listArte = servicioPlanillaArte
-				.buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()), variable);
+		// List<PlanillaArte> listArte = servicioPlanillaArte
+		// .buscarAdminEstado(variable);
+		// List<PlanillaArte> listArte = servicioPlanillaArte
+		// .buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
+		// List<PlanillaArte> listArte = servicioPlanillaArte
+		// .buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()),
+		// variable);
 		for (int i = 0; i < listArte.size(); i++) {
 			long id = listArte.get(i).getIdPlanillaArte();
 			String usuario = listArte.get(i).getUsuario().getNombre();
@@ -391,12 +448,13 @@ public class CSolicitud extends CGenerico {
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
 		}
-//		List<PlanillaUniforme> listUniforme = servicioPlanillaUniforme
-//				.buscarAdminEstado(variable);
-//		List<PlanillaUniforme> listUniforme = servicioPlanillaUniforme
-//				.buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
-		List<PlanillaUniforme> listUniforme = servicioPlanillaUniforme
-				.buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()), variable);
+		// List<PlanillaUniforme> listUniforme = servicioPlanillaUniforme
+		// .buscarAdminEstado(variable);
+		// List<PlanillaUniforme> listUniforme = servicioPlanillaUniforme
+		// .buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
+		// List<PlanillaUniforme> listUniforme = servicioPlanillaUniforme
+		// .buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()),
+		// variable);
 		for (int i = 0; i < listUniforme.size(); i++) {
 			long id = listUniforme.get(i).getIdPlanillaUniforme();
 			String usuario = listUniforme.get(i).getUsuario().getNombre();
@@ -409,12 +467,13 @@ public class CSolicitud extends CGenerico {
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
 		}
-//		List<PlanillaFachada> listFachada = servicioPlanillaFachada
-//				.buscarAdminEstado(variable);
-//		List<PlanillaFachada> listFachada = servicioPlanillaFachada
-//				.buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
-		List<PlanillaFachada> listFachada = servicioPlanillaFachada
-				.buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()), variable);
+		// List<PlanillaFachada> listFachada = servicioPlanillaFachada
+		// .buscarAdminEstado(variable);
+		// List<PlanillaFachada> listFachada = servicioPlanillaFachada
+		// .buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
+		// List<PlanillaFachada> listFachada = servicioPlanillaFachada
+		// .buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()),
+		// variable);
 		for (int i = 0; i < listFachada.size(); i++) {
 			long id = listFachada.get(i).getIdPlanillaFachada();
 			String usuario = listFachada.get(i).getUsuario().getNombre();

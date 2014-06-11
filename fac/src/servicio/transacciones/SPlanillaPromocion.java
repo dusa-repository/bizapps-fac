@@ -45,7 +45,7 @@ public class SPlanillaPromocion {
 	}
 
 	public List<PlanillaPromocion> buscarAdminEstado(String variable) {
-		return planillaPromocionDAO.findByEstado(variable);
+		return planillaPromocionDAO.findByEstadoNot(variable);
 	}
 
 	public List<PlanillaPromocion> buscarSupervisorYEstado(

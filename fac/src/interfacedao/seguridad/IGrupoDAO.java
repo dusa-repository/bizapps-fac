@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IGrupoDAO extends JpaRepository<Grupo, Long> {
 
-	List<Grupo> findByUsuarios(Usuario u);
+	List<Grupo> findByUsuariosOrderByNombreAsc(Usuario u);
 
 }

@@ -19,6 +19,6 @@ public interface IPlanillaCataDAO extends JpaRepository<PlanillaCata, Long> {
 	List<PlanillaCata> findByUsuarioSupervisorAndEstado(
 			String nombreUsuarioSesion, String variable);
 
-	List<PlanillaCata> findByEstado(String variable);
+	List<PlanillaCata> findByEstadoNot(String variable);
 
 }

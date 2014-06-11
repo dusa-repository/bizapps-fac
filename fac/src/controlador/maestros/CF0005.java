@@ -71,7 +71,7 @@ public class CF0005 extends CGenerico {
 			}
 
 			@Override
-			public void reporte() {
+			public void buscar() {
 			}
 
 			@Override

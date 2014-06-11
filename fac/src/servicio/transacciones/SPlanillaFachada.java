@@ -45,7 +45,7 @@ public class SPlanillaFachada {
 	}
 
 	public List<PlanillaFachada> buscarAdminEstado(String variable) {
-		return planillaFachadaDAO.findByEstado(variable);
+		return planillaFachadaDAO.findByEstadoNot(variable);
 	}
 
 	public List<PlanillaFachada> buscarSupervisorYEstado(
