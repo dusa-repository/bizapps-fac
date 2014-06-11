@@ -50,6 +50,19 @@
 										<!-- onClick='contenido.src="../vistas/seguridad/VEditarUsuario.zul"' -->
 									</a>
 								</vbox>
+								<vbox>
+									<separator />
+									<separator />
+									<separator />
+									<listbox  width="120px" height="30px"  id="ltbRoles">
+										<template name="model">
+											<listitem>
+												<listcell style="background:#500101"  label="${each.nombre}">
+												</listcell>
+											</listitem>
+										</template>
+									</listbox>
+								</vbox>
 							</hbox>
 						</div>
 					</hbox>
@@ -75,7 +88,7 @@
 										orient="vertical" visible="false" />
 									<button id="btnSolicitudArte" class="btn"
 										label="Solicitud de Arte y Publicaciones" orient="vertical"
-										visible="false"/>
+										visible="false" />
 								</hbox>
 								<separator />
 								<separator />
@@ -93,7 +106,7 @@
 						<groupbox closable="false" height="80%" width="190px"
 							mold="3d">
 							<caption label="ACCIONES"
-								style="color:White; font-size: 17px; font-weight:bold; background: #3A0202" />
+								style="color:White; font-size: 17px; font-weight:bold; background: #3A0202; padding: 0 0 0 35px" />
 							<vbox pack="center">
 								<separator />
 								<separator />

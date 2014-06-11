@@ -6,6 +6,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Properties;
+
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import modelo.seguridad.Usuario;
 
@@ -149,5 +157,54 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 
 	public Usuario usuarioSesion(String valor) {
 		return servicioUsuario.buscar(valor);
+	}
+	/* Metodo que permite enviar un correo electronico a cualquier destinatario */
+	public boolean enviarEmailNotificacion(String correo, String mensajes) {
+		try {
+
+			Properties props = new Properties();
+			props.setProperty("mail.smtp.host", "smtp.gmail.com");
+			props.setProperty("mail.smtp.starttls.enable", "true");
+			props.setProperty("mail.smtp.port", "587");
+			props.setProperty("mail.smtp.auth", "true");
+
+			Session session = Session.getDefaultInstance(props);
+			String asunto = "Notificacion de SITEG";
+			String remitente = "siteg.ucla@gmail.com";
+			String contrasena = "Equipo.2";
+			String destino = correo;
+			String mensaje = mensajes;
+
+			String destinos[] = destino.split(",");
+
+			MimeMessage message = new MimeMessage(session);
+
+			message.setFrom(new InternetAddress(remitente));
+
+			Address[] receptores = new Address[destinos.length];
+			int j = 0;
+			while (j < destinos.length) {
+				receptores[j] = new InternetAddress(destinos[j]);
+				j++;
+			}
+
+			message.addRecipients(Message.RecipientType.TO, receptores);
+			message.setSubject(asunto);
+			message.setText(mensaje);
+
+			Transport t = session.getTransport("smtp");
+			t.connect(remitente, contrasena);
+			t.sendMessage(message,
+					message.getRecipients(Message.RecipientType.TO));
+
+			t.close();
+
+			return true;
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

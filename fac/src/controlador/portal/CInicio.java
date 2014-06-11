@@ -6,10 +6,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import modelo.maestros.Uniforme;
 import modelo.seguridad.Arbol;
+import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 
 import org.springframework.security.core.Authentication;
@@ -28,6 +31,8 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Window;
 
 import componente.Validador;
@@ -56,22 +61,56 @@ public class CInicio extends CGenerico {
 	private Button btnCruds;
 	@Wire
 	private Image imagenes;
+	@Wire
+	private Listbox ltbRoles;
 //	@Wire
 //	private Include include;
 	URL url = getClass().getResource("/controlador/maestros/usuario.png");
 
 	@Override
 	public void inicializar() throws IOException {
+		
+		Authentication authe = SecurityContextHolder.getContext()
+				.getAuthentication();
+
+		Usuario u = servicioUsuario.buscarUsuarioPorNombre(authe.getName());
+		
+		Set<Grupo> roles;
+		roles =  u.getGrupos();
+		ltbRoles.setModel(new ListModelList<Grupo>(roles));
+		
+		btnCataInduccion.setSrc("/public/imagenes/botones/planillaP.png");
+		btnEvento.setSrc("/public/imagenes/botones/planillaP.png");
+		btnFachada.setSrc("/public/imagenes/botones/planillaP.png");
+		btnPromocion.setSrc("/public/imagenes/botones/planillaP.png");
+		btnSolicitudArte.setSrc("/public/imagenes/botones/planillaP.png");
+		btnUniforme.setSrc("/public/imagenes/botones/planillaP.png");
+		btnCruds.setSrc("/public/imagenes/botones/adminP.png");
+		btnInBox.setSrc("/public/imagenes/botones/inboxP.png");
+
+		Over(btnCruds, "adminG");
+		Out(btnCruds, "adminP");
+		Over(btnInBox, "inboxG");
+		Out(btnInBox, "inboxP");
+		Over(btnCataInduccion, "planillaG");
+		Out(btnCataInduccion, "planillaP");		
+		Over(btnEvento, "planillaG");
+		Out(btnEvento, "planillaP");		
+		Over(btnFachada, "planillaG");
+		Out(btnFachada, "planillaP");		
+		Over(btnPromocion, "planillaG");
+		Out(btnPromocion, "planillaP");		
+		Over(btnSolicitudArte, "planillaG");
+		Out(btnSolicitudArte, "planillaP");
+		Over(btnUniforme, "planillaG");
+		Out(btnUniforme, "planillaP");
 
 		// String ruta = "/vistas/componentes/VPrincipal.zul";
 		// include.setSrc(null);
 		
 //		include.setSrc("/vistas/componentes/VPrincipal.zul");
 		
-		Authentication authe = SecurityContextHolder.getContext()
-				.getAuthentication();
 
-		Usuario u = servicioUsuario.buscarUsuarioPorNombre(authe.getName());
 
 		if (u.getImagen() == null) {
 			imagenes.setContent(new AImage(url));
@@ -94,6 +133,7 @@ public class CInicio extends CGenerico {
 		botones.add(btnSolicitudArte);
 		botones.add(btnInBox);
 		botones.add(btnCruds);
+		
 //		if (SecurityUtil.isAllGranted("ROLE_SUPERVISOR")) {
 //		}
 		Authentication auth = SecurityContextHolder.getContext()
@@ -110,28 +150,6 @@ public class CInicio extends CGenerico {
 							.getId())) {
 						final int j = i;
 						botones.get(i).setVisible(true);
-						botones.get(i).setSrc(
-								"/public/imagenes/botones/planillaP.png");
-						botones.get(i).addEventListener(Events.ON_MOUSE_OVER,
-								new EventListener<Event>() {
-									@Override
-									public void onEvent(Event arg0)
-											throws Exception {
-										botones.get(j)
-												.setSrc("/public/imagenes/botones/planillaG.png");
-										botones.get(j).setStyle("color:black; font-weight: bold");
-									}
-								});
-						botones.get(i).addEventListener(Events.ON_MOUSE_OUT,
-								new EventListener<Event>() {
-									@Override
-									public void onEvent(Event arg0)
-											throws Exception {
-										botones.get(j)
-												.setSrc("/public/imagenes/botones/planillaP.png");
-										botones.get(j).setStyle("color:white; font-weight: normal");
-									}
-								});
 						botones.get(i).addEventListener(Events.ON_CLICK,
 								new EventListener<Event>() {
 									@Override
@@ -148,5 +166,28 @@ public class CInicio extends CGenerico {
 				}
 			}
 		}
+	}
+	
+
+	public void Over(final Button boton, final String imagen) {
+		boton.addEventListener(Events.ON_MOUSE_OVER,
+				new EventListener<Event>() {
+					@Override
+					public void onEvent(Event arg0) throws Exception {
+						boton.setSrc("/public/imagenes/botones/" + imagen
+								+ ".png");
+						boton.setStyle("color:black");
+					}
+				});
+	}
+
+	public void Out(final Button boton, final String imagen) {
+		boton.addEventListener(Events.ON_MOUSE_OUT, new EventListener<Event>() {
+			@Override
+			public void onEvent(Event arg0) throws Exception {
+				boton.setSrc("/public/imagenes/botones/" + imagen + ".png");
+				boton.setStyle("color:white");
+			}
+		});
 	}
 }
