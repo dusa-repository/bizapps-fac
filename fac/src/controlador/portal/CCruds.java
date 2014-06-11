@@ -111,7 +111,7 @@ public class CCruds extends CGenerico {
 											throws Exception {
 										botones.get(j)
 												.setSrc("/public/imagenes/botones/crudG.png");
-										botones.get(j).setStyle("color:black; font-weight: bold");
+										botones.get(j).setStyle("color:black");
 									}
 								});
 						botones.get(i).addEventListener(Events.ON_MOUSE_OUT,
@@ -121,7 +121,7 @@ public class CCruds extends CGenerico {
 											throws Exception {
 										botones.get(j)
 												.setSrc("/public/imagenes/botones/crudP.png");
-										botones.get(j).setStyle("color:white; font-weight: normal");
+										botones.get(j).setStyle("color:white");
 									}
 								});
 						botones.get(i).addEventListener(Events.ON_CLICK,

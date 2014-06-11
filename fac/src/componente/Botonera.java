@@ -30,7 +30,7 @@ public abstract class Botonera extends Hbox {
 		this.appendChild(btnReporte);
 		this.appendChild(btnSalir);
 		Space espacio = new Space();
-		espacio.setSpacing("125%");
+		espacio.setSpacing("150%");
 		this.appendChild(espacio);
 		this.appendChild(btnEnviar);
 

@@ -133,7 +133,7 @@ public class CInbox extends CGenerico {
 					public void onEvent(Event arg0) throws Exception {
 						boton.setSrc("/public/imagenes/botones/" + imagen
 								+ ".png");
-						boton.setStyle("color:black; font-weight: bold");
+						boton.setStyle("color:black");
 					}
 				});
 	}
@@ -143,7 +143,7 @@ public class CInbox extends CGenerico {
 			@Override
 			public void onEvent(Event arg0) throws Exception {
 				boton.setSrc("/public/imagenes/botones/" + imagen + ".png");
-				boton.setStyle("color:white; font-weight: normal");
+				boton.setStyle("color:white");
 			}
 		});
 	}

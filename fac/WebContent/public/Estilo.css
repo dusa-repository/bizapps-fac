@@ -9,6 +9,7 @@
 	color: white;
 	font-size: 16px;
 	font-weight: normal;
+
 }
 
 .z-borderlayout {
@@ -34,11 +35,13 @@
 	border-top: none;
 	border-right: none;
 	border-bottom: none;
+
 }
 
 .z-groupbox-header {
 	border: #3A0202;
 	background: #3A0202;
+	font-weight: normal;
 }
 
 .z-groupbox-content {
@@ -59,17 +62,18 @@
 	border: none;
 	color: white;
 	white-space: pre-line;
+		text-shadow: 0 1px #3A0202;
 }
 
 .btn-salir {
-	font-size: 18px;
+	font-size: 17px;
 	cursor: pointer;
 	width: 110px;
 	height: 40px;
 	background: #3A0202;
 	color: white;
-	white-space: pre-line;
 	orient: vertical;
+	text-shadow: 0 1px #3A0202;
 }
 
 .multilinea {

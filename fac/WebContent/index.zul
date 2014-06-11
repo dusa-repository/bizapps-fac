@@ -6,7 +6,7 @@
 		a
 		= "";
 		if (variable == null)
-		a = "INICIAR SESION";
+		a = "ACCESO AL SISTEMA";
 		else
 		a =
 		execution.getParameter("respuesta");
@@ -18,8 +18,8 @@
 					<hbox hflex="1">
 						<vbox>
 							<separator />
-							<image src="/public/imagenes/generales/LogoDusa.png"
-								height="4em" width="20em" />
+							<image src="/public/imagenes/generales/LogoDusaA.jpg"
+								height="5em" width="25em" />
 						</vbox>
 						<div align="center" width="35em">
 							<separator />
@@ -37,22 +37,19 @@
 			<center border="none">
 				<div align="center" height="100%" width="100%" style="background:#500101">
 					<div align="right">
-						<hbox >
-							<image src="/public/imagenes/generales/1.png"
-								height="7em" width="9em" />
-							<image src="/public/imagenes/generales/2.png"
-								height="7em" width="9em" />
-							<image src="/public/imagenes/generales/3.png"
-								height="7em" width="9em" />
-							<image src="/public/imagenes/generales/4.png"
-								height="7em" width="9em" />
+						<hbox>
+							<image src="/public/imagenes/generales/1.jpg" height="7em"
+								width="9em" />
+							<image src="/public/imagenes/generales/2.jpg" height="7em"
+								width="9em" />
+							<image src="/public/imagenes/generales/3.jpg" height="7em"
+								width="9em" />
 						</hbox>
 					</div>
 					<hbox style="border: none" align="center" pack="center"
 						height="75%" width="100%">
-						<groupbox width="25em" height="50%" mold="3d">
-							<caption label="${a}"
-								style="color:white; font-size: 18px; font-weight:bold" />
+						<groupbox apply="controlador.portal.CIndex" width="25em" height="60%" mold="3d">
+							<caption label="${a}" style="color:white; font-size: 18px" />
 							<separator></separator>
 							<separator></separator>
 							<hlayout width="100%">
@@ -83,6 +80,14 @@
 									<separator></separator>
 									<separator></separator>
 								</h:form>
+							</hlayout>
+							<separator></separator>
+							<hlayout width="100%">
+								<a href="">
+									<label id="lblOlvidoClave" sclass="pointer"
+										value="¿Olvido su Contraseña?" class="etiqueta"
+										style="margin-left:80px;font-size:16px; font-weight: bold" />
+								</a>
 							</hlayout>
 						</groupbox>
 					</hbox>
