@@ -81,21 +81,8 @@ public class CInicio extends CGenerico {
 		// roles = u.getGrupos();
 		List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
 		for (int i = 0; i < grupos.size(); i++) {
-			if (grupos.get(i).getNombre().equals("Administrador")) {
+			if (grupos.get(i).getNombre().equals("Administrador"))
 				admin = true;
-				grupoDominante = grupos.get(i).getNombre();
-				i = grupos.size();
-			} else {
-				if (grupos.get(i).getNombre().equals("Coordinador")) {
-					grupoDominante = grupos.get(i).getNombre();
-					i = grupos.size();
-				} else {
-					if (grupos.get(i).getNombre().equals("Supervisor")) {
-						grupoDominante = grupos.get(i).getNombre();
-						i = grupos.size();
-					}
-				}
-			}
 		}
 		ltbRoles.setModel(new ListModelList<Grupo>(grupos));
 
