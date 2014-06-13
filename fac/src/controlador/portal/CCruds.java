@@ -155,5 +155,12 @@ public class CCruds extends CGenerico {
 	public void cerrar(){
 		cerrarVentana(wdwCruds);
 	}
+	
+	@Listen("onClick = #lblEditarCuenta")
+	public void abrirVentana(){
+		Window window = (Window) Executions.createComponents(
+				"/vistas/seguridad/VEditarUsuario.zul", null, null);
+				window.doModal();
+	}
 
 }

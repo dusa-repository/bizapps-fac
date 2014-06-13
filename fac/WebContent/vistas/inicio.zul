@@ -46,8 +46,8 @@
 									</a>
 									<a style="color:white">
 										<space />
-										<label id="lblEditarCuenta" value="Editar Cuenta" />
-										<!-- onClick='contenido.src="../vistas/seguridad/VEditarUsuario.zul"' -->
+										<label id="lblEditarCuenta" value="Editar Cuenta"/>
+
 									</a>
 								</vbox>
 								<separator />
@@ -59,7 +59,8 @@
 									<listbox style="border:none" width="150px" id="ltbRoles">
 										<template name="model">
 											<listitem>
-												<listcell style="color:white;font-weight: bold; background:#500101"
+												<listcell
+													style="color:white;font-weight: bold; background:#500101"
 													label="${each.nombre}">
 												</listcell>
 											</listitem>

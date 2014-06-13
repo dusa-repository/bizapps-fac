@@ -20,6 +20,10 @@ public class Mensaje {
 	public static String enUso = "La interfaz esta siendo usada";
 	public static String articuloNoExiste = "El Codigo del Articulo no Existe.";
 	public static String enviado = "La solicitud ha sido enviada Correctamente";
+	public static String correoInvalido = "El Correo es Invalido.";
+	public static String usuarioNoRegistrado = "El Usuario no Esta Registrado.";
+	public static String correoNoConcuerda= "El Correo no Concuerda con los Datos del Usuario.";
+	public static String contrasennasNoCoinciden = "Las Contraseñas no Coinciden.";
 	
 	
 	public void mensajeInformacion(String msj) {

@@ -22,8 +22,6 @@
 						</div>
 						<vbox>
 							<separator />
-							<!-- <image src="../public/imagenes/generales/banner.png" height="3em" 
-								width="7em" /> -->
 						</vbox>
 						<div align="center" width="100%">
 							<hbox>
@@ -42,7 +40,6 @@
 									<a style="color:white">
 										<space />
 										<label id="lblEditarCuenta" value="Editar Cuenta" />
-										<!-- onClick='contenido.src="../vistas/seguridad/VEditarUsuario.zul"' -->
 									</a>
 								</vbox>
 								<separator />
@@ -54,7 +51,8 @@
 									<listbox style="border:none" width="150px" id="ltbRoles">
 										<template name="model">
 											<listitem>
-												<listcell style="color:white;font-weight: bold; background:#500101"
+												<listcell
+													style="color:white;font-weight: bold; background:#500101"
 													label="${each.nombre}">
 												</listcell>
 											</listitem>

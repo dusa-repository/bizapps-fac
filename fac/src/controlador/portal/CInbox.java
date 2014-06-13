@@ -197,4 +197,11 @@ public class CInbox extends CGenerico {
 		getPendiente();
 		getRechazada();
 	}
+	
+	@Listen("onClick = #lblEditarCuenta")
+	public void abrirVentana(){
+		Window window = (Window) Executions.createComponents(
+				"/vistas/seguridad/VEditarUsuario.zul", null, null);
+				window.doModal();
+	}
 }
