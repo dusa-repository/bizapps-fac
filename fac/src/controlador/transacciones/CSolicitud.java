@@ -12,6 +12,8 @@ import modelo.estado.BitacoraFachada;
 import modelo.estado.BitacoraPromocion;
 import modelo.estado.BitacoraUniforme;
 import modelo.generico.PlanillaGenerica;
+import modelo.seguridad.Grupo;
+import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaArte;
 import modelo.transacciones.PlanillaCata;
 import modelo.transacciones.PlanillaEvento;
@@ -19,6 +21,8 @@ import modelo.transacciones.PlanillaFachada;
 import modelo.transacciones.PlanillaPromocion;
 import modelo.transacciones.PlanillaUniforme;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -68,6 +72,26 @@ public class CSolicitud extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
+		Authentication authe = SecurityContextHolder.getContext()
+				.getAuthentication();
+		Usuario u = servicioUsuario.buscarUsuarioPorNombre(authe.getName());
+		List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
+		for (int i = 0; i < grupos.size(); i++) {
+			if (grupos.get(i).getNombre().equals("Administrador")) {
+				grupoDominante = grupos.get(i).getNombre();
+				i = grupos.size();
+			} else {
+				if (grupos.get(i).getNombre().equals("Coordinador")) {
+					grupoDominante = grupos.get(i).getNombre();
+					i = grupos.size();
+				} else {
+					if (grupos.get(i).getNombre().equals("Supervisor")) {
+						grupoDominante = grupos.get(i).getNombre();
+						i = grupos.size();
+					}
+				}
+			}
+		}
 		System.out.println("Grupo" + grupoDominante + "  Variable" + variable);
 		buscarCatalogoPropio();
 

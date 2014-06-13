@@ -274,7 +274,7 @@ public class CUsuario extends CGenerico {
 			else {
 				txtCodigoUsuario.setFocus(true);
 				// msj.mensajeAlerta(Mensaje.noHayRegistros);
-				txtCodigoUsuario.setValue("");
+//				txtCodigoUsuario.setValue("");
 				txtEmailUsuario.setValue("");
 				txtNombreUsuario.setValue("");
 				txtPasswordUsuario.setValue("");
@@ -290,7 +290,7 @@ public class CUsuario extends CGenerico {
 				setearUsuario(usuario2);
 			else {
 				txtSupervisorUsuario.setFocus(true);
-				txtSupervisorUsuario.setValue("");
+//				txtSupervisorUsuario.setValue("");
 				// msj.mensajeAlerta(Mensaje.noHayRegistros);
 			}
 			break;
