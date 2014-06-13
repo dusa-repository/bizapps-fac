@@ -26,9 +26,7 @@ public class CReinicioPassword extends CGenerico {
 	@Wire
 	private Textbox txtCorreoUsuario;
 	@Wire
-	private Textbox txtCedulaUsuario;
-	@Wire
-	private Label lblNombreUsuario;
+	private Textbox txtNombreUsuario;
 	@Wire
 	private Div botoneraReinicio;
 	@Wire
@@ -38,8 +36,8 @@ public class CReinicioPassword extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-		
-		txtCedulaUsuario.setFocus(true);
+
+		txtNombreUsuario.setFocus(true);
 		Botonera botonera = new Botonera() {
 
 			@Override
@@ -57,8 +55,8 @@ public class CReinicioPassword extends CGenerico {
 			@Override
 			public void limpiar() {
 				txtCorreoUsuario.setValue("");
-				txtCedulaUsuario.setValue("");
-				txtCedulaUsuario.setFocus(true);
+				txtNombreUsuario.setValue("");
+				txtNombreUsuario.setFocus(true);
 
 			}
 
@@ -67,29 +65,27 @@ public class CReinicioPassword extends CGenerico {
 				String password = KeyGenerators.string().generateKey();
 				String correo;
 				if (validar()) {
-					Usuario usuario = servicioUsuario
-							.buscarUsuarioPorNombre(txtCedulaUsuario.getValue());
+					Usuario usuario = servicioUsuario.buscar(txtNombreUsuario
+							.getValue());
 					if (usuario != null) {
-						if (usuario.getMail() != null) {
+						if (usuario.getMail().equals(
+								txtCorreoUsuario.getValue())) {
 							correo = usuario.getMail();
-						} else {
-							correo = txtCorreoUsuario.getValue();
-						}
-						usuario.setPassword(password);
-						servicioUsuario.guardar(usuario);
-						enviarEmailNotificacion(
-								correo,
-								"Ha Solicitado Reiniciar su Password, sus nuevos datos para el inicio de sesion son: "
-										+ " Usuario: "
-										+ usuario.getNombre()
-										+ "  " + " Password: " + password);
-						limpiar();
-			
+							usuario.setPassword(password);
+							servicioUsuario.guardar(usuario);
+							enviarEmailNotificacion(
+									correo,
+									"Ha Solicitado Reiniciar su Password, sus nuevos datos para el inicio de sesion son: "
+											+ " Usuario: "
+											+ usuario.getIdUsuario()
+											+ "  "
+											+ " Password: " + password);
+							limpiar();
+						} else
+							msj.mensajeAlerta(Mensaje.correoNoConcuerda);
+
 					} else {
-						Messagebox
-								.show("El Nombre de Usuario no Existe",
-										"Informacion", Messagebox.OK,
-										Messagebox.INFORMATION);
+						msj.mensajeAlerta(Mensaje.usuarioNoRegistrado);
 					}
 				}
 
@@ -97,25 +93,21 @@ public class CReinicioPassword extends CGenerico {
 
 			@Override
 			public void enviar() {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void eliminar() {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void atras() {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void adelante() {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -131,7 +123,7 @@ public class CReinicioPassword extends CGenerico {
 	}
 
 	protected boolean validar() {
-		if (txtCedulaUsuario.getText().compareTo("") == 0
+		if (txtNombreUsuario.getText().compareTo("") == 0
 				|| txtCorreoUsuario.getText().compareTo("") == 0) {
 			msj.mensajeError(Mensaje.camposVacios);
 			return false;
@@ -145,17 +137,8 @@ public class CReinicioPassword extends CGenerico {
 	@Listen("onChange = #txtCorreoUsuario")
 	public void validarCorreo() throws IOException {
 		if (Validador.validarCorreo(txtCorreoUsuario.getValue()) == false) {
-			Messagebox.show("Correo Invalido", "Informacion", Messagebox.OK,
-					Messagebox.EXCLAMATION);
+			msj.mensajeAlerta(Mensaje.correoInvalido);
 		}
 	}
 
-	/* Valida la cedula */
-	@Listen("onChange = #txtCedulaUsuario")
-	public void validarCedula() {
-		if (!Validador.validarNumero(txtCedulaUsuario.getValue())) {
-			Messagebox.show("Cedula Invalida", "Informacion", Messagebox.OK,
-					Messagebox.EXCLAMATION);
-		}
-	}
 }
