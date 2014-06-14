@@ -1,5 +1,6 @@
 package componente;
 
+import org.zkoss.spring.security.SecurityUtil;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
@@ -8,7 +9,7 @@ import org.zkoss.zul.Hbox;
 import org.zkoss.zul.Space;
 
 public abstract class Botonera extends Hbox {
-	
+
 	private static final long serialVersionUID = 7264458156730934676L;
 
 	public Botonera() {
@@ -21,7 +22,6 @@ public abstract class Botonera extends Hbox {
 		Button btnAdelante = new Button();
 		Button btnAtras = new Button();
 		Button btnEnviar = new Button();
-
 		this.appendChild(btnGuardar);
 		this.appendChild(btnLimpiar);
 		this.appendChild(btnEliminar);
@@ -42,7 +42,7 @@ public abstract class Botonera extends Hbox {
 		btnBuscar.setSrc("/public/imagenes/botones/buscar.png");
 		btnSalir.setSrc("/public/imagenes/botones/salir.png");
 		btnEnviar.setSrc("/public/imagenes/botones/guardar.png");
-	
+
 		btnAtras.setStyle("font-size: 12px ;width: 93px; height: 30px");
 		btnEliminar.setStyle("font-size: 12px ;width: 93px; height: 30px");
 		btnAdelante.setStyle("font-size: 12px ;width: 93px; height: 30px");
@@ -51,7 +51,7 @@ public abstract class Botonera extends Hbox {
 		btnSalir.setStyle("font-size: 12px ;width: 93px; height: 30px");
 		btnBuscar.setStyle("font-size: 12px ;width: 93px; height: 30px");
 		btnEnviar.setStyle("font-size: 12px ;width: 93px; height: 30px");
-		
+
 		btnAdelante.setLabel("Siguiente");
 		btnAtras.setLabel("Anterior");
 		btnGuardar.setLabel("Guardar");
@@ -70,21 +70,20 @@ public abstract class Botonera extends Hbox {
 		btnSalir.setTooltiptext("Salir");
 		btnEnviar.setTooltiptext("Enviar Solicitud");
 
-
-		btnAtras.addEventListener(Events.ON_CLICK,
+		btnAtras.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+			@Override
+			public void onEvent(Event arg0) throws Exception {
+				atras();
+			}
+		});
+		btnAdelante.addEventListener(Events.ON_CLICK,
 				new EventListener<Event>() {
 					@Override
 					public void onEvent(Event arg0) throws Exception {
-						atras();
+						adelante();
 					}
-				});
-		btnAdelante.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
-			@Override
-			public void onEvent(Event arg0) throws Exception {
-				adelante();
-			}
 
-		});
+				});
 		btnGuardar.addEventListener(Events.ON_CLICK,
 				new EventListener<Event>() {
 					@Override
@@ -108,20 +107,19 @@ public abstract class Botonera extends Hbox {
 						limpiar();
 					}
 				});
-		btnBuscar.addEventListener(Events.ON_CLICK,
-				new EventListener<Event>() {
-					@Override
-					public void onEvent(Event arg0) throws Exception {
-						buscar();
-					}
-				});
+		btnBuscar.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
+			@Override
+			public void onEvent(Event arg0) throws Exception {
+				buscar();
+			}
+		});
 		btnSalir.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 			@Override
 			public void onEvent(Event arg0) throws Exception {
 				salir();
 			}
 		});
-		
+
 		btnEnviar.addEventListener(Events.ON_CLICK, new EventListener<Event>() {
 			@Override
 			public void onEvent(Event arg0) throws Exception {

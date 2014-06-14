@@ -133,6 +133,7 @@ public class CEvento extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
+		System.out.println("Valor"+valor);
 		cargarCombos();
 		llenarListas();
 		txtRespActividad.setValue(nombreUsuarioSesion());

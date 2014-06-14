@@ -119,7 +119,7 @@
 								<separator />
 								<separator />
 								<separator />
-								<zk if="${sec:isAllGranted('admin')}">
+								<zk if="${sec:isAnyGranted('Administrador')}">
 									<button id="botoncito" class="btn" label="Botoncito"
 										orient="vertical" />
 								</zk>

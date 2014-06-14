@@ -5,14 +5,17 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
 
 import modelo.maestros.Uniforme;
 import modelo.seguridad.Arbol;
+import modelo.seguridad.Configuracion;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 
@@ -35,6 +38,7 @@ import org.zkoss.zul.Include;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import componente.Validador;
@@ -63,7 +67,8 @@ public class CInicio extends CGenerico {
 	private Button btnCruds;
 	@Wire
 	private Image imagenes;
-	
+	private String tipo = "";
+	List<Button> botonesAgregados = new ArrayList<Button>();
 	@Wire
 	private Listbox ltbRoles;
 	boolean admin = false;
@@ -155,6 +160,9 @@ public class CInicio extends CGenerico {
 				for (int i = 0; i < botones.size(); i++) {
 					if (("btn" + arbol.getNombre()).equals(botones.get(i)
 							.getId())) {
+						if (!botones.get(i).getId().equals("btnInBox")
+								&& !botones.get(i).getId().equals("btnCruds"))
+							botonesAgregados.add(botones.get(i));
 						final int j = i;
 						botones.get(i).setVisible(true);
 						botones.get(i).addEventListener(Events.ON_CLICK,
@@ -164,6 +172,7 @@ public class CInicio extends CGenerico {
 											throws Exception {
 										if (arbol.getNombre().equals("InBox")
 												&& admin) {
+											recibir(tipo);
 											variable = "En Edicion";
 											Window window = (Window) Executions
 													.createComponents(
@@ -171,6 +180,7 @@ public class CInicio extends CGenerico {
 															null, null);
 											window.doModal();
 										} else {
+											recibir(tipo);
 											Window window = (Window) Executions.createComponents(
 													"/vistas/" + arbol.getUrl()
 															+ ".zul", null,
@@ -183,6 +193,25 @@ public class CInicio extends CGenerico {
 				}
 			}
 		}
+		Map params = new HashMap();
+		params.put("width", "500px");
+		params.put("height", "500px");
+		params.put("style", "top:250px");
+		String[] arreglo = { "TradeMark", "Marca" };
+		Messagebox.Button[] ba = { Messagebox.Button.OK,
+				Messagebox.Button.CANCEL };
+		Messagebox.show("Seleccione un Tipo", "", ba, arreglo, "pit", null,
+				new org.zkoss.zk.ui.event.EventListener() {
+					public void onEvent(Event evt) throws InterruptedException {
+						if (evt.getName().equals("onOK")) {
+							trade();
+						} else {
+							if (evt.getName().equals("onCancel")) {
+								marca();
+							}
+						}
+					}
+				}, params);
 	}
 
 	public void Over(final Button boton, final String imagen) {
@@ -212,5 +241,36 @@ public class CInicio extends CGenerico {
 		Window window = (Window) Executions.createComponents(
 				"/vistas/seguridad/VEditarUsuario.zul", null, null);
 				window.doModal();
+	}
+	
+	public void marca() {
+		List<Configuracion> configuracion = servicioConfiguracion
+				.buscar("TradeMark");
+		System.out.println("vino");
+		tipo = "marca";
+		recorrer(configuracion);
+
+	}
+
+	public void trade() {
+		List<Configuracion> configuracion = servicioConfiguracion
+				.buscar("Marca");
+		System.out.println("vino");
+		recorrer(configuracion);
+		tipo = "trade";
+	}
+
+	private void recorrer(List<Configuracion> configuracion) {
+		for (int i = 0; i < botonesAgregados.size(); i++) {
+			String boton = botonesAgregados.get(i).getId();
+			boolean entro = false;
+			for (int j = 0; j < configuracion.size(); j++) {
+				if (boton.equals("btn" + configuracion.get(j).getPlanilla())) {
+					entro = true;
+				}
+			}
+			if (!entro)
+				botonesAgregados.get(i).setVisible(false);
+		}
 	}
 }

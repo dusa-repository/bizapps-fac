@@ -45,6 +45,7 @@ import servicio.maestros.SSku;
 import servicio.maestros.SUniforme;
 import servicio.maestros.SZona;
 import servicio.seguridad.SArbol;
+import servicio.seguridad.SConfiguracion;
 import servicio.seguridad.SGrupo;
 import servicio.seguridad.SUsuario;
 import servicio.transacciones.SItemDegustacionPlanillaEvento;
@@ -81,6 +82,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SBitacoraPromocion servicioBitacoraPromocion;
 	@WireVariable("SBitacoraUniforme")
 	protected SBitacoraUniforme servicioBitacoraUniforme;
+	@WireVariable("SConfiguracion")
+	protected SConfiguracion servicioConfiguracion;
 	@WireVariable("SGrupo")
 	protected SGrupo servicioGrupo;
 	@WireVariable("SItemDegustacionPlanillaEvento")
@@ -140,6 +143,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	public java.util.Date fecha = new Date();
 	public Timestamp fechaHora = new Timestamp(fecha.getTime());
 	public Mensaje msj = new Mensaje();
+	static public String valor;
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
@@ -153,6 +157,11 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 		win.onClose();
 	}
 
+	public void recibir(String string){
+		valor = string;
+		System.out.println(valor);
+	}
+	
 	public String nombreUsuarioSesion() {
 		Authentication sesion = SecurityContextHolder.getContext()
 				.getAuthentication();
