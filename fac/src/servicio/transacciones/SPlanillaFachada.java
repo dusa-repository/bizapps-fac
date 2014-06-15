@@ -44,14 +44,19 @@ public class SPlanillaFachada {
 		planillaFachadaDAO.save(listFachada);
 	}
 
-	public List<PlanillaFachada> buscarAdminEstado(String variable) {
-		return planillaFachadaDAO.findByEstadoNot(variable);
+	public List<PlanillaFachada> buscarAdminEstado(String variable,
+			String variable2, Usuario usuarioSesion) {
+		List<PlanillaFachada> planillas = planillaFachadaDAO
+				.findByEstadoNotAndTipo(variable, variable2);
+		planillas.addAll(planillaFachadaDAO.findByUsuarioAndEstado(
+				usuarioSesion, variable));
+		return planillas;
 	}
 
 	public List<PlanillaFachada> buscarSupervisorYEstado(
 			String nombreUsuarioSesion, String variable) {
-		return planillaFachadaDAO.findByUsuarioSupervisorAndEstado(nombreUsuarioSesion,
-				variable);
+		return planillaFachadaDAO.findByUsuarioSupervisorAndEstado(
+				nombreUsuarioSesion, variable);
 	}
 
 	public List<PlanillaFachada> buscarUsuarioSessionYEstado(

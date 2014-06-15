@@ -100,6 +100,15 @@ public class PlanillaArte implements Serializable {
 	@OneToMany(mappedBy="planillaArte")
 	private Set<BitacoraArte> bitacoras;
 	
+	@Column(name="tipo_configuracion",length = 500)
+	private String tipo;
+	
+	@Column(name="referencia_pago",length = 500)
+	private String refencia;
+	
+	@Column(name="padre")
+	private Long padre;
+	
 	public PlanillaArte() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -111,7 +120,7 @@ public class PlanillaArte implements Serializable {
 			Double largo, Double ancho, byte[] imagenA, byte[] imagenB,
 			byte[] imagenC, byte[] imagenD, String lineamiento,
 			Timestamp fechaAuditoria, String horaAuditoria,
-			String usuarioAuditoria, String estado, String zona) {
+			String usuarioAuditoria, String estado, String zona, String tipo, String referencia, long padre) {
 		super();
 		this.idPlanillaArte = idPlanillaArte;
 		this.usuario = usuario;
@@ -135,6 +144,9 @@ public class PlanillaArte implements Serializable {
 		this.usuarioAuditoria = usuarioAuditoria;
 		this.estado = estado;
 		this.zona = zona;
+		this.tipo = tipo;
+		this.refencia = referencia;
+		this.padre = padre;
 	}
 
 	public long getIdPlanillaArte() {
@@ -319,6 +331,30 @@ public class PlanillaArte implements Serializable {
 
 	public void setBitacoras(Set<BitacoraArte> bitacoras) {
 		this.bitacoras = bitacoras;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getRefencia() {
+		return refencia;
+	}
+
+	public void setRefencia(String refencia) {
+		this.refencia = refencia;
+	}
+
+	public Long getPadre() {
+		return padre;
+	}
+
+	public void setPadre(Long padre) {
+		this.padre = padre;
 	}
 	
 	

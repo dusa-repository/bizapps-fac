@@ -19,6 +19,7 @@ public interface IPlanillaEventoDAO extends JpaRepository<PlanillaEvento, Long> 
 	List<PlanillaEvento> findByUsuarioSupervisorAndEstado(
 			String nombreUsuarioSesion, String variable);
 
-	List<PlanillaEvento> findByEstadoNot(String variable);
+	List<PlanillaEvento> findByEstadoNotAndTipo(String variable,
+			String variable2);
 
 }

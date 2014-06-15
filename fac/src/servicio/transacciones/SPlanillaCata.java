@@ -46,18 +46,21 @@ public class SPlanillaCata {
 
 	public List<PlanillaCata> buscarUsuarioSessionYEstado(
 			Usuario usuarioSesion, String variable) {
-		return planillaCataDAO.findByUsuarioAndEstado(usuarioSesion,
-				variable);
+		return planillaCataDAO.findByUsuarioAndEstado(usuarioSesion, variable);
 	}
 
 	public List<PlanillaCata> buscarSupervisorYEstado(
 			String nombreUsuarioSesion, String variable) {
-		return planillaCataDAO.findByUsuarioSupervisorAndEstado(nombreUsuarioSesion,
-				variable);
+		return planillaCataDAO.findByUsuarioSupervisorAndEstado(
+				nombreUsuarioSesion, variable);
 	}
 
-	public List<PlanillaCata> buscarAdminEstado(String variable) {
-		// TODO Auto-generated method stub
-		return planillaCataDAO.findByEstadoNot(variable);
+	public List<PlanillaCata> buscarAdminEstado(String variable,
+			String variable2, Usuario usuarioSesion) {
+		List<PlanillaCata> planillas = planillaCataDAO.findByEstadoNotAndTipo(
+				variable, variable2);
+		planillas.addAll(planillaCataDAO.findByUsuarioAndEstado(usuarioSesion,
+				variable));
+		return planillas;
 	}
 }

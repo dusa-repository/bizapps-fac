@@ -119,10 +119,6 @@
 								<separator />
 								<separator />
 								<separator />
-								<zk if="${sec:isAnyGranted('Administrador')}">
-									<button id="botoncito" class="btn" label="Botoncito"
-										orient="vertical" />
-								</zk>
 								<button id="btnCruds" class="btn" label="Admin" orient="vertical"
 									visible="false" />
 							</vbox>

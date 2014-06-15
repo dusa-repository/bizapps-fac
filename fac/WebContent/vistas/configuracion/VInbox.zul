@@ -75,29 +75,38 @@
 								<separator />
 								<separator />
 								<hbox>
+									<button id="btnEdicion" class="btn"
+										label="En Edicion (${$composer.edicion})" orient="vertical"
+										visible="false" />
 									<button id="btnPendiente" class="btn"
 										label="Pendientes por Aprobacion (${$composer.pendiente})"
 										orient="vertical" visible="false" />
-									<button id="btnAprobada" class="btn"
-										label="Procesadas (${$composer.aprobada})" orient="vertical"
-										visible="false" />
 								</hbox>
 								<separator />
 								<separator />
 								<separator />
 								<hbox>
+									<button id="btnAprobada" class="btn"
+										label="Procesadas (${$composer.aprobada})" orient="vertical"
+										visible="false" />
 									<button id="btnRechazada" class="btn"
 										label="Rechazadas (${$composer.rechazada})" orient="vertical"
 										visible="false" />
+
+								</hbox>
+								<separator />
+								<separator />
+								<separator />
+								<hbox>
 									<button id="btnCancelada" class="btn"
 										label="Canceladas (${$composer.cancelada})" orient="vertical"
 										visible="false" />
-
+									<div align="right" style="float: right;">
+										<button id="btnCerrar" class="btn-salir" label="Volver"
+											visible="true" image="/public/imagenes/botones/salir.png" />
+									</div>
 								</hbox>
-								<div align="right" style="float: right;">
-									<button id="btnCerrar" class="btn-salir" label="Volver"
-										visible="true" image="/public/imagenes/botones/salir.png" />
-								</div>
+
 							</vbox>
 						</groupbox>
 					</hbox>

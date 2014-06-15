@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import modelo.estado.BitacoraCata;
@@ -11,12 +12,16 @@ import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.maestros.Recurso;
 import modelo.maestros.Sku;
+import modelo.seguridad.Configuracion;
+import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.ItemPlanillaCata;
 import modelo.transacciones.PlanillaCata;
+import modelo.transacciones.PlanillaEvento;
 import modelo.transacciones.RecursoPlanillaCata;
 
 import org.zkforge.ckez.CKeditor;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -110,15 +115,27 @@ public class CCata extends CGenerico {
 	List<RecursoPlanillaCata> recursosAgregados = new ArrayList<RecursoPlanillaCata>();
 	List<Listbox> listas = new ArrayList<Listbox>();
 	long id = 0;
+	boolean inbox = false;
+	String estadoInbox = "";
+	String tipoInbox = "";
+	Botonera botonera;
+	Usuario usuarioEditador = new Usuario();
 
 	@Override
 	public void inicializar() throws IOException {
-		cargarCombos();
-		llenarListas();
 		txtRespActividad.setValue(nombreUsuarioSesion());
 		txtRespZona.setValue(usuarioSesion(nombreUsuarioSesion())
 				.getSupervisor());
-		Botonera botonera = new Botonera() {
+		boolean editar = false;
+		List<Grupo> grupos = servicioGrupo
+				.buscarGruposUsuario(usuarioSesion(nombreUsuarioSesion()));
+		for (int i = 0; i < grupos.size(); i++) {
+			if (grupos.get(i).getNombre().equals("Administrador")) {
+				i = grupos.size();
+				editar = true;
+			}
+		}
+		botonera = new Botonera() {
 
 			@Override
 			public void salir() {
@@ -151,6 +168,10 @@ public class CCata extends CGenerico {
 				dtbActividad.setValue(fecha);
 				tabDatos.setSelected(true);
 				id = 0;
+				usuarioEditador = null;
+				estadoInbox = "";
+				tipoInbox = "";
+				inbox = false;
 				llenarListas();
 			}
 
@@ -173,10 +194,14 @@ public class CCata extends CGenerico {
 								public void onEvent(Event evt)
 										throws InterruptedException {
 									if (evt.getName().equals("onOK")) {
-										PlanillaCata planilla = servicioPlanillaCata.buscar(id);
-										servicioBitacoraCata.eliminarPorPlanilla(planilla);
-										servicioRecursoPlanillaCata.limpiar(planilla);
-										servicioItemPlanillaCata.limpiar(planilla);
+										PlanillaCata planilla = servicioPlanillaCata
+												.buscar(id);
+										servicioBitacoraCata
+												.eliminarPorPlanilla(planilla);
+										servicioRecursoPlanillaCata
+												.limpiar(planilla);
+										servicioItemPlanillaCata
+												.limpiar(planilla);
 										servicioPlanillaCata.eliminar(id);
 										limpiar();
 										Messagebox
@@ -233,6 +258,53 @@ public class CCata extends CGenerico {
 			}
 		};
 		botoneraCataInduccion.appendChild(botonera);
+		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
+				.getCurrent().getAttribute("inbox");
+		if (map != null) {
+			if (map.get("id") != null) {
+				PlanillaCata planilla = servicioPlanillaCata.buscar((Long) map
+						.get("id"));
+				usuarioEditador = planilla.getUsuario();
+				estadoInbox = (String) map.get("estadoInbox");
+				tipoInbox = planilla.getTipo();
+				settearCampos(planilla);
+				switch (estadoInbox) {
+				case "Pendiente":
+					if (editar) {
+						botonera.getChildren().get(1).setVisible(false);
+						botonera.getChildren().get(2).setVisible(false);
+						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(7).setVisible(false);
+						botonera.getChildren().get(8).setVisible(false);
+					} else {
+						botonera.getChildren().get(0).setVisible(false);
+						botonera.getChildren().get(1).setVisible(false);
+						botonera.getChildren().get(2).setVisible(false);
+						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(7).setVisible(false);
+						botonera.getChildren().get(8).setVisible(false);
+					}
+					break;
+
+				case "En Edicion":
+					break;
+
+				default:
+					botonera.getChildren().get(0).setVisible(false);
+					botonera.getChildren().get(1).setVisible(false);
+					botonera.getChildren().get(2).setVisible(false);
+					botonera.getChildren().get(5).setVisible(false);
+					botonera.getChildren().get(7).setVisible(false);
+					botonera.getChildren().get(8).setVisible(false);
+				}
+				inbox = true;
+				map.clear();
+				map = null;
+				editar = false;
+			}
+		}
+		cargarCombos();
+		llenarListas();
 	}
 
 	public void guardarDatos(String string) {
@@ -254,7 +326,18 @@ public class CCata extends CGenerico {
 		mail = txtCiudad.getValue();
 		nombreActividad = txtNombreActividad.getValue();
 		telefono = txtTelefono.getValue();
-		Usuario usuario = usuarioSesion(nombreUsuarioSesion());
+		Usuario usuario = new Usuario();
+		if (inbox)
+			usuario = usuarioEditador;
+		else
+			usuario = usuarioSesion(nombreUsuarioSesion());
+		if (estadoInbox.equals("Pendiente"))
+			string = "Pendiente";
+		String tipoConfig = "";
+		if (tipoInbox.equals("TradeMark"))
+			tipoConfig = "TradeMark";
+		else
+			tipoConfig = valor;
 		Marca marca = servicioMarca.buscar(cmbMarcaSugerida.getSelectedItem()
 				.getContext());
 		Date valorFecha = dtbActividad.getValue();
@@ -266,7 +349,7 @@ public class CCata extends CGenerico {
 				telefono, mail, direccion, personas, motivo, nivel, edadTarget,
 				costo, descripcion, mecanica, fechaHora, horaAuditoria,
 				nombreUsuarioSesion(), string, usuario.getZona()
-						.getDescripcion());
+						.getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaCata.guardar(planilla);
 		if (id != 0)
 			planilla = servicioPlanillaCata.buscar(id);
@@ -275,6 +358,25 @@ public class CCata extends CGenerico {
 		guardarBitacora(planilla, string);
 		guardarItems(planilla);
 		guardarRecursos(planilla);
+		if (valor.equals("TradeMark") && string.equals("Pendiente")) {
+			Configuracion con = servicioConfiguracion
+					.buscarTradeMark("TradeMark");
+			Usuario usuarioAdmin = new Usuario();
+			if (con != null)
+				usuarioAdmin = con.getUsuario();
+			PlanillaCata planillaAdmin = new PlanillaCata(0, usuarioAdmin,
+					marca, nombreActividad, fechaActividad, cata, ciudad,
+					contacto, telefono, mail, direccion, personas, motivo,
+					nivel, edadTarget, costo, descripcion, mecanica, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), string, usuario
+							.getZona().getDescripcion(), "Marca", "",
+					planilla.getIdPlanillaCata());
+			servicioPlanillaCata.guardar(planillaAdmin);
+			planillaAdmin = servicioPlanillaCata.buscarUltima();
+			guardarBitacora(planillaAdmin, string);
+			guardarItems(planillaAdmin);
+			guardarRecursos(planillaAdmin);
+		}
 	}
 
 	public void guardarBitacora(PlanillaCata planilla, String string) {
@@ -443,6 +545,12 @@ public class CCata extends CGenerico {
 	@Listen("onSeleccion = #catalogoCataInduccion")
 	public void seleccionPropia() {
 		PlanillaCata planilla = catalogo.objetoSeleccionadoDelCatalogo();
+		settearCampos(planilla);
+		llenarListas();
+		catalogo.setParent(null);
+	}
+
+	private void settearCampos(PlanillaCata planilla) {
 		txtCiudad.setValue(planilla.getCiudad());
 		txtContacto.setValue(planilla.getNombreCliente());
 		txtCosto.setValue(planilla.getCosto());
@@ -466,8 +574,6 @@ public class CCata extends CGenerico {
 		dtbActividad.setValue(planilla.getFechaActividad());
 		tabDatos.setSelected(true);
 		id = planilla.getIdPlanillaCata();
-		llenarListas();
-		catalogo.setParent(null);
 	}
 
 	@Listen("onClick = #pasar1")

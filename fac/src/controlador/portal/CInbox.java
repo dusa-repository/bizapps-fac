@@ -47,18 +47,26 @@ public class CInbox extends CGenerico {
 	@Wire
 	private Button btnCancelada;
 	@Wire
+	private Button btnEdicion;
+	@Wire
 	private Image imagenes;
 	@Wire
 	private Listbox ltbRoles;
-	
+
 	URL url = getClass().getResource("/controlador/maestros/usuario.png");
 	int pendiente = 0;
 	int aprobada = 0;
 	int cancelada = 0;
 	int finalizada = 0;
 	int rechazada = 0;
-	
-	
+	int edicion = 0;
+
+	public int getEdicion() {
+		edicion = servicioPlanillaGenerica.buscarCantidadPorUsuarioYEstado(
+				usuarioSesion(nombreUsuarioSesion()), "En Edicion");
+		return edicion;
+	}
+
 	public int getRechazada() {
 		rechazada = servicioPlanillaGenerica.buscarCantidadPorUsuarioYEstado(
 				usuarioSesion(nombreUsuarioSesion()), "Rechazada");
@@ -110,10 +118,10 @@ public class CInbox extends CGenerico {
 				.getAuthentication();
 
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(authe.getName());
-		
+
 		List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
 		ltbRoles.setModel(new ListModelList<Grupo>(grupos));
-		
+
 		if (u.getImagen() == null) {
 			imagenes.setContent(new AImage(url));
 		} else {
@@ -130,6 +138,7 @@ public class CInbox extends CGenerico {
 		botones.add(btnPendiente);
 		botones.add(btnAprobada);
 		botones.add(btnRechazada);
+		botones.add(btnEdicion);
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(
@@ -150,7 +159,11 @@ public class CInbox extends CGenerico {
 									public void onEvent(Event arg0)
 											throws Exception {
 
-										variable = arbol.getNombre();
+										if (arbol.getNombre().equals(
+												"Edicion"))
+											variable = "En Edicion";
+										else
+											variable = arbol.getNombre();
 										Window window = (Window) Executions
 												.createComponents("/vistas/"
 														+ arbol.getUrl()
@@ -190,18 +203,18 @@ public class CInbox extends CGenerico {
 			}
 		});
 	}
-	
-	public void actualizar(){
+
+	public void actualizar() {
 		getAprobada();
 		getCancelada();
 		getPendiente();
 		getRechazada();
 	}
-	
+
 	@Listen("onClick = #lblEditarCuenta")
-	public void abrirVentana(){
+	public void abrirVentana() {
 		Window window = (Window) Executions.createComponents(
 				"/vistas/seguridad/VEditarUsuario.zul", null, null);
-				window.doModal();
+		window.doModal();
 	}
 }

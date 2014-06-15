@@ -245,19 +245,19 @@ public class CInicio extends CGenerico {
 	
 	public void marca() {
 		List<Configuracion> configuracion = servicioConfiguracion
-				.buscar("TradeMark");
+				.buscar("Marca");
 		System.out.println("vino");
-		tipo = "marca";
+		tipo = "Marca";
 		recorrer(configuracion);
 
 	}
 
 	public void trade() {
 		List<Configuracion> configuracion = servicioConfiguracion
-				.buscar("Marca");
+				.buscar("TradeMark");
 		System.out.println("vino");
 		recorrer(configuracion);
-		tipo = "trade";
+		tipo = "TradeMark";
 	}
 
 	private void recorrer(List<Configuracion> configuracion) {

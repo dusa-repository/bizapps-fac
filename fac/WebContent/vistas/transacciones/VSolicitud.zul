@@ -1,16 +1,20 @@
+<?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
 <zk>
-	<window width="60em" closable="false" id="wdwSolicitud"
+	<window width="60em" vflex="1" hflex="1" closable="false" id="wdwSolicitud"
 		apply="controlador.transacciones.CSolicitud">
 		<caption label="Solicitudes ${$composer.titulo}"
 			style="color:white; font-size: 16px; font-weight:bold; " />
 		<div>
-			<hbox>
+			<hbox vflex="1" hflex="1">
 				<div id="catalogoSolicitud" />
 				<vbox>
-					<button id="btnProcesar" label="Procesar"/>
-					<button id="btnCancelar" label="Cancelar"/>
-					<button id="btnRechazar" label="Rechazar" />
-					<button id="btnFinalizar" label="Finalizar"/>
+					<zk if="${sec:isAnyGranted('Administrador')}">
+						<button id="btnProcesar" label="Procesar" />
+						<button id="btnCancelar" label="Cancelar" />
+						<button id="btnRechazar" label="Rechazar" />
+						<button id="btnFinalizar" label="Finalizar" />
+						<button id="btnPagar" label="Pagar" />
+					</zk>
 					<button id="btnVer" label="Ver Solicitud" />
 					<button id="btnCerrar" label="Salir" />
 				</vbox>

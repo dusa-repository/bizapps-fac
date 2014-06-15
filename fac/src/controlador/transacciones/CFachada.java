@@ -7,6 +7,7 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -16,8 +17,11 @@ import modelo.estado.BitacoraFachada;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.maestros.Recurso;
+import modelo.seguridad.Configuracion;
+import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaCata;
+import modelo.transacciones.PlanillaEvento;
 import modelo.transacciones.PlanillaFachada;
 import modelo.transacciones.RecursoPlanillaCata;
 import modelo.transacciones.RecursoPlanillaFachada;
@@ -25,6 +29,7 @@ import modelo.transacciones.RecursoPlanillaFachada;
 import org.zkforge.ckez.CKeditor;
 import org.zkoss.image.AImage;
 import org.zkoss.util.media.Media;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -158,15 +163,27 @@ public class CFachada extends CGenerico {
 	List<RecursoPlanillaFachada> recursosAgregados = new ArrayList<RecursoPlanillaFachada>();
 	List<Listbox> listas = new ArrayList<Listbox>();
 	long id = 0;
+	boolean inbox = false;
+	String estadoInbox = "";
+	String tipoInbox = "";
+	Botonera botonera;
+	Usuario usuarioEditador = new Usuario();
 
 	@Override
 	public void inicializar() throws IOException {
-		cargarCombos();
-		llenarListas();
 		txtRespActividad.setValue(nombreUsuarioSesion());
 		txtRespZona.setValue(usuarioSesion(nombreUsuarioSesion())
 				.getSupervisor());
-		Botonera botonera = new Botonera() {
+		boolean editar = false;
+		List<Grupo> grupos = servicioGrupo
+				.buscarGruposUsuario(usuarioSesion(nombreUsuarioSesion()));
+		for (int i = 0; i < grupos.size(); i++) {
+			if (grupos.get(i).getNombre().equals("Administrador")) {
+				i = grupos.size();
+				editar = true;
+			}
+		}
+		botonera = new Botonera() {
 
 			@Override
 			public void salir() {
@@ -211,7 +228,12 @@ public class CFachada extends CGenerico {
 				imagen2.setContent(imagenUsuario1);
 				imagen3.setContent(imagenUsuario1);
 				imagen4.setContent(imagenUsuario1);
+				usuarioEditador = null;
+				estadoInbox = "";
+				tipoInbox = "";
+				inbox = false;
 				id = 0;
+				tabDatos.setSelected(true);
 				llenarListas();
 			}
 
@@ -294,6 +316,53 @@ public class CFachada extends CGenerico {
 			}
 		};
 		botoneraFachada.appendChild(botonera);
+		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
+				.getCurrent().getAttribute("inbox");
+		if (map != null) {
+			if (map.get("id") != null) {
+				PlanillaFachada planilla = servicioPlanillaFachada
+						.buscar((Long) map.get("id"));
+				estadoInbox = (String) map.get("estadoInbox");
+				usuarioEditador = planilla.getUsuario();
+				tipoInbox = planilla.getTipo();
+				setearCampos(planilla);
+				switch (estadoInbox) {
+				case "Pendiente":
+					if (editar) {
+						botonera.getChildren().get(1).setVisible(false);
+						botonera.getChildren().get(2).setVisible(false);
+						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(7).setVisible(false);
+						botonera.getChildren().get(8).setVisible(false);
+					} else {
+						botonera.getChildren().get(0).setVisible(false);
+						botonera.getChildren().get(1).setVisible(false);
+						botonera.getChildren().get(2).setVisible(false);
+						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(7).setVisible(false);
+						botonera.getChildren().get(8).setVisible(false);
+					}
+					break;
+
+				case "En Edicion":
+					break;
+
+				default:
+					botonera.getChildren().get(0).setVisible(false);
+					botonera.getChildren().get(1).setVisible(false);
+					botonera.getChildren().get(2).setVisible(false);
+					botonera.getChildren().get(5).setVisible(false);
+					botonera.getChildren().get(7).setVisible(false);
+					botonera.getChildren().get(8).setVisible(false);
+				}
+				inbox = true;
+				editar = false;
+				map.clear();
+				map = null;
+			}
+		}
+		cargarCombos();
+		llenarListas();
 	}
 
 	protected void guardarDatos(String string) {
@@ -319,7 +388,18 @@ public class CFachada extends CGenerico {
 		mail = txtEmail.getValue();
 		nombreActividad = txtNombreActividad.getValue();
 		telefono = txtTelefono.getValue();
-		Usuario usuario = usuarioSesion(nombreUsuarioSesion());
+		Usuario usuario = new Usuario();
+		if (inbox)
+			usuario = usuarioEditador;
+		else
+			usuario = usuarioSesion(nombreUsuarioSesion());
+		if (estadoInbox.equals("Pendiente"))
+			string = "Pendiente";
+		String tipoConfig = "";
+		if (tipoInbox.equals("TradeMark"))
+			tipoConfig = "TradeMark";
+		else
+			tipoConfig = valor;
 		Marca marca = servicioMarca.buscar(cmbMarcaSugerida.getSelectedItem()
 				.getContext());
 		Date valorFecha = dtbActividad.getValue();
@@ -356,7 +436,7 @@ public class CFachada extends CGenerico {
 				tipoDecoracion, formato, salidaArte, alto, largo, ancho,
 				imagenUsuario1, imagenUsuario2, imagenUsuario3, imagenUsuario4,
 				fechaHora, horaAuditoria, nombreUsuarioSesion(), string,
-				usuario.getZona().getDescripcion());
+				usuario.getZona().getDescripcion(), valor, "", 0);
 		servicioPlanillaFachada.guardar(planillaFachada);
 		if (id != 0)
 			planillaFachada = servicioPlanillaFachada.buscar(id);
@@ -364,6 +444,27 @@ public class CFachada extends CGenerico {
 			planillaFachada = servicioPlanillaFachada.buscarUltima();
 		guardarBitacora(planillaFachada, string);
 		guardarRecursos(planillaFachada);
+		if (valor.equals("TradeMark") && string.equals("Pendiente")) {
+			Configuracion con = servicioConfiguracion
+					.buscarTradeMark("TradeMark");
+			Usuario usuarioAdmin = new Usuario();
+			if (con != null)
+				usuarioAdmin = con.getUsuario();
+			PlanillaFachada planillaAdmin = new PlanillaFachada(0,
+					usuarioAdmin, marca, nombreActividad, fechaActividad,
+					tipoActividad, ciudad, contacto, nombre, rif, telefono,
+					direccion, mail, personas, duracion, nivel, patente, costo,
+					descripcion, justificacion, tipoDecoracion, formato,
+					salidaArte, alto, largo, ancho, imagenUsuario1,
+					imagenUsuario2, imagenUsuario3, imagenUsuario4, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), string, usuario
+							.getZona().getDescripcion(), "Marca", "",
+					planillaFachada.getIdPlanillaFachada());
+			servicioPlanillaFachada.guardar(planillaAdmin);
+			planillaAdmin = servicioPlanillaFachada.buscarUltima();
+			guardarBitacora(planillaAdmin, string);
+			guardarRecursos(planillaAdmin);
+		}
 	}
 
 	private void guardarRecursos(PlanillaFachada planillaFachada) {
@@ -569,6 +670,12 @@ public class CFachada extends CGenerico {
 	@Listen("onSeleccion = #catalogoFachada")
 	public void seleccionPropia() {
 		PlanillaFachada planilla = catalogo.objetoSeleccionadoDelCatalogo();
+		setearCampos(planilla);
+		llenarListas();
+		catalogo.setParent(null);
+	}
+
+	private void setearCampos(PlanillaFachada planilla) {
 		txtCiudad.setValue(planilla.getCiudad());
 		txtNombre.setValue(planilla.getNombrePdv());
 		txtPatente.setValue(planilla.getPatente());
@@ -602,7 +709,6 @@ public class CFachada extends CGenerico {
 		dtbActividad.setValue(planilla.getFechaActividad());
 		tabDatos.setSelected(true);
 		id = planilla.getIdPlanillaFachada();
-		llenarListas();
 		BufferedImage imag1;
 		if (planilla.getImagenA() != null) {
 			try {
@@ -643,7 +749,7 @@ public class CFachada extends CGenerico {
 				e.printStackTrace();
 			}
 		}
-		catalogo.setParent(null);
+
 	}
 
 	@Listen("onUpload = #fudImagen1")

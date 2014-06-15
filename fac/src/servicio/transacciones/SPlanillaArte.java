@@ -46,17 +46,21 @@ public class SPlanillaArte {
 
 	public List<PlanillaArte> buscarUsuarioSessionYEstado(
 			Usuario usuarioSesion, String variable) {
-		return planillaArteDAO.findByUsuarioAndEstado(usuarioSesion,
-				variable);
+		return planillaArteDAO.findByUsuarioAndEstado(usuarioSesion, variable);
 	}
 
 	public List<PlanillaArte> buscarSupervisorYEstado(
 			String nombreUsuarioSesion, String variable) {
-		return planillaArteDAO.findByUsuarioSupervisorAndEstado(nombreUsuarioSesion,
-				variable);
+		return planillaArteDAO.findByUsuarioSupervisorAndEstado(
+				nombreUsuarioSesion, variable);
 	}
 
-	public List<PlanillaArte> buscarAdminEstado(String variable) {
-		return planillaArteDAO.findByEstadoNot(variable);
+	public List<PlanillaArte> buscarAdminEstado(String variable,
+			String variable2, Usuario usuarioSesion) {
+		List<PlanillaArte> planillas = planillaArteDAO.findByEstadoNotAndTipo(
+				variable, variable2);
+		planillas.addAll(planillaArteDAO.findByUsuarioAndEstado(usuarioSesion,
+				variable));
+		return planillas;
 	}
 }

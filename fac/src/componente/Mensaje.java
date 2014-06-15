@@ -24,6 +24,7 @@ public class Mensaje {
 	public static String usuarioNoRegistrado = "El Usuario no Esta Registrado.";
 	public static String correoNoConcuerda= "El Correo no Concuerda con los Datos del Usuario.";
 	public static String contrasennasNoCoinciden = "Las Contraseñas no Coinciden.";
+	public static String estadoIncorrecto = "Alguna de las planillas no se encuentran en el estado correcto para ser cambiadas";
 	
 	
 	public void mensajeInformacion(String msj) {
