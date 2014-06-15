@@ -44,14 +44,19 @@ public class SPlanillaPromocion {
 		planillaPromocionDAO.save(listPromocion);
 	}
 
-	public List<PlanillaPromocion> buscarAdminEstado(String variable) {
-		return planillaPromocionDAO.findByEstadoNot(variable);
+	public List<PlanillaPromocion> buscarAdminEstado(String variable,
+			String variable2, Usuario usuarioSesion) {
+		List<PlanillaPromocion> planillas = planillaPromocionDAO
+				.findByEstadoNotAndTipo(variable, variable2);
+		planillas.addAll(planillaPromocionDAO.findByUsuarioAndEstado(
+				usuarioSesion, variable));
+		return planillas;
 	}
 
 	public List<PlanillaPromocion> buscarSupervisorYEstado(
 			String nombreUsuarioSesion, String variable) {
-		return planillaPromocionDAO.findByUsuarioSupervisorAndEstado(nombreUsuarioSesion,
-				variable);
+		return planillaPromocionDAO.findByUsuarioSupervisorAndEstado(
+				nombreUsuarioSesion, variable);
 	}
 
 	public List<PlanillaPromocion> buscarUsuarioSessionYEstado(

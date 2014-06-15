@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -16,13 +17,17 @@ import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.maestros.Recurso;
 import modelo.maestros.Uniforme;
+import modelo.seguridad.Configuracion;
+import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaFachada;
+import modelo.transacciones.PlanillaPromocion;
 import modelo.transacciones.PlanillaUniforme;
 import modelo.transacciones.RecursoPlanillaFachada;
 import modelo.transacciones.UniformePlanillaUniforme;
 
 import org.zkforge.ckez.CKeditor;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.event.MouseEvent;
@@ -112,15 +117,27 @@ public class CUniforme extends CGenerico {
 	List<UniformePlanillaUniforme> uniformesAgregados = new ArrayList<UniformePlanillaUniforme>();
 	List<Listbox> listas = new ArrayList<Listbox>();
 	long id = 0;
+	boolean inbox = false;
+	String estadoInbox = "";
+	String tipoInbox = "";
+	Botonera botonera;
+	Usuario usuarioEditador = new Usuario();
 
 	@Override
 	public void inicializar() throws IOException {
-		cargarCombos();
-		llenarListas();
 		txtRespActividad.setValue(nombreUsuarioSesion());
 		txtRespZona.setValue(usuarioSesion(nombreUsuarioSesion())
 				.getSupervisor());
-		Botonera botonera = new Botonera() {
+		boolean editar = false;
+		List<Grupo> grupos = servicioGrupo
+				.buscarGruposUsuario(usuarioSesion(nombreUsuarioSesion()));
+		for (int i = 0; i < grupos.size(); i++) {
+			if (grupos.get(i).getNombre().equals("Administrador")) {
+				i = grupos.size();
+				editar = true;
+			}
+		}
+		botonera = new Botonera() {
 
 			@Override
 			public void salir() {
@@ -154,6 +171,10 @@ public class CUniforme extends CGenerico {
 				cdtJustificacion.setValue("");
 				dtbActividad.setValue(fecha);
 				tabDatos.setSelected(true);
+				usuarioEditador = null;
+				estadoInbox = "";
+				tipoInbox = "";
+				inbox = false;
 				id = 0;
 				llenarListas();
 			}
@@ -225,6 +246,53 @@ public class CUniforme extends CGenerico {
 			}
 		};
 		botoneraUniformes.appendChild(botonera);
+		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
+				.getCurrent().getAttribute("inbox");
+		if (map != null) {
+			if (map.get("id") != null) {
+				PlanillaUniforme planilla = servicioPlanillaUniforme
+						.buscar((Long) map.get("id"));
+				estadoInbox = (String) map.get("estadoInbox");
+				usuarioEditador = planilla.getUsuario();
+				tipoInbox = planilla.getTipo();
+				settearCampos(planilla);
+				switch (estadoInbox) {
+				case "Pendiente":
+					if (editar) {
+						botonera.getChildren().get(1).setVisible(false);
+						botonera.getChildren().get(2).setVisible(false);
+						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(7).setVisible(false);
+						botonera.getChildren().get(8).setVisible(false);
+					} else {
+						botonera.getChildren().get(0).setVisible(false);
+						botonera.getChildren().get(1).setVisible(false);
+						botonera.getChildren().get(2).setVisible(false);
+						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(7).setVisible(false);
+						botonera.getChildren().get(8).setVisible(false);
+					}
+					break;
+
+				case "En Edicion":
+					break;
+
+				default:
+					botonera.getChildren().get(0).setVisible(false);
+					botonera.getChildren().get(1).setVisible(false);
+					botonera.getChildren().get(2).setVisible(false);
+					botonera.getChildren().get(5).setVisible(false);
+					botonera.getChildren().get(7).setVisible(false);
+					botonera.getChildren().get(8).setVisible(false);
+				}
+				inbox = true;
+				editar = false;
+				map.clear();
+				map = null;
+			}
+		}
+		cargarCombos();
+		llenarListas();
 	}
 
 	protected void guardarDatos(String string) {
@@ -245,7 +313,18 @@ public class CUniforme extends CGenerico {
 		nombreActividad = txtNombreActividad.getValue();
 		telefono = txtTelefono.getValue();
 		double costo = txtCosto.getValue();
-		Usuario usuario = usuarioSesion(nombreUsuarioSesion());
+		Usuario usuario = new Usuario();
+		if (inbox)
+			usuario = usuarioEditador;
+		else
+			usuario = usuarioSesion(nombreUsuarioSesion());
+		if (estadoInbox.equals("Pendiente"))
+			string = "Pendiente";
+		String tipoConfig = "";
+		if (tipoInbox.equals("TradeMark"))
+			tipoConfig = "TradeMark";
+		else
+			tipoConfig = valor;
 		Marca marca = servicioMarca.buscar(cmbMarcaSugerida.getSelectedItem()
 				.getContext());
 		Date valorFecha = dtbActividad.getValue();
@@ -258,7 +337,7 @@ public class CUniforme extends CGenerico {
 				marca, nombreActividad, fechaActividad, tipoActividad, ciudad,
 				cliente, nombre, rif, telefono, mail, direccion, logo, costo,
 				justificacion, contrato, fechaHora, rif, nombreUsuarioSesion(),
-				string, usuario.getZona().getDescripcion());
+				string, usuario.getZona().getDescripcion(), valor, "", 0);
 		servicioPlanillaUniforme.guardar(planillaUniforme);
 		if (id != 0)
 			planillaUniforme = servicioPlanillaUniforme.buscar(id);
@@ -266,6 +345,24 @@ public class CUniforme extends CGenerico {
 			planillaUniforme = servicioPlanillaUniforme.buscarUltima();
 		guardarBitacora(planillaUniforme, string);
 		guardarUniformes(planillaUniforme);
+		if (valor.equals("TradeMark") && string.equals("Pendiente")) {
+			Configuracion con = servicioConfiguracion
+					.buscarTradeMark("TradeMark");
+			Usuario usuarioAdmin = new Usuario();
+			if (con != null)
+				usuarioAdmin = con.getUsuario();
+			PlanillaUniforme planillaAdmin = new PlanillaUniforme(0,
+					usuarioAdmin, marca, nombreActividad, fechaActividad,
+					tipoActividad, ciudad, cliente, nombre, rif, telefono,
+					mail, direccion, logo, costo, justificacion, contrato,
+					fechaHora, rif, nombreUsuarioSesion(), string, usuario
+							.getZona().getDescripcion(), "Marca", "",
+					planillaUniforme.getIdPlanillaUniforme());
+			servicioPlanillaUniforme.guardar(planillaAdmin);
+			planillaAdmin = servicioPlanillaUniforme.buscarUltima();
+			guardarBitacora(planillaAdmin, string);
+			guardarUniformes(planillaAdmin);
+		}
 	}
 
 	private void guardarUniformes(PlanillaUniforme planillaUniforme) {
@@ -463,6 +560,12 @@ public class CUniforme extends CGenerico {
 	@Listen("onSeleccion = #catalogoUniformes")
 	public void seleccionPropia() {
 		PlanillaUniforme planilla = catalogo.objetoSeleccionadoDelCatalogo();
+		settearCampos(planilla);
+		llenarListas();
+		catalogo.setParent(null);
+	}
+
+	private void settearCampos(PlanillaUniforme planilla) {
 		txtCiudad.setValue(planilla.getCiudad());
 		txtNombre.setValue(planilla.getNombrePdv());
 		txtCliente.setValue(planilla.getNombreCliente());
@@ -487,8 +590,6 @@ public class CUniforme extends CGenerico {
 		else
 			rdoNo.setChecked(true);
 		id = planilla.getIdPlanillaUniforme();
-		llenarListas();
-		catalogo.setParent(null);
 	}
 
 	public int getCambio() {

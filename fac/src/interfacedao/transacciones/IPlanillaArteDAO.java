@@ -19,6 +19,6 @@ public interface IPlanillaArteDAO extends JpaRepository<PlanillaArte, Long> {
 	List<PlanillaArte> findByUsuarioSupervisorAndEstado(
 			String nombreUsuarioSesion, String variable);
 
-	List<PlanillaArte> findByEstadoNot(String variable);
+	List<PlanillaArte> findByEstadoNotAndTipo(String variable, String variable2);
 
 }

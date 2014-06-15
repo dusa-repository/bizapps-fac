@@ -53,11 +53,16 @@ public class SPlanillaUniforme {
 
 	public List<PlanillaUniforme> buscarSupervisorYEstado(
 			String nombreUsuarioSesion, String variable) {
-		return planillaUniformeDAO.findByUsuarioSupervisorAndEstado(nombreUsuarioSesion,
-				variable);
+		return planillaUniformeDAO.findByUsuarioSupervisorAndEstado(
+				nombreUsuarioSesion, variable);
 	}
 
-	public List<PlanillaUniforme> buscarAdminEstado(String variable) {
-		return planillaUniformeDAO.findByEstadoNot(variable);
+	public List<PlanillaUniforme> buscarAdminEstado(String variable,
+			String variable2, Usuario usuarioSesion) {
+		List<PlanillaUniforme> planillas = planillaUniformeDAO
+				.findByEstadoNotAndTipo(variable, variable2);
+		planillas.addAll(planillaUniformeDAO.findByUsuarioAndEstado(
+				usuarioSesion, variable));
+		return planillas;
 	}
 }

@@ -3,6 +3,7 @@ package controlador.transacciones;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import modelo.estado.BitacoraArte;
@@ -23,6 +24,8 @@ import modelo.transacciones.PlanillaUniforme;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -45,30 +48,8 @@ public class CSolicitud extends CGenerico {
 	private Div catalogoSolicitud;
 	Catalogo<PlanillaGenerica> catalogo;
 	String titulo = "";
-	CInbox controlador = new CInbox();
-
+	private boolean tradeMark = false;
 	final List<PlanillaGenerica> listPlanilla = new ArrayList<PlanillaGenerica>();
-
-	public String getTitulo() {
-		switch (variable) {
-		case "Aprobada":
-			titulo = "Aprobadas";
-			break;
-		case "Cancelada":
-			titulo = "Canceladas";
-			break;
-		case "Rechazada":
-			titulo = "Rechazadas";
-			break;
-		case "Pendiente":
-			titulo = "Pendientes por Aprobar";
-			break;
-
-		default:
-			break;
-		}
-		return titulo;
-	}
 
 	@Override
 	public void inicializar() throws IOException {
@@ -80,6 +61,9 @@ public class CSolicitud extends CGenerico {
 			if (grupos.get(i).getNombre().equals("Administrador")) {
 				grupoDominante = grupos.get(i).getNombre();
 				i = grupos.size();
+				if (servicioConfiguracion.buscarAdministradorTradeMark(u,
+						"TradeMark") != null)
+					tradeMark = true;
 			} else {
 				if (grupos.get(i).getNombre().equals("Coordinador")) {
 					grupoDominante = grupos.get(i).getNombre();
@@ -152,20 +136,23 @@ public class CSolicitud extends CGenerico {
 	public void procesar() {
 		final List<PlanillaGenerica> procesadas = catalogo
 				.obtenerSeleccionados();
+		final String estatus = "Aprobada";
 		if (validarSeleccion(procesadas)) {
-			Messagebox.show("¿Desea Aprobar las " + procesadas.size()
-					+ " Planillas?", "Alerta", Messagebox.OK
-					| Messagebox.CANCEL, Messagebox.QUESTION,
-					new org.zkoss.zk.ui.event.EventListener<Event>() {
-						public void onEvent(Event evt)
-								throws InterruptedException {
-							if (evt.getName().equals("onOK")) {
-								cambiarEstado(procesadas, "Aprobada");
-								cargarLista();
-								catalogo.actualizarLista(listPlanilla);
+			if (validarEstatus(procesadas, estatus)) {
+				Messagebox.show("¿Desea Aprobar las " + procesadas.size()
+						+ " Planillas?", "Alerta", Messagebox.OK
+						| Messagebox.CANCEL, Messagebox.QUESTION,
+						new org.zkoss.zk.ui.event.EventListener<Event>() {
+							public void onEvent(Event evt)
+									throws InterruptedException {
+								if (evt.getName().equals("onOK")) {
+									cambiarEstado(procesadas, estatus);
+									cargarLista();
+									catalogo.actualizarLista(listPlanilla);
+								}
 							}
-						}
-					});
+						});
+			}
 		}
 	}
 
@@ -173,20 +160,23 @@ public class CSolicitud extends CGenerico {
 	public void cancelar() {
 		final List<PlanillaGenerica> procesadas = catalogo
 				.obtenerSeleccionados();
+		final String estatus = "Cancelada";
 		if (validarSeleccion(procesadas)) {
-			Messagebox.show("¿Desea Cancelar las " + procesadas.size()
-					+ " Planillas?", "Alerta", Messagebox.OK
-					| Messagebox.CANCEL, Messagebox.QUESTION,
-					new org.zkoss.zk.ui.event.EventListener<Event>() {
-						public void onEvent(Event evt)
-								throws InterruptedException {
-							if (evt.getName().equals("onOK")) {
-								cambiarEstado(procesadas, "Cancelada");
-								cargarLista();
-								catalogo.actualizarLista(listPlanilla);
+			if (validarEstatus(procesadas, estatus)) {
+				Messagebox.show("¿Desea Cancelar las " + procesadas.size()
+						+ " Planillas?", "Alerta", Messagebox.OK
+						| Messagebox.CANCEL, Messagebox.QUESTION,
+						new org.zkoss.zk.ui.event.EventListener<Event>() {
+							public void onEvent(Event evt)
+									throws InterruptedException {
+								if (evt.getName().equals("onOK")) {
+									cambiarEstado(procesadas, estatus);
+									cargarLista();
+									catalogo.actualizarLista(listPlanilla);
+								}
 							}
-						}
-					});
+						});
+			}
 		}
 
 	}
@@ -195,20 +185,23 @@ public class CSolicitud extends CGenerico {
 	public void rechazar() {
 		final List<PlanillaGenerica> procesadas = catalogo
 				.obtenerSeleccionados();
+		final String estatus = "Rechazada";
 		if (validarSeleccion(procesadas)) {
-			Messagebox.show("¿Desea Rechazar las " + procesadas.size()
-					+ " Planillas?", "Alerta", Messagebox.OK
-					| Messagebox.CANCEL, Messagebox.QUESTION,
-					new org.zkoss.zk.ui.event.EventListener<Event>() {
-						public void onEvent(Event evt)
-								throws InterruptedException {
-							if (evt.getName().equals("onOK")) {
-								cambiarEstado(procesadas, "Rechazada");
-								cargarLista();
-								catalogo.actualizarLista(listPlanilla);
+			if (validarEstatus(procesadas, estatus)) {
+				Messagebox.show("¿Desea Rechazar las " + procesadas.size()
+						+ " Planillas?", "Alerta", Messagebox.OK
+						| Messagebox.CANCEL, Messagebox.QUESTION,
+						new org.zkoss.zk.ui.event.EventListener<Event>() {
+							public void onEvent(Event evt)
+									throws InterruptedException {
+								if (evt.getName().equals("onOK")) {
+									cambiarEstado(procesadas, estatus);
+									cargarLista();
+									catalogo.actualizarLista(listPlanilla);
+								}
 							}
-						}
-					});
+						});
+			}
 		}
 
 	}
@@ -217,22 +210,101 @@ public class CSolicitud extends CGenerico {
 	public void finalizar() {
 		final List<PlanillaGenerica> procesadas = catalogo
 				.obtenerSeleccionados();
+		final String estatus = "Finalizada";
 		if (validarSeleccion(procesadas)) {
-			Messagebox.show("¿Desea Finalizar las " + procesadas.size()
-					+ " Planillas?", "Alerta", Messagebox.OK
-					| Messagebox.CANCEL, Messagebox.QUESTION,
-					new org.zkoss.zk.ui.event.EventListener<Event>() {
-						public void onEvent(Event evt)
-								throws InterruptedException {
-							if (evt.getName().equals("onOK")) {
-								cambiarEstado(procesadas, "Finalizada");
-								cargarLista();
-								catalogo.actualizarLista(listPlanilla);
+			if (validarEstatus(procesadas, estatus)) {
+				Messagebox.show("¿Desea Finalizar las " + procesadas.size()
+						+ " Planillas?", "Alerta", Messagebox.OK
+						| Messagebox.CANCEL, Messagebox.QUESTION,
+						new org.zkoss.zk.ui.event.EventListener<Event>() {
+							public void onEvent(Event evt)
+									throws InterruptedException {
+								if (evt.getName().equals("onOK")) {
+									cambiarEstado(procesadas, estatus);
+									cargarLista();
+									catalogo.actualizarLista(listPlanilla);
+								}
 							}
-						}
-					});
+						});
+			}
 		}
 
+	}
+
+	@Listen("onClick = #btnPagar")
+	public void pagar() {
+		final List<PlanillaGenerica> procesadas = catalogo
+				.obtenerSeleccionados();
+		final String estatus = "Pagada";
+		if (validarSeleccion(procesadas)) {
+			if (validarEstatus(procesadas, estatus)) {
+				Messagebox.show("¿Desea Pagar las " + procesadas.size()
+						+ " Planillas?", "Alerta", Messagebox.OK
+						| Messagebox.CANCEL, Messagebox.QUESTION,
+						new org.zkoss.zk.ui.event.EventListener<Event>() {
+							public void onEvent(Event evt)
+									throws InterruptedException {
+								if (evt.getName().equals("onOK")) {
+									cambiarEstado(procesadas, estatus);
+									cargarLista();
+									catalogo.actualizarLista(listPlanilla);
+								}
+							}
+						});
+			}
+		}
+	}
+
+	@Listen("onClick = #btnVer")
+	public void verPlanilla() {
+		final List<PlanillaGenerica> procesadas = catalogo
+				.obtenerSeleccionados();
+		if (validarSeleccion(procesadas)) {
+			if (procesadas.size() == 1) {
+				final HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("id", procesadas.get(0).getId());
+				map.put("estadoInbox", procesadas.get(0).getEstado());
+				Sessions.getCurrent().setAttribute("inbox", map);
+				Window window = new Window();
+				switch (procesadas.get(0).getTipoPlanilla()) {
+				case "Eventos Especiales":
+					window = (Window) Executions.createComponents(
+							"/vistas/transacciones/VEvento.zul", null, null);
+					window.doModal();
+					break;
+				case "Uniformes":
+					window = (Window) Executions.createComponents(
+							"/vistas/transacciones/VUniforme.zul", null, null);
+					window.doModal();
+					break;
+				case "Promociones de Marca":
+					window = (Window) Executions.createComponents(
+							"/vistas/transacciones/VPromocion.zul", null, null);
+					window.doModal();
+					break;
+				case "Solicitud de Arte y Publicaciones":
+					window = (Window) Executions.createComponents(
+							"/vistas/transacciones/VSolicitudArte.zul", null,
+							null);
+					window.doModal();
+					break;
+				case "Cata Induccion":
+					window = (Window) Executions.createComponents(
+							"/vistas/transacciones/VCataInduccion.zul", null,
+							null);
+					window.doModal();
+					break;
+				case "Fachada y Decoraciones":
+					window = (Window) Executions.createComponents(
+							"/vistas/transacciones/VFachada.zul", null, null);
+					window.doModal();
+					break;
+				default:
+					break;
+				}
+			} else
+				msj.mensajeAlerta(Mensaje.editarSoloUno);
+		}
 	}
 
 	public boolean validarSeleccion(List<PlanillaGenerica> procesadas) {
@@ -246,6 +318,41 @@ public class CSolicitud extends CGenerico {
 			} else {
 				return true;
 			}
+		}
+	}
+
+	public boolean validarEstatus(List<PlanillaGenerica> procesadas,
+			String estatus) {
+		int contadorAprobada = 0, contadorPendiente = 0, contadorFinalizada = 0;
+		for (int i = 0; i < procesadas.size(); i++) {
+			if (procesadas.get(i).getEstado().equals("Pendiente"))
+				contadorPendiente++;
+			if (procesadas.get(i).getEstado().equals("Aprobada"))
+				contadorAprobada++;
+			if (procesadas.get(i).getEstado().equals("Finalizada"))
+				contadorFinalizada++;
+		}
+		switch (estatus) {
+		case "Aprobada":
+			if (contadorAprobada != 0 || contadorFinalizada != 0) {
+				msj.mensajeAlerta(Mensaje.estadoIncorrecto);
+				return false;
+			} else
+				return true;
+		case "Finalizada":
+			if (contadorPendiente != 0 || contadorFinalizada != 0) {
+				msj.mensajeAlerta(Mensaje.estadoIncorrecto);
+				return false;
+			} else
+				return true;
+		case "Pagada":
+			if (contadorPendiente != 0 || contadorAprobada != 0) {
+				msj.mensajeAlerta(Mensaje.estadoIncorrecto);
+				return false;
+			} else
+				return true;
+		default:
+			return true;
 		}
 	}
 
@@ -350,15 +457,25 @@ public class CSolicitud extends CGenerico {
 		List<PlanillaArte> listArte = new ArrayList<PlanillaArte>();
 		List<PlanillaUniforme> listUniforme = new ArrayList<PlanillaUniforme>();
 		List<PlanillaFachada> listFachada = new ArrayList<PlanillaFachada>();
+		String tipoConfig = "";
+		if (tradeMark)
+			tipoConfig = "TradeMark";
+		else
+			tipoConfig = "Marca";
 		switch (grupoDominante) {
 		case "Administrador":
-			listCata = servicioPlanillaCata.buscarAdminEstado(variable);
-			listEvento = servicioPlanillaEvento.buscarAdminEstado(variable);
-			listPromocion = servicioPlanillaPromocion
-					.buscarAdminEstado(variable);
-			listArte = servicioPlanillaArte.buscarAdminEstado(variable);
-			listUniforme = servicioPlanillaUniforme.buscarAdminEstado(variable);
-			listFachada = servicioPlanillaFachada.buscarAdminEstado(variable);
+			listCata = servicioPlanillaCata.buscarAdminEstado(variable,
+					tipoConfig, usuarioSesion(nombreUsuarioSesion()));
+			listEvento = servicioPlanillaEvento.buscarAdminEstado(variable,
+					tipoConfig, usuarioSesion(nombreUsuarioSesion()));
+			listPromocion = servicioPlanillaPromocion.buscarAdminEstado(
+					variable, tipoConfig, usuarioSesion(nombreUsuarioSesion()));
+			listArte = servicioPlanillaArte.buscarAdminEstado(variable,
+					tipoConfig, usuarioSesion(nombreUsuarioSesion()));
+			listUniforme = servicioPlanillaUniforme.buscarAdminEstado(variable,
+					tipoConfig, usuarioSesion(nombreUsuarioSesion()));
+			listFachada = servicioPlanillaFachada.buscarAdminEstado(variable,
+					tipoConfig, usuarioSesion(nombreUsuarioSesion()));
 			break;
 
 		case "Coordinador":
@@ -396,13 +513,6 @@ public class CSolicitud extends CGenerico {
 		default:
 			break;
 		}
-		// listCata = servicioPlanillaCata.buscarAdminEstado(variable);
-		// List<PlanillaCata> listCata2 =
-		// servicioPlanillaCata.buscarSupervisorYEstado(nombreUsuarioSesion(),
-		// variable);
-		// List<PlanillaCata> listCata = servicioPlanillaCata
-		// .buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()),
-		// variable);
 		for (int i = 0; i < listCata.size(); i++) {
 			long id = listCata.get(i).getIdPlanillaCata();
 			String usuario = listCata.get(i).getUsuario().getNombre();
@@ -415,13 +525,6 @@ public class CSolicitud extends CGenerico {
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
 		}
-		// List<PlanillaEvento> listEvento = servicioPlanillaEvento
-		// .buscarAdminEstado(variable);
-		// List<PlanillaEvento> listEvento = servicioPlanillaEvento
-		// .buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
-		// List<PlanillaEvento> listEvento = servicioPlanillaEvento
-		// .buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()),
-		// variable);
 		for (int i = 0; i < listEvento.size(); i++) {
 			long id = listEvento.get(i).getIdPlanillaEvento();
 			String usuario = listEvento.get(i).getUsuario().getNombre();
@@ -434,13 +537,6 @@ public class CSolicitud extends CGenerico {
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
 		}
-		// List<PlanillaPromocion> listPromocion = servicioPlanillaPromocion
-		// .buscarAdminEstado(variable);
-		// List<PlanillaPromocion> listPromocion = servicioPlanillaPromocion
-		// .buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
-		// List<PlanillaPromocion> listPromocion = servicioPlanillaPromocion
-		// .buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()),
-		// variable);
 		for (int i = 0; i < listPromocion.size(); i++) {
 			long id = listPromocion.get(i).getIdPlanillaPromocion();
 			String usuario = listPromocion.get(i).getUsuario().getNombre();
@@ -453,13 +549,6 @@ public class CSolicitud extends CGenerico {
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
 		}
-		// List<PlanillaArte> listArte = servicioPlanillaArte
-		// .buscarAdminEstado(variable);
-		// List<PlanillaArte> listArte = servicioPlanillaArte
-		// .buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
-		// List<PlanillaArte> listArte = servicioPlanillaArte
-		// .buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()),
-		// variable);
 		for (int i = 0; i < listArte.size(); i++) {
 			long id = listArte.get(i).getIdPlanillaArte();
 			String usuario = listArte.get(i).getUsuario().getNombre();
@@ -472,13 +561,6 @@ public class CSolicitud extends CGenerico {
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
 		}
-		// List<PlanillaUniforme> listUniforme = servicioPlanillaUniforme
-		// .buscarAdminEstado(variable);
-		// List<PlanillaUniforme> listUniforme = servicioPlanillaUniforme
-		// .buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
-		// List<PlanillaUniforme> listUniforme = servicioPlanillaUniforme
-		// .buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()),
-		// variable);
 		for (int i = 0; i < listUniforme.size(); i++) {
 			long id = listUniforme.get(i).getIdPlanillaUniforme();
 			String usuario = listUniforme.get(i).getUsuario().getNombre();
@@ -491,13 +573,6 @@ public class CSolicitud extends CGenerico {
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
 		}
-		// List<PlanillaFachada> listFachada = servicioPlanillaFachada
-		// .buscarAdminEstado(variable);
-		// List<PlanillaFachada> listFachada = servicioPlanillaFachada
-		// .buscarSupervisorYEstado(nombreUsuarioSesion(), variable);
-		// List<PlanillaFachada> listFachada = servicioPlanillaFachada
-		// .buscarUsuarioSessionYEstado(usuarioSesion(nombreUsuarioSesion()),
-		// variable);
 		for (int i = 0; i < listFachada.size(); i++) {
 			long id = listFachada.get(i).getIdPlanillaFachada();
 			String usuario = listFachada.get(i).getUsuario().getNombre();
@@ -510,5 +585,29 @@ public class CSolicitud extends CGenerico {
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
 		}
+	}
+
+	public String getTitulo() {
+		switch (variable) {
+		case "Aprobada":
+			titulo = "Aprobadas";
+			break;
+		case "Cancelada":
+			titulo = "Canceladas";
+			break;
+		case "Rechazada":
+			titulo = "Rechazadas";
+			break;
+		case "Pendiente":
+			titulo = "Pendientes por Aprobar";
+			break;
+		case "En Edicion":
+			titulo = "En Edicion";
+			break;
+
+		default:
+			break;
+		}
+		return titulo;
 	}
 }

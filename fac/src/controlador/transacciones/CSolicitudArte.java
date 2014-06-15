@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -14,12 +15,17 @@ import modelo.estado.BitacoraArte;
 import modelo.estado.BitacoraFachada;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
+import modelo.seguridad.Configuracion;
+import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaArte;
+import modelo.transacciones.PlanillaCata;
 import modelo.transacciones.PlanillaFachada;
+import modelo.transacciones.PlanillaUniforme;
 
 import org.zkforge.ckez.CKeditor;
 import org.zkoss.util.media.Media;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.UploadEvent;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -112,14 +118,27 @@ public class CSolicitudArte extends CGenerico {
 	Catalogo<PlanillaArte> catalogo;
 	ListModelList<Marca> marcas;
 	long id = 0;
-
+	boolean inbox = false;
+	String estadoInbox = "";
+	String tipoInbox = "";
+	Botonera botonera;
+	Usuario usuarioEditador = new Usuario();
+	
 	@Override
 	public void inicializar() throws IOException {
-		cargarCombos();
 		txtRespActividad.setValue(nombreUsuarioSesion());
 		txtRespZona.setValue(usuarioSesion(nombreUsuarioSesion())
 				.getSupervisor());
-		Botonera botonera = new Botonera() {
+		boolean editar = false;
+		List<Grupo> grupos = servicioGrupo
+				.buscarGruposUsuario(usuarioSesion(nombreUsuarioSesion()));
+		for (int i = 0; i < grupos.size(); i++) {
+			if (grupos.get(i).getNombre().equals("Administrador")) {
+				i = grupos.size();
+				editar = true;
+			}
+		}
+		botonera = new Botonera() {
 
 			@Override
 			public void salir() {
@@ -151,6 +170,10 @@ public class CSolicitudArte extends CGenerico {
 				imagen2.setContent(imagenUsuario1);
 				imagen3.setContent(imagenUsuario1);
 				imagen4.setContent(imagenUsuario1);
+				usuarioEditador = null;
+				estadoInbox = "";
+				tipoInbox = "";
+				inbox = false;
 				id = 0;
 			}
 
@@ -198,11 +221,11 @@ public class CSolicitudArte extends CGenerico {
 				if (tabLineamientos.isSelected())
 					tabDatos.setSelected(true);
 				if (tabImagenes.isSelected())
-					tabLineamientos.setSelected(true);			
+					tabLineamientos.setSelected(true);
 			}
 
 			@Override
-			public void adelante() {			
+			public void adelante() {
 				if (tabLineamientos.isSelected())
 					tabImagenes.setSelected(true);
 				if (tabDatos.isSelected())
@@ -219,6 +242,52 @@ public class CSolicitudArte extends CGenerico {
 			}
 		};
 		botoneraSolicitudArte.appendChild(botonera);
+		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
+				.getCurrent().getAttribute("inbox");
+		if (map != null) {
+			if (map.get("id") != null) {
+				PlanillaArte planilla = servicioPlanillaArte.buscar((Long) map
+						.get("id"));
+				estadoInbox = (String) map.get("estadoInbox");
+				usuarioEditador = planilla.getUsuario();
+				tipoInbox = planilla.getTipo();
+				settearCampos(planilla);
+				switch (estadoInbox) {
+				case "Pendiente":
+					if (editar) {
+						botonera.getChildren().get(1).setVisible(false);
+						botonera.getChildren().get(2).setVisible(false);
+						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(7).setVisible(false);
+						botonera.getChildren().get(8).setVisible(false);
+					} else {
+						botonera.getChildren().get(0).setVisible(false);
+						botonera.getChildren().get(1).setVisible(false);
+						botonera.getChildren().get(2).setVisible(false);
+						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(7).setVisible(false);
+						botonera.getChildren().get(8).setVisible(false);
+					}
+					break;
+
+				case "En Edicion":
+					break;
+
+				default:
+					botonera.getChildren().get(0).setVisible(false);
+					botonera.getChildren().get(1).setVisible(false);
+					botonera.getChildren().get(2).setVisible(false);
+					botonera.getChildren().get(5).setVisible(false);
+					botonera.getChildren().get(7).setVisible(false);
+					botonera.getChildren().get(8).setVisible(false);
+				}
+				inbox = true;
+				editar = false;
+				map.clear();
+				map = null;
+			}
+		}
+		cargarCombos();
 	}
 
 	protected void guardarDatos(String string) {
@@ -230,7 +299,18 @@ public class CSolicitudArte extends CGenerico {
 		patente = txtPatente.getValue();
 		rif = txtRif.getValue();
 		nombreActividad = txtNombreActividad.getValue();
-		Usuario usuario = usuarioSesion(nombreUsuarioSesion());
+		Usuario usuario = new Usuario();
+		if (inbox)
+			usuario = usuarioEditador;
+		else
+			usuario = usuarioSesion(nombreUsuarioSesion());
+		if (estadoInbox.equals("Pendiente"))
+			string = "Pendiente";
+		String tipoConfig = "";
+		if (tipoInbox.equals("TradeMark"))
+			tipoConfig = "TradeMark";
+		else
+			tipoConfig = valor;
 		Marca marca = servicioMarca.buscar(cmbMarcaSugerida.getSelectedItem()
 				.getContext());
 		double alto = dspAlto.getValue();
@@ -257,13 +337,31 @@ public class CSolicitudArte extends CGenerico {
 				formato, alto, largo, ancho, imagenUsuario1, imagenUsuario2,
 				imagenUsuario3, imagenUsuario4, lineamiento, fechaHora,
 				horaAuditoria, nombreUsuarioSesion(), string, usuario.getZona()
-						.getDescripcion());
+						.getDescripcion(), valor, "", 0);
 		servicioPlanillaArte.guardar(planillaArte);
 		if (id != 0)
 			planillaArte = servicioPlanillaArte.buscar(id);
 		else
 			planillaArte = servicioPlanillaArte.buscarUltima();
 		guardarBitacora(planillaArte, string);
+		if (valor.equals("TradeMark") && string.equals("Pendiente")) {
+			Configuracion con = servicioConfiguracion
+					.buscarTradeMark("TradeMark");
+			Usuario usuarioAdmin = new Usuario();
+			if (con != null)
+				usuarioAdmin = con.getUsuario();
+			PlanillaArte planillaAdmin = new PlanillaArte(0, usuarioAdmin,
+					marca, nombreActividad, nombreLocal, salidaArte, rif,
+					patente, formato, alto, largo, ancho, imagenUsuario1,
+					imagenUsuario2, imagenUsuario3, imagenUsuario4,
+					lineamiento, fechaHora, horaAuditoria,
+					nombreUsuarioSesion(), string, usuario.getZona()
+							.getDescripcion(), "Marca", "",
+					planillaArte.getIdPlanillaArte());
+			servicioPlanillaArte.guardar(planillaAdmin);
+			planillaAdmin = servicioPlanillaArte.buscarUltima();
+			guardarBitacora(planillaAdmin, string);
+		}
 	}
 
 	private void guardarBitacora(PlanillaArte planillaArte, String string) {
@@ -303,7 +401,7 @@ public class CSolicitudArte extends CGenerico {
 		marcas = new ListModelList<Marca>(servicioMarca.buscarTodosOrdenados());
 		return marcas;
 	}
-	
+
 	@Listen("onClick = #btnBuscarPlanillas")
 	public void buscarCatalogoPropio() {
 		final List<PlanillaArte> listPlanilla = servicioPlanillaArte
@@ -350,6 +448,11 @@ public class CSolicitudArte extends CGenerico {
 	@Listen("onSeleccion = #catalogoSolicitudArte")
 	public void seleccionPropia() {
 		PlanillaArte planilla = catalogo.objetoSeleccionadoDelCatalogo();
+		settearCampos(planilla);
+		catalogo.setParent(null);
+	}
+
+	private void settearCampos(PlanillaArte planilla) {
 		txtPatente.setValue(planilla.getPatente());
 		txtRif.setValue(planilla.getRif());
 		txtNombreLocal.setValue(planilla.getNombreCliente());
@@ -407,7 +510,6 @@ public class CSolicitudArte extends CGenerico {
 				e.printStackTrace();
 			}
 		}
-		catalogo.setParent(null);
 	}
 
 	@Listen("onUpload = #fudImagen1")
