@@ -98,8 +98,11 @@ public class CSolicitud extends CGenerico {
 							.startsWith(valores.get(0))
 							&& planilla.getEstado().toLowerCase()
 									.startsWith(valores.get(1))
-							&& String.valueOf(planilla.getFecha())
-									.toLowerCase().startsWith(valores.get(2))
+							&& String
+									.valueOf(
+											formatoFecha.format(planilla
+													.getFecha())).toLowerCase()
+									.startsWith(valores.get(2))
 							&& planilla.getMarca().toLowerCase()
 									.startsWith(valores.get(3))
 							&& planilla.getNombreActividad().toLowerCase()
@@ -117,7 +120,8 @@ public class CSolicitud extends CGenerico {
 				String[] registros = new String[6];
 				registros[0] = planilla.getUsuario();
 				registros[1] = planilla.getEstado();
-				registros[2] = String.valueOf(planilla.getFecha());
+				registros[2] = String.valueOf(formatoFecha.format(planilla
+						.getFecha()));
 				registros[3] = planilla.getMarca();
 				registros[4] = planilla.getNombreActividad();
 				registros[5] = planilla.getTipoPlanilla();
@@ -323,7 +327,9 @@ public class CSolicitud extends CGenerico {
 
 	public boolean validarEstatus(List<PlanillaGenerica> procesadas,
 			String estatus) {
-		int contadorAprobada = 0, contadorPendiente = 0, contadorFinalizada = 0;
+		int contadorAprobada = 0, contadorPendiente = 0, contadorFinalizada = 0, contadorPagada = 0;
+		boolean error = false;
+		boolean errorEdicion = false;
 		for (int i = 0; i < procesadas.size(); i++) {
 			if (procesadas.get(i).getEstado().equals("Pendiente"))
 				contadorPendiente++;
@@ -331,22 +337,49 @@ public class CSolicitud extends CGenerico {
 				contadorAprobada++;
 			if (procesadas.get(i).getEstado().equals("Finalizada"))
 				contadorFinalizada++;
+			if (procesadas.get(i).getEstado().equals("En Edicion"))
+				errorEdicion=true;
+			if (procesadas.get(i).getEstado().equals("Pagada"))
+				contadorPagada++;
+			if (procesadas.get(i).getEstado().equals("Rechazada")
+					|| procesadas.get(i).getEstado().equals("Cancelada"))
+				error = true;
+		}
+		if (error) {
+			msj.mensajeAlerta(Mensaje.estadoIncorrectoRechazada);
+			return false;
+		}
+		if (errorEdicion) {
+			msj.mensajeAlerta(Mensaje.estadoIncorrectoEdicion);
+			return false;
 		}
 		switch (estatus) {
 		case "Aprobada":
-			if (contadorAprobada != 0 || contadorFinalizada != 0) {
+			if (contadorAprobada != 0 || contadorFinalizada != 0 || contadorPagada != 0) {
 				msj.mensajeAlerta(Mensaje.estadoIncorrecto);
 				return false;
 			} else
 				return true;
 		case "Finalizada":
-			if (contadorPendiente != 0 || contadorFinalizada != 0) {
+			if (contadorPendiente != 0 || contadorFinalizada != 0 || contadorPagada != 0) {
 				msj.mensajeAlerta(Mensaje.estadoIncorrecto);
 				return false;
 			} else
 				return true;
 		case "Pagada":
-			if (contadorPendiente != 0 || contadorAprobada != 0) {
+			if (contadorPendiente != 0 || contadorAprobada != 0 || contadorPagada != 0) {
+				msj.mensajeAlerta(Mensaje.estadoIncorrecto);
+				return false;
+			} else
+				return true;
+		case "Rechazada":
+			if (contadorPagada != 0) {
+				msj.mensajeAlerta(Mensaje.estadoIncorrecto);
+				return false;
+			} else
+				return true;
+		case "Cancelada":
+			if (contadorPagada != 0) {
 				msj.mensajeAlerta(Mensaje.estadoIncorrecto);
 				return false;
 			} else

@@ -24,7 +24,9 @@ public class Mensaje {
 	public static String usuarioNoRegistrado = "El Usuario no Esta Registrado.";
 	public static String correoNoConcuerda= "El Correo no Concuerda con los Datos del Usuario.";
 	public static String contrasennasNoCoinciden = "Las Contraseñas no Coinciden.";
-	public static String estadoIncorrecto = "Alguna de las planillas no se encuentran en el estado correcto para ser cambiadas";
+	public static String estadoIncorrecto = "Alguna de las solicitudes no se encuentran en el estado correcto para ser cambiadas";
+	public static String estadoIncorrectoRechazada = "No puede cambiar de estado las solicitudes canceladas o rechadas, verifique su seleccion";
+	public static String estadoIncorrectoEdicion = "No puede cambiar de estado las solicitudes en edicion, para modificarlas presione el boton Ver Solicitud";
 	
 	
 	public void mensajeInformacion(String msj) {

@@ -113,7 +113,7 @@ public class CPromocion extends CGenerico {
 	String tipoInbox = "";
 	Botonera botonera;
 	Usuario usuarioEditador = new Usuario();
-	
+
 	@Override
 	public void inicializar() throws IOException {
 		cargarCombos();
@@ -232,7 +232,8 @@ public class CPromocion extends CGenerico {
 				.getCurrent().getAttribute("inbox");
 		if (map != null) {
 			if (map.get("id") != null) {
-				PlanillaPromocion planilla = servicioPlanillaPromocion.buscar((Long) map.get("id"));
+				PlanillaPromocion planilla = servicioPlanillaPromocion
+						.buscar((Long) map.get("id"));
 				estadoInbox = (String) map.get("estadoInbox");
 				usuarioEditador = planilla.getUsuario();
 				tipoInbox = planilla.getTipo();
@@ -254,7 +255,7 @@ public class CPromocion extends CGenerico {
 						botonera.getChildren().get(8).setVisible(false);
 					}
 					break;
-					
+
 				case "En Edicion":
 					break;
 
@@ -321,7 +322,7 @@ public class CPromocion extends CGenerico {
 				direccion, fechaInicio, fechaFin, modalidad, frecuencia,
 				material, extra, costo, descripcion1, descripcion2, fechaHora,
 				horaAuditoria, nombreUsuarioSesion(), string, usuario.getZona()
-						.getDescripcion(), valor,"",0);
+						.getDescripcion(), valor, "", 0);
 		servicioPlanillaPromocion.guardar(planillaPromocion);
 		if (id != 0)
 			planillaPromocion = servicioPlanillaPromocion.buscar(id);
@@ -335,12 +336,14 @@ public class CPromocion extends CGenerico {
 			if (con != null)
 				usuarioAdmin = con.getUsuario();
 			PlanillaPromocion planillaAdmin = new PlanillaPromocion(0,
-					usuarioAdmin, marca1, marca2, nombreActividad, tipoActividad, local,
-					ciudad, estado, responsable, nombreLocal, rif, telefono, email,
-					direccion, fechaInicio, fechaFin, modalidad, frecuencia,
-					material, extra, costo, descripcion1, descripcion2, fechaHora,
-					horaAuditoria, nombreUsuarioSesion(), string, usuario.getZona()
-							.getDescripcion(), "Marca","",planillaPromocion.getIdPlanillaPromocion());
+					usuarioAdmin, marca1, marca2, nombreActividad,
+					tipoActividad, local, ciudad, estado, responsable,
+					nombreLocal, rif, telefono, email, direccion, fechaInicio,
+					fechaFin, modalidad, frecuencia, material, extra, costo,
+					descripcion1, descripcion2, fechaHora, horaAuditoria,
+					nombreUsuarioSesion(), string, usuario.getZona()
+							.getDescripcion(), "Marca", "",
+					planillaPromocion.getIdPlanillaPromocion());
 			servicioPlanillaPromocion.guardar(planillaAdmin);
 			planillaAdmin = servicioPlanillaPromocion.buscarUltima();
 			guardarBitacora(planillaAdmin, string);
@@ -398,12 +401,12 @@ public class CPromocion extends CGenerico {
 		udc = servicioF0005.buscarParaUDCOrdenados("00", "08");
 		cmbPop.setModel(new ListModelList<F0005>(udc));
 	}
-	
+
 	public ListModelList<Marca> getMarcas() {
 		marcas = new ListModelList<Marca>(servicioMarca.buscarTodosOrdenados());
 		return marcas;
 	}
-	
+
 	@Listen("onClick = #btnBuscarPlanillas")
 	public void buscarCatalogoPropio() {
 		final List<PlanillaPromocion> listPlanilla = servicioPlanillaPromocion
@@ -424,9 +427,9 @@ public class CPromocion extends CGenerico {
 									.toLowerCase().startsWith(valores.get(1))
 							&& String
 									.valueOf(
-											planilla.getFechaAuditoria()
-													.getTime()).toLowerCase()
-									.startsWith(valores.get(2))) {
+											formatoFecha.format(planilla
+													.getFechaAuditoria()))
+									.toLowerCase().startsWith(valores.get(2))) {
 						lista.add(planilla);
 					}
 				}
@@ -438,8 +441,8 @@ public class CPromocion extends CGenerico {
 				String[] registros = new String[3];
 				registros[0] = planillaCata.getNombreActividad();
 				registros[1] = planillaCata.getMarcaA().getDescripcion();
-				registros[2] = String.valueOf(planillaCata.getFechaAuditoria()
-						.getTime());
+				registros[2] = String.valueOf(formatoFecha.format(planillaCata
+						.getFechaAuditoria()));
 				return registros;
 			}
 		};
@@ -468,7 +471,8 @@ public class CPromocion extends CGenerico {
 		txtLocal.setValue(planilla.getTipoLocal());
 		txtResponsablePDV.setValue(planilla.getNombrePdv());
 		txtTelefono.setValue(planilla.getTelefonoPdv());
-		F0005 f05 = servicioF0005.buscar("00", "10", planilla.getComunicacion());
+		F0005 f05 = servicioF0005
+				.buscar("00", "10", planilla.getComunicacion());
 		cmbExtra.setValue(f05.getDrdl01());
 		f05 = servicioF0005.buscar("00", "07", planilla.getFrecuenciaPago());
 		cmbFrecuencia.setValue(f05.getDrdl01());

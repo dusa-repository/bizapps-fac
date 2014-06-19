@@ -123,7 +123,7 @@ public class CSolicitudArte extends CGenerico {
 	String tipoInbox = "";
 	Botonera botonera;
 	Usuario usuarioEditador = new Usuario();
-	
+
 	@Override
 	public void inicializar() throws IOException {
 		txtRespActividad.setValue(nombreUsuarioSesion());
@@ -422,9 +422,9 @@ public class CSolicitudArte extends CGenerico {
 									.toLowerCase().startsWith(valores.get(1))
 							&& String
 									.valueOf(
-											planilla.getFechaAuditoria()
-													.getTime()).toLowerCase()
-									.startsWith(valores.get(2))) {
+											formatoFecha.format(planilla
+													.getFechaAuditoria()))
+									.toLowerCase().startsWith(valores.get(2))) {
 						lista.add(planilla);
 					}
 				}
@@ -436,8 +436,8 @@ public class CSolicitudArte extends CGenerico {
 				String[] registros = new String[3];
 				registros[0] = planillaCata.getNombreActividad();
 				registros[1] = planillaCata.getMarca().getDescripcion();
-				registros[2] = String.valueOf(planillaCata.getFechaAuditoria()
-						.getTime());
+				registros[2] = String.valueOf(formatoFecha.format(planillaCata
+						.getFechaAuditoria()));
 				return registros;
 			}
 		};

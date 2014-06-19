@@ -133,6 +133,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	static public String variable = "";
 	static public String grupoDominante = "";
 	protected DateFormat df = new SimpleDateFormat("HH:mm:ss");
+	protected DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 	public final Calendar calendario = Calendar.getInstance();
 	public String horaAuditoria = String.valueOf(calendario
 			.get(Calendar.HOUR_OF_DAY))
