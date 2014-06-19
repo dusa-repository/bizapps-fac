@@ -1,22 +1,29 @@
 <?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
 <zk>
-	<window width="60em" vflex="1" hflex="1" closable="false" id="wdwSolicitud"
+	<window width="90em" hflex="1" closable="false" id="wdwSolicitud"
 		apply="controlador.transacciones.CSolicitud">
 		<caption label="Solicitudes ${$composer.titulo}"
 			style="color:white; font-size: 16px; font-weight:bold; " />
-		<div>
-			<hbox vflex="1" hflex="1">
+		<div hflex="1">
+			<hbox widths="95%,5%" hflex="1">
 				<div id="catalogoSolicitud" />
 				<vbox>
 					<zk if="${sec:isAnyGranted('Administrador')}">
-						<button id="btnProcesar" label="Procesar" />
-						<button id="btnCancelar" label="Cancelar" />
-						<button id="btnRechazar" label="Rechazar" />
-						<button id="btnFinalizar" label="Finalizar" />
-						<button id="btnPagar" label="Pagar" />
+						<button id="btnProcesar" label="Procesar"
+							style="font-size: 11px ;width: 87px; height: 25px" />
+						<button id="btnFinalizar" label="Finalizar"
+							style="font-size: 11px ;width: 87px; height: 25px" />
+						<button id="btnPagar" label="Pagar"
+							style="font-size: 11px ;width: 87px; height: 25px" />
+						<button id="btnCancelar" label="Cancelar"
+							style="font-size: 11px ;width: 87px; height: 25px" />
+						<button id="btnRechazar" label="Rechazar"
+							style="font-size: 11px ;width: 87px; height: 25px" />
 					</zk>
-					<button id="btnVer" label="Ver Solicitud" />
-					<button id="btnCerrar" label="Salir" />
+					<button id="btnVer" label="Ver Solicitud"
+						style="font-size: 11px ;width: 87px; height: 25px" />
+					<button id="btnCerrar" label="Salir"
+						style="font-size: 11px ;width: 87px; height: 25px" />
 				</vbox>
 			</hbox>
 		</div>
