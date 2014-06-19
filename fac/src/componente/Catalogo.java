@@ -35,8 +35,7 @@ public abstract class Catalogo<Clase> extends Window {
 	Label labelBuscado;
 
 	public Catalogo(final Component cGenerico, String titulo,
-			List<Clase> lista, boolean emergente,
-			String... campos) {
+			List<Clase> lista, boolean emergente, String... campos) {
 		super("", "2", false);
 		this.setId("cmpCatalogo" + titulo);
 		this.setStyle("background-header:#FF7925; background: #f4f2f2");
@@ -102,11 +101,17 @@ public abstract class Catalogo<Clase> extends Window {
 			cabeceraFila.appendChild(cajaTexto);
 			cabecera.appendChild(cabeceraFila);
 			Listheader listheader = new Listheader(campos[i]);
+			listheader.setHflex("min");
 			lhdEncabezado.appendChild(listheader);
 		}
 		lsbCatalogo.appendChild(cabecera);
+		
+		if (!emergente)
+			lsbCatalogo.setHflex("1");
+		else
+			lsbCatalogo.setWidth("100%");
 		lsbCatalogo.appendChild(lhdEncabezado);
-		lsbCatalogo.setSizedByContent(true);
+		// lsbCatalogo.setSizedByContent(true);
 		lsbCatalogo.setSpan("true");
 		cabecera.setVisible(true);
 		lhdEncabezado.setVisible(true);
@@ -127,7 +132,7 @@ public abstract class Catalogo<Clase> extends Window {
 
 		if (emergente) {
 			this.setClosable(true);
-			this.setWidth("60%");
+			this.setWidth("80em");
 			this.setTitle("Registros");
 			this.appendChild(separador2);
 			this.appendChild(lsbCatalogo);
@@ -136,18 +141,19 @@ public abstract class Catalogo<Clase> extends Window {
 			lsbCatalogo.setMultiple(false);
 			lsbCatalogo.setCheckmark(false);
 		} else {
-//			Space espacio = new Space();
-//			espacio.setHeight("10px");
-//			box.appendChild(espacio);
-//			box.setWidth("100%");
-//			box.setAlign("end");
-//			box.setHeight("12px");
-//			box.setWidths("96%,2%,2%");
-			this.setWidth("100%");
+			// Space espacio = new Space();
+			// espacio.setHeight("10px");
+			// box.appendChild(espacio);
+			// box.setWidth("100%");
+			// box.setAlign("end");
+			// box.setHeight("12px");
+			// box.setWidths("96%,2%,2%");
+//			this.setVflex("min");
+			this.setHflex("1");
 			this.setClosable(false);
-//			this.appendChild(separador1);
-//			this.appendChild(box);
-//			this.appendChild(separador2);
+			// this.appendChild(separador1);
+			// this.appendChild(box);
+			// this.appendChild(separador2);
 			this.appendChild(lsbCatalogo);
 			lsbCatalogo.setMultiple(false);
 			lsbCatalogo.setCheckmark(false);
