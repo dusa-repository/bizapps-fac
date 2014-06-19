@@ -643,9 +643,9 @@ public class CFachada extends CGenerico {
 									.toLowerCase().startsWith(valores.get(2))
 							&& String
 									.valueOf(
-											planilla.getFechaAuditoria()
-													.getTime()).toLowerCase()
-									.startsWith(valores.get(3))) {
+											formatoFecha.format(planilla
+													.getFechaAuditoria()))
+									.toLowerCase().startsWith(valores.get(3))) {
 						lista.add(planilla);
 					}
 				}
@@ -658,8 +658,8 @@ public class CFachada extends CGenerico {
 				registros[0] = planillaCata.getNombreActividad();
 				registros[1] = planillaCata.getCiudad();
 				registros[2] = planillaCata.getMarca().getDescripcion();
-				registros[3] = String.valueOf(planillaCata.getFechaAuditoria()
-						.getTime());
+				registros[3] = String.valueOf(formatoFecha.format(planillaCata
+						.getFechaAuditoria()));
 				return registros;
 			}
 		};

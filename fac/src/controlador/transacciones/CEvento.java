@@ -579,9 +579,9 @@ public class CEvento extends CGenerico {
 									.toLowerCase().startsWith(valores.get(2))
 							&& String
 									.valueOf(
-											planillaEvento.getFechaAuditoria()
-													.getTime()).toLowerCase()
-									.startsWith(valores.get(3))) {
+											formatoFecha.format(planillaEvento
+													.getFechaAuditoria()))
+									.toLowerCase().startsWith(valores.get(3))) {
 						lista.add(planillaEvento);
 					}
 				}
@@ -594,8 +594,8 @@ public class CEvento extends CGenerico {
 				registros[0] = planillaEvento.getNombreActividad();
 				registros[1] = planillaEvento.getCiudad();
 				registros[2] = planillaEvento.getMarca().getDescripcion();
-				registros[3] = String.valueOf(planillaEvento
-						.getFechaAuditoria().getTime());
+				registros[3] = String.valueOf(formatoFecha
+						.format(planillaEvento.getFechaAuditoria()));
 				return registros;
 			}
 		};
