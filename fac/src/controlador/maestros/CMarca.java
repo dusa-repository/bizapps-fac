@@ -44,7 +44,7 @@ public class CMarca extends CGenerico {
 			
 			@Override
 			public void buscar() {
-				// TODO Auto-generated method stub
+				buscarCatalogoPropio();
 				
 			}
 			
@@ -114,7 +114,6 @@ public class CMarca extends CGenerico {
 				
 			}
 		};
-		botonera.getChildren().get(3).setVisible(false);
 		botonera.getChildren().get(4).setVisible(false);
 		botonera.getChildren().get(5).setVisible(false);
 		botonera.getChildren().get(7).setVisible(false);
@@ -132,10 +131,10 @@ public class CMarca extends CGenerico {
 			return true;
 	}
 	
-	@Listen("onClick = #btnBuscarMarcas")
+
 	public void buscarCatalogoPropio() {
 		final List<Marca> listMarca = servicioMarca.buscarTodosOrdenados();
-		catalogo = new Catalogo<Marca>(DivCatalogoMarca, "Marca",
+		catalogo = new Catalogo<Marca>(DivCatalogoMarca, "Catalogo de Marcas",
 				listMarca, true, "Id", "Descripcion") {
 
 			@Override

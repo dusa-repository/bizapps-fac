@@ -60,6 +60,7 @@ public class CInbox extends CGenerico {
 	int finalizada = 0;
 	int rechazada = 0;
 	int edicion = 0;
+	boolean coordinador = false;
 
 	public int getEdicion() {
 		edicion = servicioPlanillaGenerica.buscarCantidadPorUsuarioYEstado(
@@ -68,33 +69,74 @@ public class CInbox extends CGenerico {
 	}
 
 	public int getRechazada() {
-		rechazada = servicioPlanillaGenerica.buscarCantidadPorUsuarioYEstado(
-				usuarioSesion(nombreUsuarioSesion()), "Rechazada");
+		if (buscarCoordinador())
+			rechazada = servicioPlanillaGenerica
+					.buscarCantidadPorCoordinadorYEstado(nombreUsuarioSesion(),
+							"Rechazada");
+		else
+			rechazada = servicioPlanillaGenerica
+					.buscarCantidadPorUsuarioYEstado(
+							usuarioSesion(nombreUsuarioSesion()), "Rechazada");
 		return rechazada;
 	}
 
 	public int getAprobada() {
-		aprobada = servicioPlanillaGenerica.buscarCantidadPorUsuarioYEstado(
-				usuarioSesion(nombreUsuarioSesion()), "Aprobada");
+		if (buscarCoordinador())
+			aprobada = servicioPlanillaGenerica
+					.buscarCantidadPorCoordinadorYEstado(nombreUsuarioSesion(),
+							"Aprobada");
+		else
+			aprobada = servicioPlanillaGenerica
+					.buscarCantidadPorUsuarioYEstado(
+							usuarioSesion(nombreUsuarioSesion()), "Aprobada");
 		return aprobada;
 	}
 
 	public int getCancelada() {
-		cancelada = servicioPlanillaGenerica.buscarCantidadPorUsuarioYEstado(
-				usuarioSesion(nombreUsuarioSesion()), "Cancelada");
+		if (buscarCoordinador())
+			cancelada = servicioPlanillaGenerica
+					.buscarCantidadPorCoordinadorYEstado(nombreUsuarioSesion(),
+							"Cancelada");
+		else
+			cancelada = servicioPlanillaGenerica
+					.buscarCantidadPorUsuarioYEstado(
+							usuarioSesion(nombreUsuarioSesion()), "Cancelada");
 		return cancelada;
 	}
 
 	public int getFinalizada() {
-		finalizada = servicioPlanillaGenerica.buscarCantidadPorUsuarioYEstado(
-				usuarioSesion(nombreUsuarioSesion()), "Finalizada");
+		if (buscarCoordinador())
+			finalizada = servicioPlanillaGenerica
+					.buscarCantidadPorCoordinadorYEstado(nombreUsuarioSesion(),
+							"Finalizada");
+		else
+			finalizada = servicioPlanillaGenerica
+					.buscarCantidadPorUsuarioYEstado(
+							usuarioSesion(nombreUsuarioSesion()), "Finalizada");
 		return finalizada;
 	}
 
 	public int getPendiente() {
-		pendiente = servicioPlanillaGenerica.buscarCantidadPorUsuarioYEstado(
-				usuarioSesion(nombreUsuarioSesion()), "Pendiente");
+		if (buscarCoordinador())
+			pendiente = servicioPlanillaGenerica
+					.buscarCantidadPorCoordinadorYEstado(nombreUsuarioSesion(),
+							"Pendiente");
+		else
+			pendiente = servicioPlanillaGenerica
+					.buscarCantidadPorUsuarioYEstado(
+							usuarioSesion(nombreUsuarioSesion()), "Pendiente");
 		return pendiente;
+	}
+
+	public boolean buscarCoordinador() {
+		List<Grupo> grupos = servicioGrupo
+				.buscarGruposUsuario(usuarioSesion(nombreUsuarioSesion()));
+		for (int w = 0; w < grupos.size(); w++) {
+			if (grupos.get(w).getNombre().equals("Coordinador")) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -104,6 +146,7 @@ public class CInbox extends CGenerico {
 		btnAprobada.setSrc("/public/imagenes/botones/procesada.png");
 		btnCancelada.setSrc("/public/imagenes/botones/cancelada.png");
 		btnRechazada.setSrc("/public/imagenes/botones/rechazada.png");
+		btnEdicion.setSrc("/public/imagenes/botones/planillaP.png");
 
 		Over(btnCancelada, "canceladaG");
 		Out(btnCancelada, "cancelada");
@@ -113,6 +156,8 @@ public class CInbox extends CGenerico {
 		Out(btnAprobada, "procesada");
 		Over(btnRechazada, "rechazadaG");
 		Out(btnRechazada, "rechazada");
+		Over(btnEdicion, "planillaG");
+		Out(btnEdicion, "planillaP");
 
 		Authentication authe = SecurityContextHolder.getContext()
 				.getAuthentication();
@@ -121,7 +166,14 @@ public class CInbox extends CGenerico {
 
 		List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
 		ltbRoles.setModel(new ListModelList<Grupo>(grupos));
-
+		for (int w = 0; w < grupos.size(); w++) {
+			if (grupos.get(w).getNombre().equals("Coordinador")) {
+				coordinador = true;
+				w = grupos.size();
+			}
+		}
+		System.out.println("Coordinador" + coordinador);
+		getRechazada();
 		if (u.getImagen() == null) {
 			imagenes.setContent(new AImage(url));
 		} else {
@@ -159,8 +211,7 @@ public class CInbox extends CGenerico {
 									public void onEvent(Event arg0)
 											throws Exception {
 
-										if (arbol.getNombre().equals(
-												"Edicion"))
+										if (arbol.getNombre().equals("Edicion"))
 											variable = "En Edicion";
 										else
 											variable = arbol.getNombre();

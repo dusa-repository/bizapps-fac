@@ -126,6 +126,8 @@ public class CSolicitudArte extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
+		
+		txtNombreActividad.setFocus(true);
 		txtRespActividad.setValue(nombreUsuarioSesion());
 		txtRespZona.setValue(usuarioSesion(nombreUsuarioSesion())
 				.getSupervisor());
@@ -147,7 +149,7 @@ public class CSolicitudArte extends CGenerico {
 
 			@Override
 			public void buscar() {
-				// TODO Auto-generated method stub
+				buscarCatalogoPropio();
 
 			}
 
@@ -257,14 +259,14 @@ public class CSolicitudArte extends CGenerico {
 					if (editar) {
 						botonera.getChildren().get(1).setVisible(false);
 						botonera.getChildren().get(2).setVisible(false);
-						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(3).setVisible(false);
 						botonera.getChildren().get(7).setVisible(false);
 						botonera.getChildren().get(8).setVisible(false);
 					} else {
 						botonera.getChildren().get(0).setVisible(false);
 						botonera.getChildren().get(1).setVisible(false);
 						botonera.getChildren().get(2).setVisible(false);
-						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(3).setVisible(false);
 						botonera.getChildren().get(7).setVisible(false);
 						botonera.getChildren().get(8).setVisible(false);
 					}
@@ -277,7 +279,7 @@ public class CSolicitudArte extends CGenerico {
 					botonera.getChildren().get(0).setVisible(false);
 					botonera.getChildren().get(1).setVisible(false);
 					botonera.getChildren().get(2).setVisible(false);
-					botonera.getChildren().get(5).setVisible(false);
+					botonera.getChildren().get(3).setVisible(false);
 					botonera.getChildren().get(7).setVisible(false);
 					botonera.getChildren().get(8).setVisible(false);
 				}
@@ -309,8 +311,12 @@ public class CSolicitudArte extends CGenerico {
 		String tipoConfig = "";
 		if (tipoInbox.equals("TradeMark"))
 			tipoConfig = "TradeMark";
-		else
-			tipoConfig = valor;
+		else {
+			if (tipoInbox.equals("Marca"))
+				tipoConfig = "Marca";
+			else
+				tipoConfig = valor;
+		}
 		Marca marca = servicioMarca.buscar(cmbMarcaSugerida.getSelectedItem()
 				.getContext());
 		double alto = dspAlto.getValue();
@@ -337,14 +343,14 @@ public class CSolicitudArte extends CGenerico {
 				formato, alto, largo, ancho, imagenUsuario1, imagenUsuario2,
 				imagenUsuario3, imagenUsuario4, lineamiento, fechaHora,
 				horaAuditoria, nombreUsuarioSesion(), string, usuario.getZona()
-						.getDescripcion(), valor, "", 0);
+						.getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaArte.guardar(planillaArte);
 		if (id != 0)
 			planillaArte = servicioPlanillaArte.buscar(id);
 		else
 			planillaArte = servicioPlanillaArte.buscarUltima();
 		guardarBitacora(planillaArte, string);
-		if (valor.equals("TradeMark") && string.equals("Pendiente")) {
+		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente") && !inbox) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
 			Usuario usuarioAdmin = new Usuario();
@@ -402,12 +408,11 @@ public class CSolicitudArte extends CGenerico {
 		return marcas;
 	}
 
-	@Listen("onClick = #btnBuscarPlanillas")
 	public void buscarCatalogoPropio() {
 		final List<PlanillaArte> listPlanilla = servicioPlanillaArte
 				.buscarTodosOrdenados(usuarioSesion(nombreUsuarioSesion()));
 		catalogo = new Catalogo<PlanillaArte>(catalogoSolicitudArte,
-				"PlanillaCata", listPlanilla, true, "Nombre Actividad",
+				"Planillas de Arte y Publicaciones", listPlanilla, true, "Nombre Actividad",
 				"Marca", "Fecha Edicion") {
 
 			@Override

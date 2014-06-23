@@ -19,10 +19,8 @@
 						</hbox>
 						<textbox id="txtDescripcionAliado" hflex="1" maxlength="500"
 							multiline="true" class="multilinea" tooltiptext="Ingrese la descripcion del Aliado" />
-						<button id="btnBuscarAliados" label="Buscar" tooltiptext="Catalogo Aliados"
-							image="/public/imagenes/botones/buscar.png" />
+						<hbox />
 					</row>
-
 					<row>
 						<hbox>
 							<label class="etiqueta" value="Zona: " />

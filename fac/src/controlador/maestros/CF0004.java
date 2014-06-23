@@ -60,6 +60,7 @@ public class CF0004 extends CGenerico {
 
 			@Override
 			public void buscar() {
+				mostrarCatalogo();
 			}
 
 			@Override
@@ -149,7 +150,7 @@ public class CF0004 extends CGenerico {
 				
 			}
 		};
-		botonera.getChildren().get(3).setVisible(false);
+
 		botonera.getChildren().get(4).setVisible(false);
 		botonera.getChildren().get(5).setVisible(false);
 		botonera.getChildren().get(7).setVisible(false);
@@ -217,10 +218,10 @@ public class CF0004 extends CGenerico {
 			return true;
 	}
 
-	@Listen("onClick = #btnBuscarF0004")
+
 	public void mostrarCatalogo() {
 		final List<F0004> listF0004 = servicioF0004.buscarTodosOrdenados();
-		catalogo = new Catalogo<F0004>(divCatalogoF0004, "F0004", listF0004,true, "SY",
+		catalogo = new Catalogo<F0004>(divCatalogoF0004, "Catalogo de F0004", listF0004,true, "SY",
 				"RT", "Descripcion", "Codigo", "2 Linea", "Numerico") {
 
 			@Override

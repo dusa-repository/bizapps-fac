@@ -19,8 +19,7 @@
 						</hbox>
 						<textbox id="txtCodigoUsuario" hflex="1" maxlength="50"
 							tooltiptext="Ingrese el Login del Usuario" />
-						<button id="btnBuscarUsuarios" label="Buscar" tooltiptext="Catalogo Usuarios"
-							image="/public/imagenes/botones/buscar.png" />
+						<hbox />
 					</row>
 					<row>
 						<fileupload image="/public/imagenes/botones/cargar.png"

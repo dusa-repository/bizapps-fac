@@ -20,8 +20,7 @@
 						</hbox>
 						<textbox id="txtSYF0004" hflex="1" maxlength="4"
 							tooltiptext="Ingrese el Codigo Principal del Sistema" />
-						<button id="btnBuscarF0004" label=""
-							tooltiptext="Catalogo de Codigos de Producto" image="/public/imagenes/botones/buscar.png" />
+						<hbox />
 					</row>
 					<row>
 						<hbox>

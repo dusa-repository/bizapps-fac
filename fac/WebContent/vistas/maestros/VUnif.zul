@@ -19,8 +19,7 @@
 						</hbox>
 						<textbox id="txtDescripcionUniforme" hflex="1" maxlength="50"
 							tooltiptext="Ingrese la descripcion del uniforme" />
-						<button id="btnBuscarUniformes" label="Buscar" tooltiptext="Catalogo Uniforme"
-							image="/public/imagenes/botones/buscar.png" />
+						<hbox />
 					</row>
 				</rows>
 			</grid>

@@ -45,7 +45,7 @@ public class CZona extends CGenerico {
 
 			@Override
 			public void buscar() {
-				// TODO Auto-generated method stub
+				buscarCatalogoPropio();
 
 			}
 
@@ -116,7 +116,6 @@ public class CZona extends CGenerico {
 				
 			}
 		};
-		botonera.getChildren().get(3).setVisible(false);
 		botonera.getChildren().get(4).setVisible(false);
 		botonera.getChildren().get(5).setVisible(false);
 		botonera.getChildren().get(7).setVisible(false);
@@ -134,10 +133,9 @@ public class CZona extends CGenerico {
 			return true;
 	}
 
-	@Listen("onClick = #btnBuscarZonas")
 	public void buscarCatalogoPropio() {
 		final List<Zona> listZona = servicioZona.buscarTodosOrdenados();
-		catalogo = new Catalogo<Zona>(DivCatalogoZona, "Zona", listZona, true,
+		catalogo = new Catalogo<Zona>(DivCatalogoZona, "Catalogo de Zonas", listZona, true,
 				"Id", "Descripcion") {
 
 			@Override

@@ -19,8 +19,7 @@
 						</hbox>
 						<textbox id="txtDescripcionRecurso" hflex="1" maxlength="50"
 							tooltiptext="Ingrese la descripcion del recurso" />
-						<button id="btnBuscarRecursos" label="Buscar" tooltiptext="Catalogo Recursos"
-							image="/public/imagenes/botones/buscar.png" />
+						<hbox />
 					</row>
 				</rows>
 			</grid>

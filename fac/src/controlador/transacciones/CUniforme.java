@@ -51,6 +51,7 @@ import org.zkoss.zul.Window;
 import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
+import componente.Validador;
 
 import controlador.maestros.CGenerico;
 
@@ -125,6 +126,8 @@ public class CUniforme extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
+		
+		txtNombreActividad.setFocus(true);
 		txtRespActividad.setValue(nombreUsuarioSesion());
 		txtRespZona.setValue(usuarioSesion(nombreUsuarioSesion())
 				.getSupervisor());
@@ -146,8 +149,7 @@ public class CUniforme extends CGenerico {
 
 			@Override
 			public void buscar() {
-				// TODO Auto-generated method stub
-
+				buscarCatalogoPropio();
 			}
 
 			@Override
@@ -261,14 +263,14 @@ public class CUniforme extends CGenerico {
 					if (editar) {
 						botonera.getChildren().get(1).setVisible(false);
 						botonera.getChildren().get(2).setVisible(false);
-						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(3).setVisible(false);
 						botonera.getChildren().get(7).setVisible(false);
 						botonera.getChildren().get(8).setVisible(false);
 					} else {
 						botonera.getChildren().get(0).setVisible(false);
 						botonera.getChildren().get(1).setVisible(false);
 						botonera.getChildren().get(2).setVisible(false);
-						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(3).setVisible(false);
 						botonera.getChildren().get(7).setVisible(false);
 						botonera.getChildren().get(8).setVisible(false);
 					}
@@ -281,7 +283,7 @@ public class CUniforme extends CGenerico {
 					botonera.getChildren().get(0).setVisible(false);
 					botonera.getChildren().get(1).setVisible(false);
 					botonera.getChildren().get(2).setVisible(false);
-					botonera.getChildren().get(5).setVisible(false);
+					botonera.getChildren().get(3).setVisible(false);
 					botonera.getChildren().get(7).setVisible(false);
 					botonera.getChildren().get(8).setVisible(false);
 				}
@@ -323,8 +325,12 @@ public class CUniforme extends CGenerico {
 		String tipoConfig = "";
 		if (tipoInbox.equals("TradeMark"))
 			tipoConfig = "TradeMark";
-		else
-			tipoConfig = valor;
+		else {
+			if (tipoInbox.equals("Marca"))
+				tipoConfig = "Marca";
+			else
+				tipoConfig = valor;
+		}
 		Marca marca = servicioMarca.buscar(cmbMarcaSugerida.getSelectedItem()
 				.getContext());
 		Date valorFecha = dtbActividad.getValue();
@@ -337,7 +343,7 @@ public class CUniforme extends CGenerico {
 				marca, nombreActividad, fechaActividad, tipoActividad, ciudad,
 				cliente, nombre, rif, telefono, mail, direccion, logo, costo,
 				justificacion, contrato, fechaHora, rif, nombreUsuarioSesion(),
-				string, usuario.getZona().getDescripcion(), valor, "", 0);
+				string, usuario.getZona().getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaUniforme.guardar(planillaUniforme);
 		if (id != 0)
 			planillaUniforme = servicioPlanillaUniforme.buscar(id);
@@ -345,7 +351,7 @@ public class CUniforme extends CGenerico {
 			planillaUniforme = servicioPlanillaUniforme.buscarUltima();
 		guardarBitacora(planillaUniforme, string);
 		guardarUniformes(planillaUniforme);
-		if (valor.equals("TradeMark") && string.equals("Pendiente")) {
+		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente") && !inbox) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
 			Usuario usuarioAdmin = new Usuario();
@@ -412,7 +418,7 @@ public class CUniforme extends CGenerico {
 				|| cdtJustificacion.getValue().compareTo("") == 0
 				|| dtbActividad.getText().compareTo("") == 0
 				|| (!rdoNo.isChecked() && !rdoSi.isChecked())) {
-			Messagebox.show("Debe Llenar Todos los Campos", "Informacion",
+			Messagebox.show("Debe Llenar Todos los Campos Requeridos", "Informacion",
 					Messagebox.OK, Messagebox.INFORMATION);
 			return false;
 		} else
@@ -511,12 +517,12 @@ public class CUniforme extends CGenerico {
 		return tallas;
 	}
 
-	@Listen("onClick = #btnBuscarPlanillas")
+
 	public void buscarCatalogoPropio() {
 		final List<PlanillaUniforme> listPlanilla = servicioPlanillaUniforme
 				.buscarTodosOrdenados(usuarioSesion(nombreUsuarioSesion()));
 		catalogo = new Catalogo<PlanillaUniforme>(catalogoUniformes,
-				"PlanillaCata", listPlanilla, true, "Nombre Actividad",
+				"Planillas de Solicitud de Uniformes", listPlanilla, true, "Nombre Actividad",
 				"Ciudad", "Marca", "Fecha Edicion") {
 
 			@Override
@@ -609,5 +615,22 @@ public class CUniforme extends CGenerico {
 		}
 		return cambio;
 	}
+	
+	/* Metodo que valida el formmato del telefono ingresado */
+	@Listen("onChange = #txtTelefono")
+	public void validarTelefono2E() throws IOException {
+		if (Validador.validarTelefono(txtTelefono.getValue()) == false) {
+			Messagebox.show("Formato de Telefono No Valido", "Alerta",
+					Messagebox.OK, Messagebox.EXCLAMATION);
+		}
+	}
 
+	/* Metodo que valida el formmato del correo ingresado */
+	@Listen("onChange = #txtEMail")
+	public void validarCorreo() throws IOException {
+		if (Validador.validarCorreo(txtEMail.getValue()) == false) {
+			Messagebox.show("Correo Electronico Invalido", "Alerta",
+					Messagebox.OK, Messagebox.EXCLAMATION);
+		}
+	}
 }

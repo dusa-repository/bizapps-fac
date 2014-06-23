@@ -1,5 +1,5 @@
 <zk>
-	<window width="60em" closable="false" id="wdwSolicitudUniforme"
+	<window width="70em" closable="false" id="wdwSolicitudUniforme"
 		apply="controlador.transacciones.CUniforme">
 		<caption label="Formato de Solicitud de Uniformes"
 			style="color:white; font-size: 16px; font-weight:bold; " />
@@ -21,15 +21,6 @@
 								<column label="" width="30%" />
 							</columns>
 							<rows>
-								<row>
-									<cell colspan="3" align="end">
-										<label class="etiqueta"
-											value="Presione el boton para modificar alguna planilla en edicion: " />
-									</cell>
-									<button id="btnBuscarPlanillas" label=""
-										tooltiptext="Catalogo de Planillas de Solicitud de Uniformes"
-										image="/public/imagenes/botones/buscar.png" />
-								</row>
 								<row>
 									<hbox>
 										<label class="etiqueta" value="Nombre Actividad: " />
@@ -182,7 +173,7 @@
 					</tabpanel>
 					<tabpanel>
 						<hbox>
-							<listbox id="ltbUniformes" height="280px" width="220px"
+							<listbox id="ltbUniformes" height="450px" width="300px"
 								emptyMessage="No hay Uniformes Registrados">
 								<listhead>
 									<listheader label="Uniforme" width="100%" />
@@ -230,12 +221,12 @@
 							</listbox>
 							<vbox>
 								<button id="pasar1Recurso" image="/public/imagenes/botones/adelante.png"
-									tooltiptext="Agregar Producto" width="30px" />
+									tooltiptext="Agregar Producto" width="33px" />
 								<separator />
 								<button id="pasar2Recurso" image="/public/imagenes/botones/atras.png"
-									tooltiptext="Quitar Recurso" width="30px" />
+									tooltiptext="Quitar Recurso" width="33px" />
 							</vbox>
-							<listbox id="ltbUniformesAgregados" height="280px"
+							<listbox id="ltbUniformesAgregados" height="450px"
 								emptyMessage="No ha Seleccionado ningun Recurso">
 								<listhead>
 									<listheader label="Uniforme" width="35%" />
@@ -267,8 +258,6 @@
 											</combobox>
 										</listcell>
 										<listcell>
-											<!-- onClick="ltbUniformesAgregados.onSelect", onChange='$composer.cambio', 
-												onChanging='test()' -->
 											<spinner onChanging='$composer.cambio' onChange='$composer.cambio'
 												value="${each.cantidad}" constraint="min 0 max 1000000"
 												tooltiptext="Ingrese la Cantidad Solicitada de Recursos"
@@ -283,7 +272,7 @@
 										<listcell>
 											<doublespinner value="${each.precioUnitario*each.cantidad}"
 												inplace="true" readonly="true" width="98%" constraint="min 0 max 100000000"
-												format="#.#" step="1" />
+												format="#.#" step="1" buttonVisible="false" />
 										</listcell>
 										<listcell>
 											<spinner value="${each.uniforme.idUniforme}" width="98%"
@@ -299,13 +288,15 @@
 							<separator />
 							<hbox>
 								<label class="etiqueta" value="¿Contrato Condicionado? " />
+								<space />
 								<radiogroup id="rdbJustificacion">
 									<radio id="rdoSi" label="Si" />
+									<space />
 									<radio id="rdoNo" label="No" />
 								</radiogroup>
 							</hbox>
 							<separator />
-							<ckeditor id="cdtJustificacion" width="100%" height="100%">
+							<ckeditor id="cdtJustificacion" width="100%" height="350px">
 								<attribute name="value" />
 							</ckeditor>
 						</vbox>

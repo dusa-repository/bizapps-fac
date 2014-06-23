@@ -67,7 +67,7 @@
 			<center border="none">
 				<div height="100%" width="100%" style="background:#500101">
 					<hbox align="center" pack="center" height="100%" width="100%">
-						<groupbox closable="false" height="85%" width="370px"
+						<groupbox closable="false" height="80%" width="530px"
 							mold="3d">
 							<caption label="INBOX"
 								style="color:white; font-size: 17px; font-weight:bold; background: #3A0202" />
@@ -75,38 +75,39 @@
 								<separator />
 								<separator />
 								<hbox>
+									<space />
 									<button id="btnEdicion" class="btn"
 										label="En Edicion (${$composer.edicion})" orient="vertical"
 										visible="false" />
+									<space />
 									<button id="btnPendiente" class="btn"
 										label="Pendientes por Aprobacion (${$composer.pendiente})"
 										orient="vertical" visible="false" />
-								</hbox>
-								<separator />
-								<separator />
-								<separator />
-								<hbox>
+									<space />
 									<button id="btnAprobada" class="btn"
 										label="Procesadas (${$composer.aprobada})" orient="vertical"
 										visible="false" />
-									<button id="btnRechazada" class="btn"
-										label="Rechazadas (${$composer.rechazada})" orient="vertical"
-										visible="false" />
-
 								</hbox>
 								<separator />
 								<separator />
 								<separator />
 								<hbox>
+									<space />
+									<button id="btnRechazada" class="btn"
+										label="Rechazadas (${$composer.rechazada})" orient="vertical"
+										visible="false" />
+									<space />
 									<button id="btnCancelada" class="btn"
 										label="Canceladas (${$composer.cancelada})" orient="vertical"
 										visible="false" />
-									<div align="right" style="float: right;">
-										<button id="btnCerrar" class="btn-salir" label="Volver"
-											visible="true" image="/public/imagenes/botones/salir.png" />
-									</div>
 								</hbox>
-
+								<space />
+								<space />
+								<space />
+								<div align="right" style="float: right;">
+									<button id="btnCerrar" class="btn-salir" label="Volver"
+										visible="true" image="/public/imagenes/botones/salir.png" />
+								</div>
 							</vbox>
 						</groupbox>
 					</hbox>

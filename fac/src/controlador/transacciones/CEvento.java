@@ -144,6 +144,7 @@ public class CEvento extends CGenerico {
 	@Override
 	public void inicializar() throws IOException {
 
+		txtNombreActividad.setFocus(true);
 		txtRespActividad.setValue(nombreUsuarioSesion());
 		txtRespZona.setValue(usuarioSesion(nombreUsuarioSesion())
 				.getSupervisor());
@@ -165,7 +166,7 @@ public class CEvento extends CGenerico {
 
 			@Override
 			public void buscar() {
-				// TODO Auto-generated method stub
+				buscarCatalogoPropio();
 
 			}
 
@@ -269,6 +270,7 @@ public class CEvento extends CGenerico {
 					tabMecanica.setSelected(true);
 				if (tabDatos.isSelected())
 					tabDescripcion.setSelected(true);
+				
 			}
 
 			@Override
@@ -296,14 +298,14 @@ public class CEvento extends CGenerico {
 					if (editar) {
 						botonera.getChildren().get(1).setVisible(false);
 						botonera.getChildren().get(2).setVisible(false);
-						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(3).setVisible(false);
 						botonera.getChildren().get(7).setVisible(false);
 						botonera.getChildren().get(8).setVisible(false);
 					} else {
 						botonera.getChildren().get(0).setVisible(false);
 						botonera.getChildren().get(1).setVisible(false);
 						botonera.getChildren().get(2).setVisible(false);
-						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(3).setVisible(false);
 						botonera.getChildren().get(7).setVisible(false);
 						botonera.getChildren().get(8).setVisible(false);
 					}
@@ -316,7 +318,7 @@ public class CEvento extends CGenerico {
 					botonera.getChildren().get(0).setVisible(false);
 					botonera.getChildren().get(1).setVisible(false);
 					botonera.getChildren().get(2).setVisible(false);
-					botonera.getChildren().get(5).setVisible(false);
+					botonera.getChildren().get(3).setVisible(false);
 					botonera.getChildren().get(7).setVisible(false);
 					botonera.getChildren().get(8).setVisible(false);
 				}
@@ -361,8 +363,12 @@ public class CEvento extends CGenerico {
 		String tipoConfig = "";
 		if (tipoInbox.equals("TradeMark"))
 			tipoConfig = "TradeMark";
-		else
-			tipoConfig = valor;
+		else {
+			if (tipoInbox.equals("Marca"))
+				tipoConfig = "Marca";
+			else
+				tipoConfig = valor;
+		}
 		Marca marca = servicioMarca.buscar(cmbMarcaSugerida.getSelectedItem()
 				.getContext());
 		Date fechaI = dtbInicio.getValue();
@@ -378,7 +384,7 @@ public class CEvento extends CGenerico {
 				horaEvento, direccion, personas, contacto, telefono, nivel,
 				edadTarget, medio, venta, costo, descripcion, mecanica,
 				fechaHora, horaAuditoria, nombreUsuarioSesion(), string,
-				usuario.getZona().getDescripcion(), valor, "", 0);
+				usuario.getZona().getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaEvento.guardar(planillaEvento);
 		if (id != 0)
 			planillaEvento = servicioPlanillaEvento.buscar(id);
@@ -388,7 +394,8 @@ public class CEvento extends CGenerico {
 		guardarItemsDegustacion(planillaEvento);
 		guardarItemsEstimados(planillaEvento);
 		guardarRecursos(planillaEvento);
-		if (valor.equals("TradeMark") && string.equals("Pendiente")) {
+		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente")
+				&& !inbox) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
 			Usuario usuarioAdmin = new Usuario();
@@ -557,13 +564,12 @@ public class CEvento extends CGenerico {
 		cmbMedio.setModel(new ListModelList<F0005>(udc));
 	}
 
-	@Listen("onClick = #btnBuscarPlanillas")
 	public void buscarCatalogoPropio() {
 		final List<PlanillaEvento> listPlanilla = servicioPlanillaEvento
 				.buscarTodosOrdenados(usuarioSesion(nombreUsuarioSesion()));
 		catalogo = new Catalogo<PlanillaEvento>(catalogoEvento,
-				"PlanillaEvento", listPlanilla, true, "Nombre Actividad",
-				"Ciudad", "Marca", "Fecha Edicion") {
+				"Planillas de Eventos Especiales", listPlanilla, true,
+				"Nombre Actividad", "Ciudad", "Marca", "Fecha Edicion") {
 
 			@Override
 			protected List<PlanillaEvento> buscar(List<String> valores) {

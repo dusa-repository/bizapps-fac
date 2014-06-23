@@ -19,8 +19,7 @@
 						</hbox>
 						<textbox id="txtCodigoSku" hflex="1" maxlength="50"
 							tooltiptext="Ingrese el Nombre del Sku" />
-						<button id="btnBuscarSkus" label="Buscar" tooltiptext="Catalogo Skus"
-							image="/public/imagenes/botones/buscar.png" />
+						<hbox />
 					</row>
 					<row>
 						<hbox>

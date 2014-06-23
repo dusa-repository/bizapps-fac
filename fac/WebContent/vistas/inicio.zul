@@ -76,7 +76,7 @@
 				<div height="100%" width="100%" style="background:#500101">
 					<hbox style="border: none" align="center" pack="center"
 						height="100%" width="100%">
-						<groupbox closable="false" width="630px" height="80%"
+						<groupbox closable="false" width="710px" height="80%"
 							mold="3d">
 							<caption label="FORMATOS DISPONIBLES"
 								style="color:White; font-size: 17px; font-weight:bold; background: #3A0202" />
@@ -86,10 +86,13 @@
 								<hbox>
 									<button id="btnEvento" class="btn" label="Eventos Especiales"
 										orient="vertical" visible="false" />
+										<space/>
 									<button id="btnUniforme" class="btn" label="Uniformes"
 										orient="vertical" visible="false" />
+										<space/>
 									<button id="btnPromocion" class="btn" label="Promociones de Marca"
 										orient="vertical" visible="false" />
+										<space/>
 									<button id="btnSolicitudArte" class="btn"
 										label="Solicitud de Arte y Publicaciones" orient="vertical"
 										visible="false" />
@@ -100,8 +103,10 @@
 								<hbox>
 									<button id="btnCataInduccion" class="btn" label="Cata Induccion"
 										orient="vertical" visible="false" />
+										<space/>
 									<button id="btnFachada" class="btn" label="Fachadas y Decoraciones"
 										orient="vertical" visible="false" />
+										<space/>
 									<button id="btnMarca" class="btn" label="Marca" orient="vertical"
 										visible="false" />
 								</hbox>

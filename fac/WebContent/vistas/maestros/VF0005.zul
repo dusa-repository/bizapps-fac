@@ -43,8 +43,7 @@
 						</hbox>
 						<textbox id="txtKYF0005" hflex="1" maxlength="10"
 							tooltiptext="Ingrese el Codigo" />
-						<button id="btnBuscarF0005" label=""
-							tooltiptext="Catalogo de Codigos de Producto" image="/public/imagenes/botones/buscar.png" />
+						<hbox />
 					</row>
 					<row>
 						<hbox>

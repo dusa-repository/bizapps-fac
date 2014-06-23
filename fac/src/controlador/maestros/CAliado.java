@@ -49,6 +49,7 @@ public class CAliado extends CGenerico {
 
 			@Override
 			public void buscar() {
+				buscarCatalogoPropio();
 			}
 
 			@Override
@@ -117,7 +118,6 @@ public class CAliado extends CGenerico {
 				
 			}
 		};
-		botonera.getChildren().get(3).setVisible(false);
 		botonera.getChildren().get(4).setVisible(false);
 		botonera.getChildren().get(5).setVisible(false);
 		botonera.getChildren().get(7).setVisible(false);
@@ -136,10 +136,9 @@ public class CAliado extends CGenerico {
 			return true;
 	}
 
-	@Listen("onClick = #btnBuscarAliados")
 	public void buscarCatalogoPropio() {
 		final List<Aliado> listAliado = servicioAliado.buscarTodosOrdenados();
-		catalogo = new Catalogo<Aliado>(DivCatalogoAliado, "Aliado",
+		catalogo = new Catalogo<Aliado>(DivCatalogoAliado, "Catalogo de Aliados",
 				listAliado, true, "Nombre", "Zona", "Anexo") {
 
 			@Override
@@ -176,7 +175,7 @@ public class CAliado extends CGenerico {
 	@Listen("onClick = #btnBuscarZonas")
 	public void buscarCatalogoAjeno() {
 		final List<Zona> listZona = servicioZona.buscarTodosOrdenados();
-		catalogoZona = new Catalogo<Zona>(DivCatalogoZona, "Zona", listZona,
+		catalogoZona = new Catalogo<Zona>(DivCatalogoZona, "Catalogo de Zonas", listZona,
 				true, "Id", "Descripcion") {
 
 			@Override

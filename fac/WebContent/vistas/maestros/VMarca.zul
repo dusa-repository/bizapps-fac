@@ -19,8 +19,7 @@
 						</hbox>
 						<textbox id="txtCodigoMarca" hflex="1" maxlength="50"
 							tooltiptext="Ingrese el Nombre de la Marca" />
-						<button id="btnBuscarMarcas" label="Buscar" tooltiptext="Catalogo Marcas"
-							image="/public/imagenes/botones/buscar.png" />
+						<hbox />
 					</row>
 					<row>
 						<hbox>
@@ -28,9 +27,9 @@
 							<space />
 							<label value="*" style="font-weight:bold;color:red" />
 						</hbox>
-						<textbox id="txtDescripcionMarca" hflex="1" maxlength="500" multiline="true" class="multilinea"
-							tooltiptext="Ingrese el Nombre de la Marca" />
-						<hbox/>
+						<textbox id="txtDescripcionMarca" hflex="1" maxlength="500"
+							multiline="true" class="multilinea" tooltiptext="Ingrese el Nombre de la Marca" />
+						<hbox />
 					</row>
 				</rows>
 			</grid>

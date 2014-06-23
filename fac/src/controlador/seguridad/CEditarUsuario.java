@@ -152,7 +152,7 @@ public class CEditarUsuario extends CGenerico {
 			}
 
 		};
-		botonera.getChildren().get(2).setVisible(false);
+		botonera.getChildren().get(1).setVisible(false);
 		botonera.getChildren().get(3).setVisible(false);
 		botonera.getChildren().get(4).setVisible(false);
 		botonera.getChildren().get(5).setVisible(false);

@@ -53,6 +53,7 @@ public class CSku extends CGenerico {
 
 			@Override
 			public void buscar() {
+				buscarCatalogoPropio();
 			}
 
 			@Override
@@ -124,7 +125,6 @@ public class CSku extends CGenerico {
 				
 			}
 		};
-		botonera.getChildren().get(3).setVisible(false);
 		botonera.getChildren().get(4).setVisible(false);
 		botonera.getChildren().get(5).setVisible(false);
 		botonera.getChildren().get(7).setVisible(false);
@@ -143,10 +143,9 @@ public class CSku extends CGenerico {
 			return true;
 	}
 
-	@Listen("onClick = #btnBuscarSkus")
 	public void buscarCatalogoPropio() {
 		final List<Sku> listSku = servicioSku.buscarTodosOrdenados();
-		catalogo = new Catalogo<Sku>(DivCatalogoSku, "Sku", listSku, true,
+		catalogo = new Catalogo<Sku>(DivCatalogoSku, "Catalogo de Sku", listSku, true,
 				"Id", "Descripcion", "Marca") {
 
 			@Override
