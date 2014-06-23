@@ -86,7 +86,8 @@ public class CUsuario extends CGenerico {
 
 			@Override
 			public void buscar() {
-				// TODO Auto-generated method stub
+				Event e = new Event("");
+				buscarCatalogoPropio(e);
 
 			}
 
@@ -186,7 +187,6 @@ public class CUsuario extends CGenerico {
 				
 			}
 		};
-		botonera.getChildren().get(3).setVisible(false);
 		botonera.getChildren().get(4).setVisible(false);
 		botonera.getChildren().get(5).setVisible(false);
 		botonera.getChildren().get(7).setVisible(false);
@@ -214,13 +214,19 @@ public class CUsuario extends CGenerico {
 		imagen.setContent((org.zkoss.image.Image) media);
 	}
 
-	@Listen("onClick = #btnBuscarUsuarios, #btnBuscarSupervisores")
+	@Listen("onClick =  #btnBuscarSupervisores")
 	public void buscarCatalogoPropio(Event e) {
-		Button boton = (Button) e.getTarget();
+		Button boton;
+		if(e.getTarget() !=null)
+		{
+		boton = (Button) e.getTarget();
 		idBoton = boton.getId();
+		}
+		else
+			idBoton="btnBuscarUsuarios";
 		final List<Usuario> listUsuario = servicioUsuario
 				.buscarTodosOrdenados();
-		catalogoUsuario = new Catalogo<Usuario>(DivCatalogoUsuario, "Usuario",
+		catalogoUsuario = new Catalogo<Usuario>(DivCatalogoUsuario, "Catalogo de Usuarios",
 				listUsuario, true, "Codigo", "Nombre", "Email", "Supervisor",
 				"Zona") {
 
@@ -343,7 +349,7 @@ public class CUsuario extends CGenerico {
 	@Listen("onClick = #btnBuscarZonas")
 	public void buscarCatalogoAjeno() {
 		final List<Zona> listZona = servicioZona.buscarTodosOrdenados();
-		catalogo = new Catalogo<Zona>(DivCatalogoZona, "Zona", listZona, true,
+		catalogo = new Catalogo<Zona>(DivCatalogoZona, "Catalogo de Zonas", listZona, true,
 				"Id", "Descripcion") {
 
 			@Override

@@ -7,9 +7,9 @@
 
 .z-window-header {
 	color: white;
-	font-size: 16px;
+	font-size: 18px;
 	font-weight: normal;
-
+	background-color: #661313;
 }
 
 .z-borderlayout {

@@ -38,9 +38,8 @@ public abstract class Catalogo<Clase> extends Window {
 			List<Clase> lista, boolean emergente, String... campos) {
 		super("", "2", false);
 		this.setId("cmpCatalogo" + titulo);
-		this.setStyle("background-header:#FF7925; background: #f4f2f2");
-		// this.setWidth("auto");
-		crearLista(lista, campos, emergente);
+		this.setStyle("background-header:#661313; background: #f4f2f2");
+		crearLista(lista, campos, emergente, titulo);
 		lsbCatalogo.addEventListener(Events.ON_SELECT,
 				new EventListener<Event>() {
 
@@ -52,7 +51,7 @@ public abstract class Catalogo<Clase> extends Window {
 	}
 
 	public void crearLista(List<Clase> lista, String[] campos,
-			final boolean emergente) {
+			final boolean emergente, String titulo) {
 		Hbox box = new Hbox();
 		final Separator separador1 = new Separator();
 		final Separator separador2 = new Separator();
@@ -133,7 +132,7 @@ public abstract class Catalogo<Clase> extends Window {
 		if (emergente) {
 			this.setClosable(true);
 			this.setWidth("80em");
-			this.setTitle("Registros");
+			this.setTitle(titulo);
 			this.appendChild(separador2);
 			this.appendChild(lsbCatalogo);
 			lsbCatalogo.setMultiple(true);
@@ -141,19 +140,8 @@ public abstract class Catalogo<Clase> extends Window {
 			lsbCatalogo.setMultiple(false);
 			lsbCatalogo.setCheckmark(false);
 		} else {
-			// Space espacio = new Space();
-			// espacio.setHeight("10px");
-			// box.appendChild(espacio);
-			// box.setWidth("100%");
-			// box.setAlign("end");
-			// box.setHeight("12px");
-			// box.setWidths("96%,2%,2%");
-//			this.setVflex("min");
 			this.setHflex("1");
 			this.setClosable(false);
-			// this.appendChild(separador1);
-			// this.appendChild(box);
-			// this.appendChild(separador2);
 			this.appendChild(lsbCatalogo);
 			lsbCatalogo.setMultiple(false);
 			lsbCatalogo.setCheckmark(false);

@@ -43,4 +43,20 @@ public class SPlanillaGenerica {
 						.size();
 		return contador;
 	}
+	
+	public int buscarCantidadPorCoordinadorYEstado(String usuario, String estado) {
+		int contador = planillaArteDAO.findByUsuarioSupervisorAndEstado(usuario, estado)
+				.size()
+				+ planillaCataDAO.findByUsuarioSupervisorAndEstado(usuario, estado)
+						.size()
+				+ planillaEventoDAO.findByUsuarioSupervisorAndEstado(usuario, estado)
+						.size()
+				+ planillaFachadaDAO.findByUsuarioSupervisorAndEstado(usuario, estado)
+						.size()
+				+ planillaPromocionDAO.findByUsuarioSupervisorAndEstado(usuario, estado)
+						.size()
+				+ planillaUniformeDAO.findByUsuarioSupervisorAndEstado(usuario, estado)
+						.size();
+		return contador;
+	}
 }

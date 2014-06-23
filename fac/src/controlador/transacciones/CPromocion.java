@@ -117,6 +117,7 @@ public class CPromocion extends CGenerico {
 	@Override
 	public void inicializar() throws IOException {
 		cargarCombos();
+		txtNombreActividad.setFocus(true);
 		txtRespActividad.setValue(nombreUsuarioSesion());
 		txtRespZona.setValue(usuarioSesion(nombreUsuarioSesion())
 				.getSupervisor());
@@ -138,7 +139,7 @@ public class CPromocion extends CGenerico {
 
 			@Override
 			public void buscar() {
-				// TODO Auto-generated method stub
+				buscarCatalogoPropio();
 
 			}
 
@@ -243,14 +244,14 @@ public class CPromocion extends CGenerico {
 					if (editar) {
 						botonera.getChildren().get(1).setVisible(false);
 						botonera.getChildren().get(2).setVisible(false);
-						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(3).setVisible(false);
 						botonera.getChildren().get(7).setVisible(false);
 						botonera.getChildren().get(8).setVisible(false);
 					} else {
 						botonera.getChildren().get(0).setVisible(false);
 						botonera.getChildren().get(1).setVisible(false);
 						botonera.getChildren().get(2).setVisible(false);
-						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(3).setVisible(false);
 						botonera.getChildren().get(7).setVisible(false);
 						botonera.getChildren().get(8).setVisible(false);
 					}
@@ -263,7 +264,7 @@ public class CPromocion extends CGenerico {
 					botonera.getChildren().get(0).setVisible(false);
 					botonera.getChildren().get(1).setVisible(false);
 					botonera.getChildren().get(2).setVisible(false);
-					botonera.getChildren().get(5).setVisible(false);
+					botonera.getChildren().get(3).setVisible(false);
 					botonera.getChildren().get(7).setVisible(false);
 					botonera.getChildren().get(8).setVisible(false);
 				}
@@ -305,8 +306,12 @@ public class CPromocion extends CGenerico {
 		String tipoConfig = "";
 		if (tipoInbox.equals("TradeMark"))
 			tipoConfig = "TradeMark";
-		else
-			tipoConfig = valor;
+		else {
+			if (tipoInbox.equals("Marca"))
+				tipoConfig = "Marca";
+			else
+				tipoConfig = valor;
+		}
 		Marca marca1 = servicioMarca.buscar(cmbMarca1.getSelectedItem()
 				.getContext());
 		Marca marca2 = servicioMarca.buscar(cmbMarca2.getSelectedItem()
@@ -322,14 +327,15 @@ public class CPromocion extends CGenerico {
 				direccion, fechaInicio, fechaFin, modalidad, frecuencia,
 				material, extra, costo, descripcion1, descripcion2, fechaHora,
 				horaAuditoria, nombreUsuarioSesion(), string, usuario.getZona()
-						.getDescripcion(), valor, "", 0);
+						.getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaPromocion.guardar(planillaPromocion);
 		if (id != 0)
 			planillaPromocion = servicioPlanillaPromocion.buscar(id);
 		else
 			planillaPromocion = servicioPlanillaPromocion.buscarUltima();
 		guardarBitacora(planillaPromocion, string);
-		if (valor.equals("TradeMark") && string.equals("Pendiente")) {
+		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente")
+				&& !inbox) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
 			Usuario usuarioAdmin = new Usuario();
@@ -407,12 +413,12 @@ public class CPromocion extends CGenerico {
 		return marcas;
 	}
 
-	@Listen("onClick = #btnBuscarPlanillas")
+	
 	public void buscarCatalogoPropio() {
 		final List<PlanillaPromocion> listPlanilla = servicioPlanillaPromocion
 				.buscarTodosOrdenados(usuarioSesion(nombreUsuarioSesion()));
 		catalogo = new Catalogo<PlanillaPromocion>(catalogoPromocion,
-				"PlanillaCata", listPlanilla, true, "Nombre Actividad",
+				"Planillas de Promociones de Marca", listPlanilla, true, "Nombre Actividad",
 				"Marca", "Fecha Edicion") {
 
 			@Override

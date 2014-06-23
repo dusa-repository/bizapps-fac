@@ -43,7 +43,7 @@ public class CRecurso extends CGenerico {
 			
 			@Override
 			public void buscar() {
-				// TODO Auto-generated method stub
+				buscarCatalogoPropio();
 				
 			}
 			
@@ -111,7 +111,6 @@ public class CRecurso extends CGenerico {
 				
 			}
 		};
-		botonera.getChildren().get(3).setVisible(false);
 		botonera.getChildren().get(4).setVisible(false);
 		botonera.getChildren().get(5).setVisible(false);
 		botonera.getChildren().get(7).setVisible(false);
@@ -128,10 +127,9 @@ public class CRecurso extends CGenerico {
 			return true;
 	}
 
-	@Listen("onClick = #btnBuscarRecursos")
 	public void buscarCatalogoPropio() {
 		final List<Recurso> listRecurso = servicioRecurso.buscarTodosOrdenados();
-		catalogo = new Catalogo<Recurso>(DivCatalogoRecurso, "Recurso",
+		catalogo = new Catalogo<Recurso>(DivCatalogoRecurso, "Catalogo de Recursos",
 				listRecurso, true, "Descripcion") {
 
 			@Override

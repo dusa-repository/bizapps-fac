@@ -1,29 +1,33 @@
 <?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
 <zk>
-	<window width="90em" hflex="1" closable="false" id="wdwSolicitud"
+	<window width="90em" closable="false" id="wdwSolicitud"
 		apply="controlador.transacciones.CSolicitud">
 		<caption label="Solicitudes ${$composer.titulo}"
 			style="color:white; font-size: 16px; font-weight:bold; " />
-		<div hflex="1">
+		<div>
+			<space />
 			<hbox widths="95%,5%" hflex="1">
 				<div id="catalogoSolicitud" />
+								<space/>
 				<vbox>
 					<zk if="${sec:isAnyGranted('Administrador')}">
 						<button id="btnProcesar" label="Procesar"
-							style="font-size: 11px ;width: 87px; height: 25px" />
+							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/procesar.png" />
 						<button id="btnFinalizar" label="Finalizar"
-							style="font-size: 11px ;width: 87px; height: 25px" />
+							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/finalizar.png" />
 						<button id="btnPagar" label="Pagar"
-							style="font-size: 11px ;width: 87px; height: 25px" />
+							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/pagar.png" />
 						<button id="btnCancelar" label="Cancelar"
-							style="font-size: 11px ;width: 87px; height: 25px" />
+							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/cancelar.png" />
 						<button id="btnRechazar" label="Rechazar"
-							style="font-size: 11px ;width: 87px; height: 25px" />
+							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/rechazar.png" />
 					</zk>
 					<button id="btnVer" label="Ver Solicitud"
-						style="font-size: 11px ;width: 87px; height: 25px" />
+						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/ver.png" />
+					<button id="btnBitacora" label="Ver Bitacora"
+						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/bitacora.png" />
 					<button id="btnCerrar" label="Salir"
-						style="font-size: 11px ;width: 87px; height: 25px" />
+						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/salir.png" />
 				</vbox>
 			</hbox>
 		</div>

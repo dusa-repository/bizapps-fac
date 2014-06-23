@@ -1,5 +1,5 @@
 <zk>
-	<window width="60em" closable="false" id="wdwPromocion"
+	<window width="70em" closable="false" id="wdwPromocion"
 		apply="controlador.transacciones.CPromocion">
 		<caption label="Formato de Promociones de Marca"
 			style="color:white; font-size: 16px; font-weight:bold; " />
@@ -20,14 +20,6 @@
 								<column label="" width="30%" />
 							</columns>
 							<rows>
-								<row>
-									<cell colspan="3" align="end">
-										<label class="etiqueta" value="Presione el boton para modificar alguna planilla en edicion: " />
-									</cell>
-									<button id="btnBuscarPlanillas" label=""
-										tooltiptext="Catalogo de Planillas de Promociones"
-										image="/public/imagenes/botones/buscar.png" />
-								</row>
 								<row>
 									<hbox>
 										<label class="etiqueta" value="Nombre Actividad: " />
@@ -231,14 +223,14 @@
 								<label class="etiqueta" value="Marca Sugerida: " />
 								<combobox tooltiptext="Seleccione la Marca Sugerida" model="${$composer.marcas}"
 									placeholder="Seleccione una Marca" id="cmbMarca1" readonly="true"
-									width="100%">
+									width="320px">
 									<template name="model">
 										<comboitem label="${each.descripcion}" context="${each.idMarca}" />
 									</template>
 								</combobox>
 							</hbox>
 								<separator/>
-							<ckeditor id="cdtMarca1" width="99%" height="60px">
+							<ckeditor id="cdtMarca1" width="99%" height="140px">
 								<attribute name="value" />
 							</ckeditor>
 							<separator/>
@@ -246,14 +238,14 @@
 								<label class="etiqueta" value="Marca Sugerida: " />
 								<combobox tooltiptext="Seleccione la Marca Sugerida" model="${$composer.marcas}"
 									placeholder="Seleccione una Marca" id="cmbMarca2" readonly="true"
-									width="100%">
+									width="320px">
 									<template name="model">
 										<comboitem label="${each.descripcion}" context="${each.idMarca}" />
 									</template>
 								</combobox>
 							</hbox>
 							<separator/>
-							<ckeditor id="cdtMarca2" width="99%" height="60px">
+							<ckeditor id="cdtMarca2" width="99%" height="140px">
 								<attribute name="value" />
 							</ckeditor>
 						</vbox>

@@ -68,7 +68,7 @@
 			<center border="none">
 				<div height="100%" width="100%" style="background:#500101">
 					<hbox align="center" pack="center" height="100%" width="100%">
-						<groupbox closable="false" height="85%" width="800px"
+						<groupbox closable="false" height="80%" width="800px"
 							mold="3d">
 							<caption label="PANEL ADMINISTRATIVO"
 								style="color:white; font-size: 17px; font-weight:bold; background: #3A0202" />
@@ -100,6 +100,9 @@
 									<button id="btnUnif" class="btn" label="Uniforme"
 										orient="vertical" visible="false" />
 								</hbox>
+								<space />
+								<space />
+								<space />
 								<div align="right" style="float: right;">
 									<button id="btnCerrar" class="btn-salir" label="Volver"
 										visible="true" image="/public/imagenes/botones/salir.png" />

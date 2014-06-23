@@ -45,7 +45,7 @@ public class CUnif extends CGenerico {
 
 			@Override
 			public void buscar() {
-				// TODO Auto-generated method stub
+				buscarCatalogoPropio();
 
 			}
 
@@ -114,7 +114,6 @@ public class CUnif extends CGenerico {
 				
 			}
 		};
-		botonera.getChildren().get(3).setVisible(false);
 		botonera.getChildren().get(4).setVisible(false);
 		botonera.getChildren().get(5).setVisible(false);
 		botonera.getChildren().get(7).setVisible(false);
@@ -131,11 +130,10 @@ public class CUnif extends CGenerico {
 			return true;
 	}
 
-	@Listen("onClick = #btnBuscarUniformes")
 	public void buscarCatalogoPropio() {
 		final List<Uniforme> listUniforme = servicioUniforme
 				.buscarTodosOrdenados();
-		catalogo = new Catalogo<Uniforme>(DivCatalogoUniforme, "Recurso",
+		catalogo = new Catalogo<Uniforme>(DivCatalogoUniforme, "Catalogo de Uniformes",
 				listUniforme, true, "Descripcion") {
 
 			@Override

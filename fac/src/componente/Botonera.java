@@ -23,14 +23,14 @@ public abstract class Botonera extends Hbox {
 		Button btnAtras = new Button();
 		Button btnEnviar = new Button();
 		this.appendChild(btnGuardar);
+		this.appendChild(btnBuscar);
 		this.appendChild(btnLimpiar);
 		this.appendChild(btnEliminar);
 		this.appendChild(btnAtras);
 		this.appendChild(btnAdelante);
-		this.appendChild(btnBuscar);
 		this.appendChild(btnSalir);
 		Space espacio = new Space();
-		espacio.setSpacing("150%");
+		espacio.setWidth("310px");
 		this.appendChild(espacio);
 		this.appendChild(btnEnviar);
 

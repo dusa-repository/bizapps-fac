@@ -1,5 +1,5 @@
 <zk>
-	<window width="60em" closable="false" id="wdwCata"
+	<window width="70em" closable="false" id="wdwCata"
 		apply="controlador.transacciones.CCata">
 		<caption label="Formato de Cata Induccion"
 			style="color:white; font-size: 16px; font-weight:bold; " />
@@ -23,14 +23,6 @@
 								<column label="" width="30%" />
 							</columns>
 							<rows>
-								<row>
-									<cell colspan="3" align="end">
-										<label class="etiqueta" value="Presione el boton para modificar alguna planilla en edicion: " />
-									</cell>
-									<button id="btnBuscarPlanillas" label=""
-										tooltiptext="Catalogo de Planillas de Cata o Induccion"
-										image="/public/imagenes/botones/buscar.png" />
-								</row>
 								<row>
 									<hbox>
 										<label class="etiqueta" value="Nombre Actividad: " />
@@ -206,18 +198,18 @@
 						</grid>
 					</tabpanel>
 					<tabpanel>
-						<ckeditor id="cdtDescripcion" width="100%">
+						<ckeditor id="cdtDescripcion" width="100%" height="350px" >
 							<attribute name="value" />
 						</ckeditor>
 					</tabpanel>
 					<tabpanel>
-						<ckeditor id="cdtMecanica" width="100%">
+						<ckeditor id="cdtMecanica" width="100%"  height="350px" >
 							<attribute name="value" />
 						</ckeditor>
 					</tabpanel>
 					<tabpanel>
 						<hbox>
-							<listbox id="ltbProductos" height="280px" width="220px"
+							<listbox id="ltbProductos" height="450px" width="300px"
 								emptyMessage="No hay Productos Registrados">
 								<listhead>
 									<listheader label="PT" width="100%" />
@@ -245,12 +237,12 @@
 							</listbox>
 							<vbox>
 								<button id="pasar1" image="/public/imagenes/botones/adelante.png"
-									tooltiptext="Agregar Producto" width="30px" />
+									tooltiptext="Agregar Producto" width="33px" />
 								<separator />
 								<button id="pasar2" image="/public/imagenes/botones/atras.png"
-									tooltiptext="Quitar Producto" width="30px" />
+									tooltiptext="Quitar Producto" width="33px" />
 							</vbox>
-							<listbox id="ltbProductosAgregados" height="280px"
+							<listbox id="ltbProductosAgregados" height="450px"
 								emptyMessage="No ha Seleccionado ningun Producto">
 								<listhead>
 									<listheader label="PT" width="35%" />
@@ -283,7 +275,7 @@
 					</tabpanel>
 					<tabpanel>
 						<hbox>
-							<listbox id="ltbRecursos" height="280px" width="220px"
+							<listbox id="ltbRecursos" height="450px" width="300px"
 								emptyMessage="No hay Recursos Registrados">
 								<listhead>
 									<listheader label="Recurso" width="100%" />
@@ -311,12 +303,12 @@
 							</listbox>
 							<vbox>
 								<button id="pasar1Recurso" image="/public/imagenes/botones/adelante.png"
-									tooltiptext="Agregar Producto" width="30px" />
+									tooltiptext="Agregar Producto" width="33px" />
 								<separator />
 								<button id="pasar2Recurso" image="/public/imagenes/botones/atras.png"
-									tooltiptext="Quitar Recurso" width="30px" />
+									tooltiptext="Quitar Recurso" width="33px" />
 							</vbox>
-							<listbox id="ltbRecursosAgregados" height="280px"
+							<listbox id="ltbRecursosAgregados" height="450px"
 								emptyMessage="No ha Seleccionado ningun Recurso">
 								<listhead>
 									<listheader label="Recurso" width="50%" />

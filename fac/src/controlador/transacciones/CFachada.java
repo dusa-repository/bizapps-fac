@@ -171,6 +171,8 @@ public class CFachada extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
+		
+		txtNombreActividad.setFocus(true);
 		txtRespActividad.setValue(nombreUsuarioSesion());
 		txtRespZona.setValue(usuarioSesion(nombreUsuarioSesion())
 				.getSupervisor());
@@ -192,7 +194,7 @@ public class CFachada extends CGenerico {
 
 			@Override
 			public void buscar() {
-				// TODO Auto-generated method stub
+				 buscarCatalogoPropio();
 
 			}
 
@@ -331,14 +333,14 @@ public class CFachada extends CGenerico {
 					if (editar) {
 						botonera.getChildren().get(1).setVisible(false);
 						botonera.getChildren().get(2).setVisible(false);
-						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(3).setVisible(false);
 						botonera.getChildren().get(7).setVisible(false);
 						botonera.getChildren().get(8).setVisible(false);
 					} else {
 						botonera.getChildren().get(0).setVisible(false);
 						botonera.getChildren().get(1).setVisible(false);
 						botonera.getChildren().get(2).setVisible(false);
-						botonera.getChildren().get(5).setVisible(false);
+						botonera.getChildren().get(3).setVisible(false);
 						botonera.getChildren().get(7).setVisible(false);
 						botonera.getChildren().get(8).setVisible(false);
 					}
@@ -351,7 +353,7 @@ public class CFachada extends CGenerico {
 					botonera.getChildren().get(0).setVisible(false);
 					botonera.getChildren().get(1).setVisible(false);
 					botonera.getChildren().get(2).setVisible(false);
-					botonera.getChildren().get(5).setVisible(false);
+					botonera.getChildren().get(3).setVisible(false);
 					botonera.getChildren().get(7).setVisible(false);
 					botonera.getChildren().get(8).setVisible(false);
 				}
@@ -398,8 +400,12 @@ public class CFachada extends CGenerico {
 		String tipoConfig = "";
 		if (tipoInbox.equals("TradeMark"))
 			tipoConfig = "TradeMark";
-		else
-			tipoConfig = valor;
+		else {
+			if (tipoInbox.equals("Marca"))
+				tipoConfig = "Marca";
+			else
+				tipoConfig = valor;
+		}
 		Marca marca = servicioMarca.buscar(cmbMarcaSugerida.getSelectedItem()
 				.getContext());
 		Date valorFecha = dtbActividad.getValue();
@@ -436,7 +442,7 @@ public class CFachada extends CGenerico {
 				tipoDecoracion, formato, salidaArte, alto, largo, ancho,
 				imagenUsuario1, imagenUsuario2, imagenUsuario3, imagenUsuario4,
 				fechaHora, horaAuditoria, nombreUsuarioSesion(), string,
-				usuario.getZona().getDescripcion(), valor, "", 0);
+				usuario.getZona().getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaFachada.guardar(planillaFachada);
 		if (id != 0)
 			planillaFachada = servicioPlanillaFachada.buscar(id);
@@ -444,7 +450,7 @@ public class CFachada extends CGenerico {
 			planillaFachada = servicioPlanillaFachada.buscarUltima();
 		guardarBitacora(planillaFachada, string);
 		guardarRecursos(planillaFachada);
-		if (valor.equals("TradeMark") && string.equals("Pendiente")) {
+		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente") && !inbox) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
 			Usuario usuarioAdmin = new Usuario();
@@ -621,12 +627,11 @@ public class CFachada extends CGenerico {
 		return marcas;
 	}
 
-	@Listen("onClick = #btnBuscarPlanillas")
 	public void buscarCatalogoPropio() {
 		final List<PlanillaFachada> listPlanilla = servicioPlanillaFachada
 				.buscarTodosOrdenados(usuarioSesion(nombreUsuarioSesion()));
 		catalogo = new Catalogo<PlanillaFachada>(catalogoFachada,
-				"PlanillaCata", listPlanilla, true, "Nombre Actividad",
+				"Planillas de Fachadas y Decoraciones", listPlanilla, true, "Nombre Actividad",
 				"Ciudad", "Marca", "Fecha Edicion") {
 
 			@Override
