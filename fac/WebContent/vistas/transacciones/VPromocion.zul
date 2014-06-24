@@ -119,7 +119,7 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 										<textbox id="txtTelefono" hflex="1" maxlength="500"
-											tooltiptext="Ingrese el Telefono" />
+											tooltiptext="Ingrese el Telefono (0426-9999999)" />
 									</hbox>
 								</row>
 								<row>
@@ -152,7 +152,7 @@
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
 									<textbox id="txtEMail" hflex="1" maxlength="500"
-										tooltiptext="Ingrese el E-Mail del Responsable del PDV" />
+										tooltiptext="Ingrese el E-Mail del Responsable del PDV (ejemplo@gmail.com)" />
 								</row>
 								<row>
 									<hbox>
@@ -255,6 +255,8 @@
 			<separator />
 			<div id="botoneraPromocion" />
 			<div id="catalogoPromocion" />
+			<image id="imagenNo" visible="false" />
+			<image id="imagenSi" visible="false" />
 		</div>
 	</window>
 </zk>

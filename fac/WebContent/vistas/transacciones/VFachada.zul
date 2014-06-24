@@ -149,7 +149,7 @@
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
 									<textbox id="txtTelefono" hflex="1" maxlength="500"
-										tooltiptext="Ingrese el Telefono" />
+										tooltiptext="Ingrese el Telefono  (0426-9999999)" />
 								</row>
 								<row>
 									<hbox>
@@ -251,7 +251,7 @@
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
 									<textbox id="txtEmail" hflex="1" maxlength="500"
-										tooltiptext="Ingrese el E-Mail del Contacto" />
+										tooltiptext="Ingrese el E-Mail del Contacto (ejemplo@gmail.com)" />
 								</row>
 								<row>
 									<label class="etiqueta" value="Medidas: " />
@@ -439,6 +439,8 @@
 			<separator />
 			<div id="botoneraFachada" />
 			<div id="catalogoFachada" />
+			<image id="imagenNo" visible="false" />
+			<image id="imagenSi" visible="false" />
 		</div>
 	</window>
 </zk>

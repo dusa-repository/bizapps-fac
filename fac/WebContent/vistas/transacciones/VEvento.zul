@@ -142,7 +142,7 @@
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
 									<textbox id="txtTelefono" hflex="1" width="90%"
-										maxlength="500" tooltiptext="Ingrese el Telefono" />
+										maxlength="500" tooltiptext="Ingrese el Telefono (0426-9999999)" />
 								</row>
 								<row>
 									<hbox>
@@ -427,6 +427,8 @@
 			<separator />
 			<div id="botoneraEvento" />
 			<div id="catalogoEvento" />
+			<image id="imagenNo" visible="false" />
+			<image id="imagenSi" visible="false" />
 		</div>
 	</window>
 </zk>

@@ -13,7 +13,7 @@
 				<rows>
 					<row>
 						<hbox>
-							<label class="etiqueta" value="Decripcion: " />
+							<label class="etiqueta" value="Descripcion: " />
 							<space />
 							<label value="*" style="font-weight:bold;color:red" />
 						</hbox>

@@ -257,6 +257,8 @@
 			<separator />
 			<div id="botoneraSolicitudArte" />
 			<div id="catalogoSolicitudArte" />
+			<image id="imagenNo" visible="false" />
+			<image id="imagenSi" visible="false" />
 		</div>
 	</window>
 </zk>

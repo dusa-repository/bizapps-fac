@@ -95,8 +95,6 @@ public class CF0004 extends CGenerico {
 					fooo4.setUsuarioAuditoria(nombreUsuarioSesion());
 					fooo4.setFechaAuditoria(fechaHora);
 					fooo4.setHoraAuditoria(horaAuditoria);
-					// fooo4.setDtupmj(dtupmj); //Fecha
-//					fooo4.setDtupmt(Double.parseDouble(horaAuditoria));
 					servicioF0004.guardar(fooo4);
 					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
@@ -117,6 +115,8 @@ public class CF0004 extends CGenerico {
 													throws InterruptedException {
 												if (evt.getName()
 														.equals("onOK")) {
+													//CONDICION?													
+													
 													servicioF0004
 															.eliminarUno(clave);
 													msj.mensajeInformacion(Mensaje.eliminado);
@@ -127,8 +127,7 @@ public class CF0004 extends CGenerico {
 											}
 										});
 					} else
-						System.out.println();
-//						msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
+						msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 
 			}
 

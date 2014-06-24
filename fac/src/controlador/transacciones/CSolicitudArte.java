@@ -3,6 +3,7 @@ package controlador.transacciones;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +25,7 @@ import modelo.transacciones.PlanillaFachada;
 import modelo.transacciones.PlanillaUniforme;
 
 import org.zkforge.ckez.CKeditor;
+import org.zkoss.image.AImage;
 import org.zkoss.util.media.Media;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
@@ -123,6 +125,10 @@ public class CSolicitudArte extends CGenerico {
 	String tipoInbox = "";
 	Botonera botonera;
 	Usuario usuarioEditador = new Usuario();
+	@Wire
+	private Image imagenSi;
+	@Wire
+	private Image imagenNo;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -293,6 +299,10 @@ public class CSolicitudArte extends CGenerico {
 	}
 
 	protected void guardarDatos(String string) {
+		
+		boolean envio = false;
+		boolean guardo = false;
+		
 		String nombreLocal, patente, rif, nombreActividad, formato, salidaArte, lineamiento;
 		formato = cmbFormato.getSelectedItem().getContext();
 		salidaArte = cmbArte.getSelectedItem().getContext();
@@ -306,6 +316,13 @@ public class CSolicitudArte extends CGenerico {
 			usuario = usuarioEditador;
 		else
 			usuario = usuarioSesion(nombreUsuarioSesion());
+		
+		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
+			envio = true;
+
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion"))
+			guardo = true;
+		
 		if (estadoInbox.equals("Pendiente"))
 			string = "Pendiente";
 		String tipoConfig = "";
@@ -349,7 +366,12 @@ public class CSolicitudArte extends CGenerico {
 			planillaArte = servicioPlanillaArte.buscar(id);
 		else
 			planillaArte = servicioPlanillaArte.buscarUltima();
-		guardarBitacora(planillaArte, string);
+
+		if (guardo)
+			guardarBitacora(planillaArte, true);
+		if (envio)
+			guardarBitacora(planillaArte, false);
+		
 		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente") && !inbox) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
@@ -366,14 +388,59 @@ public class CSolicitudArte extends CGenerico {
 					planillaArte.getIdPlanillaArte());
 			servicioPlanillaArte.guardar(planillaAdmin);
 			planillaAdmin = servicioPlanillaArte.buscarUltima();
-			guardarBitacora(planillaAdmin, string);
+			guardarBitacora(planillaAdmin, false);
 		}
 	}
 
-	private void guardarBitacora(PlanillaArte planillaArte, String string) {
-		BitacoraArte bitacora = new BitacoraArte(0, planillaArte, string,
-				fechaHora, fechaHora, horaAuditoria, nombreUsuarioSesion());
-		servicioBitacoraArte.guardar(bitacora);
+	private void guardarBitacora(PlanillaArte planillaArte,
+			boolean edicion) {
+
+		/* Busca las imagenes representativas de los estados */
+		URL url = getClass().getResource("/imagenes/si.png");
+		try {
+			imagenSi.setContent(new AImage(url));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		byte[] imagen = imagenSi.getContent().getByteData();
+
+		URL url2 = getClass().getResource("/imagenes/no.png");
+		try {
+			imagenNo.setContent(new AImage(url2));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		byte[] imagenX = imagenNo.getContent().getByteData();
+
+		if (edicion) {
+			BitacoraArte bitacora = new BitacoraArte(0, planillaArte,
+					"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
+					nombreUsuarioSesion(), imagen);
+			servicioBitacoraArte.guardar(bitacora);
+		} else {
+			List<BitacoraArte> listaBitacoras = new ArrayList<BitacoraArte>();
+			BitacoraArte bitacora = new BitacoraArte(0, planillaArte,
+					"Planilla Enviada", fechaHora, fechaHora, horaAuditoria,
+					nombreUsuarioSesion(), imagen);
+			listaBitacoras.add(bitacora);
+
+			BitacoraArte bitacora2 = new BitacoraArte(0, planillaArte,
+					"Esperando Aprobacion de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora2);
+
+			BitacoraArte bitacora3 = new BitacoraArte(0, planillaArte,
+					"Esperando Finalizacion de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora3);
+
+			BitacoraArte bitacora4 = new BitacoraArte(0, planillaArte,
+					"Esperando Pago de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora4);
+
+			servicioBitacoraArte.guardarBitacoras(listaBitacoras);
+		}
 	}
 
 	protected boolean validar() {

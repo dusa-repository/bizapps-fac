@@ -3,6 +3,7 @@ package controlador.transacciones;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,6 +28,7 @@ import modelo.transacciones.RecursoPlanillaFachada;
 import modelo.transacciones.UniformePlanillaUniforme;
 
 import org.zkforge.ckez.CKeditor;
+import org.zkoss.image.AImage;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.ForwardEvent;
@@ -38,6 +40,7 @@ import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublebox;
 import org.zkoss.zul.Doublespinner;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
@@ -123,10 +126,14 @@ public class CUniforme extends CGenerico {
 	String tipoInbox = "";
 	Botonera botonera;
 	Usuario usuarioEditador = new Usuario();
+	@Wire
+	private Image imagenSi;
+	@Wire
+	private Image imagenNo;
 
 	@Override
 	public void inicializar() throws IOException {
-		
+
 		txtNombreActividad.setFocus(true);
 		txtRespActividad.setValue(nombreUsuarioSesion());
 		txtRespZona.setValue(usuarioSesion(nombreUsuarioSesion())
@@ -298,6 +305,8 @@ public class CUniforme extends CGenerico {
 	}
 
 	protected void guardarDatos(String string) {
+		boolean envio = false;
+		boolean guardo = false;
 		if (id != 0) {
 			PlanillaUniforme planilla = servicioPlanillaUniforme.buscar(id);
 			servicioUniformePlanillaUniforme.limpiar(planilla);
@@ -320,6 +329,14 @@ public class CUniforme extends CGenerico {
 			usuario = usuarioEditador;
 		else
 			usuario = usuarioSesion(nombreUsuarioSesion());
+		
+
+		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
+			envio = true;
+
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion"))
+			guardo = true;
+		
 		if (estadoInbox.equals("Pendiente"))
 			string = "Pendiente";
 		String tipoConfig = "";
@@ -349,9 +366,15 @@ public class CUniforme extends CGenerico {
 			planillaUniforme = servicioPlanillaUniforme.buscar(id);
 		else
 			planillaUniforme = servicioPlanillaUniforme.buscarUltima();
-		guardarBitacora(planillaUniforme, string);
+
+		if (guardo)
+			guardarBitacora(planillaUniforme, true);
+		if (envio)
+			guardarBitacora(planillaUniforme, false);
+		
 		guardarUniformes(planillaUniforme);
-		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente") && !inbox) {
+		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente")
+				&& !inbox) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
 			Usuario usuarioAdmin = new Usuario();
@@ -366,7 +389,7 @@ public class CUniforme extends CGenerico {
 					planillaUniforme.getIdPlanillaUniforme());
 			servicioPlanillaUniforme.guardar(planillaAdmin);
 			planillaAdmin = servicioPlanillaUniforme.buscarUltima();
-			guardarBitacora(planillaAdmin, string);
+			guardarBitacora(planillaAdmin, false);
 			guardarUniformes(planillaAdmin);
 		}
 	}
@@ -395,11 +418,54 @@ public class CUniforme extends CGenerico {
 	}
 
 	private void guardarBitacora(PlanillaUniforme planillaUniforme,
-			String string) {
-		BitacoraUniforme bitacora = new BitacoraUniforme(0, planillaUniforme,
-				string, fechaHora, fechaHora, horaAuditoria,
-				nombreUsuarioSesion());
-		servicioBitacoraUniforme.guardar(bitacora);
+			boolean edicion) {
+
+		/* Busca las imagenes representativas de los estados */
+		URL url = getClass().getResource("/imagenes/si.png");
+		try {
+			imagenSi.setContent(new AImage(url));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		byte[] imagen = imagenSi.getContent().getByteData();
+
+		URL url2 = getClass().getResource("/imagenes/no.png");
+		try {
+			imagenNo.setContent(new AImage(url2));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		byte[] imagenX = imagenNo.getContent().getByteData();
+
+		if (edicion) {
+			BitacoraUniforme bitacora = new BitacoraUniforme(0, planillaUniforme,
+					"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
+					nombreUsuarioSesion(), imagen);
+			servicioBitacoraUniforme.guardar(bitacora);
+		} else {
+			List<BitacoraUniforme> listaBitacoras = new ArrayList<BitacoraUniforme>();
+			BitacoraUniforme bitacora = new BitacoraUniforme(0, planillaUniforme,
+					"Planilla Enviada", fechaHora, fechaHora, horaAuditoria,
+					nombreUsuarioSesion(), imagen);
+			listaBitacoras.add(bitacora);
+
+			BitacoraUniforme bitacora2 = new BitacoraUniforme(0, planillaUniforme,
+					"Esperando Aprobacion de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora2);
+
+			BitacoraUniforme bitacora3 = new BitacoraUniforme(0, planillaUniforme,
+					"Esperando Finalizacion de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora3);
+
+			BitacoraUniforme bitacora4 = new BitacoraUniforme(0, planillaUniforme,
+					"Esperando Pago de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora4);
+
+			servicioBitacoraUniforme.guardarBitacoras(listaBitacoras);
+		}
 	}
 
 	protected boolean validar() {
@@ -418,11 +484,23 @@ public class CUniforme extends CGenerico {
 				|| cdtJustificacion.getValue().compareTo("") == 0
 				|| dtbActividad.getText().compareTo("") == 0
 				|| (!rdoNo.isChecked() && !rdoSi.isChecked())) {
-			Messagebox.show("Debe Llenar Todos los Campos Requeridos", "Informacion",
-					Messagebox.OK, Messagebox.INFORMATION);
+			Messagebox.show("Debe Llenar Todos los Campos Requeridos",
+					"Informacion", Messagebox.OK, Messagebox.INFORMATION);
 			return false;
-		} else
-			return true;
+		} else {
+			if (!Validador.validarCorreo(txtEMail.getValue())) {
+				Messagebox.show("Formato de Correo No Valido", "Alerta",
+						Messagebox.OK, Messagebox.EXCLAMATION);
+				return false;
+			} else {
+				if (!Validador.validarTelefono(txtTelefono.getValue())) {
+					Messagebox.show("Formato de Telefono No Valido", "Alerta",
+							Messagebox.OK, Messagebox.EXCLAMATION);
+					return false;
+				} else
+					return true;
+			}
+		}
 	}
 
 	private void llenarListas() {
@@ -517,13 +595,12 @@ public class CUniforme extends CGenerico {
 		return tallas;
 	}
 
-
 	public void buscarCatalogoPropio() {
 		final List<PlanillaUniforme> listPlanilla = servicioPlanillaUniforme
 				.buscarTodosOrdenados(usuarioSesion(nombreUsuarioSesion()));
 		catalogo = new Catalogo<PlanillaUniforme>(catalogoUniformes,
-				"Planillas de Solicitud de Uniformes", listPlanilla, true, "Nombre Actividad",
-				"Ciudad", "Marca", "Fecha Edicion") {
+				"Planillas de Solicitud de Uniformes", listPlanilla, true,
+				"Nombre Actividad", "Ciudad", "Marca", "Fecha Edicion") {
 
 			@Override
 			protected List<PlanillaUniforme> buscar(List<String> valores) {
@@ -615,7 +692,7 @@ public class CUniforme extends CGenerico {
 		}
 		return cambio;
 	}
-	
+
 	/* Metodo que valida el formmato del telefono ingresado */
 	@Listen("onChange = #txtTelefono")
 	public void validarTelefono2E() throws IOException {

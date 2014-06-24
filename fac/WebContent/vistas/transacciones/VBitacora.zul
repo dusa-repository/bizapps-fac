@@ -1,0 +1,67 @@
+<zk>
+	<window width="55em" closable="false" id="wdwBitacora"
+		apply="controlador.transacciones.CBitacora">
+		<caption label="Bitacora de la Planilla"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div>
+			<separator />
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="20%" />
+					<column label="" width="80%" />
+				</columns>
+				<rows>
+					<row>
+						<label class="etiqueta" value="Usuario: " />
+						<label id="lblUsuario" />
+					</row>
+					<row>
+						<label class="etiqueta" value="Estado Actual: " />
+						<label id="lblEstado" />
+					</row>
+					<row>
+						<label class="etiqueta" value="Marca: " />
+						<label id="lblMarca" />
+					</row>
+					<row>
+						<label class="etiqueta" value="Nombre Actividad: " />
+						<label id="lblNombre" />
+					</row>
+					<row>
+						<label class="etiqueta" value="Tipo de Planilla: " />
+						<label id="lblTipo" />
+					</row>
+				</rows>
+			</grid>
+			<separator />
+			<listbox id="ltbBitacora" height="100%" 
+				emptyMessage="No hay Estados Registrados">
+				<listhead>
+					<listheader label="Estado" width="40%" />
+					<listheader label="Fecha de Cambio" width="25%" />
+					<listheader label="Usuario" width="25%" />
+					<listheader label="" width="10%" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell style="background:white ; font-size: 18px"
+							label="${each.estado}">
+						</listcell>
+						<listcell style="background:white ; font-size: 18px"
+							label="${each.fechaCambio}">
+						</listcell>
+						<listcell style="background:white ; font-size: 18px"
+							label="${each.usuarioAuditoria}">
+						</listcell>
+						<listcell style="background:white ; font-size: 18px">
+							<image content="${each.traerImagen(imagen)}" />
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+		</div>
+		<separator/>
+		<div id="botoneraBitacora" />
+	</window>
+</zk>
+								

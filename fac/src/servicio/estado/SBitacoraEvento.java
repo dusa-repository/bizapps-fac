@@ -25,4 +25,14 @@ public class SBitacoraEvento {
 		if(!eliminados.isEmpty())
 			bitacoraEventoDAO.delete(eliminados);
 	}
+
+	public List<BitacoraEvento> buscarPorPlanilla(PlanillaEvento planilla) {
+		return bitacoraEventoDAO.findByPlanillaEvento(planilla);
+		 
+	}
+
+	public void guardarBitacoras(List<BitacoraEvento> listaBitacoras) {
+		bitacoraEventoDAO.save(listaBitacoras);
+		
+	}
 }

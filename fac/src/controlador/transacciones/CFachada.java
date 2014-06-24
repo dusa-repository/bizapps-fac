@@ -53,6 +53,7 @@ import org.zkoss.zul.Window;
 import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
+import componente.Validador;
 
 import controlador.maestros.CGenerico;
 
@@ -168,10 +169,14 @@ public class CFachada extends CGenerico {
 	String tipoInbox = "";
 	Botonera botonera;
 	Usuario usuarioEditador = new Usuario();
+	@Wire
+	private Image imagenSi;
+	@Wire
+	private Image imagenNo;
 
 	@Override
 	public void inicializar() throws IOException {
-		
+
 		txtNombreActividad.setFocus(true);
 		txtRespActividad.setValue(nombreUsuarioSesion());
 		txtRespZona.setValue(usuarioSesion(nombreUsuarioSesion())
@@ -194,7 +199,7 @@ public class CFachada extends CGenerico {
 
 			@Override
 			public void buscar() {
-				 buscarCatalogoPropio();
+				buscarCatalogoPropio();
 
 			}
 
@@ -318,6 +323,7 @@ public class CFachada extends CGenerico {
 			}
 		};
 		botoneraFachada.appendChild(botonera);
+
 		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
 				.getCurrent().getAttribute("inbox");
 		if (map != null) {
@@ -368,6 +374,8 @@ public class CFachada extends CGenerico {
 	}
 
 	protected void guardarDatos(String string) {
+		boolean envio = false;
+		boolean guardo = false;
 		if (id != 0) {
 			PlanillaFachada planilla = servicioPlanillaFachada.buscar(id);
 			servicioRecursoPlanillaFachada.limpiar(planilla);
@@ -390,22 +398,6 @@ public class CFachada extends CGenerico {
 		mail = txtEmail.getValue();
 		nombreActividad = txtNombreActividad.getValue();
 		telefono = txtTelefono.getValue();
-		Usuario usuario = new Usuario();
-		if (inbox)
-			usuario = usuarioEditador;
-		else
-			usuario = usuarioSesion(nombreUsuarioSesion());
-		if (estadoInbox.equals("Pendiente"))
-			string = "Pendiente";
-		String tipoConfig = "";
-		if (tipoInbox.equals("TradeMark"))
-			tipoConfig = "TradeMark";
-		else {
-			if (tipoInbox.equals("Marca"))
-				tipoConfig = "Marca";
-			else
-				tipoConfig = valor;
-		}
 		Marca marca = servicioMarca.buscar(cmbMarcaSugerida.getSelectedItem()
 				.getContext());
 		Date valorFecha = dtbActividad.getValue();
@@ -435,6 +427,32 @@ public class CFachada extends CGenerico {
 			imagenUsuario4 = imagen4.getContent().getByteData();
 
 		}
+
+		Usuario usuario = new Usuario();
+		if (inbox)
+			usuario = usuarioEditador;
+		else
+			usuario = usuarioSesion(nombreUsuarioSesion());
+
+		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
+			envio = true;
+
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion"))
+			guardo = true;
+
+		if (estadoInbox.equals("Pendiente"))
+			string = "Pendiente";
+
+		String tipoConfig = "";
+		if (tipoInbox.equals("TradeMark"))
+			tipoConfig = "TradeMark";
+		else {
+			if (tipoInbox.equals("Marca"))
+				tipoConfig = "Marca";
+			else
+				tipoConfig = valor;
+		}
+
 		PlanillaFachada planillaFachada = new PlanillaFachada(id, usuario,
 				marca, nombreActividad, fechaActividad, tipoActividad, ciudad,
 				contacto, nombre, rif, telefono, direccion, mail, personas,
@@ -444,13 +462,20 @@ public class CFachada extends CGenerico {
 				fechaHora, horaAuditoria, nombreUsuarioSesion(), string,
 				usuario.getZona().getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaFachada.guardar(planillaFachada);
+
 		if (id != 0)
 			planillaFachada = servicioPlanillaFachada.buscar(id);
 		else
 			planillaFachada = servicioPlanillaFachada.buscarUltima();
-		guardarBitacora(planillaFachada, string);
+
+		if (guardo)
+			guardarBitacora(planillaFachada, true);
+		if (envio)
+			guardarBitacora(planillaFachada, false);
+
 		guardarRecursos(planillaFachada);
-		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente") && !inbox) {
+		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente")
+				&& !inbox) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
 			Usuario usuarioAdmin = new Usuario();
@@ -468,7 +493,7 @@ public class CFachada extends CGenerico {
 					planillaFachada.getIdPlanillaFachada());
 			servicioPlanillaFachada.guardar(planillaAdmin);
 			planillaAdmin = servicioPlanillaFachada.buscarUltima();
-			guardarBitacora(planillaAdmin, string);
+			guardarBitacora(planillaAdmin, false);
 			guardarRecursos(planillaAdmin);
 		}
 	}
@@ -491,11 +516,55 @@ public class CFachada extends CGenerico {
 		servicioRecursoPlanillaFachada.guardar(recursosPlanilla);
 	}
 
-	private void guardarBitacora(PlanillaFachada planillaFachada, String string) {
-		BitacoraFachada bitacora = new BitacoraFachada(0, planillaFachada,
-				string, fechaHora, fechaHora, horaAuditoria,
-				nombreUsuarioSesion());
-		servicioBitacoraFachada.guardar(bitacora);
+	private void guardarBitacora(PlanillaFachada planillaFachada,
+			boolean edicion) {
+
+		/* Busca las imagenes representativas de los estados */
+		URL url = getClass().getResource("/imagenes/si.png");
+		try {
+			imagenSi.setContent(new AImage(url));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		byte[] imagen = imagenSi.getContent().getByteData();
+
+		URL url2 = getClass().getResource("/imagenes/no.png");
+		try {
+			imagenNo.setContent(new AImage(url2));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		byte[] imagenX = imagenNo.getContent().getByteData();
+
+		if (edicion) {
+			BitacoraFachada bitacora = new BitacoraFachada(0, planillaFachada,
+					"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
+					nombreUsuarioSesion(), imagen);
+			servicioBitacoraFachada.guardar(bitacora);
+		} else {
+			List<BitacoraFachada> listaBitacoras = new ArrayList<BitacoraFachada>();
+			BitacoraFachada bitacora = new BitacoraFachada(0, planillaFachada,
+					"Planilla Enviada", fechaHora, fechaHora, horaAuditoria,
+					nombreUsuarioSesion(), imagen);
+			listaBitacoras.add(bitacora);
+
+			BitacoraFachada bitacora2 = new BitacoraFachada(0, planillaFachada,
+					"Esperando Aprobacion de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora2);
+
+			BitacoraFachada bitacora3 = new BitacoraFachada(0, planillaFachada,
+					"Esperando Finalizacion de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora3);
+
+			BitacoraFachada bitacora4 = new BitacoraFachada(0, planillaFachada,
+					"Esperando Pago de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora4);
+
+			servicioBitacoraFachada.guardarBitacoras(listaBitacoras);
+		}
 	}
 
 	protected boolean validar() {
@@ -526,8 +595,20 @@ public class CFachada extends CGenerico {
 			Messagebox.show("Debe Llenar Todos los Campos", "Informacion",
 					Messagebox.OK, Messagebox.INFORMATION);
 			return false;
-		} else
-			return true;
+		} else {
+			if (!Validador.validarCorreo(txtEmail.getValue())) {
+				Messagebox.show("Formato de Correo No Valido", "Alerta",
+						Messagebox.OK, Messagebox.EXCLAMATION);
+				return false;
+			} else {
+				if (!Validador.validarTelefono(txtTelefono.getValue())) {
+					Messagebox.show("Formato de Telefono No Valido", "Alerta",
+							Messagebox.OK, Messagebox.EXCLAMATION);
+					return false;
+				} else
+					return true;
+			}
+		}
 	}
 
 	private void llenarListas() {
@@ -631,8 +712,8 @@ public class CFachada extends CGenerico {
 		final List<PlanillaFachada> listPlanilla = servicioPlanillaFachada
 				.buscarTodosOrdenados(usuarioSesion(nombreUsuarioSesion()));
 		catalogo = new Catalogo<PlanillaFachada>(catalogoFachada,
-				"Planillas de Fachadas y Decoraciones", listPlanilla, true, "Nombre Actividad",
-				"Ciudad", "Marca", "Fecha Edicion") {
+				"Planillas de Fachadas y Decoraciones", listPlanilla, true,
+				"Nombre Actividad", "Ciudad", "Marca", "Fecha Edicion") {
 
 			@Override
 			protected List<PlanillaFachada> buscar(List<String> valores) {
@@ -779,6 +860,24 @@ public class CFachada extends CGenerico {
 	public void processMedia4(UploadEvent event) {
 		media4 = event.getMedia();
 		imagen4.setContent((org.zkoss.image.Image) media4);
+	}
+
+	/* Metodo que valida el formmato del telefono ingresado */
+	@Listen("onChange = #txtTelefono")
+	public void validarTelefono2E() throws IOException {
+		if (Validador.validarTelefono(txtTelefono.getValue()) == false) {
+			Messagebox.show("Formato de Telefono No Valido", "Alerta",
+					Messagebox.OK, Messagebox.EXCLAMATION);
+		}
+	}
+
+	/* Metodo que valida el formmato del correo ingresado */
+	@Listen("onChange = #txtEmail")
+	public void validarCorreo() throws IOException {
+		if (Validador.validarCorreo(txtEmail.getValue()) == false) {
+			Messagebox.show("Correo Electronico Invalido", "Alerta",
+					Messagebox.OK, Messagebox.EXCLAMATION);
+		}
 	}
 
 }

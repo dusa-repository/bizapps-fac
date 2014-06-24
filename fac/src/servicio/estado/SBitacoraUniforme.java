@@ -25,4 +25,14 @@ public class SBitacoraUniforme {
 		if(!eliminados.isEmpty())
 			bitacoraUniformeDAO.delete(eliminados);
 	}
+
+	public List<BitacoraUniforme> buscarPorPlanilla(PlanillaUniforme planilla) {
+		// TODO Auto-generated method stub
+		return bitacoraUniformeDAO.findByPlanillaUniforme(planilla);
+	}
+
+	public void guardarBitacoras(List<BitacoraUniforme> listaBitacoras) {
+		bitacoraUniformeDAO.save(listaBitacoras);
+		
+	}
 }

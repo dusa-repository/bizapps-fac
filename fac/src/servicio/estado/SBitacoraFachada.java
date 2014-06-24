@@ -25,4 +25,14 @@ public class SBitacoraFachada {
 		if(!eliminados.isEmpty())
 			bitacoraFachadaDAO.delete(eliminados);
 	}
+
+	public void guardarBitacoras(List<BitacoraFachada> listaBitacoras) {
+		bitacoraFachadaDAO.save(listaBitacoras);
+		
+	}
+
+	public List<BitacoraFachada> buscarPorPlanilla(PlanillaFachada planilla) {
+		// TODO Auto-generated method stub
+		return bitacoraFachadaDAO.findByPlanillaFachada(planilla);
+	}
 }
