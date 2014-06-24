@@ -22,12 +22,13 @@ public class Arbol implements Serializable {
 	@Column(name="id_arbol", unique=true, nullable=false)
 	private long idArbol;
 
-	@Column(length=500)
+	@Column(length=100)
 	private String nombre;
 
-	private long padre;
+	@Column(length=100)
+	private String nombreBoton;
 
-	@Column(length=500)
+	@Column(length=100)
 	private String url;
 
 	//bi-directional many-to-many association to Grupo
@@ -39,11 +40,11 @@ public class Arbol implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Arbol(long idArbol, String nombre, long padre, String url) {
+	public Arbol(long idArbol, String nombre, String boton, String url) {
 		super();
 		this.idArbol = idArbol;
 		this.nombre = nombre;
-		this.padre = padre;
+		this.nombreBoton = boton;
 		this.url = url;
 	}
 
@@ -63,12 +64,12 @@ public class Arbol implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public long getPadre() {
-		return padre;
+	public String getNombreBoton() {
+		return nombreBoton;
 	}
 
-	public void setPadre(long padre) {
-		this.padre = padre;
+	public void setNombreBoton(String nombreBoton) {
+		this.nombreBoton = nombreBoton;
 	}
 
 	public String getUrl() {

@@ -6,12 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import modelo.estado.BitacoraArte;
-import modelo.estado.BitacoraCata;
-import modelo.estado.BitacoraEvento;
-import modelo.estado.BitacoraFachada;
-import modelo.estado.BitacoraPromocion;
-import modelo.estado.BitacoraUniforme;
 import modelo.generico.PlanillaGenerica;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
@@ -37,7 +31,6 @@ import componente.Catalogo;
 import componente.Mensaje;
 
 import controlador.maestros.CGenerico;
-import controlador.portal.CInbox;
 
 public class CSolicitud extends CGenerico {
 

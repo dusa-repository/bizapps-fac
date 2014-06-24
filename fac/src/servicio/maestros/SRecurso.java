@@ -1,16 +1,14 @@
 package servicio.maestros;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import interfacedao.maestros.IRecursoDAO;
 import interfacedao.transacciones.IRecursoPlanillaCataDAO;
 import interfacedao.transacciones.IRecursoPlanillaEventoDAO;
 import interfacedao.transacciones.IRecursoPlanillaFachadaDAO;
 
-import modelo.maestros.Marca;
+import java.util.ArrayList;
+import java.util.List;
+
 import modelo.maestros.Recurso;
-import modelo.transacciones.ItemPlanillaCata;
 import modelo.transacciones.PlanillaCata;
 import modelo.transacciones.PlanillaEvento;
 import modelo.transacciones.PlanillaFachada;

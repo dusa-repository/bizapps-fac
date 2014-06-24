@@ -27,6 +27,7 @@ public class Mensaje {
 	public static String estadoIncorrecto = "Alguna de las solicitudes no se encuentran en el estado correcto para ser cambiadas";
 	public static String estadoIncorrectoRechazada = "No puede cambiar de estado las solicitudes canceladas o rechadas, verifique su seleccion";
 	public static String estadoIncorrectoEdicion = "No puede cambiar de estado las solicitudes en edicion, para modificarlas presione el boton Ver Solicitud";
+	public static String eliminacionFallida = "No puede eliminar este grupo";
 	
 	
 	public void mensajeInformacion(String msj) {

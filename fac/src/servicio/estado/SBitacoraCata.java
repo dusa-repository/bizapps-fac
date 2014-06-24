@@ -1,10 +1,8 @@
 package servicio.estado;
 
-import java.util.List;
-
-import javax.swing.text.Position.Bias;
-
 import interfacedao.estado.IBitacoraCataDAO;
+
+import java.util.List;
 
 import modelo.estado.BitacoraCata;
 import modelo.transacciones.PlanillaCata;

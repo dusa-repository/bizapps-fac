@@ -1,11 +1,10 @@
 package servicio.transacciones;
 
-import java.util.List;
-
 import interfacedao.transacciones.IPlanillaEventoDAO;
 
+import java.util.List;
+
 import modelo.seguridad.Usuario;
-import modelo.transacciones.PlanillaCata;
 import modelo.transacciones.PlanillaEvento;
 
 import org.springframework.beans.factory.annotation.Autowired;

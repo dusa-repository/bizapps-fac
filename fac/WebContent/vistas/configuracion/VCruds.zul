@@ -68,7 +68,7 @@
 			<center border="none">
 				<div height="100%" width="100%" style="background:#500101">
 					<hbox align="center" pack="center" height="100%" width="100%">
-						<groupbox closable="false" height="80%" width="800px"
+						<groupbox closable="false" height="80%" width="100%"
 							mold="3d">
 							<caption label="PANEL ADMINISTRATIVO"
 								style="color:white; font-size: 17px; font-weight:bold; background: #3A0202" />
@@ -86,18 +86,25 @@
 										orient="vertical" visible="false" />
 									<button id="btnMarca" class="btn" label="Marca" orient="vertical"
 										visible="false" />
+									<button id="btnZona" class="btn" label="Zona" orient="vertical"
+										visible="false" />
 								</hbox>
 								<separator />
 								<separator />
 								<separator />
 								<hbox>
-									<button id="btnZona" class="btn" label="Zona" orient="vertical"
-										visible="false" />
+
 									<button id="btnSku" class="btn" label="Sku" orient="vertical"
 										visible="false" />
 									<button id="btnAliado" class="btn" label="Aliado"
 										orient="vertical" visible="false" />
 									<button id="btnUnif" class="btn" label="Uniforme"
+										orient="vertical" visible="false" />
+									<button id="btnGrupo" class="btn" label="Grupo" orient="vertical"
+										visible="false" />
+									<button id="btnFuncionalidad" class="btn" label="Funcionalidad"
+										orient="vertical" visible="false" />
+									<button id="btnConfiguracion" class="btn" label="Configuracion"
 										orient="vertical" visible="false" />
 								</hbox>
 								<space />

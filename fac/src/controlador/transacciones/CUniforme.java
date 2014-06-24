@@ -1,7 +1,5 @@
 package controlador.transacciones;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
@@ -10,29 +8,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-
-import modelo.estado.BitacoraFachada;
 import modelo.estado.BitacoraUniforme;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
-import modelo.maestros.Recurso;
 import modelo.maestros.Uniforme;
 import modelo.seguridad.Configuracion;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
-import modelo.transacciones.PlanillaFachada;
-import modelo.transacciones.PlanillaPromocion;
 import modelo.transacciones.PlanillaUniforme;
-import modelo.transacciones.RecursoPlanillaFachada;
 import modelo.transacciones.UniformePlanillaUniforme;
 
 import org.zkforge.ckez.CKeditor;
 import org.zkoss.image.AImage;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.ForwardEvent;
-import org.zkoss.zk.ui.event.MouseEvent;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Combobox;

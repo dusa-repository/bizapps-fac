@@ -3,7 +3,6 @@ package interfacedao.transacciones;
 import java.util.List;
 
 import modelo.pk.RecursoPlanillaCataId;
-import modelo.transacciones.ItemPlanillaCata;
 import modelo.transacciones.PlanillaCata;
 import modelo.transacciones.RecursoPlanillaCata;
 

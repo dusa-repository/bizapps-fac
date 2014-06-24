@@ -1,8 +1,9 @@
 package servicio.transacciones;
 
+import interfacedao.transacciones.IRecursoPlanillaCataDAO;
+
 import java.util.List;
 
-import interfacedao.transacciones.IRecursoPlanillaCataDAO;
 import modelo.transacciones.PlanillaCata;
 import modelo.transacciones.RecursoPlanillaCata;
 

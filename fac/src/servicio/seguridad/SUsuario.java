@@ -1,9 +1,12 @@
 package servicio.seguridad;
 
-import java.util.List;
-
+import interfacedao.seguridad.IGrupoDAO;
 import interfacedao.seguridad.IUsuarioDAO;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,8 @@ public class SUsuario {
 
 	@Autowired
 	private IUsuarioDAO usuarioDAO;
+	@Autowired
+	private IGrupoDAO grupoDAO;
 
 	@Transactional
 	public Usuario buscarUsuarioPorNombre(String nombre) {
@@ -35,5 +40,13 @@ public class SUsuario {
 
 	public Usuario buscar(String value) {
 		return usuarioDAO.findOne(value);
+	}
+
+	public List<Usuario> buscarAdministradores() {
+		Grupo grupo = grupoDAO.findByNombre("Administrador");
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+		if (grupo != null)
+			usuarios = usuarioDAO.findByGrupos(grupo);
+		return usuarios;
 	}
 }

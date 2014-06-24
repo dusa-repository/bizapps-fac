@@ -1,8 +1,8 @@
 package servicio.estado;
 
-import java.util.List;
-
 import interfacedao.estado.IBitacoraUniformeDAO;
+
+import java.util.List;
 
 import modelo.estado.BitacoraUniforme;
 import modelo.transacciones.PlanillaUniforme;

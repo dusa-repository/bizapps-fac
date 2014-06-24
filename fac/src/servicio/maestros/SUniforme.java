@@ -1,14 +1,13 @@
 package servicio.maestros;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import interfacedao.maestros.IUniformeDAO;
 import interfacedao.transacciones.IUniformePlanillaUniformeDAO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import modelo.maestros.Uniforme;
 import modelo.transacciones.PlanillaUniforme;
-import modelo.transacciones.RecursoPlanillaCata;
 import modelo.transacciones.UniformePlanillaUniforme;
 
 import org.springframework.beans.factory.annotation.Autowired;

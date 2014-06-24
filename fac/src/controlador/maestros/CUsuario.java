@@ -5,13 +5,14 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import modelo.maestros.Marca;
-import modelo.maestros.Sku;
 import modelo.maestros.Zona;
+import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 
 import org.zkoss.image.AImage;
@@ -24,14 +25,15 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Fileupload;
 import org.zkoss.zul.Image;
-import org.zkoss.zul.Longbox;
+import org.zkoss.zul.ListModelList;
+import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import componente.Botonera;
 import componente.Catalogo;
-import componente.Mensaje;
 
 public class CUsuario extends CGenerico {
 
@@ -62,6 +64,12 @@ public class CUsuario extends CGenerico {
 	private Fileupload fudImagenUsuario;
 	@Wire
 	private Media media;
+	@Wire
+	private Listbox ltbGruposDisponibles;
+	@Wire
+	private Listbox ltbGruposAgregados;
+	List<Grupo> gruposDisponibles = new ArrayList<Grupo>();
+	List<Grupo> gruposOcupados = new ArrayList<Grupo>();
 	URL url = getClass().getResource("usuario.png");
 
 	Catalogo<Usuario> catalogoUsuario;
@@ -77,6 +85,7 @@ public class CUsuario extends CGenerico {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		llenarListas();
 		Botonera botonera = new Botonera() {
 
 			@Override
@@ -93,6 +102,8 @@ public class CUsuario extends CGenerico {
 
 			@Override
 			public void limpiar() {
+				ltbGruposAgregados.getItems().clear();
+				ltbGruposDisponibles.getItems().clear();
 				txtCodigoUsuario.setValue("");
 				txtEmailUsuario.setValue("");
 				txtNombreUsuario.setValue("");
@@ -107,11 +118,18 @@ public class CUsuario extends CGenerico {
 				id = "";
 				idZona = "";
 				idBoton = "";
+				llenarListas();
 			}
 
 			@Override
 			public void guardar() {
 				if (validar()) {
+					Set<Grupo> gruposUsuario = new HashSet<Grupo>();
+					for (int i = 0; i < ltbGruposAgregados.getItemCount(); i++) {
+						Grupo grupo = ltbGruposAgregados.getItems().get(i)
+								.getValue();
+						gruposUsuario.add(grupo);
+					}
 					String login = txtCodigoUsuario.getValue();
 					String nombre = txtNombreUsuario.getValue();
 					String email = txtEmailUsuario.getValue();
@@ -133,7 +151,7 @@ public class CUsuario extends CGenerico {
 					Usuario usuario = new Usuario(login, zona, nombre, email,
 							password, supervisor, "1", "Envio", imagenUsuario,
 							true, fechaHora, horaAuditoria,
-							nombreUsuarioSesion());
+							nombreUsuarioSesion(), gruposUsuario);
 					servicioUsuario.guardar(usuario);
 					Messagebox.show("Registro Guardado Exitosamente",
 							"Informacion", Messagebox.OK,
@@ -184,7 +202,7 @@ public class CUsuario extends CGenerico {
 			@Override
 			public void enviar() {
 				// TODO Auto-generated method stub
-				
+
 			}
 		};
 		botonera.getChildren().get(4).setVisible(false);
@@ -192,6 +210,31 @@ public class CUsuario extends CGenerico {
 		botonera.getChildren().get(7).setVisible(false);
 		botonera.getChildren().get(8).setVisible(false);
 		botoneraUsuario.appendChild(botonera);
+	}
+
+	protected void llenarListas() {
+
+		Usuario usuario = servicioUsuario.buscar(id);
+		gruposDisponibles = servicioGrupo.buscarDisponibles(usuario);
+		ltbGruposDisponibles.setModel(new ListModelList<Grupo>(
+				gruposDisponibles));
+		
+		if (usuario != null)
+			gruposOcupados = servicioGrupo.buscarGruposUsuario(usuario);
+		else
+			gruposOcupados.clear();
+		
+		ltbGruposAgregados.setModel(new ListModelList<Grupo>(gruposOcupados));
+
+		ltbGruposAgregados.setMultiple(false);
+		ltbGruposAgregados.setCheckmark(false);
+		ltbGruposAgregados.setMultiple(true);
+		ltbGruposAgregados.setCheckmark(true);
+
+		ltbGruposDisponibles.setMultiple(false);
+		ltbGruposDisponibles.setCheckmark(false);
+		ltbGruposDisponibles.setMultiple(true);
+		ltbGruposDisponibles.setCheckmark(true);
 	}
 
 	protected boolean validar() {
@@ -217,18 +260,16 @@ public class CUsuario extends CGenerico {
 	@Listen("onClick =  #btnBuscarSupervisores")
 	public void buscarCatalogoPropio(Event e) {
 		Button boton;
-		if(e.getTarget() !=null)
-		{
-		boton = (Button) e.getTarget();
-		idBoton = boton.getId();
-		}
-		else
-			idBoton="btnBuscarUsuarios";
+		if (e.getTarget() != null) {
+			boton = (Button) e.getTarget();
+			idBoton = boton.getId();
+		} else
+			idBoton = "btnBuscarUsuarios";
 		final List<Usuario> listUsuario = servicioUsuario
 				.buscarTodosOrdenados();
-		catalogoUsuario = new Catalogo<Usuario>(DivCatalogoUsuario, "Catalogo de Usuarios",
-				listUsuario, true, "Codigo", "Nombre", "Email", "Supervisor",
-				"Zona") {
+		catalogoUsuario = new Catalogo<Usuario>(DivCatalogoUsuario,
+				"Catalogo de Usuarios", listUsuario, true, "Codigo", "Nombre",
+				"Email", "Supervisor", "Zona") {
 
 			@Override
 			protected List<Usuario> buscar(List<String> valores) {
@@ -280,7 +321,7 @@ public class CUsuario extends CGenerico {
 			else {
 				txtCodigoUsuario.setFocus(true);
 				// msj.mensajeAlerta(Mensaje.noHayRegistros);
-//				txtCodigoUsuario.setValue("");
+				// txtCodigoUsuario.setValue("");
 				txtEmailUsuario.setValue("");
 				txtNombreUsuario.setValue("");
 				txtPasswordUsuario.setValue("");
@@ -296,7 +337,7 @@ public class CUsuario extends CGenerico {
 				setearUsuario(usuario2);
 			else {
 				txtSupervisorUsuario.setFocus(true);
-//				txtSupervisorUsuario.setValue("");
+				// txtSupervisorUsuario.setValue("");
 				// msj.mensajeAlerta(Mensaje.noHayRegistros);
 			}
 			break;
@@ -340,6 +381,7 @@ public class CUsuario extends CGenerico {
 		}
 		idZona = usuario.getZona().getIdZona();
 		id = usuario.getIdUsuario();
+		llenarListas();
 	}
 
 	public void setearSupervisor(Usuario usuario) {
@@ -349,8 +391,8 @@ public class CUsuario extends CGenerico {
 	@Listen("onClick = #btnBuscarZonas")
 	public void buscarCatalogoAjeno() {
 		final List<Zona> listZona = servicioZona.buscarTodosOrdenados();
-		catalogo = new Catalogo<Zona>(DivCatalogoZona, "Catalogo de Zonas", listZona, true,
-				"Id", "Descripcion") {
+		catalogo = new Catalogo<Zona>(DivCatalogoZona, "Catalogo de Zonas",
+				listZona, true, "Id", "Descripcion") {
 
 			@Override
 			protected List<Zona> buscar(List<String> valores) {
@@ -390,14 +432,66 @@ public class CUsuario extends CGenerico {
 
 	@Listen("onChange = #txtZonaUsuario")
 	public void buscarPorNombreAjeno() {
-		Zona zona = servicioZona.buscarPorDescripcion(txtZonaUsuario.getValue());
+		Zona zona = servicioZona
+				.buscarPorDescripcion(txtZonaUsuario.getValue());
 		if (zona != null) {
 			txtZonaUsuario.setValue(zona.getDescripcion());
 			idZona = zona.getIdZona();
-		}else{
+		} else {
 			txtZonaUsuario.setValue("");
 			idZona = "";
 			txtZonaUsuario.setFocus(true);
 		}
+	}
+
+	@Listen("onClick = #pasar1")
+	public void moverDerecha() {
+		List<Listitem> listitemEliminar = new ArrayList<Listitem>();
+		List<Listitem> listItem = ltbGruposDisponibles.getItems();
+		if (listItem.size() != 0) {
+			for (int i = 0; i < listItem.size(); i++) {
+				if (listItem.get(i).isSelected()) {
+					Grupo grupo = listItem.get(i).getValue();
+					gruposDisponibles.remove(grupo);
+					gruposOcupados.add(grupo);
+					ltbGruposAgregados.setModel(new ListModelList<Grupo>(
+							gruposOcupados));
+					listitemEliminar.add(listItem.get(i));
+				}
+			}
+		}
+		for (int i = 0; i < listitemEliminar.size(); i++) {
+			ltbGruposDisponibles.removeItemAt(listitemEliminar.get(i)
+					.getIndex());
+		}
+		ltbGruposAgregados.setMultiple(false);
+		ltbGruposAgregados.setCheckmark(false);
+		ltbGruposAgregados.setMultiple(true);
+		ltbGruposAgregados.setCheckmark(true);
+	}
+
+	@Listen("onClick = #pasar2")
+	public void moverIzquierda() {
+		List<Listitem> listitemEliminar = new ArrayList<Listitem>();
+		List<Listitem> listItem2 = ltbGruposAgregados.getItems();
+		if (listItem2.size() != 0) {
+			for (int i = 0; i < listItem2.size(); i++) {
+				if (listItem2.get(i).isSelected()) {
+					Grupo grupo = listItem2.get(i).getValue();
+					gruposOcupados.remove(grupo);
+					gruposDisponibles.add(grupo);
+					ltbGruposDisponibles.setModel(new ListModelList<Grupo>(
+							gruposDisponibles));
+					listitemEliminar.add(listItem2.get(i));
+				}
+			}
+		}
+		for (int i = 0; i < listitemEliminar.size(); i++) {
+			ltbGruposAgregados.removeItemAt(listitemEliminar.get(i).getIndex());
+		}
+		ltbGruposDisponibles.setMultiple(false);
+		ltbGruposDisponibles.setCheckmark(false);
+		ltbGruposDisponibles.setMultiple(true);
+		ltbGruposDisponibles.setCheckmark(true);
 	}
 }

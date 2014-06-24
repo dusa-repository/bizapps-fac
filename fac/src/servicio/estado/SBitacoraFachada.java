@@ -1,8 +1,8 @@
 package servicio.estado;
 
-import java.util.List;
-
 import interfacedao.estado.IBitacoraFachadaDAO;
+
+import java.util.List;
 
 import modelo.estado.BitacoraFachada;
 import modelo.transacciones.PlanillaFachada;

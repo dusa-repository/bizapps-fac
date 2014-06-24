@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import modelo.estado.BitacoraCata;
 import modelo.estado.BitacoraEvento;
 import modelo.maestros.Marca;
 import modelo.seguridad.Usuario;

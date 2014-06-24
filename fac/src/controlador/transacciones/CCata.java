@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import modelo.estado.BitacoraCata;
-import modelo.estado.BitacoraFachada;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.maestros.Recurso;
@@ -19,8 +18,6 @@ import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.ItemPlanillaCata;
 import modelo.transacciones.PlanillaCata;
-import modelo.transacciones.PlanillaEvento;
-import modelo.transacciones.PlanillaFachada;
 import modelo.transacciones.RecursoPlanillaCata;
 
 import org.zkforge.ckez.CKeditor;

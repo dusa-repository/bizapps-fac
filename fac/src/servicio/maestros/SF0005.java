@@ -1,12 +1,11 @@
 package servicio.maestros;
 
 
-import java.util.List;
-
 import interfacedao.maestros.IF0005DAO;
 
+import java.util.List;
+
 import modelo.maestros.F0005;
-import modelo.pk.F0004PK;
 import modelo.pk.F0005PK;
 
 import org.springframework.beans.factory.annotation.Autowired;

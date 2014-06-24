@@ -6,7 +6,6 @@ import interfacedao.transacciones.IPlanillaEventoDAO;
 import interfacedao.transacciones.IPlanillaFachadaDAO;
 import interfacedao.transacciones.IPlanillaPromocionDAO;
 import interfacedao.transacciones.IPlanillaUniformeDAO;
-
 import modelo.seguridad.Usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;

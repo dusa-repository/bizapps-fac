@@ -1,8 +1,8 @@
 package servicio.seguridad;
 
-import java.util.List;
-
 import interfacedao.seguridad.IConfiguracionDAO;
+
+import java.util.List;
 
 import modelo.seguridad.Configuracion;
 import modelo.seguridad.Usuario;
@@ -35,5 +35,17 @@ public class SConfiguracion {
 			return configuracion.get(0);
 		else
 			return null;
+	}
+
+	public List<Configuracion> buscarTipo(String string) {
+		return configuracionDAO.findByTipo(string);
+	}
+
+	public void limpiar() {
+		configuracionDAO.deleteAll();
+	}
+
+	public void guardar(List<Configuracion> lista) {
+		configuracionDAO.save(lista);
 	}
 }

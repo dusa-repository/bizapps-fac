@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import modelo.maestros.Marca;
 import modelo.maestros.Zona;
 
 import org.zkoss.zk.ui.event.Event;

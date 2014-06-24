@@ -1,0 +1,60 @@
+<zk>
+	<window width="70em" closable="false" id="wdwGrupo"
+		apply="controlador.seguridad.CGrupo">
+		<caption label="Grupos"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div>
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="28%" />
+					<column label="" width="48%" />
+					<column label="" width="6%" />
+					<column label="" width="18%" />
+				</columns>
+				<rows>
+					<row>
+						<label value="Nombre del Grupo :" class="etiqueta" />
+						<textbox maxlength="500" id="txtNombreGrupo" tooltiptext="Ingrese el Nombre del Grupo" />
+						<hbox />
+						<hbox />
+					</row>
+				</rows>
+			</grid>
+			<separator />
+
+			<hbox hflex="1" widths="60%, 40%">
+				<groupbox height="20%" mold="3d">
+					<caption label="Funcionalidades Disponibles" style="color:white; font-size: 14px" />
+					<listbox height="450px" width="100%" id="ltbFuncionalidades"
+						model="${$composer.modelArbol}">
+						<listhead>
+							<listheader label="Nombre funcionalidad" width="100%" />
+						</listhead>
+						<template name="model">
+							<listitem>
+								<listcell label="${each.nombreBoton}" context="${each.idArbol}"></listcell>
+							</listitem>
+						</template>
+					</listbox>
+				</groupbox>
+				<groupbox height="20%" mold="3d">
+					<caption label="Funcionalidades Seleccionadas" style="color:white; font-size: 14px" />
+					<listbox height="450px" width="100%"
+						id="ltbFuncionalidadesSeleccionados">
+						<listhead>
+							<listheader label="Nombre funcionalidad" width="100%" />
+						</listhead>
+						<template name="model">
+							<listitem>
+								<listcell label="${each}"></listcell>
+							</listitem>
+						</template>
+					</listbox>
+				</groupbox>
+			</hbox>
+			<separator />
+			<div id="botoneraGrupo" />
+			<div id="catalogoGrupo" />
+		</div>
+	</window>
+</zk>
