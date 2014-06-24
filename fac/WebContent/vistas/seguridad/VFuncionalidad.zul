@@ -1,0 +1,50 @@
+<zk>
+	<window width="40em" closable="false" id="wdwFuncionalidad"
+		apply="controlador.seguridad.CFuncionalidad">
+		<caption label="Funcionalidad"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div>
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="50%" />
+					<column label="" width="50%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Nombre: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtNombre" hflex="1" maxlength="100"
+							tooltiptext="Ingrese el Nombre del Item del Menu Arbol" width="100%" />
+						<hbox />
+					</row>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Nombre del Boton: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtNombreBoton" hflex="1" maxlength="100"
+							tooltiptext="Ingrese el Nombre del Item del Menu Arbol" width="100%" />
+						<hbox />
+					</row>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Url de la vista: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtUrl" hflex="1" maxlength="100"
+							tooltiptext="Ingrese el Nombre del Item del Menu Arbol" width="100%" />
+						<hbox />
+					</row>
+				</rows>
+			</grid>
+			<separator />
+			<div id="botoneraFuncionalidad" />
+			<div id="catalogoFuncionalidad" />
+		</div>
+	</window>
+</zk>

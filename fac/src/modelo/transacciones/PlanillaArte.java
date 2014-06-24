@@ -18,7 +18,6 @@ import javax.persistence.Table;
 
 import modelo.estado.BitacoraArte;
 import modelo.maestros.Marca;
-import modelo.maestros.Sku;
 import modelo.seguridad.Usuario;
 
 @Entity

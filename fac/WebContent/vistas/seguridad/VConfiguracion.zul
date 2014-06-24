@@ -1,0 +1,75 @@
+<zk>
+	<window width="70em" closable="false" id="wdwConfiguracion"
+		apply="controlador.seguridad.CConfiguracion">
+		<caption label="Configuracion de Portal TradeMark/Marca"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div>
+			<hbox hflex="1" widths="50%, 50%">
+				<groupbox mold="3d">
+					<caption label="TradeMark" style="color:white; font-size: 14px" />
+						<grid width="100%">
+							<columns visible="false">
+								<column label="" width="60%" />
+								<column label="" width="40%" />
+							</columns>
+							<rows>
+								<row>
+									<textbox id="txtAdminTrade" hflex="1" maxlength="50"
+										tooltiptext="Ingrese el usuario de tipo Administrador que desea que sea el Administrador de TradeMark" />
+									<button id="btnBuscarTrade" label="Buscar"
+										tooltiptext="Catalogo Usuarios de Tipo Administrador para TradeMark"
+										image="/public/imagenes/botones/buscar.png" />
+								</row>
+							</rows>
+						</grid>
+						<!-- 
+							 -->
+						<listbox model="${$composer.configuracion}" width="100%" id="ltbTradeMark"
+							tooltiptext="Seleccione las Planillas que se podran visualizar en el entorno de TradeMark">
+							<listhead>
+								<listheader label="Nombre de Planilla para Entorno de TradeMark" width="100%" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell label="${each.nombreBoton}" context="${each.nombre}"></listcell>
+								</listitem>
+							</template>
+						</listbox>
+				</groupbox>
+				<groupbox mold="3d">
+					<caption label="Marca" style="color:white; font-size: 14px" />
+						<grid width="100%">
+							<columns visible="false">
+								<column label="" width="60%" />
+								<column label="" width="40%" />
+							</columns>
+							<rows>
+								<row>
+									<textbox id="txtAdminMarca" hflex="1" maxlength="50"
+										tooltiptext="Ingrese el usuario de tipo Administrador que desea que sea el Administrador de Marca" />
+									<button id="btnBuscarMarca" label="Buscar"
+										tooltiptext="Catalogo Usuarios de Tipo Administrador para Marca"
+										image="/public/imagenes/botones/buscar.png" />
+								</row>
+							</rows>
+						</grid>
+						<listbox width="100%" id="ltbMarca"
+							model="${$composer.configuracion}"
+							tooltiptext="Seleccione las Planillas que se podran visualizar en el entorno de Marca">
+							<listhead>
+								<listheader label="Nombre de Planilla para Entorno de Marca" width="100%" />
+							</listhead>
+							<template name="model">
+								<listitem>
+									<listcell label="${each.nombreBoton}" context="${each.nombre}"></listcell>
+								</listitem>
+							</template>
+						</listbox>
+				</groupbox>
+			</hbox>
+			<separator />
+			<div id="botoneraConfiguracion" />
+			<div id="catalogoUsuario" />
+		</div>
+	</window>
+</zk>

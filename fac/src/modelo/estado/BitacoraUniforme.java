@@ -18,7 +18,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import modelo.transacciones.PlanillaArte;
 import modelo.transacciones.PlanillaUniforme;
 
 @Entity

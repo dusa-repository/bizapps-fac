@@ -107,7 +107,7 @@ public class Usuario implements Serializable {
 			String password, String supervisor, String soloLectura,
 			String envioCorreo, byte[] imagen, Boolean estado,
 			Timestamp fechaAuditoria, String horaAuditoria,
-			String usuarioAuditoria) {
+			String usuarioAuditoria, Set<Grupo> grupos) {
 		super();
 		this.idUsuario = idUsuario;
 		this.zona = zona;
@@ -122,6 +122,7 @@ public class Usuario implements Serializable {
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
 		this.usuarioAuditoria = usuarioAuditoria;
+		this.grupos = grupos;
 	}
 
 	public String getIdUsuario() {

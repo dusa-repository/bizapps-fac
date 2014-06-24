@@ -21,13 +21,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.SelectorComposer;
-import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
-import org.zkoss.zul.Div;
 import org.zkoss.zul.Window;
-
-import componente.Mensaje;
 
 import servicio.estado.SBitacoraArte;
 import servicio.estado.SBitacoraCata;
@@ -61,6 +57,8 @@ import servicio.transacciones.SRecursoPlanillaCata;
 import servicio.transacciones.SRecursoPlanillaEvento;
 import servicio.transacciones.SRecursoPlanillaFachada;
 import servicio.transacciones.SUniformePlanillaUniforme;
+
+import componente.Mensaje;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public abstract class CGenerico extends SelectorComposer<Component> {

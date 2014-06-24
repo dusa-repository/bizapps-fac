@@ -1,8 +1,8 @@
 package servicio.estado;
 
-import java.util.List;
-
 import interfacedao.estado.IBitacoraPromocionDAO;
+
+import java.util.List;
 
 import modelo.estado.BitacoraPromocion;
 import modelo.transacciones.PlanillaPromocion;

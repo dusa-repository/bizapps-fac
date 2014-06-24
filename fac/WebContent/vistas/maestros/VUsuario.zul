@@ -85,9 +85,41 @@
 				</rows>
 			</grid>
 			<separator />
-			<div id="botoneraUsuario" />
-			<div id="DivCatalogoUsuario" />
-			<div id="DivCatalogoZona" />
+				<groupbox width="100%" mold="3d" >
+				<caption label="Seleccione los Grupos Correspondientes al Usuario"
+					style="color:white; font-size: 14px" />
+					<hbox>
+						<listbox id="ltbGruposDisponibles" height="160px"
+							emptyMessage="No hay Grupos registrados">
+							<template name="model">
+								<listitem>
+									<listcell label="${each.nombre}">
+									</listcell>
+								</listitem>
+							</template>
+						</listbox>
+						<vbox>
+							<button id="pasar1" image="/public/imagenes/botones/adelante.png"
+								tooltiptext="Agregar Grupos" width="30px" />
+							<separator />
+							<button id="pasar2" image="/public/imagenes/botones/atras.png"
+								tooltiptext="Quitar Grupos" width="30px" />
+						</vbox>
+						<listbox id="ltbGruposAgregados" height="160px"
+							emptyMessage="No ha Seleccionado ningun Grupo" checkmark="true">
+							<template name="model">
+								<listitem>
+									<listcell label="${each.nombre}">
+									</listcell>
+								</listitem>
+							</template>
+						</listbox>
+					</hbox>
+				</groupbox>
+				<separator />
+				<div id="botoneraUsuario" />
+				<div id="DivCatalogoUsuario" />
+				<div id="DivCatalogoZona" />
 		</div>
 	</window>
 </zk>

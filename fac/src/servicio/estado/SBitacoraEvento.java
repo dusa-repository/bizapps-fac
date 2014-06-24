@@ -1,8 +1,8 @@
 package servicio.estado;
 
-import java.util.List;
-
 import interfacedao.estado.IBitacoraEventoDAO;
+
+import java.util.List;
 
 import modelo.estado.BitacoraEvento;
 import modelo.transacciones.PlanillaEvento;

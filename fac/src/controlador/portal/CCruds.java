@@ -56,6 +56,12 @@ public class CCruds extends CGenerico {
 	@Wire
 	private Button btnUDC;
 	@Wire
+	private Button btnConfiguracion;
+	@Wire
+	private Button btnFuncionalidad;
+	@Wire
+	private Button btnGrupo;
+	@Wire
 	private Image imagenes;
 	@Wire
 	private Listbox ltbRoles;
@@ -97,6 +103,9 @@ public class CCruds extends CGenerico {
 		botones.add(btnUnif);
 		botones.add(btnTiposUDC);
 		botones.add(btnUDC);
+		botones.add(btnGrupo);
+		botones.add(btnFuncionalidad);
+		botones.add(btnConfiguracion);
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(

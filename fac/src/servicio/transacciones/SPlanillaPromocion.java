@@ -1,8 +1,8 @@
 package servicio.transacciones;
 
-import java.util.List;
-
 import interfacedao.transacciones.IPlanillaPromocionDAO;
+
+import java.util.List;
 
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaPromocion;

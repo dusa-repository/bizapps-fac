@@ -2,7 +2,7 @@ package interfacedao.seguridad;
 
 import java.util.List;
 
-import modelo.maestros.Aliado;
+import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +14,6 @@ public interface IUsuarioDAO extends JpaRepository<Usuario, String> {
 
 	@Query("Select u from Usuario u order by u.nombre asc")
 	List<Usuario> findAllOrderByDescripcion();
+
+	List<Usuario> findByGrupos(Grupo grupo);
 }

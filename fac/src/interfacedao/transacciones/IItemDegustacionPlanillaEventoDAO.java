@@ -4,7 +4,6 @@ import java.util.List;
 
 import modelo.pk.ItemDegustacionPlanillaEventoId;
 import modelo.transacciones.ItemDegustacionPlanillaEvento;
-import modelo.transacciones.PlanillaCata;
 import modelo.transacciones.PlanillaEvento;
 
 import org.springframework.data.jpa.repository.JpaRepository;
