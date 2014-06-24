@@ -25,4 +25,14 @@ public class SBitacoraPromocion {
 		if(!eliminados.isEmpty())
 			bitacoraPromocionDAO.delete(eliminados);
 	}
+
+	public List<BitacoraPromocion> buscarPorPlanilla(PlanillaPromocion planilla) {
+		// TODO Auto-generated method stub
+		return bitacoraPromocionDAO.findByPlanillaPromocion(planilla);
+	}
+
+	public void guardarBitacoras(List<BitacoraPromocion> listaBitacoras) {
+		bitacoraPromocionDAO.save(listaBitacoras);
+		
+	}
 }

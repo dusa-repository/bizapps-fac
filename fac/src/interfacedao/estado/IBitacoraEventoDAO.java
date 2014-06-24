@@ -11,4 +11,5 @@ public interface IBitacoraEventoDAO extends JpaRepository<BitacoraEvento, Long> 
 
 	List<BitacoraEvento> findByPlanillaEvento(PlanillaEvento planilla);
 
+
 }

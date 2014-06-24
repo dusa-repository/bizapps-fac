@@ -29,4 +29,14 @@ public class SBitacoraArte {
 		if(!eliminados.isEmpty())
 			bitacoraArteDAO.delete(eliminados);
 	}
+
+	public List<BitacoraArte> buscarPorPlanilla(PlanillaArte planilla) {
+		// TODO Auto-generated method stub
+		return bitacoraArteDAO.findByPlanillaArte(planilla);
+	}
+
+	public void guardarBitacoras(List<BitacoraArte> listaBitacoras) {
+		bitacoraArteDAO.save(listaBitacoras);
+		
+	}
 }

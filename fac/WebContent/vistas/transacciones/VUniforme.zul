@@ -132,7 +132,7 @@
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
 									<textbox id="txtEMail" hflex="1" maxlength="500"
-										tooltiptext="Ingrese el E-Mail del PDV" />
+										tooltiptext="Ingrese el E-Mail del PDV (ejemplo@gmail.com)" />
 								</row>
 								<row>
 									<hbox>
@@ -148,7 +148,7 @@
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
 									<textbox id="txtTelefono" hflex="1" maxlength="500"
-										tooltiptext="Ingrese el Numero Telefonico del PDV" />
+										tooltiptext="Ingrese el Numero Telefonico del PDV (0426-9999999)" />
 								</row>
 								<row>
 									<hbox>
@@ -229,12 +229,12 @@
 							<listbox id="ltbUniformesAgregados" height="450px"
 								emptyMessage="No ha Seleccionado ningun Recurso">
 								<listhead>
-									<listheader label="Uniforme" width="35%" />
-									<listheader label="Genero" width="10%" />
+									<listheader label="Uniforme" width="32%" />
+									<listheader label="Genero" width="15%" />
 									<listheader label="Talla" width="10%" />
 									<listheader label="Cantidad" width="10%" />
 									<listheader label="Precio Unitario" width="15%" />
-									<listheader label="Sub-Total" width="20%" />
+									<listheader label="Sub-Total" width="18%" />
 									<listheader label="id" visible="false" />
 								</listhead>
 								<template id="template" name="model">
@@ -306,6 +306,8 @@
 			<separator />
 			<div id="botoneraUniformes" />
 			<div id="catalogoUniformes" />
+			<image id="imagenNo" visible="false" />
+			<image id="imagenSi" visible="false" />
 		</div>
 	</window>
 </zk>

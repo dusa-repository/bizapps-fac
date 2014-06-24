@@ -1,6 +1,7 @@
 package controlador.transacciones;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import modelo.estado.BitacoraCata;
 import modelo.estado.BitacoraEvento;
+import modelo.estado.BitacoraFachada;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.maestros.Recurso;
@@ -23,10 +25,12 @@ import modelo.transacciones.ItemPlanillaCata;
 import modelo.transacciones.PlanillaArte;
 import modelo.transacciones.PlanillaCata;
 import modelo.transacciones.PlanillaEvento;
+import modelo.transacciones.PlanillaFachada;
 import modelo.transacciones.RecursoPlanillaCata;
 import modelo.transacciones.RecursoPlanillaEvento;
 
 import org.zkforge.ckez.CKeditor;
+import org.zkoss.image.AImage;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
@@ -36,6 +40,7 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublebox;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
@@ -49,6 +54,7 @@ import org.zkoss.zul.Window;
 import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
+import componente.Validador;
 
 import controlador.maestros.CGenerico;
 
@@ -140,6 +146,10 @@ public class CEvento extends CGenerico {
 	String tipoInbox = "";
 	Botonera botonera;
 	Usuario usuarioEditador = new Usuario();
+	@Wire
+	private Image imagenSi;
+	@Wire
+	private Image imagenNo;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -270,7 +280,7 @@ public class CEvento extends CGenerico {
 					tabMecanica.setSelected(true);
 				if (tabDatos.isSelected())
 					tabDescripcion.setSelected(true);
-				
+
 			}
 
 			@Override
@@ -333,6 +343,8 @@ public class CEvento extends CGenerico {
 	}
 
 	public void guardarDatos(String string) {
+		boolean envio = false;
+		boolean guardo = false;
 		if (id != 0) {
 			PlanillaEvento planilla = servicioPlanillaEvento.buscar(id);
 			servicioRecursoPlanillaEvento.limpiar(planilla);
@@ -358,6 +370,13 @@ public class CEvento extends CGenerico {
 			usuario = usuarioEditador;
 		else
 			usuario = usuarioSesion(nombreUsuarioSesion());
+		
+		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
+			envio = true;
+
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion"))
+			guardo = true;
+		
 		if (estadoInbox.equals("Pendiente"))
 			string = "Pendiente";
 		String tipoConfig = "";
@@ -390,7 +409,12 @@ public class CEvento extends CGenerico {
 			planillaEvento = servicioPlanillaEvento.buscar(id);
 		else
 			planillaEvento = servicioPlanillaEvento.buscarUltima();
-		guardarBitacora(planillaEvento, string);
+		
+		if (guardo)
+			guardarBitacora(planillaEvento, true);
+		if (envio)
+			guardarBitacora(planillaEvento, false);
+		
 		guardarItemsDegustacion(planillaEvento);
 		guardarItemsEstimados(planillaEvento);
 		guardarRecursos(planillaEvento);
@@ -411,10 +435,61 @@ public class CEvento extends CGenerico {
 					planillaEvento.getIdPlanillaEvento());
 			servicioPlanillaEvento.guardar(planillaAdmin);
 			planillaAdmin = servicioPlanillaEvento.buscarUltima();
-			guardarBitacora(planillaAdmin, string);
+			guardarBitacora(planillaAdmin, false);
 			guardarItemsDegustacion(planillaAdmin);
 			guardarItemsEstimados(planillaAdmin);
 			guardarRecursos(planillaAdmin);
+		}
+	}
+	
+	private void guardarBitacora(PlanillaEvento planillaEvento,
+			boolean edicion) {
+
+		/* Busca las imagenes representativas de los estados */
+		URL url = getClass().getResource("/imagenes/si.png");
+		try {
+			imagenSi.setContent(new AImage(url));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		byte[] imagen = imagenSi.getContent().getByteData();
+
+		URL url2 = getClass().getResource("/imagenes/no.png");
+		try {
+			imagenNo.setContent(new AImage(url2));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		byte[] imagenX = imagenNo.getContent().getByteData();
+
+		if (edicion) {
+			BitacoraEvento bitacora = new BitacoraEvento(0, planillaEvento,
+					"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
+					nombreUsuarioSesion(), imagen);
+			servicioBitacoraEvento.guardar(bitacora);
+		} else {
+			List<BitacoraEvento> listaBitacoras = new ArrayList<BitacoraEvento>();
+			BitacoraEvento bitacora = new BitacoraEvento(0, planillaEvento,
+					"Planilla Enviada", fechaHora, fechaHora, horaAuditoria,
+					nombreUsuarioSesion(), imagen);
+			listaBitacoras.add(bitacora);
+
+			BitacoraEvento bitacora2 = new BitacoraEvento(0, planillaEvento,
+					"Esperando Aprobacion de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora2);
+
+			BitacoraEvento bitacora3 = new BitacoraEvento(0, planillaEvento,
+					"Esperando Finalizacion de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora3);
+
+			BitacoraEvento bitacora4 = new BitacoraEvento(0, planillaEvento,
+					"Esperando Pago de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora4);
+
+			servicioBitacoraEvento.guardarBitacoras(listaBitacoras);
 		}
 	}
 
@@ -474,11 +549,6 @@ public class CEvento extends CGenerico {
 		servicioRecursoPlanillaEvento.guardar(recursosPlanilla);
 	}
 
-	private void guardarBitacora(PlanillaEvento planillaEvento, String string) {
-		BitacoraEvento bitacora = new BitacoraEvento(0, planillaEvento, string,
-				fechaHora, fechaHora, horaAuditoria, nombreUsuarioSesion());
-		servicioBitacoraEvento.guardar(bitacora);
-	}
 
 	protected boolean validar() {
 		if (txtCiudad.getText().compareTo("") == 0
@@ -502,8 +572,15 @@ public class CEvento extends CGenerico {
 			Messagebox.show("Debe Llenar Todos los Campos", "Informacion",
 					Messagebox.OK, Messagebox.INFORMATION);
 			return false;
-		} else
-			return true;
+		} else {
+			if (!Validador.validarTelefono(txtTelefono.getValue())) {
+				Messagebox.show("Formato de Telefono No Valido", "Alerta",
+						Messagebox.OK, Messagebox.EXCLAMATION);
+				return false;
+			} else
+				return true;
+		}
+
 	}
 
 	private void llenarListas() {
@@ -804,6 +881,15 @@ public class CEvento extends CGenerico {
 	public ListModelList<Marca> getMarcas() {
 		marcas = new ListModelList<Marca>(servicioMarca.buscarTodosOrdenados());
 		return marcas;
+	}
+
+	/* Metodo que valida el formmato del telefono ingresado */
+	@Listen("onChange = #txtTelefono")
+	public void validarTelefono2E() throws IOException {
+		if (Validador.validarTelefono(txtTelefono.getValue()) == false) {
+			Messagebox.show("Formato de Telefono No Valido", "Alerta",
+					Messagebox.OK, Messagebox.EXCLAMATION);
+		}
 	}
 
 }

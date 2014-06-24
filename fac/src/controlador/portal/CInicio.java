@@ -83,9 +83,7 @@ public class CInicio extends CGenerico {
 				.getAuthentication();
 
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(authe.getName());
-
-		// Set<Grupo> roles;
-		// roles = u.getGrupos();
+		
 		List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
 		for (int i = 0; i < grupos.size(); i++) {
 			if (grupos.get(i).getNombre().equals("Administrador"))
@@ -146,8 +144,6 @@ public class CInicio extends CGenerico {
 		botones.add(btnInBox);
 		botones.add(btnCruds);
 
-		// if (SecurityUtil.isAllGranted("ROLE_SUPERVISOR")) {
-		// }
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(
@@ -195,7 +191,7 @@ public class CInicio extends CGenerico {
 		}
 		Map params = new HashMap();
 		params.put("width", "500px");
-		params.put("height", "500px");
+		params.put("height", "600px");
 		params.put("style", "top:250px");
 		String[] arreglo = { "TradeMark", "Marca" };
 		Messagebox.Button[] ba = { Messagebox.Button.OK,

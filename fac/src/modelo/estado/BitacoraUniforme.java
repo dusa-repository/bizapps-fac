@@ -1,8 +1,12 @@
 package modelo.estado;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.imageio.ImageIO;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -45,6 +50,9 @@ public class BitacoraUniforme implements Serializable {
 
 	@Column(name = "usuario_auditoria", length = 50)
 	private String usuarioAuditoria;
+	
+	@Lob
+	private byte[] imagen;
 
 	public BitacoraUniforme() {
 		super();
@@ -53,7 +61,7 @@ public class BitacoraUniforme implements Serializable {
 
 	public BitacoraUniforme(long idBitacora, PlanillaUniforme planillaUniforme,
 			String estado, Timestamp fechaCambio, Timestamp fechaAuditoria,
-			String horaAuditoria, String usuarioAuditoria) {
+			String horaAuditoria, String usuarioAuditoria,byte[] imagen ) {
 		super();
 		this.idBitacora = idBitacora;
 		this.planillaUniforme = planillaUniforme;
@@ -62,6 +70,7 @@ public class BitacoraUniforme implements Serializable {
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
 		this.usuarioAuditoria = usuarioAuditoria;
+		this.imagen = imagen;
 	}
 
 	public long getIdBitacora() {
@@ -119,6 +128,21 @@ public class BitacoraUniforme implements Serializable {
 	public void setUsuarioAuditoria(String usuarioAuditoria) {
 		this.usuarioAuditoria = usuarioAuditoria;
 	}
+
+	public byte[] getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
+	}
+	
+	public BufferedImage traerImagen(String Imagen) throws IOException {
+		BufferedImage imagenes;
+		imagenes = ImageIO.read(new ByteArrayInputStream(imagen));
+		return imagenes;
+	}
+	
 	
 	
 }

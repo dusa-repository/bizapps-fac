@@ -402,10 +402,10 @@ public class CSolicitud extends CGenerico {
 				PlanillaEvento planillaEvento = servicioPlanillaEvento
 						.buscar(procesadas.get(i).getId());
 				planillaEvento.setEstado(estado);
-				BitacoraEvento bitacoraEvento = new BitacoraEvento(0,
-						planillaEvento, estado, fechaHora, fechaHora,
-						horaAuditoria, nombreUsuarioSesion());
-				servicioBitacoraEvento.guardar(bitacoraEvento);
+//				BitacoraEvento bitacoraEvento = new BitacoraEvento(0,
+//						planillaEvento, estado, fechaHora, fechaHora,
+//						horaAuditoria, nombreUsuarioSesion());
+//				servicioBitacoraEvento.guardar(bitacoraEvento);
 				listEvento.add(planillaEvento);
 				break;
 
@@ -413,10 +413,10 @@ public class CSolicitud extends CGenerico {
 				PlanillaUniforme planillaUniforme = servicioPlanillaUniforme
 						.buscar(procesadas.get(i).getId());
 				planillaUniforme.setEstado(estado);
-				BitacoraUniforme bitacoraUniforme = new BitacoraUniforme(0,
-						planillaUniforme, estado, fechaHora, fechaHora,
-						horaAuditoria, nombreUsuarioSesion());
-				servicioBitacoraUniforme.guardar(bitacoraUniforme);
+//				BitacoraUniforme bitacoraUniforme = new BitacoraUniforme(0,
+//						planillaUniforme, estado, fechaHora, fechaHora,
+//						horaAuditoria, nombreUsuarioSesion());
+//				servicioBitacoraUniforme.guardar(bitacoraUniforme);
 				listUniforme.add(planillaUniforme);
 				break;
 
@@ -424,10 +424,10 @@ public class CSolicitud extends CGenerico {
 				PlanillaPromocion planillaPromocion = servicioPlanillaPromocion
 						.buscar(procesadas.get(i).getId());
 				planillaPromocion.setEstado(estado);
-				BitacoraPromocion bitacora = new BitacoraPromocion(0,
-						planillaPromocion, estado, fechaHora, fechaHora,
-						horaAuditoria, nombreUsuarioSesion());
-				servicioBitacoraPromocion.guardar(bitacora);
+//				BitacoraPromocion bitacora = new BitacoraPromocion(0,
+//						planillaPromocion, estado, fechaHora, fechaHora,
+//						horaAuditoria, nombreUsuarioSesion());
+//				servicioBitacoraPromocion.guardar(bitacora);
 				listPromocion.add(planillaPromocion);
 				break;
 
@@ -435,10 +435,10 @@ public class CSolicitud extends CGenerico {
 				PlanillaArte planillaArte = servicioPlanillaArte
 						.buscar(procesadas.get(i).getId());
 				planillaArte.setEstado(estado);
-				BitacoraArte bitacoraArte = new BitacoraArte(0, planillaArte,
-						estado, fechaHora, fechaHora, horaAuditoria,
-						nombreUsuarioSesion());
-				servicioBitacoraArte.guardar(bitacoraArte);
+//				BitacoraArte bitacoraArte = new BitacoraArte(0, planillaArte,
+//						estado, fechaHora, fechaHora, horaAuditoria,
+//						nombreUsuarioSesion());
+//				servicioBitacoraArte.guardar(bitacoraArte);
 				listArte.add(planillaArte);
 				break;
 
@@ -446,10 +446,10 @@ public class CSolicitud extends CGenerico {
 				PlanillaCata planillaCata = servicioPlanillaCata
 						.buscar(procesadas.get(i).getId());
 				planillaCata.setEstado(estado);
-				BitacoraCata bitacoraCata = new BitacoraCata(0, planillaCata,
-						estado, fechaHora, fechaHora, horaAuditoria,
-						nombreUsuarioSesion());
-				servicioBitacoraCata.guardar(bitacoraCata);
+//				BitacoraCata bitacoraCata = new BitacoraCata(0, planillaCata,
+//						estado, fechaHora, fechaHora, horaAuditoria,
+//						nombreUsuarioSesion());
+//				servicioBitacoraCata.guardar(bitacoraCata);
 				listCata.add(planillaCata);
 				break;
 
@@ -457,10 +457,10 @@ public class CSolicitud extends CGenerico {
 				PlanillaFachada planillaFachada = servicioPlanillaFachada
 						.buscar(procesadas.get(i).getId());
 				planillaFachada.setEstado(estado);
-				BitacoraFachada bitacoraFachada = new BitacoraFachada(0,
-						planillaFachada, estado, fechaHora, fechaHora,
-						horaAuditoria, nombreUsuarioSesion());
-				servicioBitacoraFachada.guardar(bitacoraFachada);
+//				BitacoraFachada bitacoraFachada = new BitacoraFachada(0,
+//						planillaFachada, estado, fechaHora, fechaHora,
+//						horaAuditoria, nombreUsuarioSesion());
+//				servicioBitacoraFachada.guardar(bitacoraFachada);
 				listFachada.add(planillaFachada);
 				break;
 
@@ -617,6 +617,25 @@ public class CSolicitud extends CGenerico {
 			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
+		}
+	}
+	
+	@Listen("onClick = #btnBitacora")
+	public void verBitacora() {
+		final List<PlanillaGenerica> procesadas = catalogo
+				.obtenerSeleccionados();
+		if (validarSeleccion(procesadas)) {
+			if (procesadas.size() == 1) {
+				final HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("id", procesadas.get(0).getId());
+				map.put("tipoPlanilla", procesadas.get(0).getTipoPlanilla());
+				Sessions.getCurrent().setAttribute("inbox", map);
+				Window window = new Window();
+				window = (Window) Executions.createComponents(
+						"/vistas/transacciones/VBitacora.zul", null, null);
+				window.doModal();
+			} else
+				msj.mensajeAlerta(Mensaje.editarSoloUno);
 		}
 	}
 

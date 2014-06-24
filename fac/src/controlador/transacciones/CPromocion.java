@@ -3,6 +3,7 @@ package controlador.transacciones;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import modelo.estado.BitacoraArte;
+import modelo.estado.BitacoraFachada;
 import modelo.estado.BitacoraPromocion;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
@@ -23,6 +25,7 @@ import modelo.transacciones.PlanillaFachada;
 import modelo.transacciones.PlanillaPromocion;
 
 import org.zkforge.ckez.CKeditor;
+import org.zkoss.image.AImage;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -31,6 +34,7 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublebox;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Spinner;
@@ -41,6 +45,7 @@ import org.zkoss.zul.Window;
 import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
+import componente.Validador;
 
 import controlador.maestros.CGenerico;
 
@@ -113,6 +118,10 @@ public class CPromocion extends CGenerico {
 	String tipoInbox = "";
 	Botonera botonera;
 	Usuario usuarioEditador = new Usuario();
+	@Wire
+	private Image imagenSi;
+	@Wire
+	private Image imagenNo;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -278,6 +287,10 @@ public class CPromocion extends CGenerico {
 	}
 
 	protected void guardarDatos(String string) {
+		
+		boolean envio = false;
+		boolean guardo = false;
+		
 		String nombreLocal, local, rif, nombreActividad, tipoActividad, modalidad, material, frecuencia, ciudad, email, estado, responsable, telefono, extra, descripcion1, descripcion2, direccion;
 		tipoActividad = cmbActividad.getSelectedItem().getContext();
 		extra = cmbExtra.getSelectedItem().getContext();
@@ -301,6 +314,13 @@ public class CPromocion extends CGenerico {
 			usuario = usuarioEditador;
 		else
 			usuario = usuarioSesion(nombreUsuarioSesion());
+		
+		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
+			envio = true;
+
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion"))
+			guardo = true;
+		
 		if (estadoInbox.equals("Pendiente"))
 			string = "Pendiente";
 		String tipoConfig = "";
@@ -333,7 +353,12 @@ public class CPromocion extends CGenerico {
 			planillaPromocion = servicioPlanillaPromocion.buscar(id);
 		else
 			planillaPromocion = servicioPlanillaPromocion.buscarUltima();
-		guardarBitacora(planillaPromocion, string);
+		
+		if (guardo)
+			guardarBitacora(planillaPromocion, true);
+		if (envio)
+			guardarBitacora(planillaPromocion, false);
+		
 		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente")
 				&& !inbox) {
 			Configuracion con = servicioConfiguracion
@@ -352,16 +377,59 @@ public class CPromocion extends CGenerico {
 					planillaPromocion.getIdPlanillaPromocion());
 			servicioPlanillaPromocion.guardar(planillaAdmin);
 			planillaAdmin = servicioPlanillaPromocion.buscarUltima();
-			guardarBitacora(planillaAdmin, string);
+			guardarBitacora(planillaAdmin, false);
 		}
 	}
 
 	private void guardarBitacora(PlanillaPromocion planillaPromocion,
-			String string) {
-		BitacoraPromocion bitacora = new BitacoraPromocion(0,
-				planillaPromocion, string, fechaHora, fechaHora, horaAuditoria,
-				nombreUsuarioSesion());
-		servicioBitacoraPromocion.guardar(bitacora);
+			boolean edicion) {
+
+		/* Busca las imagenes representativas de los estados */
+		URL url = getClass().getResource("/imagenes/si.png");
+		try {
+			imagenSi.setContent(new AImage(url));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		byte[] imagen = imagenSi.getContent().getByteData();
+
+		URL url2 = getClass().getResource("/imagenes/no.png");
+		try {
+			imagenNo.setContent(new AImage(url2));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		byte[] imagenX = imagenNo.getContent().getByteData();
+
+		if (edicion) {
+			BitacoraPromocion bitacora = new BitacoraPromocion(0, planillaPromocion,
+					"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
+					nombreUsuarioSesion(), imagen);
+			servicioBitacoraPromocion.guardar(bitacora);
+		} else {
+			List<BitacoraPromocion> listaBitacoras = new ArrayList<BitacoraPromocion>();
+			BitacoraPromocion bitacora = new BitacoraPromocion(0, planillaPromocion,
+					"Planilla Enviada", fechaHora, fechaHora, horaAuditoria,
+					nombreUsuarioSesion(), imagen);
+			listaBitacoras.add(bitacora);
+
+			BitacoraPromocion bitacora2 = new BitacoraPromocion(0, planillaPromocion,
+					"Esperando Aprobacion de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora2);
+
+			BitacoraPromocion bitacora3 = new BitacoraPromocion(0, planillaPromocion,
+					"Esperando Finalizacion de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora3);
+
+			BitacoraPromocion bitacora4 = new BitacoraPromocion(0, planillaPromocion,
+					"Esperando Pago de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora4);
+
+			servicioBitacoraPromocion.guardarBitacoras(listaBitacoras);
+		}
 	}
 
 	protected boolean validar() {
@@ -387,8 +455,20 @@ public class CPromocion extends CGenerico {
 				|| cdtMarca2.getValue().compareTo("") == 0) {
 			msj.mensajeInformacion(Mensaje.camposVacios);
 			return false;
-		} else
-			return true;
+		} else {
+			if (!Validador.validarCorreo(txtEMail.getValue())) {
+				Messagebox.show("Formato de Correo No Valido", "Alerta",
+						Messagebox.OK, Messagebox.EXCLAMATION);
+				return false;
+			} else {
+				if (!Validador.validarTelefono(txtTelefono.getValue())) {
+					Messagebox.show("Formato de Telefono No Valido", "Alerta",
+							Messagebox.OK, Messagebox.EXCLAMATION);
+					return false;
+				} else
+					return true;
+			}
+		}
 	}
 
 	private void cargarCombos() {
@@ -496,6 +576,25 @@ public class CPromocion extends CGenerico {
 		cdtMarca2.setValue(planilla.getDescripcionMarcaB());
 		tabDatos.setSelected(true);
 		id = planilla.getIdPlanillaPromocion();
+	}
+	
+
+	/* Metodo que valida el formmato del telefono ingresado */
+	@Listen("onChange = #txtTelefono")
+	public void validarTelefono2E() throws IOException {
+		if (Validador.validarTelefono(txtTelefono.getValue()) == false) {
+			Messagebox.show("Formato de Telefono No Valido", "Alerta",
+					Messagebox.OK, Messagebox.EXCLAMATION);
+		}
+	}
+
+	/* Metodo que valida el formmato del correo ingresado */
+	@Listen("onChange = #txtEMail")
+	public void validarCorreo() throws IOException {
+		if (Validador.validarCorreo(txtEMail.getValue()) == false) {
+			Messagebox.show("Correo Electronico Invalido", "Alerta",
+					Messagebox.OK, Messagebox.EXCLAMATION);
+		}
 	}
 
 }

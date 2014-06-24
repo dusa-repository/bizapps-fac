@@ -1,6 +1,7 @@
 package controlador.transacciones;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import modelo.estado.BitacoraCata;
+import modelo.estado.BitacoraFachada;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.maestros.Recurso;
@@ -18,9 +20,11 @@ import modelo.seguridad.Usuario;
 import modelo.transacciones.ItemPlanillaCata;
 import modelo.transacciones.PlanillaCata;
 import modelo.transacciones.PlanillaEvento;
+import modelo.transacciones.PlanillaFachada;
 import modelo.transacciones.RecursoPlanillaCata;
 
 import org.zkforge.ckez.CKeditor;
+import org.zkoss.image.AImage;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -29,6 +33,7 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublebox;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
@@ -41,6 +46,7 @@ import org.zkoss.zul.Window;
 import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
+import componente.Validador;
 
 import controlador.maestros.CGenerico;
 
@@ -120,6 +126,11 @@ public class CCata extends CGenerico {
 	String tipoInbox = "";
 	Botonera botonera;
 	Usuario usuarioEditador = new Usuario();
+	@Wire
+	private Image imagenSi;
+	@Wire
+	private Image imagenNo;
+
 
 	@Override
 	public void inicializar() throws IOException {
@@ -311,6 +322,8 @@ public class CCata extends CGenerico {
 	}
 
 	public void guardarDatos(String string) {
+		boolean envio = false;
+		boolean guardo = false;
 		if (id != 0) {
 			PlanillaCata planilla = servicioPlanillaCata.buscar(id);
 			servicioRecursoPlanillaCata.limpiar(planilla);
@@ -330,6 +343,14 @@ public class CCata extends CGenerico {
 		nombreActividad = txtNombreActividad.getValue();
 		telefono = txtTelefono.getValue();
 		Usuario usuario = new Usuario();
+		
+		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
+			envio = true;
+
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion"))
+			guardo = true;
+
+
 		if (inbox)
 			usuario = usuarioEditador;
 		else
@@ -362,7 +383,12 @@ public class CCata extends CGenerico {
 			planilla = servicioPlanillaCata.buscar(id);
 		else
 			planilla = servicioPlanillaCata.buscarUltima();
-		guardarBitacora(planilla, string);
+		
+		if (guardo)
+			guardarBitacora(planilla, true);
+		if (envio)
+			guardarBitacora(planilla, false);
+		
 		guardarItems(planilla);
 		guardarRecursos(planilla);
 		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente") && !inbox) {
@@ -380,16 +406,61 @@ public class CCata extends CGenerico {
 					planilla.getIdPlanillaCata());
 			servicioPlanillaCata.guardar(planillaAdmin);
 			planillaAdmin = servicioPlanillaCata.buscarUltima();
-			guardarBitacora(planillaAdmin, string);
+			guardarBitacora(planillaAdmin, false);
 			guardarItems(planillaAdmin);
 			guardarRecursos(planillaAdmin);
 		}
 	}
 
-	public void guardarBitacora(PlanillaCata planilla, String string) {
-		BitacoraCata bitacora = new BitacoraCata(0, planilla, string,
-				fechaHora, fechaHora, horaAuditoria, nombreUsuarioSesion());
-		servicioBitacoraCata.guardar(bitacora);
+	private void guardarBitacora(PlanillaCata planillaCata,
+			boolean edicion) {
+
+		/* Busca las imagenes representativas de los estados */
+		URL url = getClass().getResource("/imagenes/si.png");
+		try {
+			imagenSi.setContent(new AImage(url));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		byte[] imagen = imagenSi.getContent().getByteData();
+
+		URL url2 = getClass().getResource("/imagenes/no.png");
+		try {
+			imagenNo.setContent(new AImage(url2));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		byte[] imagenX = imagenNo.getContent().getByteData();
+
+		if (edicion) {
+			BitacoraCata bitacora = new BitacoraCata(0, planillaCata,
+					"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
+					nombreUsuarioSesion(), imagen);
+			servicioBitacoraCata.guardar(bitacora);
+		} else {
+			List<BitacoraCata> listaBitacoras = new ArrayList<BitacoraCata>();
+			BitacoraCata bitacora = new BitacoraCata(0, planillaCata,
+					"Planilla Enviada", fechaHora, fechaHora, horaAuditoria,
+					nombreUsuarioSesion(), imagen);
+			listaBitacoras.add(bitacora);
+
+			BitacoraCata bitacora2 = new BitacoraCata(0, planillaCata,
+					"Esperando Aprobacion de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora2);
+
+			BitacoraCata bitacora3 = new BitacoraCata(0, planillaCata,
+					"Esperando Finalizacion de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora3);
+
+			BitacoraCata bitacora4 = new BitacoraCata(0, planillaCata,
+					"Esperando Pago de Planilla", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			listaBitacoras.add(bitacora4);
+
+			servicioBitacoraCata.guardarBitacoras(listaBitacoras);
+		}
 	}
 
 	protected void guardarRecursos(PlanillaCata planilla) {
@@ -449,8 +520,20 @@ public class CCata extends CGenerico {
 			Messagebox.show("Debe Llenar Todos los Campos", "Informacion",
 					Messagebox.OK, Messagebox.INFORMATION);
 			return false;
-		} else
-			return true;
+		} else {
+			if (!Validador.validarCorreo(txtEMail.getValue())) {
+				Messagebox.show("Formato de Correo No Valido", "Alerta",
+						Messagebox.OK, Messagebox.EXCLAMATION);
+				return false;
+			} else {
+				if (!Validador.validarTelefono(txtTelefono.getValue())) {
+					Messagebox.show("Formato de Telefono No Valido", "Alerta",
+							Messagebox.OK, Messagebox.EXCLAMATION);
+					return false;
+				} else
+					return true;
+			}
+		}
 	}
 
 	private void listasMultiples() {
@@ -675,6 +758,25 @@ public class CCata extends CGenerico {
 					.getIndex());
 		}
 		listasMultiples();
+	}
+	
+
+	/* Metodo que valida el formmato del telefono ingresado */
+	@Listen("onChange = #txtTelefono")
+	public void validarTelefono2E() throws IOException {
+		if (Validador.validarTelefono(txtTelefono.getValue()) == false) {
+			Messagebox.show("Formato de Telefono No Valido", "Alerta",
+					Messagebox.OK, Messagebox.EXCLAMATION);
+		}
+	}
+
+	/* Metodo que valida el formmato del correo ingresado */
+	@Listen("onChange = #txtEMail")
+	public void validarCorreo() throws IOException {
+		if (Validador.validarCorreo(txtEMail.getValue()) == false) {
+			Messagebox.show("Correo Electronico Invalido", "Alerta",
+					Messagebox.OK, Messagebox.EXCLAMATION);
+		}
 	}
 
 }

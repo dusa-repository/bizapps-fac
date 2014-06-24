@@ -27,4 +27,14 @@ public class SBitacoraCata {
 		if(!bitacoras.isEmpty())
 			bitacoraCataDAO.delete(bitacoras);
 	}
+
+	public List<BitacoraCata> buscarPorPlanilla(PlanillaCata planilla) {
+		// TODO Auto-generated method stub
+		return bitacoraCataDAO.findByPlanillaCata(planilla);
+	}
+
+	public void guardarBitacoras(List<BitacoraCata> listaBitacoras) {
+		bitacoraCataDAO.save(listaBitacoras);
+		
+	}
 }
