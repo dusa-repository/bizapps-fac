@@ -379,7 +379,7 @@ public class CEvento extends CGenerico {
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
 
-		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion"))
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion") && id==0)
 			guardo = true;
 		
 		if (estadoInbox.equals("Pendiente"))
@@ -483,6 +483,14 @@ public class CEvento extends CGenerico {
 					nombreUsuarioSesion(), imagen);
 			servicioBitacoraEvento.guardar(bitacora);
 		} else {
+			if(id==0)
+			{
+				BitacoraEvento bitacora = new BitacoraEvento(0, planillaEvento,
+						"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
+						nombreUsuarioSesion(), imagen);
+				servicioBitacoraEvento.guardar(bitacora);
+				
+			}
 			List<BitacoraEvento> listaBitacoras = new ArrayList<BitacoraEvento>();
 			BitacoraEvento bitacora = new BitacoraEvento(0, planillaEvento,
 					"Planilla Enviada", fechaHora, fechaHora, horaAuditoria,

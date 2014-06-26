@@ -48,7 +48,7 @@
 							label="${each.estado}">
 						</listcell>
 						<listcell style="background:white ; font-size: 18px"
-							label="${each.fechaCambio}">
+							label="${each.traerFecha()}">
 						</listcell>
 						<listcell style="background:white ; font-size: 18px"
 							label="${each.usuarioAuditoria}">

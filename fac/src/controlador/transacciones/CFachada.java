@@ -445,7 +445,7 @@ public class CFachada extends CGenerico {
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
 
-		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion"))
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion") && id==0)
 			guardo = true;
 
 		if (estadoInbox.equals("Pendiente"))
@@ -560,6 +560,14 @@ public class CFachada extends CGenerico {
 					nombreUsuarioSesion(), imagen);
 			servicioBitacoraFachada.guardar(bitacora);
 		} else {
+			
+			if(id==0)
+			{
+				BitacoraFachada bitacora = new BitacoraFachada(0, planillaFachada,
+						"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
+						nombreUsuarioSesion(), imagen);
+				servicioBitacoraFachada.guardar(bitacora);
+			}
 			List<BitacoraFachada> listaBitacoras = new ArrayList<BitacoraFachada>();
 			BitacoraFachada bitacora = new BitacoraFachada(0, planillaFachada,
 					"Planilla Enviada", fechaHora, fechaHora, horaAuditoria,

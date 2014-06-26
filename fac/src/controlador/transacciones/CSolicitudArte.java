@@ -323,7 +323,7 @@ public class CSolicitudArte extends CGenerico {
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
 
-		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion"))
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion") && id==0)
 			guardo = true;
 		
 		if (estadoInbox.equals("Pendiente"))
@@ -431,6 +431,13 @@ public class CSolicitudArte extends CGenerico {
 					nombreUsuarioSesion(), imagen);
 			servicioBitacoraArte.guardar(bitacora);
 		} else {
+			if(id==0)
+			{
+				BitacoraArte bitacora = new BitacoraArte(0, planillaArte,
+						"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
+						nombreUsuarioSesion(), imagen);
+				servicioBitacoraArte.guardar(bitacora);
+			}
 			List<BitacoraArte> listaBitacoras = new ArrayList<BitacoraArte>();
 			BitacoraArte bitacora = new BitacoraArte(0, planillaArte,
 					"Planilla Enviada", fechaHora, fechaHora, horaAuditoria,

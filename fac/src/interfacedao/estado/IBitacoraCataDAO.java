@@ -11,4 +11,7 @@ public interface IBitacoraCataDAO extends JpaRepository<BitacoraCata, Long> {
 
 	List<BitacoraCata> findByPlanillaCata(PlanillaCata planilla);
 
+	BitacoraCata findByEstadoAndPlanillaCata(String estadoDefecto,
+			PlanillaCata planillaCata);
+
 }

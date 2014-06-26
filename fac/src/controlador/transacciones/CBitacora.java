@@ -193,6 +193,7 @@ public class CBitacora extends CGenerico {
 							planilla.getEstado());
 					List<BitacoraFachada> listaBitacoras = servicioBitacoraFachada
 							.buscarPorPlanilla(planilla);
+					
 					ltbBitacora.setModel(new ListModelList<BitacoraFachada>(
 							listaBitacoras));
 				}

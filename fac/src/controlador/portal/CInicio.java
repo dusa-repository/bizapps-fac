@@ -162,7 +162,7 @@ public class CInicio extends CGenerico {
 										if (arbol.getNombre().equals("InBox")
 												&& admin) {
 											recibir(tipo);
-											variable = "En Edicion";
+											variable = "Generales";
 											Window window = (Window) Executions
 													.createComponents(
 															"/vistas/transacciones/VSolicitud.zul",
@@ -185,11 +185,13 @@ public class CInicio extends CGenerico {
 		Map params = new HashMap();
 		params.put("width", "500px");
 		params.put("height", "600px");
-		params.put("style", "top:250px");
+		params.put("style", "top:100px;");
 		String[] arreglo = { "TradeMark", "Marca" };
-		Messagebox.Button[] ba = { Messagebox.Button.OK,
+		
+		Messagebox.Button[] boton = { Messagebox.Button.OK,
 				Messagebox.Button.CANCEL };
-		Messagebox.show("Seleccione un Tipo", "", ba, arreglo, "pit", null,
+
+		Messagebox.show("Seleccione un Tipo", "", boton, arreglo, Messagebox.QUESTION, null,
 				new org.zkoss.zk.ui.event.EventListener() {
 					public void onEvent(Event evt) throws InterruptedException {
 						if (evt.getName().equals("onOK")) {

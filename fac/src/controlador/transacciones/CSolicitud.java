@@ -1,11 +1,18 @@
 package controlador.transacciones;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import modelo.estado.BitacoraArte;
+import modelo.estado.BitacoraCata;
+import modelo.estado.BitacoraEvento;
+import modelo.estado.BitacoraFachada;
+import modelo.estado.BitacoraPromocion;
+import modelo.estado.BitacoraUniforme;
 import modelo.generico.PlanillaGenerica;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
@@ -18,12 +25,14 @@ import modelo.transacciones.PlanillaUniforme;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.zkoss.image.AImage;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Div;
+import org.zkoss.zul.Image;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
@@ -39,6 +48,10 @@ public class CSolicitud extends CGenerico {
 	private Window wdwSolicitud;
 	@Wire
 	private Div catalogoSolicitud;
+	@Wire
+	private Image imagenNo;
+	@Wire
+	private Image imagenSi;
 	public Catalogo<PlanillaGenerica> catalogo;
 	String titulo = "";
 	private boolean tradeMark = false;
@@ -79,7 +92,8 @@ public class CSolicitud extends CGenerico {
 		System.out.println(listPlanilla.size());
 		catalogo = new Catalogo<PlanillaGenerica>(catalogoSolicitud,
 				"PlanillaCata", listPlanilla, false, "Usuario", "Estado",
-				"Fecha", "Marca", "Nombre Actividad", "Tipo Planilla") {
+				"Fecha de Envio de Planilla", "Marca", "Nombre Actividad",
+				"Tipo Planilla") {
 
 			@Override
 			protected List<PlanillaGenerica> buscar(List<String> valores) {
@@ -134,6 +148,8 @@ public class CSolicitud extends CGenerico {
 		final List<PlanillaGenerica> procesadas = catalogo
 				.obtenerSeleccionados();
 		final String estatus = "Aprobada";
+		final String estadoDefecto = "Esperando Aprobacion de Planilla";
+		final String estadoNuevo = "Planilla Aprobada";
 		if (validarSeleccion(procesadas)) {
 			if (validarEstatus(procesadas, estatus)) {
 				Messagebox.show("¿Desea Aprobar las " + procesadas.size()
@@ -143,7 +159,8 @@ public class CSolicitud extends CGenerico {
 							public void onEvent(Event evt)
 									throws InterruptedException {
 								if (evt.getName().equals("onOK")) {
-									cambiarEstado(procesadas, estatus);
+									cambiarEstado(procesadas, estatus,
+											estadoDefecto, estadoNuevo);
 									cargarLista();
 									catalogo.actualizarLista(listPlanilla);
 								}
@@ -158,6 +175,8 @@ public class CSolicitud extends CGenerico {
 		final List<PlanillaGenerica> procesadas = catalogo
 				.obtenerSeleccionados();
 		final String estatus = "Cancelada";
+		final String estadoDefecto = "";
+		final String estadoNuevo = "Planilla Cancelada";
 		if (validarSeleccion(procesadas)) {
 			if (validarEstatus(procesadas, estatus)) {
 				Messagebox.show("¿Desea Cancelar las " + procesadas.size()
@@ -167,7 +186,8 @@ public class CSolicitud extends CGenerico {
 							public void onEvent(Event evt)
 									throws InterruptedException {
 								if (evt.getName().equals("onOK")) {
-									cambiarEstado(procesadas, estatus);
+									cambiarEstado(procesadas, estatus,
+											estadoDefecto, estadoNuevo);
 									cargarLista();
 									catalogo.actualizarLista(listPlanilla);
 								}
@@ -183,6 +203,8 @@ public class CSolicitud extends CGenerico {
 		final List<PlanillaGenerica> procesadas = catalogo
 				.obtenerSeleccionados();
 		final String estatus = "Rechazada";
+		final String estadoDefecto = "";
+		final String estadoNuevo = "Planilla Rechazada";
 		if (validarSeleccion(procesadas)) {
 			if (validarEstatus(procesadas, estatus)) {
 				Messagebox.show("¿Desea Rechazar las " + procesadas.size()
@@ -192,7 +214,8 @@ public class CSolicitud extends CGenerico {
 							public void onEvent(Event evt)
 									throws InterruptedException {
 								if (evt.getName().equals("onOK")) {
-									cambiarEstado(procesadas, estatus);
+									cambiarEstado(procesadas, estatus,
+											estadoDefecto, estadoNuevo);
 									cargarLista();
 									catalogo.actualizarLista(listPlanilla);
 								}
@@ -208,6 +231,8 @@ public class CSolicitud extends CGenerico {
 		final List<PlanillaGenerica> procesadas = catalogo
 				.obtenerSeleccionados();
 		final String estatus = "Finalizada";
+		final String estadoDefecto = "Esperando Finalizacion de Planilla";
+		final String estadoNuevo = "Planilla Finalizada";
 		if (validarSeleccion(procesadas)) {
 			if (validarEstatus(procesadas, estatus)) {
 				Messagebox.show("¿Desea Finalizar las " + procesadas.size()
@@ -217,7 +242,8 @@ public class CSolicitud extends CGenerico {
 							public void onEvent(Event evt)
 									throws InterruptedException {
 								if (evt.getName().equals("onOK")) {
-									cambiarEstado(procesadas, estatus);
+									cambiarEstado(procesadas, estatus,
+											estadoDefecto, estadoNuevo);
 									cargarLista();
 									catalogo.actualizarLista(listPlanilla);
 								}
@@ -233,6 +259,8 @@ public class CSolicitud extends CGenerico {
 		final List<PlanillaGenerica> procesadas = catalogo
 				.obtenerSeleccionados();
 		final String estatus = "Pagada";
+		final String estadoDefecto = "Esperando Pago de Planilla";
+		final String estadoNuevo = "Planilla Pagada";
 		if (validarSeleccion(procesadas)) {
 			if (validarEstatus(procesadas, estatus)) {
 				Messagebox.show("¿Desea Pagar las " + procesadas.size()
@@ -242,7 +270,8 @@ public class CSolicitud extends CGenerico {
 							public void onEvent(Event evt)
 									throws InterruptedException {
 								if (evt.getName().equals("onOK")) {
-									cambiarEstado(procesadas, estatus);
+									cambiarEstado(procesadas, estatus,
+											estadoDefecto, estadoNuevo);
 									cargarLista();
 									catalogo.actualizarLista(listPlanilla);
 								}
@@ -334,7 +363,7 @@ public class CSolicitud extends CGenerico {
 			if (procesadas.get(i).getEstado().equals("Finalizada"))
 				contadorFinalizada++;
 			if (procesadas.get(i).getEstado().equals("En Edicion"))
-				errorEdicion=true;
+				errorEdicion = true;
 			if (procesadas.get(i).getEstado().equals("Pagada"))
 				contadorPagada++;
 			if (procesadas.get(i).getEstado().equals("Rechazada")
@@ -351,19 +380,22 @@ public class CSolicitud extends CGenerico {
 		}
 		switch (estatus) {
 		case "Aprobada":
-			if (contadorAprobada != 0 || contadorFinalizada != 0 || contadorPagada != 0) {
+			if (contadorAprobada != 0 || contadorFinalizada != 0
+					|| contadorPagada != 0) {
 				msj.mensajeAlerta(Mensaje.estadoIncorrecto);
 				return false;
 			} else
 				return true;
 		case "Finalizada":
-			if (contadorPendiente != 0 || contadorFinalizada != 0 || contadorPagada != 0) {
+			if (contadorPendiente != 0 || contadorFinalizada != 0
+					|| contadorPagada != 0) {
 				msj.mensajeAlerta(Mensaje.estadoIncorrecto);
 				return false;
 			} else
 				return true;
 		case "Pagada":
-			if (contadorPendiente != 0 || contadorAprobada != 0 || contadorPagada != 0) {
+			if (contadorPendiente != 0 || contadorAprobada != 0
+					|| contadorPagada != 0) {
 				msj.mensajeAlerta(Mensaje.estadoIncorrecto);
 				return false;
 			} else
@@ -385,23 +417,62 @@ public class CSolicitud extends CGenerico {
 		}
 	}
 
-	public void cambiarEstado(List<PlanillaGenerica> procesadas, String estado) {
+	public void cambiarEstado(List<PlanillaGenerica> procesadas, String estado,
+			String estadoDefecto, String estadoNuevo) {
 		List<PlanillaCata> listCata = new ArrayList<PlanillaCata>();
 		List<PlanillaFachada> listFachada = new ArrayList<PlanillaFachada>();
 		List<PlanillaPromocion> listPromocion = new ArrayList<PlanillaPromocion>();
 		List<PlanillaEvento> listEvento = new ArrayList<PlanillaEvento>();
 		List<PlanillaArte> listArte = new ArrayList<PlanillaArte>();
 		List<PlanillaUniforme> listUniforme = new ArrayList<PlanillaUniforme>();
+		List<BitacoraCata> listBitacoraCata = new ArrayList<BitacoraCata>();
+		List<BitacoraFachada> listBitacoraFachada = new ArrayList<BitacoraFachada>();
+		List<BitacoraPromocion> listBitacoraPromocion = new ArrayList<BitacoraPromocion>();
+		List<BitacoraEvento> listBitacoraEvento = new ArrayList<BitacoraEvento>();
+		List<BitacoraArte> listBitacoraArte = new ArrayList<BitacoraArte>();
+		List<BitacoraUniforme> listBitacoraUniforme = new ArrayList<BitacoraUniforme>();
+		
+		URL url = getClass().getResource("/imagenes/si.png");
+		try {
+			imagenSi.setContent(new AImage(url));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		byte[] imagen = imagenSi.getContent().getByteData();
+
+		URL url2 = getClass().getResource("/imagenes/no.png");
+		try {
+			imagenNo.setContent(new AImage(url2));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		byte[] imagenX = imagenNo.getContent().getByteData();
+
 		for (int i = 0; i < procesadas.size(); i++) {
 			switch (procesadas.get(i).getTipoPlanilla()) {
 			case "Eventos Especiales":
 				PlanillaEvento planillaEvento = servicioPlanillaEvento
 						.buscar(procesadas.get(i).getId());
 				planillaEvento.setEstado(estado);
-//				BitacoraEvento bitacoraEvento = new BitacoraEvento(0,
-//						planillaEvento, estado, fechaHora, fechaHora,
-//						horaAuditoria, nombreUsuarioSesion());
-//				servicioBitacoraEvento.guardar(bitacoraEvento);
+				if (estado.equals("Rechazada") || estado.equals("Cancelada")) {
+					BitacoraEvento bitacoraE = new BitacoraEvento(0,
+							planillaEvento, estadoNuevo, fechaHora, fechaHora,
+							horaAuditoria, nombreUsuarioSesion(), imagenX);
+					listBitacoraEvento.add(bitacoraE);
+
+				} else {
+					BitacoraEvento bitacoraEvento = servicioBitacoraEvento
+							.buscarPorEstadoYPlanilla(estadoDefecto,
+									planillaEvento);
+					bitacoraEvento.setEstado(estadoNuevo);
+					bitacoraEvento.setFechaCambio(fechaHora);
+					bitacoraEvento.setHoraAuditoria(horaAuditoria);
+					bitacoraEvento.setUsuarioAuditoria(nombreUsuarioSesion());
+					bitacoraEvento.setFechaAuditoria(fechaHora);
+					bitacoraEvento.setImagen(imagen);
+					listBitacoraEvento.add(bitacoraEvento);
+				}
+
 				listEvento.add(planillaEvento);
 				break;
 
@@ -409,10 +480,25 @@ public class CSolicitud extends CGenerico {
 				PlanillaUniforme planillaUniforme = servicioPlanillaUniforme
 						.buscar(procesadas.get(i).getId());
 				planillaUniforme.setEstado(estado);
-//				BitacoraUniforme bitacoraUniforme = new BitacoraUniforme(0,
-//						planillaUniforme, estado, fechaHora, fechaHora,
-//						horaAuditoria, nombreUsuarioSesion());
-//				servicioBitacoraUniforme.guardar(bitacoraUniforme);
+				if (estado.equals("Rechazada") || estado.equals("Cancelada")) {
+					BitacoraUniforme bitacoraU = new BitacoraUniforme(0,
+							planillaUniforme, estadoNuevo, fechaHora,
+							fechaHora, horaAuditoria, nombreUsuarioSesion(),
+							imagenX);
+					listBitacoraUniforme.add(bitacoraU);
+
+				} else {
+					BitacoraUniforme bitacoraUniforme = servicioBitacoraUniforme
+							.buscarPorEstadoYPlanilla(estadoDefecto,
+									planillaUniforme);
+					bitacoraUniforme.setEstado(estadoNuevo);
+					bitacoraUniforme.setFechaCambio(fechaHora);
+					bitacoraUniforme.setHoraAuditoria(horaAuditoria);
+					bitacoraUniforme.setUsuarioAuditoria(nombreUsuarioSesion());
+					bitacoraUniforme.setFechaAuditoria(fechaHora);
+					bitacoraUniforme.setImagen(imagen);
+					listBitacoraUniforme.add(bitacoraUniforme);
+				}
 				listUniforme.add(planillaUniforme);
 				break;
 
@@ -420,10 +506,26 @@ public class CSolicitud extends CGenerico {
 				PlanillaPromocion planillaPromocion = servicioPlanillaPromocion
 						.buscar(procesadas.get(i).getId());
 				planillaPromocion.setEstado(estado);
-//				BitacoraPromocion bitacora = new BitacoraPromocion(0,
-//						planillaPromocion, estado, fechaHora, fechaHora,
-//						horaAuditoria, nombreUsuarioSesion());
-//				servicioBitacoraPromocion.guardar(bitacora);
+				if (estado.equals("Rechazada") || estado.equals("Cancelada")) {
+					BitacoraPromocion bitacoraP = new BitacoraPromocion(0,
+							planillaPromocion, estadoNuevo, fechaHora,
+							fechaHora, horaAuditoria, nombreUsuarioSesion(),
+							imagenX);
+					listBitacoraPromocion.add(bitacoraP);
+
+				} else {
+					BitacoraPromocion bitacoraPromocion = servicioBitacoraPromocion
+							.buscarPorEstadoYPlanilla(estadoDefecto,
+									planillaPromocion);
+					bitacoraPromocion.setEstado(estadoNuevo);
+					bitacoraPromocion.setFechaCambio(fechaHora);
+					bitacoraPromocion.setHoraAuditoria(horaAuditoria);
+					bitacoraPromocion
+							.setUsuarioAuditoria(nombreUsuarioSesion());
+					bitacoraPromocion.setFechaAuditoria(fechaHora);
+					bitacoraPromocion.setImagen(imagen);
+					listBitacoraPromocion.add(bitacoraPromocion);
+				}
 				listPromocion.add(planillaPromocion);
 				break;
 
@@ -431,10 +533,25 @@ public class CSolicitud extends CGenerico {
 				PlanillaArte planillaArte = servicioPlanillaArte
 						.buscar(procesadas.get(i).getId());
 				planillaArte.setEstado(estado);
-//				BitacoraArte bitacoraArte = new BitacoraArte(0, planillaArte,
-//						estado, fechaHora, fechaHora, horaAuditoria,
-//						nombreUsuarioSesion());
-//				servicioBitacoraArte.guardar(bitacoraArte);
+
+				if (estado.equals("Rechazada") || estado.equals("Cancelada")) {
+					BitacoraArte bitacoraA = new BitacoraArte(0, planillaArte,
+							estadoNuevo, fechaHora, fechaHora, horaAuditoria,
+							nombreUsuarioSesion(), imagenX);
+					listBitacoraArte.add(bitacoraA);
+
+				} else {
+					BitacoraArte bitacoraArte = servicioBitacoraArte
+							.buscarPorEstadoYPlanilla(estadoDefecto,
+									planillaArte);
+					bitacoraArte.setEstado(estadoNuevo);
+					bitacoraArte.setFechaCambio(fechaHora);
+					bitacoraArte.setHoraAuditoria(horaAuditoria);
+					bitacoraArte.setUsuarioAuditoria(nombreUsuarioSesion());
+					bitacoraArte.setFechaAuditoria(fechaHora);
+					bitacoraArte.setImagen(imagen);
+					listBitacoraArte.add(bitacoraArte);
+				}
 				listArte.add(planillaArte);
 				break;
 
@@ -442,10 +559,24 @@ public class CSolicitud extends CGenerico {
 				PlanillaCata planillaCata = servicioPlanillaCata
 						.buscar(procesadas.get(i).getId());
 				planillaCata.setEstado(estado);
-//				BitacoraCata bitacoraCata = new BitacoraCata(0, planillaCata,
-//						estado, fechaHora, fechaHora, horaAuditoria,
-//						nombreUsuarioSesion());
-//				servicioBitacoraCata.guardar(bitacoraCata);
+				if (estado.equals("Rechazada") || estado.equals("Cancelada")) {
+					BitacoraCata bitacoraC = new BitacoraCata(0, planillaCata,
+							estadoNuevo, fechaHora, fechaHora, horaAuditoria,
+							nombreUsuarioSesion(), imagenX);
+					listBitacoraCata.add(bitacoraC);
+
+				} else {
+					BitacoraCata bitacoraCata = servicioBitacoraCata
+							.buscarPorEstadoYPlanilla(estadoDefecto,
+									planillaCata);
+					bitacoraCata.setEstado(estadoNuevo);
+					bitacoraCata.setFechaCambio(fechaHora);
+					bitacoraCata.setHoraAuditoria(horaAuditoria);
+					bitacoraCata.setUsuarioAuditoria(nombreUsuarioSesion());
+					bitacoraCata.setFechaAuditoria(fechaHora);
+					bitacoraCata.setImagen(imagen);
+					listBitacoraCata.add(bitacoraCata);
+				}
 				listCata.add(planillaCata);
 				break;
 
@@ -453,10 +584,25 @@ public class CSolicitud extends CGenerico {
 				PlanillaFachada planillaFachada = servicioPlanillaFachada
 						.buscar(procesadas.get(i).getId());
 				planillaFachada.setEstado(estado);
-//				BitacoraFachada bitacoraFachada = new BitacoraFachada(0,
-//						planillaFachada, estado, fechaHora, fechaHora,
-//						horaAuditoria, nombreUsuarioSesion());
-//				servicioBitacoraFachada.guardar(bitacoraFachada);
+
+				if (estado.equals("Rechazada") || estado.equals("Cancelada")) {
+					BitacoraFachada bitacoraF = new BitacoraFachada(0,
+							planillaFachada, estadoNuevo, fechaHora, fechaHora,
+							horaAuditoria, nombreUsuarioSesion(), imagenX);
+					listBitacoraFachada.add(bitacoraF);
+
+				} else {
+					BitacoraFachada bitacoraFachada = servicioBitacoraFachada
+							.buscarPorEstadoYPlanilla(estadoDefecto,
+									planillaFachada);
+					bitacoraFachada.setEstado(estadoNuevo);
+					bitacoraFachada.setFechaCambio(fechaHora);
+					bitacoraFachada.setHoraAuditoria(horaAuditoria);
+					bitacoraFachada.setUsuarioAuditoria(nombreUsuarioSesion());
+					bitacoraFachada.setFechaAuditoria(fechaHora);
+					bitacoraFachada.setImagen(imagen);
+					listBitacoraFachada.add(bitacoraFachada);
+				}
 				listFachada.add(planillaFachada);
 				break;
 
@@ -476,6 +622,19 @@ public class CSolicitud extends CGenerico {
 			servicioPlanillaPromocion.guardarVarias(listPromocion);
 		if (!listUniforme.isEmpty())
 			servicioPlanillaUniforme.guardarVarias(listUniforme);
+		// Listas de Bitacora
+		if (!listBitacoraArte.isEmpty())
+			servicioBitacoraArte.guardarVarias(listBitacoraArte);
+		if (!listBitacoraCata.isEmpty())
+			servicioBitacoraCata.guardarVarias(listBitacoraCata);
+		if (!listBitacoraEvento.isEmpty())
+			servicioBitacoraEvento.guardarVarias(listBitacoraEvento);
+		if (!listBitacoraFachada.isEmpty())
+			servicioBitacoraFachada.guardarVarias(listBitacoraFachada);
+		if (!listBitacoraPromocion.isEmpty())
+			servicioBitacoraPromocion.guardarVarias(listBitacoraPromocion);
+		if (!listBitacoraUniforme.isEmpty())
+			servicioBitacoraUniforme.guardarVarias(listBitacoraUniforme);
 	}
 
 	public void cargarLista() {
@@ -615,7 +774,7 @@ public class CSolicitud extends CGenerico {
 			listPlanilla.add(plani);
 		}
 	}
-	
+
 	@Listen("onClick = #btnBitacora")
 	public void verBitacora() {
 		final List<PlanillaGenerica> procesadas = catalogo
@@ -652,14 +811,21 @@ public class CSolicitud extends CGenerico {
 		case "En Edicion":
 			titulo = "En Edicion";
 			break;
+		case "Generales":
+			titulo = "Generales";
+			break;
+		case "Pagada":
+			titulo = "Pagadas";
+			break;
 
 		default:
 			break;
 		}
 		return titulo;
 	}
-	
-	public void actualizar(List<PlanillaGenerica> listilla, Catalogo<PlanillaGenerica> catalogoGenerico){
+
+	public void actualizar(List<PlanillaGenerica> listilla,
+			Catalogo<PlanillaGenerica> catalogoGenerico) {
 		catalogo = catalogoGenerico;
 		catalogo.actualizarLista(listilla);
 	}
