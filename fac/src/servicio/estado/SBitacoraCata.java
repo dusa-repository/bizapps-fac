@@ -27,12 +27,21 @@ public class SBitacoraCata {
 	}
 
 	public List<BitacoraCata> buscarPorPlanilla(PlanillaCata planilla) {
-		// TODO Auto-generated method stub
 		return bitacoraCataDAO.findByPlanillaCata(planilla);
 	}
 
 	public void guardarBitacoras(List<BitacoraCata> listaBitacoras) {
 		bitacoraCataDAO.save(listaBitacoras);
+		
+	}
+
+	public BitacoraCata buscarPorEstadoYPlanilla(String estadoDefecto,
+			PlanillaCata planillaCata) {
+		return bitacoraCataDAO.findByEstadoAndPlanillaCata(estadoDefecto,planillaCata);
+	}
+
+	public void guardarVarias(List<BitacoraCata> listBitacoraCata) {
+		bitacoraCataDAO.save(listBitacoraCata);
 		
 	}
 }

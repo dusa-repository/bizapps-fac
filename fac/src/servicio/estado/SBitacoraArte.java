@@ -39,4 +39,14 @@ public class SBitacoraArte {
 		bitacoraArteDAO.save(listaBitacoras);
 		
 	}
+
+	public BitacoraArte buscarPorEstadoYPlanilla(String estadoDefecto,
+			PlanillaArte planillaArte) {
+		return bitacoraArteDAO.findByEstadoAndPlanillaArte(estadoDefecto,planillaArte);
+	}
+
+	public void guardarVarias(List<BitacoraArte> listBitacoraArte) {
+		bitacoraArteDAO.save(listBitacoraArte);
+		
+	}
 }

@@ -5,6 +5,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.imageio.ImageIO;
 import javax.persistence.Column;
@@ -141,5 +143,10 @@ public class BitacoraCata implements Serializable {
 		imagenes = ImageIO.read(new ByteArrayInputStream(imagen));
 		return imagenes;
 	}
+	public String traerFecha() {
+		DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+		return String.valueOf(formatoFecha.format(fechaCambio));
+	}
+	
 	
 }

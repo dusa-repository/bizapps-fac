@@ -321,7 +321,7 @@ public class CPromocion extends CGenerico {
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
 
-		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion"))
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion")&& id==0)
 			guardo = true;
 		
 		if (estadoInbox.equals("Pendiente"))
@@ -420,6 +420,14 @@ public class CPromocion extends CGenerico {
 					nombreUsuarioSesion(), imagen);
 			servicioBitacoraPromocion.guardar(bitacora);
 		} else {
+			
+			if(id==0)
+			{
+				BitacoraPromocion bitacora = new BitacoraPromocion(0, planillaPromocion,
+						"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
+						nombreUsuarioSesion(), imagen);
+				servicioBitacoraPromocion.guardar(bitacora);
+			}
 			List<BitacoraPromocion> listaBitacoras = new ArrayList<BitacoraPromocion>();
 			BitacoraPromocion bitacora = new BitacoraPromocion(0, planillaPromocion,
 					"Planilla Enviada", fechaHora, fechaHora, horaAuditoria,

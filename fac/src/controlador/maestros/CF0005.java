@@ -117,26 +117,6 @@ public class CF0005 extends CGenerico {
 
 			@Override
 			public void eliminar() {
-					/* Elimina un solo registro */
-					if (clave != null) {
-						Messagebox
-								.show(Mensaje.deseaEliminar,
-										"Alerta",
-										Messagebox.OK | Messagebox.CANCEL,
-										Messagebox.QUESTION,
-										new org.zkoss.zk.ui.event.EventListener<Event>() {
-											public void onEvent(Event evt)
-													throws InterruptedException {
-												if (evt.getName()
-														.equals("onOK")) {
-													servicioF0005
-															.eliminarUno(clave);
-													msj.mensajeInformacion(Mensaje.eliminado);
-													limpiar();
-												}
-											}
-										});
-				}
 			}
 
 			@Override
@@ -158,6 +138,7 @@ public class CF0005 extends CGenerico {
 			}
 
 		};
+		botonera.getChildren().get(3).setVisible(false);
 		botonera.getChildren().get(4).setVisible(false);
 		botonera.getChildren().get(5).setVisible(false);
 		botonera.getChildren().get(7).setVisible(false);

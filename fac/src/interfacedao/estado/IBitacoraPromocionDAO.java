@@ -11,4 +11,7 @@ public interface IBitacoraPromocionDAO extends JpaRepository<BitacoraPromocion, 
 
 	List<BitacoraPromocion> findByPlanillaPromocion(PlanillaPromocion planilla);
 
+	BitacoraPromocion findByEstadoAndPlanillaPromocion(String estadoDefecto,
+			PlanillaPromocion planillaPromocion);
+
 }

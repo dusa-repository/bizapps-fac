@@ -49,6 +49,9 @@ public class CInbox extends CGenerico {
 	@Wire
 	private Button btnEdicion;
 	@Wire
+	private Button btnPagada;
+	
+	@Wire
 	private Image imagenes;
 	@Wire
 	private Listbox ltbRoles;
@@ -147,6 +150,7 @@ public class CInbox extends CGenerico {
 		btnCancelada.setSrc("/public/imagenes/botones/cancelada.png");
 		btnRechazada.setSrc("/public/imagenes/botones/rechazada.png");
 		btnEdicion.setSrc("/public/imagenes/botones/planillaP.png");
+		btnPagada.setSrc("/public/imagenes/botones/pagada.png");
 
 		Over(btnCancelada, "canceladaG");
 		Out(btnCancelada, "cancelada");
@@ -158,6 +162,8 @@ public class CInbox extends CGenerico {
 		Out(btnRechazada, "rechazada");
 		Over(btnEdicion, "planillaG");
 		Out(btnEdicion, "planillaP");
+		Over(btnPagada, "pagadaG");
+		Out(btnPagada, "pagada");
 
 		Authentication authe = SecurityContextHolder.getContext()
 				.getAuthentication();
@@ -191,6 +197,7 @@ public class CInbox extends CGenerico {
 		botones.add(btnAprobada);
 		botones.add(btnRechazada);
 		botones.add(btnEdicion);
+		botones.add(btnPagada);
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(

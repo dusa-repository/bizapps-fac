@@ -335,7 +335,7 @@ public class CUniforme extends CGenerico {
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
 
-		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion"))
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion") && id==0)
 			guardo = true;
 		
 		if (estadoInbox.equals("Pendiente"))
@@ -454,6 +454,13 @@ public class CUniforme extends CGenerico {
 					nombreUsuarioSesion(), imagen);
 			servicioBitacoraUniforme.guardar(bitacora);
 		} else {
+			if(id==0)
+			{
+				BitacoraUniforme bitacora = new BitacoraUniforme(0, planillaUniforme,
+						"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
+						nombreUsuarioSesion(), imagen);
+				servicioBitacoraUniforme.guardar(bitacora);
+			}
 			List<BitacoraUniforme> listaBitacoras = new ArrayList<BitacoraUniforme>();
 			BitacoraUniforme bitacora = new BitacoraUniforme(0, planillaUniforme,
 					"Planilla Enviada", fechaHora, fechaHora, horaAuditoria,

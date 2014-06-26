@@ -35,4 +35,15 @@ public class SBitacoraEvento {
 		bitacoraEventoDAO.save(listaBitacoras);
 		
 	}
+
+
+	public BitacoraEvento buscarPorEstadoYPlanilla(String estadoDefecto,
+			PlanillaEvento planillaEvento) {
+		return bitacoraEventoDAO.findByEstadoAndPlanillaEvento(estadoDefecto,planillaEvento);
+	}
+
+	public void guardarVarias(List<BitacoraEvento> listBitacoraEvento) {
+		bitacoraEventoDAO.save(listBitacoraEvento);
+		
+	}
 }

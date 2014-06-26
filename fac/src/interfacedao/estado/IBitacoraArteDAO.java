@@ -11,4 +11,7 @@ public interface IBitacoraArteDAO extends JpaRepository<BitacoraArte, Long> {
 
 	List<BitacoraArte> findByPlanillaArte(PlanillaArte planilla);
 
+	BitacoraArte findByEstadoAndPlanillaArte(String estadoDefecto,
+			PlanillaArte planillaArte);
+
 }

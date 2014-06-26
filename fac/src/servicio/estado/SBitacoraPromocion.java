@@ -35,4 +35,14 @@ public class SBitacoraPromocion {
 		bitacoraPromocionDAO.save(listaBitacoras);
 		
 	}
+
+	public BitacoraPromocion buscarPorEstadoYPlanilla(String estadoDefecto,
+			PlanillaPromocion planillaPromocion) {
+		return bitacoraPromocionDAO.findByEstadoAndPlanillaPromocion(estadoDefecto,planillaPromocion);
+	}
+
+	public void guardarVarias(List<BitacoraPromocion> listBitacoraPromocion) {
+		bitacoraPromocionDAO.save(listBitacoraPromocion);
+		
+	}
 }

@@ -5,6 +5,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import javax.imageio.ImageIO;
 import javax.persistence.Column;
@@ -27,20 +29,20 @@ public class BitacoraArte implements Serializable {
 	private static final long serialVersionUID = 5336262920291351113L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_bitacora_planilla_arte", unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_bitacora_planilla_arte", unique = true, nullable = false)
 	private long idBitacora;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_planilla_arte")
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_planilla_arte")
 	private PlanillaArte planillaArte;
-	
-	@Column(name="estado_planilla",length = 500)
+
+	@Column(name = "estado_planilla", length = 500)
 	private String estado;
-	
+
 	@Column(name = "fecha_cambio")
 	private Timestamp fechaCambio;
-	
+
 	@Column(name = "fecha_auditoria")
 	private Timestamp fechaAuditoria;
 
@@ -49,7 +51,7 @@ public class BitacoraArte implements Serializable {
 
 	@Column(name = "usuario_auditoria", length = 50)
 	private String usuarioAuditoria;
-	
+
 	@Lob
 	private byte[] imagen;
 
@@ -60,7 +62,7 @@ public class BitacoraArte implements Serializable {
 
 	public BitacoraArte(long idBitacora, PlanillaArte planillaArte,
 			String estado, Timestamp fechaCambio, Timestamp fechaAuditoria,
-			String horaAuditoria, String usuarioAuditoria,byte[] imagen ) {
+			String horaAuditoria, String usuarioAuditoria, byte[] imagen) {
 		super();
 		this.idBitacora = idBitacora;
 		this.planillaArte = planillaArte;
@@ -135,12 +137,15 @@ public class BitacoraArte implements Serializable {
 	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
 	}
-	
+
 	public BufferedImage traerImagen(String Imagen) throws IOException {
 		BufferedImage imagenes;
 		imagenes = ImageIO.read(new ByteArrayInputStream(imagen));
 		return imagenes;
 	}
-	
-	
+
+	public String traerFecha() {
+		DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+		return String.valueOf(formatoFecha.format(fechaCambio));
+	}
 }

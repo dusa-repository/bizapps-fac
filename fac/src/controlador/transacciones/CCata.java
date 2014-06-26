@@ -353,7 +353,7 @@ public class CCata extends CGenerico {
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
 
-		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion"))
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion") && id==0)
 			guardo = true;
 
 		if (inbox)
@@ -453,6 +453,14 @@ public class CCata extends CGenerico {
 					nombreUsuarioSesion(), imagen);
 			servicioBitacoraCata.guardar(bitacora);
 		} else {
+			
+			if(id==0)
+			{
+				BitacoraCata bitacora = new BitacoraCata(0, planillaCata,
+						"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
+						nombreUsuarioSesion(), imagen);
+				servicioBitacoraCata.guardar(bitacora);	
+			}
 			List<BitacoraCata> listaBitacoras = new ArrayList<BitacoraCata>();
 			BitacoraCata bitacora = new BitacoraCata(0, planillaCata,
 					"Planilla Enviada", fechaHora, fechaHora, horaAuditoria,

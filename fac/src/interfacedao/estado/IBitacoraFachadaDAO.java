@@ -12,4 +12,7 @@ public interface IBitacoraFachadaDAO extends JpaRepository<BitacoraFachada, Long
 
 	List<BitacoraFachada> findByPlanillaFachada(PlanillaFachada planilla);
 
+	BitacoraFachada findByEstadoAndPlanillaFachada(String estadoDefecto,
+			PlanillaFachada planillaFachada);
+
 }

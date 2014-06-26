@@ -35,4 +35,14 @@ public class SBitacoraFachada {
 		// TODO Auto-generated method stub
 		return bitacoraFachadaDAO.findByPlanillaFachada(planilla);
 	}
+
+	public BitacoraFachada buscarPorEstadoYPlanilla(String estadoDefecto,
+			PlanillaFachada planillaFachada) {
+		return bitacoraFachadaDAO.findByEstadoAndPlanillaFachada(estadoDefecto,planillaFachada);
+	}
+
+	public void guardarVarias(List<BitacoraFachada> listBitacoraFachada) {
+		bitacoraFachadaDAO.save(listBitacoraFachada);
+		
+	}
 }
