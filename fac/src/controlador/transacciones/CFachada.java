@@ -13,6 +13,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import modelo.estado.BitacoraFachada;
+import modelo.generico.PlanillaGenerica;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.maestros.Recurso;
@@ -169,6 +170,11 @@ public class CFachada extends CGenerico {
 	private Image imagenSi;
 	@Wire
 	private Image imagenNo;
+	
+	CSolicitud control = new CSolicitud();
+	List<PlanillaGenerica> listaGenerica = new ArrayList<PlanillaGenerica>();
+	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
+	Catalogo<PlanillaGenerica> catalogoGenerico;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -237,6 +243,9 @@ public class CFachada extends CGenerico {
 				inbox = false;
 				id = 0;
 				tabDatos.setSelected(true);
+				listaGenerica.clear();
+				planillaGenerica = null;
+				catalogoGenerico = null;
 				llenarListas();
 			}
 
@@ -329,6 +338,9 @@ public class CFachada extends CGenerico {
 				estadoInbox = (String) map.get("estadoInbox");
 				usuarioEditador = planilla.getUsuario();
 				tipoInbox = planilla.getTipo();
+				listaGenerica = (List<PlanillaGenerica>) map.get("lista");
+				planillaGenerica = (PlanillaGenerica) map.get("planilla");
+				catalogoGenerico =  (Catalogo<PlanillaGenerica>) map.get("catalogo");
 				setearCampos(planilla);
 				switch (estadoInbox) {
 				case "Pendiente":
@@ -464,6 +476,16 @@ public class CFachada extends CGenerico {
 		else
 			planillaFachada = servicioPlanillaFachada.buscarUltima();
 
+		if (inbox) {
+			PlanillaGenerica planillita = new PlanillaGenerica(
+					planillaFachada.getIdPlanillaFachada(), usuario.getNombre(),
+					marca.getDescripcion(), nombreActividad, fechaHora, string,
+					"Fachada y Decoraciones");
+			listaGenerica.remove(planillaGenerica);
+			listaGenerica.add(planillita);
+			control.actualizar(listaGenerica,catalogoGenerico);
+		}
+		
 		if (guardo)
 			guardarBitacora(planillaFachada, true);
 		if (envio)

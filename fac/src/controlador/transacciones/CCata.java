@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import modelo.estado.BitacoraCata;
+import modelo.generico.PlanillaGenerica;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.maestros.Recurso;
@@ -127,11 +128,13 @@ public class CCata extends CGenerico {
 	private Image imagenSi;
 	@Wire
 	private Image imagenNo;
-
-
+	CSolicitud control = new CSolicitud();
+	List<PlanillaGenerica> listaGenerica = new ArrayList<PlanillaGenerica>();
+	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
+	Catalogo<PlanillaGenerica> catalogoGenerico;
 	@Override
 	public void inicializar() throws IOException {
-		
+
 		txtNombreActividad.setFocus(true);
 		txtRespActividad.setValue(nombreUsuarioSesion());
 		txtRespZona.setValue(usuarioSesion(nombreUsuarioSesion())
@@ -154,7 +157,7 @@ public class CCata extends CGenerico {
 
 			@Override
 			public void buscar() {
-				 buscarCatalogoPropio();
+				buscarCatalogoPropio();
 
 			}
 
@@ -182,6 +185,9 @@ public class CCata extends CGenerico {
 				estadoInbox = "";
 				tipoInbox = "";
 				inbox = false;
+				listaGenerica.clear();
+				planillaGenerica = null;
+				catalogoGenerico = null;
 				llenarListas();
 			}
 
@@ -268,7 +274,7 @@ public class CCata extends CGenerico {
 			}
 		};
 		botoneraCataInduccion.appendChild(botonera);
-		
+
 		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
 				.getCurrent().getAttribute("inbox");
 		if (map != null) {
@@ -278,6 +284,9 @@ public class CCata extends CGenerico {
 				usuarioEditador = planilla.getUsuario();
 				estadoInbox = (String) map.get("estadoInbox");
 				tipoInbox = planilla.getTipo();
+				listaGenerica = (List<PlanillaGenerica>) map.get("lista");
+				planillaGenerica = (PlanillaGenerica) map.get("planilla");
+				catalogoGenerico =  (Catalogo<PlanillaGenerica>) map.get("catalogo");
 				settearCampos(planilla);
 				switch (estadoInbox) {
 				case "Pendiente":
@@ -336,17 +345,16 @@ public class CCata extends CGenerico {
 		ciudad = txtCiudad.getValue();
 		contacto = txtContacto.getValue();
 		direccion = txtDireccion.getValue();
-		mail = txtCiudad.getValue();
+		mail = txtEMail.getValue();
 		nombreActividad = txtNombreActividad.getValue();
 		telefono = txtTelefono.getValue();
 		Usuario usuario = new Usuario();
-		
+
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
 
 		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion"))
 			guardo = true;
-
 
 		if (inbox)
 			usuario = usuarioEditador;
@@ -380,15 +388,26 @@ public class CCata extends CGenerico {
 			planilla = servicioPlanillaCata.buscar(id);
 		else
 			planilla = servicioPlanillaCata.buscarUltima();
-		
+
+		if (inbox) {
+			PlanillaGenerica planillita = new PlanillaGenerica(
+					planilla.getIdPlanillaCata(), usuario.getNombre(),
+					marca.getDescripcion(), nombreActividad, fechaHora, string,
+					"Cata Induccion");
+			listaGenerica.remove(planillaGenerica);
+			listaGenerica.add(planillita);
+			control.actualizar(listaGenerica,catalogoGenerico);
+		}
+
 		if (guardo)
 			guardarBitacora(planilla, true);
 		if (envio)
 			guardarBitacora(planilla, false);
-		
+
 		guardarItems(planilla);
 		guardarRecursos(planilla);
-		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente") && !inbox) {
+		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente")
+				&& !inbox) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
 			Usuario usuarioAdmin = new Usuario();
@@ -409,8 +428,7 @@ public class CCata extends CGenerico {
 		}
 	}
 
-	private void guardarBitacora(PlanillaCata planillaCata,
-			boolean edicion) {
+	private void guardarBitacora(PlanillaCata planillaCata, boolean edicion) {
 
 		/* Busca las imagenes representativas de los estados */
 		URL url = getClass().getResource("/imagenes/si.png");
@@ -587,8 +605,8 @@ public class CCata extends CGenerico {
 		final List<PlanillaCata> listPlanilla = servicioPlanillaCata
 				.buscarTodosOrdenados(usuarioSesion(nombreUsuarioSesion()));
 		catalogo = new Catalogo<PlanillaCata>(catalogoCataInduccion,
-				"Planillas de Cata Induccion", listPlanilla, true, "Nombre Actividad",
-				"Ciudad", "Marca", "Fecha Edicion") {
+				"Planillas de Cata Induccion", listPlanilla, true,
+				"Nombre Actividad", "Ciudad", "Marca", "Fecha Edicion") {
 
 			@Override
 			protected List<PlanillaCata> buscar(List<String> valores) {
@@ -756,7 +774,6 @@ public class CCata extends CGenerico {
 		}
 		listasMultiples();
 	}
-	
 
 	/* Metodo que valida el formmato del telefono ingresado */
 	@Listen("onChange = #txtTelefono")

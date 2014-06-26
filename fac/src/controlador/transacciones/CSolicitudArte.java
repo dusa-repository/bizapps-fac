@@ -11,6 +11,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import modelo.estado.BitacoraArte;
+import modelo.generico.PlanillaGenerica;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.seguridad.Configuracion;
@@ -120,6 +121,11 @@ public class CSolicitudArte extends CGenerico {
 	private Image imagenSi;
 	@Wire
 	private Image imagenNo;
+	
+	CSolicitud control = new CSolicitud();
+	List<PlanillaGenerica> listaGenerica = new ArrayList<PlanillaGenerica>();
+	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
+	Catalogo<PlanillaGenerica> catalogoGenerico;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -174,6 +180,9 @@ public class CSolicitudArte extends CGenerico {
 				tipoInbox = "";
 				inbox = false;
 				id = 0;
+				listaGenerica.clear();
+				planillaGenerica = null;
+				catalogoGenerico = null;
 			}
 
 			@Override
@@ -250,6 +259,9 @@ public class CSolicitudArte extends CGenerico {
 				estadoInbox = (String) map.get("estadoInbox");
 				usuarioEditador = planilla.getUsuario();
 				tipoInbox = planilla.getTipo();
+				listaGenerica = (List<PlanillaGenerica>) map.get("lista");
+				planillaGenerica = (PlanillaGenerica) map.get("planilla");
+				catalogoGenerico =  (Catalogo<PlanillaGenerica>) map.get("catalogo");
 				settearCampos(planilla);
 				switch (estadoInbox) {
 				case "Pendiente":
@@ -358,6 +370,16 @@ public class CSolicitudArte extends CGenerico {
 		else
 			planillaArte = servicioPlanillaArte.buscarUltima();
 
+		if (inbox) {
+			PlanillaGenerica planillita = new PlanillaGenerica(
+					planillaArte.getIdPlanillaArte(), usuario.getNombre(),
+					marca.getDescripcion(), nombreActividad, fechaHora, string,
+					"Solicitud de Arte y Publicaciones");
+			listaGenerica.remove(planillaGenerica);
+			listaGenerica.add(planillita);
+			control.actualizar(listaGenerica,catalogoGenerico);
+		}		
+		
 		if (guardo)
 			guardarBitacora(planillaArte, true);
 		if (envio)
