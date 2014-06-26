@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import modelo.estado.BitacoraPromocion;
+import modelo.generico.PlanillaGenerica;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.seguridad.Configuracion;
@@ -113,6 +114,11 @@ public class CPromocion extends CGenerico {
 	private Image imagenSi;
 	@Wire
 	private Image imagenNo;
+	
+	CSolicitud control = new CSolicitud();
+	List<PlanillaGenerica> listaGenerica = new ArrayList<PlanillaGenerica>();
+	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
+	Catalogo<PlanillaGenerica> catalogoGenerico;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -171,6 +177,9 @@ public class CPromocion extends CGenerico {
 				tipoInbox = "";
 				inbox = false;
 				id = 0;
+				listaGenerica.clear();
+				planillaGenerica = null;
+				catalogoGenerico = null;
 			}
 
 			@Override
@@ -238,6 +247,9 @@ public class CPromocion extends CGenerico {
 				estadoInbox = (String) map.get("estadoInbox");
 				usuarioEditador = planilla.getUsuario();
 				tipoInbox = planilla.getTipo();
+				listaGenerica = (List<PlanillaGenerica>) map.get("lista");
+				planillaGenerica = (PlanillaGenerica) map.get("planilla");
+				catalogoGenerico =  (Catalogo<PlanillaGenerica>) map.get("catalogo");
 				settearCampos(planilla);
 				switch (estadoInbox) {
 				case "Pendiente":
@@ -344,6 +356,16 @@ public class CPromocion extends CGenerico {
 			planillaPromocion = servicioPlanillaPromocion.buscar(id);
 		else
 			planillaPromocion = servicioPlanillaPromocion.buscarUltima();
+		
+		if (inbox) {
+			PlanillaGenerica planillita = new PlanillaGenerica(
+					planillaPromocion.getIdPlanillaPromocion(), usuario.getNombre(),
+					marca1.getDescripcion(), nombreActividad, fechaHora, string,
+					"Promociones de Marca");
+			listaGenerica.remove(planillaGenerica);
+			listaGenerica.add(planillita);
+			control.actualizar(listaGenerica,catalogoGenerico);
+		}
 		
 		if (guardo)
 			guardarBitacora(planillaPromocion, true);

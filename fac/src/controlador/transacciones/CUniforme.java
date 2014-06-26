@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import modelo.estado.BitacoraUniforme;
+import modelo.generico.PlanillaGenerica;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.maestros.Uniforme;
@@ -119,6 +120,11 @@ public class CUniforme extends CGenerico {
 	private Image imagenSi;
 	@Wire
 	private Image imagenNo;
+	
+	CSolicitud control = new CSolicitud();
+	List<PlanillaGenerica> listaGenerica = new ArrayList<PlanillaGenerica>();
+	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
+	Catalogo<PlanillaGenerica> catalogoGenerico;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -174,6 +180,9 @@ public class CUniforme extends CGenerico {
 				tipoInbox = "";
 				inbox = false;
 				id = 0;
+				listaGenerica.clear();
+				planillaGenerica = null;
+				catalogoGenerico = null;
 				llenarListas();
 			}
 
@@ -253,6 +262,9 @@ public class CUniforme extends CGenerico {
 				estadoInbox = (String) map.get("estadoInbox");
 				usuarioEditador = planilla.getUsuario();
 				tipoInbox = planilla.getTipo();
+				listaGenerica = (List<PlanillaGenerica>) map.get("lista");
+				planillaGenerica = (PlanillaGenerica) map.get("planilla");
+				catalogoGenerico =  (Catalogo<PlanillaGenerica>) map.get("catalogo");
 				settearCampos(planilla);
 				switch (estadoInbox) {
 				case "Pendiente":
@@ -356,6 +368,16 @@ public class CUniforme extends CGenerico {
 		else
 			planillaUniforme = servicioPlanillaUniforme.buscarUltima();
 
+		if (inbox) {
+			PlanillaGenerica planillita = new PlanillaGenerica(
+					planillaUniforme.getIdPlanillaUniforme(), usuario.getNombre(),
+					marca.getDescripcion(), nombreActividad, fechaHora, string,
+					"Uniformes");
+			listaGenerica.remove(planillaGenerica);
+			listaGenerica.add(planillita);
+			control.actualizar(listaGenerica,catalogoGenerico);
+		}
+		
 		if (guardo)
 			guardarBitacora(planillaUniforme, true);
 		if (envio)

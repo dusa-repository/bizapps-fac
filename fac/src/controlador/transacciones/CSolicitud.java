@@ -39,7 +39,7 @@ public class CSolicitud extends CGenerico {
 	private Window wdwSolicitud;
 	@Wire
 	private Div catalogoSolicitud;
-	Catalogo<PlanillaGenerica> catalogo;
+	public Catalogo<PlanillaGenerica> catalogo;
 	String titulo = "";
 	private boolean tradeMark = false;
 	final List<PlanillaGenerica> listPlanilla = new ArrayList<PlanillaGenerica>();
@@ -261,6 +261,9 @@ public class CSolicitud extends CGenerico {
 				final HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("id", procesadas.get(0).getId());
 				map.put("estadoInbox", procesadas.get(0).getEstado());
+				map.put("lista", listPlanilla);
+				map.put("planilla", procesadas.get(0));
+				map.put("catalogo", catalogo);
 				Sessions.getCurrent().setAttribute("inbox", map);
 				Window window = new Window();
 				switch (procesadas.get(0).getTipoPlanilla()) {
@@ -654,5 +657,10 @@ public class CSolicitud extends CGenerico {
 			break;
 		}
 		return titulo;
+	}
+	
+	public void actualizar(List<PlanillaGenerica> listilla, Catalogo<PlanillaGenerica> catalogoGenerico){
+		catalogo = catalogoGenerico;
+		catalogo.actualizarLista(listilla);
 	}
 }
