@@ -149,7 +149,7 @@ public class CEvento extends CGenerico {
 	List<PlanillaGenerica> listaGenerica = new ArrayList<PlanillaGenerica>();
 	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
 	Catalogo<PlanillaGenerica> catalogoGenerico;
-
+	Timestamp fechaInbox;
 	@Override
 	public void inicializar() throws IOException {
 
@@ -209,6 +209,7 @@ public class CEvento extends CGenerico {
 				listaGenerica.clear();
 				planillaGenerica = null;
 				catalogoGenerico = null;
+				fechaInbox = null;
 			}
 
 			@Override
@@ -307,6 +308,7 @@ public class CEvento extends CGenerico {
 				listaGenerica = (List<PlanillaGenerica>) map.get("lista");
 				planillaGenerica = (PlanillaGenerica) map.get("planilla");
 				catalogoGenerico =  (Catalogo<PlanillaGenerica>) map.get("catalogo");
+				fechaInbox = (Timestamp) map.get("fechaInbox");
 				settearCampos(planilla);
 				switch (estadoInbox) {
 				case "Pendiente":
@@ -379,6 +381,10 @@ public class CEvento extends CGenerico {
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
 
+		Timestamp fechaEnvio = fechaHora;
+		if (estadoInbox.equals("Pendiente"))
+			fechaEnvio = fechaInbox;
+		
 		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion") && id==0)
 			guardo = true;
 		
@@ -407,7 +413,7 @@ public class CEvento extends CGenerico {
 				nombreActividad, fechaInicio, fechaFin, ciudad, region,
 				horaEvento, direccion, personas, contacto, telefono, nivel,
 				edadTarget, medio, venta, costo, descripcion, mecanica,
-				fechaHora, horaAuditoria, nombreUsuarioSesion(), string,
+				fechaHora,fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
 				usuario.getZona().getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaEvento.guardar(planillaEvento);
 		if (id != 0)
@@ -418,7 +424,7 @@ public class CEvento extends CGenerico {
 		if (inbox) {
 			PlanillaGenerica planillita = new PlanillaGenerica(
 					planillaEvento.getIdPlanillaEvento(), usuario.getNombre(),
-					marca.getDescripcion(), nombreActividad, fechaHora, string,
+					marca.getDescripcion(), nombreActividad, planillaEvento.getFechaEnvio(), string,
 					"Eventos Especiales");
 			listaGenerica.remove(planillaGenerica);
 			listaGenerica.add(planillita);
@@ -433,8 +439,7 @@ public class CEvento extends CGenerico {
 		guardarItemsDegustacion(planillaEvento);
 		guardarItemsEstimados(planillaEvento);
 		guardarRecursos(planillaEvento);
-		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente")
-				&& !inbox) {
+		if (tipoConfig.equals("TradeMark") && envio) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
 			Usuario usuarioAdmin = new Usuario();
@@ -444,7 +449,7 @@ public class CEvento extends CGenerico {
 					marca, nombreActividad, fechaInicio, fechaFin, ciudad,
 					region, horaEvento, direccion, personas, contacto,
 					telefono, nivel, edadTarget, medio, venta, costo,
-					descripcion, mecanica, fechaHora, horaAuditoria,
+					descripcion, mecanica, fechaHora,fechaEnvio, horaAuditoria,
 					nombreUsuarioSesion(), string, usuario.getZona()
 							.getDescripcion(), "Marca", "",
 					planillaEvento.getIdPlanillaEvento());

@@ -83,6 +83,9 @@ public class PlanillaArte implements Serializable {
 	
 	@Column(name = "fecha_auditoria")
 	private Timestamp fechaAuditoria;
+	
+	@Column(name = "fecha_envio")
+	private Timestamp fechaEnvio;
 
 	@Column(name = "hora_auditoria", length = 10)
 	private String horaAuditoria;
@@ -118,7 +121,7 @@ public class PlanillaArte implements Serializable {
 			String rif, String patente, String formato, Double alto,
 			Double largo, Double ancho, byte[] imagenA, byte[] imagenB,
 			byte[] imagenC, byte[] imagenD, String lineamiento,
-			Timestamp fechaAuditoria, String horaAuditoria,
+			Timestamp fechaAuditoria,Timestamp fecha, String horaAuditoria,
 			String usuarioAuditoria, String estado, String zona, String tipo, String referencia, long padre) {
 		super();
 		this.idPlanillaArte = idPlanillaArte;
@@ -146,6 +149,7 @@ public class PlanillaArte implements Serializable {
 		this.tipo = tipo;
 		this.refencia = referencia;
 		this.padre = padre;
+		this.fechaEnvio = fecha;
 	}
 
 	public long getIdPlanillaArte() {
@@ -354,6 +358,14 @@ public class PlanillaArte implements Serializable {
 
 	public void setPadre(Long padre) {
 		this.padre = padre;
+	}
+
+	public Timestamp getFechaEnvio() {
+		return fechaEnvio;
+	}
+
+	public void setFechaEnvio(Timestamp fechaEnvio) {
+		this.fechaEnvio = fechaEnvio;
 	}
 	
 	

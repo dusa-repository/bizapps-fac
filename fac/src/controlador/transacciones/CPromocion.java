@@ -114,12 +114,12 @@ public class CPromocion extends CGenerico {
 	private Image imagenSi;
 	@Wire
 	private Image imagenNo;
-	
+
 	CSolicitud control = new CSolicitud();
 	List<PlanillaGenerica> listaGenerica = new ArrayList<PlanillaGenerica>();
 	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
 	Catalogo<PlanillaGenerica> catalogoGenerico;
-
+	Timestamp fechaInbox;
 	@Override
 	public void inicializar() throws IOException {
 		cargarCombos();
@@ -180,6 +180,7 @@ public class CPromocion extends CGenerico {
 				listaGenerica.clear();
 				planillaGenerica = null;
 				catalogoGenerico = null;
+				fechaInbox = null;
 			}
 
 			@Override
@@ -249,7 +250,9 @@ public class CPromocion extends CGenerico {
 				tipoInbox = planilla.getTipo();
 				listaGenerica = (List<PlanillaGenerica>) map.get("lista");
 				planillaGenerica = (PlanillaGenerica) map.get("planilla");
-				catalogoGenerico =  (Catalogo<PlanillaGenerica>) map.get("catalogo");
+				catalogoGenerico = (Catalogo<PlanillaGenerica>) map
+						.get("catalogo");
+				fechaInbox = (Timestamp) map.get("fechaInbox");
 				settearCampos(planilla);
 				switch (estadoInbox) {
 				case "Pendiente":
@@ -290,10 +293,10 @@ public class CPromocion extends CGenerico {
 	}
 
 	protected void guardarDatos(String string) {
-		
+
 		boolean envio = false;
 		boolean guardo = false;
-		
+
 		String nombreLocal, local, rif, nombreActividad, tipoActividad, modalidad, material, frecuencia, ciudad, email, estado, responsable, telefono, extra, descripcion1, descripcion2, direccion;
 		tipoActividad = cmbActividad.getSelectedItem().getContext();
 		extra = cmbExtra.getSelectedItem().getContext();
@@ -317,13 +320,18 @@ public class CPromocion extends CGenerico {
 			usuario = usuarioEditador;
 		else
 			usuario = usuarioSesion(nombreUsuarioSesion());
-		
+
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
 
-		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion")&& id==0)
-			guardo = true;
+		Timestamp fechaEnvio = fechaHora;
+		if (estadoInbox.equals("Pendiente"))
+			fechaEnvio = fechaInbox;
 		
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion")
+				&& id == 0)
+			guardo = true;
+
 		if (estadoInbox.equals("Pendiente"))
 			string = "Pendiente";
 		String tipoConfig = "";
@@ -349,31 +357,31 @@ public class CPromocion extends CGenerico {
 				ciudad, estado, responsable, nombreLocal, rif, telefono, email,
 				direccion, fechaInicio, fechaFin, modalidad, frecuencia,
 				material, extra, costo, descripcion1, descripcion2, fechaHora,
-				horaAuditoria, nombreUsuarioSesion(), string, usuario.getZona()
-						.getDescripcion(), tipoConfig, "", 0);
+				fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
+				usuario.getZona().getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaPromocion.guardar(planillaPromocion);
 		if (id != 0)
 			planillaPromocion = servicioPlanillaPromocion.buscar(id);
 		else
 			planillaPromocion = servicioPlanillaPromocion.buscarUltima();
-		
+
 		if (inbox) {
 			PlanillaGenerica planillita = new PlanillaGenerica(
-					planillaPromocion.getIdPlanillaPromocion(), usuario.getNombre(),
-					marca1.getDescripcion(), nombreActividad, fechaHora, string,
+					planillaPromocion.getIdPlanillaPromocion(),
+					usuario.getNombre(), marca1.getDescripcion(),
+					nombreActividad, planillaPromocion.getFechaEnvio(), string,
 					"Promociones de Marca");
 			listaGenerica.remove(planillaGenerica);
 			listaGenerica.add(planillita);
-			control.actualizar(listaGenerica,catalogoGenerico);
+			control.actualizar(listaGenerica, catalogoGenerico);
 		}
-		
+
 		if (guardo)
 			guardarBitacora(planillaPromocion, true);
 		if (envio)
 			guardarBitacora(planillaPromocion, false);
-		
-		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente")
-				&& !inbox) {
+
+		if (tipoConfig.equals("TradeMark") && envio) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
 			Usuario usuarioAdmin = new Usuario();
@@ -384,9 +392,9 @@ public class CPromocion extends CGenerico {
 					tipoActividad, local, ciudad, estado, responsable,
 					nombreLocal, rif, telefono, email, direccion, fechaInicio,
 					fechaFin, modalidad, frecuencia, material, extra, costo,
-					descripcion1, descripcion2, fechaHora, horaAuditoria,
-					nombreUsuarioSesion(), string, usuario.getZona()
-							.getDescripcion(), "Marca", "",
+					descripcion1, descripcion2, fechaHora, fechaEnvio,
+					horaAuditoria, nombreUsuarioSesion(), string, usuario
+							.getZona().getDescripcion(), "Marca", "",
 					planillaPromocion.getIdPlanillaPromocion());
 			servicioPlanillaPromocion.guardar(planillaAdmin);
 			planillaAdmin = servicioPlanillaPromocion.buscarUltima();
@@ -415,38 +423,39 @@ public class CPromocion extends CGenerico {
 		byte[] imagenX = imagenNo.getContent().getByteData();
 
 		if (edicion) {
-			BitacoraPromocion bitacora = new BitacoraPromocion(0, planillaPromocion,
-					"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
-					nombreUsuarioSesion(), imagen);
+			BitacoraPromocion bitacora = new BitacoraPromocion(0,
+					planillaPromocion, "Planilla en Edicion", fechaHora,
+					fechaHora, horaAuditoria, nombreUsuarioSesion(), imagen);
 			servicioBitacoraPromocion.guardar(bitacora);
 		} else {
-			
-			if(id==0)
-			{
-				BitacoraPromocion bitacora = new BitacoraPromocion(0, planillaPromocion,
-						"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
-						nombreUsuarioSesion(), imagen);
+
+			if (id == 0) {
+				BitacoraPromocion bitacora = new BitacoraPromocion(0,
+						planillaPromocion, "Planilla en Edicion", fechaHora,
+						fechaHora, horaAuditoria, nombreUsuarioSesion(), imagen);
 				servicioBitacoraPromocion.guardar(bitacora);
 			}
 			List<BitacoraPromocion> listaBitacoras = new ArrayList<BitacoraPromocion>();
-			BitacoraPromocion bitacora = new BitacoraPromocion(0, planillaPromocion,
-					"Planilla Enviada", fechaHora, fechaHora, horaAuditoria,
-					nombreUsuarioSesion(), imagen);
+			BitacoraPromocion bitacora = new BitacoraPromocion(0,
+					planillaPromocion, "Planilla Enviada", fechaHora,
+					fechaHora, horaAuditoria, nombreUsuarioSesion(), imagen);
 			listaBitacoras.add(bitacora);
 
-			BitacoraPromocion bitacora2 = new BitacoraPromocion(0, planillaPromocion,
-					"Esperando Aprobacion de Planilla", fechaHora, fechaHora,
-					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			BitacoraPromocion bitacora2 = new BitacoraPromocion(0,
+					planillaPromocion, "Esperando Aprobacion de Planilla",
+					fechaHora, fechaHora, horaAuditoria, nombreUsuarioSesion(),
+					imagenX);
 			listaBitacoras.add(bitacora2);
 
-			BitacoraPromocion bitacora3 = new BitacoraPromocion(0, planillaPromocion,
-					"Esperando Finalizacion de Planilla", fechaHora, fechaHora,
-					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			BitacoraPromocion bitacora3 = new BitacoraPromocion(0,
+					planillaPromocion, "Esperando Finalizacion de Planilla",
+					fechaHora, fechaHora, horaAuditoria, nombreUsuarioSesion(),
+					imagenX);
 			listaBitacoras.add(bitacora3);
 
-			BitacoraPromocion bitacora4 = new BitacoraPromocion(0, planillaPromocion,
-					"Esperando Pago de Planilla", fechaHora, fechaHora,
-					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			BitacoraPromocion bitacora4 = new BitacoraPromocion(0,
+					planillaPromocion, "Esperando Pago de Planilla", fechaHora,
+					fechaHora, horaAuditoria, nombreUsuarioSesion(), imagenX);
 			listaBitacoras.add(bitacora4);
 
 			servicioBitacoraPromocion.guardarBitacoras(listaBitacoras);
@@ -514,13 +523,12 @@ public class CPromocion extends CGenerico {
 		return marcas;
 	}
 
-	
 	public void buscarCatalogoPropio() {
 		final List<PlanillaPromocion> listPlanilla = servicioPlanillaPromocion
 				.buscarTodosOrdenados(usuarioSesion(nombreUsuarioSesion()));
 		catalogo = new Catalogo<PlanillaPromocion>(catalogoPromocion,
-				"Planillas de Promociones de Marca", listPlanilla, true, "Nombre Actividad",
-				"Marca", "Fecha Edicion") {
+				"Planillas de Promociones de Marca", listPlanilla, true,
+				"Nombre Actividad", "Marca", "Fecha Edicion") {
 
 			@Override
 			protected List<PlanillaPromocion> buscar(List<String> valores) {
@@ -598,7 +606,6 @@ public class CPromocion extends CGenerico {
 		tabDatos.setSelected(true);
 		id = planilla.getIdPlanillaPromocion();
 	}
-	
 
 	/* Metodo que valida el formmato del telefono ingresado */
 	@Listen("onChange = #txtTelefono")

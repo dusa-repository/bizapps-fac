@@ -120,12 +120,12 @@ public class CUniforme extends CGenerico {
 	private Image imagenSi;
 	@Wire
 	private Image imagenNo;
-	
+
 	CSolicitud control = new CSolicitud();
 	List<PlanillaGenerica> listaGenerica = new ArrayList<PlanillaGenerica>();
 	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
 	Catalogo<PlanillaGenerica> catalogoGenerico;
-
+	Timestamp fechaInbox;
 	@Override
 	public void inicializar() throws IOException {
 
@@ -183,7 +183,9 @@ public class CUniforme extends CGenerico {
 				listaGenerica.clear();
 				planillaGenerica = null;
 				catalogoGenerico = null;
+				fechaInbox = null;
 				llenarListas();
+				
 			}
 
 			@Override
@@ -264,7 +266,9 @@ public class CUniforme extends CGenerico {
 				tipoInbox = planilla.getTipo();
 				listaGenerica = (List<PlanillaGenerica>) map.get("lista");
 				planillaGenerica = (PlanillaGenerica) map.get("planilla");
-				catalogoGenerico =  (Catalogo<PlanillaGenerica>) map.get("catalogo");
+				catalogoGenerico = (Catalogo<PlanillaGenerica>) map
+						.get("catalogo");
+				fechaInbox = (Timestamp) map.get("fechaInbox");
 				settearCampos(planilla);
 				switch (estadoInbox) {
 				case "Pendiente":
@@ -326,18 +330,23 @@ public class CUniforme extends CGenerico {
 		telefono = txtTelefono.getValue();
 		double costo = txtCosto.getValue();
 		Usuario usuario = new Usuario();
+
 		if (inbox)
 			usuario = usuarioEditador;
 		else
 			usuario = usuarioSesion(nombreUsuarioSesion());
-		
 
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
-
-		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion") && id==0)
-			guardo = true;
 		
+		Timestamp fechaEnvio = fechaHora;
+		if (estadoInbox.equals("Pendiente"))
+			fechaEnvio = fechaInbox;
+			
+
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion")
+				&& id == 0)
+			guardo = true;
 		if (estadoInbox.equals("Pendiente"))
 			string = "Pendiente";
 		String tipoConfig = "";
@@ -353,6 +362,7 @@ public class CUniforme extends CGenerico {
 				.getContext());
 		Date valorFecha = dtbActividad.getValue();
 		Timestamp fechaActividad = new Timestamp(valorFecha.getTime());
+
 		if (rdoNo.isChecked())
 			contrato = "N";
 		else
@@ -360,8 +370,9 @@ public class CUniforme extends CGenerico {
 		PlanillaUniforme planillaUniforme = new PlanillaUniforme(id, usuario,
 				marca, nombreActividad, fechaActividad, tipoActividad, ciudad,
 				cliente, nombre, rif, telefono, mail, direccion, logo, costo,
-				justificacion, contrato, fechaHora, rif, nombreUsuarioSesion(),
-				string, usuario.getZona().getDescripcion(), tipoConfig, "", 0);
+				justificacion, contrato, fechaHora, fechaEnvio, rif,
+				nombreUsuarioSesion(), string, usuario.getZona()
+						.getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaUniforme.guardar(planillaUniforme);
 		if (id != 0)
 			planillaUniforme = servicioPlanillaUniforme.buscar(id);
@@ -370,22 +381,22 @@ public class CUniforme extends CGenerico {
 
 		if (inbox) {
 			PlanillaGenerica planillita = new PlanillaGenerica(
-					planillaUniforme.getIdPlanillaUniforme(), usuario.getNombre(),
-					marca.getDescripcion(), nombreActividad, fechaHora, string,
+					planillaUniforme.getIdPlanillaUniforme(),
+					usuario.getNombre(), marca.getDescripcion(),
+					nombreActividad, planillaUniforme.getFechaEnvio(), string,
 					"Uniformes");
 			listaGenerica.remove(planillaGenerica);
 			listaGenerica.add(planillita);
-			control.actualizar(listaGenerica,catalogoGenerico);
+			control.actualizar(listaGenerica, catalogoGenerico);
 		}
-		
+
 		if (guardo)
 			guardarBitacora(planillaUniforme, true);
 		if (envio)
 			guardarBitacora(planillaUniforme, false);
-		
+
 		guardarUniformes(planillaUniforme);
-		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente")
-				&& !inbox) {
+		if (tipoConfig.equals("TradeMark") && envio) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
 			Usuario usuarioAdmin = new Usuario();
@@ -395,8 +406,8 @@ public class CUniforme extends CGenerico {
 					usuarioAdmin, marca, nombreActividad, fechaActividad,
 					tipoActividad, ciudad, cliente, nombre, rif, telefono,
 					mail, direccion, logo, costo, justificacion, contrato,
-					fechaHora, rif, nombreUsuarioSesion(), string, usuario
-							.getZona().getDescripcion(), "Marca", "",
+					fechaHora, fechaEnvio, rif, nombreUsuarioSesion(), string,
+					usuario.getZona().getDescripcion(), "Marca", "",
 					planillaUniforme.getIdPlanillaUniforme());
 			servicioPlanillaUniforme.guardar(planillaAdmin);
 			planillaAdmin = servicioPlanillaUniforme.buscarUltima();
@@ -449,37 +460,38 @@ public class CUniforme extends CGenerico {
 		byte[] imagenX = imagenNo.getContent().getByteData();
 
 		if (edicion) {
-			BitacoraUniforme bitacora = new BitacoraUniforme(0, planillaUniforme,
-					"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
-					nombreUsuarioSesion(), imagen);
+			BitacoraUniforme bitacora = new BitacoraUniforme(0,
+					planillaUniforme, "Planilla en Edicion", fechaHora,
+					fechaHora, horaAuditoria, nombreUsuarioSesion(), imagen);
 			servicioBitacoraUniforme.guardar(bitacora);
 		} else {
-			if(id==0)
-			{
-				BitacoraUniforme bitacora = new BitacoraUniforme(0, planillaUniforme,
-						"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
-						nombreUsuarioSesion(), imagen);
+			if (id == 0) {
+				BitacoraUniforme bitacora = new BitacoraUniforme(0,
+						planillaUniforme, "Planilla en Edicion", fechaHora,
+						fechaHora, horaAuditoria, nombreUsuarioSesion(), imagen);
 				servicioBitacoraUniforme.guardar(bitacora);
 			}
 			List<BitacoraUniforme> listaBitacoras = new ArrayList<BitacoraUniforme>();
-			BitacoraUniforme bitacora = new BitacoraUniforme(0, planillaUniforme,
-					"Planilla Enviada", fechaHora, fechaHora, horaAuditoria,
-					nombreUsuarioSesion(), imagen);
+			BitacoraUniforme bitacora = new BitacoraUniforme(0,
+					planillaUniforme, "Planilla Enviada", fechaHora, fechaHora,
+					horaAuditoria, nombreUsuarioSesion(), imagen);
 			listaBitacoras.add(bitacora);
 
-			BitacoraUniforme bitacora2 = new BitacoraUniforme(0, planillaUniforme,
-					"Esperando Aprobacion de Planilla", fechaHora, fechaHora,
-					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			BitacoraUniforme bitacora2 = new BitacoraUniforme(0,
+					planillaUniforme, "Esperando Aprobacion de Planilla",
+					fechaHora, fechaHora, horaAuditoria, nombreUsuarioSesion(),
+					imagenX);
 			listaBitacoras.add(bitacora2);
 
-			BitacoraUniforme bitacora3 = new BitacoraUniforme(0, planillaUniforme,
-					"Esperando Finalizacion de Planilla", fechaHora, fechaHora,
-					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			BitacoraUniforme bitacora3 = new BitacoraUniforme(0,
+					planillaUniforme, "Esperando Finalizacion de Planilla",
+					fechaHora, fechaHora, horaAuditoria, nombreUsuarioSesion(),
+					imagenX);
 			listaBitacoras.add(bitacora3);
 
-			BitacoraUniforme bitacora4 = new BitacoraUniforme(0, planillaUniforme,
-					"Esperando Pago de Planilla", fechaHora, fechaHora,
-					horaAuditoria, nombreUsuarioSesion(), imagenX);
+			BitacoraUniforme bitacora4 = new BitacoraUniforme(0,
+					planillaUniforme, "Esperando Pago de Planilla", fechaHora,
+					fechaHora, horaAuditoria, nombreUsuarioSesion(), imagenX);
 			listaBitacoras.add(bitacora4);
 
 			servicioBitacoraUniforme.guardarBitacoras(listaBitacoras);

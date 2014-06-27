@@ -132,6 +132,7 @@ public class CCata extends CGenerico {
 	List<PlanillaGenerica> listaGenerica = new ArrayList<PlanillaGenerica>();
 	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
 	Catalogo<PlanillaGenerica> catalogoGenerico;
+	Timestamp fechaInbox;
 	@Override
 	public void inicializar() throws IOException {
 
@@ -188,6 +189,7 @@ public class CCata extends CGenerico {
 				listaGenerica.clear();
 				planillaGenerica = null;
 				catalogoGenerico = null;
+				fechaInbox = null;
 				llenarListas();
 			}
 
@@ -285,8 +287,11 @@ public class CCata extends CGenerico {
 				estadoInbox = (String) map.get("estadoInbox");
 				tipoInbox = planilla.getTipo();
 				listaGenerica = (List<PlanillaGenerica>) map.get("lista");
+				System.out.println("size" + listaGenerica.size());
 				planillaGenerica = (PlanillaGenerica) map.get("planilla");
-				catalogoGenerico =  (Catalogo<PlanillaGenerica>) map.get("catalogo");
+				catalogoGenerico = (Catalogo<PlanillaGenerica>) map
+						.get("catalogo");
+				fechaInbox = (Timestamp) map.get("fechaInbox");
 				settearCampos(planilla);
 				switch (estadoInbox) {
 				case "Pendiente":
@@ -353,7 +358,12 @@ public class CCata extends CGenerico {
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
 
-		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion") && id==0)
+		Timestamp fechaEnvio = fechaHora;
+		if (estadoInbox.equals("Pendiente"))
+			fechaEnvio = fechaInbox;
+		
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion")
+				&& id == 0)
 			guardo = true;
 
 		if (inbox)
@@ -380,8 +390,8 @@ public class CCata extends CGenerico {
 		PlanillaCata planilla = new PlanillaCata(id, usuario, marca,
 				nombreActividad, fechaActividad, cata, ciudad, contacto,
 				telefono, mail, direccion, personas, motivo, nivel, edadTarget,
-				costo, descripcion, mecanica, fechaHora, horaAuditoria,
-				nombreUsuarioSesion(), string, usuario.getZona()
+				costo, descripcion, mecanica, fechaHora, fechaEnvio,
+				horaAuditoria, nombreUsuarioSesion(), string, usuario.getZona()
 						.getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaCata.guardar(planilla);
 		if (id != 0)
@@ -392,11 +402,11 @@ public class CCata extends CGenerico {
 		if (inbox) {
 			PlanillaGenerica planillita = new PlanillaGenerica(
 					planilla.getIdPlanillaCata(), usuario.getNombre(),
-					marca.getDescripcion(), nombreActividad, fechaHora, string,
+					marca.getDescripcion(), nombreActividad, planilla.getFechaEnvio(), string,
 					"Cata Induccion");
 			listaGenerica.remove(planillaGenerica);
 			listaGenerica.add(planillita);
-			control.actualizar(listaGenerica,catalogoGenerico);
+			control.actualizar(listaGenerica, catalogoGenerico);
 		}
 
 		if (guardo)
@@ -406,8 +416,7 @@ public class CCata extends CGenerico {
 
 		guardarItems(planilla);
 		guardarRecursos(planilla);
-		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente")
-				&& !inbox) {
+		if (tipoConfig.equals("TradeMark") && envio) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
 			Usuario usuarioAdmin = new Usuario();
@@ -417,8 +426,8 @@ public class CCata extends CGenerico {
 					marca, nombreActividad, fechaActividad, cata, ciudad,
 					contacto, telefono, mail, direccion, personas, motivo,
 					nivel, edadTarget, costo, descripcion, mecanica, fechaHora,
-					horaAuditoria, nombreUsuarioSesion(), string, usuario
-							.getZona().getDescripcion(), "Marca", "",
+					fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
+					usuario.getZona().getDescripcion(), "Marca", "",
 					planilla.getIdPlanillaCata());
 			servicioPlanillaCata.guardar(planillaAdmin);
 			planillaAdmin = servicioPlanillaCata.buscarUltima();
@@ -453,13 +462,12 @@ public class CCata extends CGenerico {
 					nombreUsuarioSesion(), imagen);
 			servicioBitacoraCata.guardar(bitacora);
 		} else {
-			
-			if(id==0)
-			{
+
+			if (id == 0) {
 				BitacoraCata bitacora = new BitacoraCata(0, planillaCata,
-						"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
-						nombreUsuarioSesion(), imagen);
-				servicioBitacoraCata.guardar(bitacora);	
+						"Planilla en Edicion", fechaHora, fechaHora,
+						horaAuditoria, nombreUsuarioSesion(), imagen);
+				servicioBitacoraCata.guardar(bitacora);
 			}
 			List<BitacoraCata> listaBitacoras = new ArrayList<BitacoraCata>();
 			BitacoraCata bitacora = new BitacoraCata(0, planillaCata,

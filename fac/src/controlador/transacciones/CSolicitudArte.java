@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -126,7 +127,7 @@ public class CSolicitudArte extends CGenerico {
 	List<PlanillaGenerica> listaGenerica = new ArrayList<PlanillaGenerica>();
 	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
 	Catalogo<PlanillaGenerica> catalogoGenerico;
-
+	Timestamp fechaInbox;
 	@Override
 	public void inicializar() throws IOException {
 		
@@ -183,6 +184,7 @@ public class CSolicitudArte extends CGenerico {
 				listaGenerica.clear();
 				planillaGenerica = null;
 				catalogoGenerico = null;
+				fechaInbox = null;
 			}
 
 			@Override
@@ -262,6 +264,7 @@ public class CSolicitudArte extends CGenerico {
 				listaGenerica = (List<PlanillaGenerica>) map.get("lista");
 				planillaGenerica = (PlanillaGenerica) map.get("planilla");
 				catalogoGenerico =  (Catalogo<PlanillaGenerica>) map.get("catalogo");
+				fechaInbox = (Timestamp) map.get("fechaInbox");
 				settearCampos(planilla);
 				switch (estadoInbox) {
 				case "Pendiente":
@@ -323,6 +326,10 @@ public class CSolicitudArte extends CGenerico {
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
 
+		Timestamp fechaEnvio = fechaHora;
+		if (estadoInbox.equals("Pendiente"))
+			fechaEnvio = fechaInbox;
+		
 		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion") && id==0)
 			guardo = true;
 		
@@ -361,7 +368,7 @@ public class CSolicitudArte extends CGenerico {
 		PlanillaArte planillaArte = new PlanillaArte(id, usuario, marca,
 				nombreActividad, nombreLocal, salidaArte, rif, patente,
 				formato, alto, largo, ancho, imagenUsuario1, imagenUsuario2,
-				imagenUsuario3, imagenUsuario4, lineamiento, fechaHora,
+				imagenUsuario3, imagenUsuario4, lineamiento, fechaHora,fechaEnvio,
 				horaAuditoria, nombreUsuarioSesion(), string, usuario.getZona()
 						.getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaArte.guardar(planillaArte);
@@ -373,7 +380,7 @@ public class CSolicitudArte extends CGenerico {
 		if (inbox) {
 			PlanillaGenerica planillita = new PlanillaGenerica(
 					planillaArte.getIdPlanillaArte(), usuario.getNombre(),
-					marca.getDescripcion(), nombreActividad, fechaHora, string,
+					marca.getDescripcion(), nombreActividad, planillaArte.getFechaEnvio(), string,
 					"Solicitud de Arte y Publicaciones");
 			listaGenerica.remove(planillaGenerica);
 			listaGenerica.add(planillita);
@@ -385,7 +392,7 @@ public class CSolicitudArte extends CGenerico {
 		if (envio)
 			guardarBitacora(planillaArte, false);
 		
-		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente") && !inbox) {
+		if (tipoConfig.equals("TradeMark") && envio) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
 			Usuario usuarioAdmin = new Usuario();
@@ -395,7 +402,7 @@ public class CSolicitudArte extends CGenerico {
 					marca, nombreActividad, nombreLocal, salidaArte, rif,
 					patente, formato, alto, largo, ancho, imagenUsuario1,
 					imagenUsuario2, imagenUsuario3, imagenUsuario4,
-					lineamiento, fechaHora, horaAuditoria,
+					lineamiento, fechaHora,fechaEnvio, horaAuditoria,
 					nombreUsuarioSesion(), string, usuario.getZona()
 							.getDescripcion(), "Marca", "",
 					planillaArte.getIdPlanillaArte());
