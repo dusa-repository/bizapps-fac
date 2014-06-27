@@ -85,6 +85,9 @@ public class PlanillaCata implements Serializable {
 	
 	@Column(name = "fecha_auditoria")
 	private Timestamp fechaAuditoria;
+	
+	@Column(name = "fecha_envio")
+	private Timestamp fechaEnvio;
 
 	@Column(name = "hora_auditoria", length = 10)
 	private String horaAuditoria;
@@ -126,7 +129,7 @@ public class PlanillaCata implements Serializable {
 			String ciudad, String nombreCliente, String telefonoPdv,
 			String correoPdv, String direccionPdv, Integer personas,
 			String motivo, String nivel, String edadTarget, Double costo,
-			String descripcion, String mecanica, Timestamp fechaAuditoria,
+			String descripcion, String mecanica, Timestamp fechaAuditoria, Timestamp fecha,
 			String horaAuditoria, String usuarioAuditoria, String estado, String zona, String tipo, String referencia, long padre) {
 		super();
 		this.idPlanillaCata = idPlanillaCata;
@@ -155,6 +158,7 @@ public class PlanillaCata implements Serializable {
 		this.tipo = tipo;
 		this.refencia = referencia;
 		this.padre = padre;
+		this.fechaEnvio = fecha;
 	}
 
 	public long getIdPlanillaCata() {
@@ -387,6 +391,14 @@ public class PlanillaCata implements Serializable {
 
 	public void setPadre(Long padre) {
 		this.padre = padre;
+	}
+
+	public Timestamp getFechaEnvio() {
+		return fechaEnvio;
+	}
+
+	public void setFechaEnvio(Timestamp fechaEnvio) {
+		this.fechaEnvio = fechaEnvio;
 	}
 	
 	

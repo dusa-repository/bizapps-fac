@@ -170,12 +170,12 @@ public class CFachada extends CGenerico {
 	private Image imagenSi;
 	@Wire
 	private Image imagenNo;
-	
+
 	CSolicitud control = new CSolicitud();
 	List<PlanillaGenerica> listaGenerica = new ArrayList<PlanillaGenerica>();
 	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
 	Catalogo<PlanillaGenerica> catalogoGenerico;
-
+	Timestamp fechaInbox;
 	@Override
 	public void inicializar() throws IOException {
 
@@ -246,6 +246,7 @@ public class CFachada extends CGenerico {
 				listaGenerica.clear();
 				planillaGenerica = null;
 				catalogoGenerico = null;
+				fechaInbox = null;
 				llenarListas();
 			}
 
@@ -340,7 +341,9 @@ public class CFachada extends CGenerico {
 				tipoInbox = planilla.getTipo();
 				listaGenerica = (List<PlanillaGenerica>) map.get("lista");
 				planillaGenerica = (PlanillaGenerica) map.get("planilla");
-				catalogoGenerico =  (Catalogo<PlanillaGenerica>) map.get("catalogo");
+				catalogoGenerico = (Catalogo<PlanillaGenerica>) map
+						.get("catalogo");
+				fechaInbox = (Timestamp) map.get("fechaInbox");
 				setearCampos(planilla);
 				switch (estadoInbox) {
 				case "Pendiente":
@@ -445,7 +448,12 @@ public class CFachada extends CGenerico {
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
 
-		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion") && id==0)
+		Timestamp fechaEnvio = fechaHora;
+		if (estadoInbox.equals("Pendiente"))
+			fechaEnvio = fechaInbox;
+		
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion")
+				&& id == 0)
 			guardo = true;
 
 		if (estadoInbox.equals("Pendiente"))
@@ -467,8 +475,8 @@ public class CFachada extends CGenerico {
 				duracion, nivel, patente, costo, descripcion, justificacion,
 				tipoDecoracion, formato, salidaArte, alto, largo, ancho,
 				imagenUsuario1, imagenUsuario2, imagenUsuario3, imagenUsuario4,
-				fechaHora, horaAuditoria, nombreUsuarioSesion(), string,
-				usuario.getZona().getDescripcion(), tipoConfig, "", 0);
+				fechaHora, fechaEnvio, horaAuditoria, nombreUsuarioSesion(),
+				string, usuario.getZona().getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaFachada.guardar(planillaFachada);
 
 		if (id != 0)
@@ -478,22 +486,22 @@ public class CFachada extends CGenerico {
 
 		if (inbox) {
 			PlanillaGenerica planillita = new PlanillaGenerica(
-					planillaFachada.getIdPlanillaFachada(), usuario.getNombre(),
-					marca.getDescripcion(), nombreActividad, fechaHora, string,
+					planillaFachada.getIdPlanillaFachada(),
+					usuario.getNombre(), marca.getDescripcion(),
+					nombreActividad, planillaFachada.getFechaEnvio(), string,
 					"Fachada y Decoraciones");
 			listaGenerica.remove(planillaGenerica);
 			listaGenerica.add(planillita);
-			control.actualizar(listaGenerica,catalogoGenerico);
+			control.actualizar(listaGenerica, catalogoGenerico);
 		}
-		
+
 		if (guardo)
 			guardarBitacora(planillaFachada, true);
 		if (envio)
 			guardarBitacora(planillaFachada, false);
 
 		guardarRecursos(planillaFachada);
-		if (tipoConfig.equals("TradeMark") && string.equals("Pendiente")
-				&& !inbox) {
+		if (tipoConfig.equals("TradeMark") && envio) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
 			Usuario usuarioAdmin = new Usuario();
@@ -506,8 +514,8 @@ public class CFachada extends CGenerico {
 					descripcion, justificacion, tipoDecoracion, formato,
 					salidaArte, alto, largo, ancho, imagenUsuario1,
 					imagenUsuario2, imagenUsuario3, imagenUsuario4, fechaHora,
-					horaAuditoria, nombreUsuarioSesion(), string, usuario
-							.getZona().getDescripcion(), "Marca", "",
+					fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
+					usuario.getZona().getDescripcion(), "Marca", "",
 					planillaFachada.getIdPlanillaFachada());
 			servicioPlanillaFachada.guardar(planillaAdmin);
 			planillaAdmin = servicioPlanillaFachada.buscarUltima();
@@ -560,12 +568,11 @@ public class CFachada extends CGenerico {
 					nombreUsuarioSesion(), imagen);
 			servicioBitacoraFachada.guardar(bitacora);
 		} else {
-			
-			if(id==0)
-			{
-				BitacoraFachada bitacora = new BitacoraFachada(0, planillaFachada,
-						"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
-						nombreUsuarioSesion(), imagen);
+
+			if (id == 0) {
+				BitacoraFachada bitacora = new BitacoraFachada(0,
+						planillaFachada, "Planilla en Edicion", fechaHora,
+						fechaHora, horaAuditoria, nombreUsuarioSesion(), imagen);
 				servicioBitacoraFachada.guardar(bitacora);
 			}
 			List<BitacoraFachada> listaBitacoras = new ArrayList<BitacoraFachada>();

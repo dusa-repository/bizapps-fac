@@ -55,7 +55,7 @@ public class CSolicitud extends CGenerico {
 	public Catalogo<PlanillaGenerica> catalogo;
 	String titulo = "";
 	private boolean tradeMark = false;
-	final List<PlanillaGenerica> listPlanilla = new ArrayList<PlanillaGenerica>();
+	private List<PlanillaGenerica> listPlanilla = new ArrayList<PlanillaGenerica>();
 
 	@Override
 	public void inicializar() throws IOException {
@@ -82,6 +82,8 @@ public class CSolicitud extends CGenerico {
 				}
 			}
 		}
+		if(variable.equals("Generales"))
+			variable = "En Edicion";
 		System.out.println("Grupo" + grupoDominante + "  Variable" + variable);
 		buscarCatalogoPropio();
 
@@ -90,8 +92,9 @@ public class CSolicitud extends CGenerico {
 	public void buscarCatalogoPropio() {
 		cargarLista();
 		System.out.println(listPlanilla.size());
+		final List<PlanillaGenerica> listaCatalogo = listPlanilla;
 		catalogo = new Catalogo<PlanillaGenerica>(catalogoSolicitud,
-				"PlanillaCata", listPlanilla, false, "Usuario", "Estado",
+				"PlanillaCata", listaCatalogo, false, "Usuario", "Estado",
 				"Fecha de Envio de Planilla", "Marca", "Nombre Actividad",
 				"Tipo Planilla") {
 
@@ -100,7 +103,7 @@ public class CSolicitud extends CGenerico {
 
 				List<PlanillaGenerica> lista = new ArrayList<PlanillaGenerica>();
 
-				for (PlanillaGenerica planilla : listPlanilla) {
+				for (PlanillaGenerica planilla : listaCatalogo) {
 					if (planilla.getUsuario().toLowerCase()
 							.startsWith(valores.get(0))
 							&& planilla.getEstado().toLowerCase()
@@ -293,6 +296,7 @@ public class CSolicitud extends CGenerico {
 				map.put("lista", listPlanilla);
 				map.put("planilla", procesadas.get(0));
 				map.put("catalogo", catalogo);
+				map.put("fechaInbox", procesadas.get(0).getFecha());
 				Sessions.getCurrent().setAttribute("inbox", map);
 				Window window = new Window();
 				switch (procesadas.get(0).getTipoPlanilla()) {
@@ -708,7 +712,7 @@ public class CSolicitud extends CGenerico {
 			String nombreActividad = listCata.get(i).getNombreActividad();
 			String estado = listCata.get(i).getEstado();
 			String tipoPlanilla = "Cata Induccion";
-			Timestamp fecha = listCata.get(i).getFechaAuditoria();
+			Timestamp fecha = listCata.get(i).getFechaEnvio();
 			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
@@ -720,7 +724,7 @@ public class CSolicitud extends CGenerico {
 			String nombreActividad = listEvento.get(i).getNombreActividad();
 			String estado = listEvento.get(i).getEstado();
 			String tipoPlanilla = "Eventos Especiales";
-			Timestamp fecha = listEvento.get(i).getFechaAuditoria();
+			Timestamp fecha = listEvento.get(i).getFechaEnvio();
 			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
@@ -732,7 +736,7 @@ public class CSolicitud extends CGenerico {
 			String nombreActividad = listPromocion.get(i).getNombreActividad();
 			String estado = listPromocion.get(i).getEstado();
 			String tipoPlanilla = "Promociones de Marca";
-			Timestamp fecha = listPromocion.get(i).getFechaAuditoria();
+			Timestamp fecha = listPromocion.get(i).getFechaEnvio();
 			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
@@ -744,7 +748,7 @@ public class CSolicitud extends CGenerico {
 			String nombreActividad = listArte.get(i).getNombreActividad();
 			String estado = listArte.get(i).getEstado();
 			String tipoPlanilla = "Solicitud de Arte y Publicaciones";
-			Timestamp fecha = listArte.get(i).getFechaAuditoria();
+			Timestamp fecha = listArte.get(i).getFechaEnvio();
 			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
@@ -756,7 +760,7 @@ public class CSolicitud extends CGenerico {
 			String nombreActividad = listUniforme.get(i).getNombreActividad();
 			String estado = listUniforme.get(i).getEstado();
 			String tipoPlanilla = "Uniformes";
-			Timestamp fecha = listUniforme.get(i).getFechaAuditoria();
+			Timestamp fecha = listUniforme.get(i).getFechaEnvio();
 			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
@@ -768,7 +772,7 @@ public class CSolicitud extends CGenerico {
 			String nombreActividad = listFachada.get(i).getNombreActividad();
 			String estado = listFachada.get(i).getEstado();
 			String tipoPlanilla = "Fachada y Decoraciones";
-			Timestamp fecha = listFachada.get(i).getFechaAuditoria();
+			Timestamp fecha = listFachada.get(i).getFechaEnvio();
 			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
