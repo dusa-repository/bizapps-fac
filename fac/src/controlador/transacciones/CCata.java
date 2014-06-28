@@ -404,8 +404,9 @@ public class CCata extends CGenerico {
 					planilla.getIdPlanillaCata(), usuario.getNombre(),
 					marca.getDescripcion(), nombreActividad, planilla.getFechaEnvio(), string,
 					"Cata Induccion");
+			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
-			listaGenerica.add(planillita);
+			listaGenerica.add(indice,planillita);
 			control.actualizar(listaGenerica, catalogoGenerico);
 		}
 

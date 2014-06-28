@@ -385,8 +385,9 @@ public class CUniforme extends CGenerico {
 					usuario.getNombre(), marca.getDescripcion(),
 					nombreActividad, planillaUniforme.getFechaEnvio(), string,
 					"Uniformes");
+			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
-			listaGenerica.add(planillita);
+			listaGenerica.add(indice,planillita);
 			control.actualizar(listaGenerica, catalogoGenerico);
 		}
 

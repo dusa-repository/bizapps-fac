@@ -122,15 +122,16 @@ public class CSolicitudArte extends CGenerico {
 	private Image imagenSi;
 	@Wire
 	private Image imagenNo;
-	
+
 	CSolicitud control = new CSolicitud();
 	List<PlanillaGenerica> listaGenerica = new ArrayList<PlanillaGenerica>();
 	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
 	Catalogo<PlanillaGenerica> catalogoGenerico;
 	Timestamp fechaInbox;
+
 	@Override
 	public void inicializar() throws IOException {
-		
+
 		txtNombreActividad.setFocus(true);
 		txtRespActividad.setValue(nombreUsuarioSesion());
 		txtRespZona.setValue(usuarioSesion(nombreUsuarioSesion())
@@ -263,7 +264,8 @@ public class CSolicitudArte extends CGenerico {
 				tipoInbox = planilla.getTipo();
 				listaGenerica = (List<PlanillaGenerica>) map.get("lista");
 				planillaGenerica = (PlanillaGenerica) map.get("planilla");
-				catalogoGenerico =  (Catalogo<PlanillaGenerica>) map.get("catalogo");
+				catalogoGenerico = (Catalogo<PlanillaGenerica>) map
+						.get("catalogo");
 				fechaInbox = (Timestamp) map.get("fechaInbox");
 				settearCampos(planilla);
 				switch (estadoInbox) {
@@ -305,10 +307,10 @@ public class CSolicitudArte extends CGenerico {
 	}
 
 	protected void guardarDatos(String string) {
-		
+
 		boolean envio = false;
 		boolean guardo = false;
-		
+
 		String nombreLocal, patente, rif, nombreActividad, formato, salidaArte, lineamiento;
 		formato = cmbFormato.getSelectedItem().getContext();
 		salidaArte = cmbArte.getSelectedItem().getContext();
@@ -322,17 +324,18 @@ public class CSolicitudArte extends CGenerico {
 			usuario = usuarioEditador;
 		else
 			usuario = usuarioSesion(nombreUsuarioSesion());
-		
+
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
 
 		Timestamp fechaEnvio = fechaHora;
 		if (estadoInbox.equals("Pendiente"))
 			fechaEnvio = fechaInbox;
-		
-		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion") && id==0)
+
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion")
+				&& id == 0)
 			guardo = true;
-		
+
 		if (estadoInbox.equals("Pendiente"))
 			string = "Pendiente";
 		String tipoConfig = "";
@@ -368,9 +371,9 @@ public class CSolicitudArte extends CGenerico {
 		PlanillaArte planillaArte = new PlanillaArte(id, usuario, marca,
 				nombreActividad, nombreLocal, salidaArte, rif, patente,
 				formato, alto, largo, ancho, imagenUsuario1, imagenUsuario2,
-				imagenUsuario3, imagenUsuario4, lineamiento, fechaHora,fechaEnvio,
-				horaAuditoria, nombreUsuarioSesion(), string, usuario.getZona()
-						.getDescripcion(), tipoConfig, "", 0);
+				imagenUsuario3, imagenUsuario4, lineamiento, fechaHora,
+				fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
+				usuario.getZona().getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaArte.guardar(planillaArte);
 		if (id != 0)
 			planillaArte = servicioPlanillaArte.buscar(id);
@@ -380,18 +383,20 @@ public class CSolicitudArte extends CGenerico {
 		if (inbox) {
 			PlanillaGenerica planillita = new PlanillaGenerica(
 					planillaArte.getIdPlanillaArte(), usuario.getNombre(),
-					marca.getDescripcion(), nombreActividad, planillaArte.getFechaEnvio(), string,
+					marca.getDescripcion(), nombreActividad,
+					planillaArte.getFechaEnvio(), string,
 					"Solicitud de Arte y Publicaciones");
+			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
-			listaGenerica.add(planillita);
-			control.actualizar(listaGenerica,catalogoGenerico);
-		}		
-		
+			listaGenerica.add(indice,planillita);
+			control.actualizar(listaGenerica, catalogoGenerico);
+		}
+
 		if (guardo)
 			guardarBitacora(planillaArte, true);
 		if (envio)
 			guardarBitacora(planillaArte, false);
-		
+
 		if (tipoConfig.equals("TradeMark") && envio) {
 			Configuracion con = servicioConfiguracion
 					.buscarTradeMark("TradeMark");
@@ -402,7 +407,7 @@ public class CSolicitudArte extends CGenerico {
 					marca, nombreActividad, nombreLocal, salidaArte, rif,
 					patente, formato, alto, largo, ancho, imagenUsuario1,
 					imagenUsuario2, imagenUsuario3, imagenUsuario4,
-					lineamiento, fechaHora,fechaEnvio, horaAuditoria,
+					lineamiento, fechaHora, fechaEnvio, horaAuditoria,
 					nombreUsuarioSesion(), string, usuario.getZona()
 							.getDescripcion(), "Marca", "",
 					planillaArte.getIdPlanillaArte());
@@ -412,8 +417,7 @@ public class CSolicitudArte extends CGenerico {
 		}
 	}
 
-	private void guardarBitacora(PlanillaArte planillaArte,
-			boolean edicion) {
+	private void guardarBitacora(PlanillaArte planillaArte, boolean edicion) {
 
 		/* Busca las imagenes representativas de los estados */
 		URL url = getClass().getResource("/imagenes/si.png");
@@ -438,11 +442,10 @@ public class CSolicitudArte extends CGenerico {
 					nombreUsuarioSesion(), imagen);
 			servicioBitacoraArte.guardar(bitacora);
 		} else {
-			if(id==0)
-			{
+			if (id == 0) {
 				BitacoraArte bitacora = new BitacoraArte(0, planillaArte,
-						"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
-						nombreUsuarioSesion(), imagen);
+						"Planilla en Edicion", fechaHora, fechaHora,
+						horaAuditoria, nombreUsuarioSesion(), imagen);
 				servicioBitacoraArte.guardar(bitacora);
 			}
 			List<BitacoraArte> listaBitacoras = new ArrayList<BitacoraArte>();
@@ -506,8 +509,8 @@ public class CSolicitudArte extends CGenerico {
 		final List<PlanillaArte> listPlanilla = servicioPlanillaArte
 				.buscarTodosOrdenados(usuarioSesion(nombreUsuarioSesion()));
 		catalogo = new Catalogo<PlanillaArte>(catalogoSolicitudArte,
-				"Planillas de Arte y Publicaciones", listPlanilla, true, "Nombre Actividad",
-				"Marca", "Fecha Edicion") {
+				"Planillas de Arte y Publicaciones", listPlanilla, true,
+				"Nombre Actividad", "Marca", "Fecha Edicion") {
 
 			@Override
 			protected List<PlanillaArte> buscar(List<String> valores) {
@@ -614,24 +617,68 @@ public class CSolicitudArte extends CGenerico {
 	@Listen("onUpload = #fudImagen1")
 	public void processMedia1(UploadEvent event) {
 		media1 = event.getMedia();
-		imagen1.setContent((org.zkoss.image.Image) media1);
+		if (media1 != null) {
+			if (media1.getContentType().equals("image/jpeg")
+					|| media1.getContentType().equals("image/png")) {
+				if (media1.getByteData().length <= 104000) {
+					imagen1.setContent((org.zkoss.image.Image) media1);
+				} else {
+					msj.mensajeAlerta(Mensaje.tamanioMuyGrande);
+				}
+			} else {
+				msj.mensajeAlerta(Mensaje.noPermitido);
+			}
+		}
 	}
 
 	@Listen("onUpload = #fudImagen2")
 	public void processMedia2(UploadEvent event) {
 		media2 = event.getMedia();
-		imagen2.setContent((org.zkoss.image.Image) media2);
+		if (media2 != null) {
+			if (media2.getContentType().equals("image/jpeg")
+					|| media2.getContentType().equals("image/png")) {
+				if (media2.getByteData().length <= 104000) {
+					imagen2.setContent((org.zkoss.image.Image) media2);
+				} else {
+					msj.mensajeAlerta(Mensaje.tamanioMuyGrande);
+				}
+			} else {
+				msj.mensajeAlerta(Mensaje.noPermitido);
+			}
+		}
 	}
 
 	@Listen("onUpload = #fudImagen3")
 	public void processMedia3(UploadEvent event) {
 		media3 = event.getMedia();
-		imagen3.setContent((org.zkoss.image.Image) media3);
+		if (media3 != null) {
+			if (media3.getContentType().equals("image/jpeg")
+					|| media3.getContentType().equals("image/png")) {
+				if (media3.getByteData().length <= 104000) {
+					imagen3.setContent((org.zkoss.image.Image) media3);
+				} else {
+					msj.mensajeAlerta(Mensaje.tamanioMuyGrande);
+				}
+			} else {
+				msj.mensajeAlerta(Mensaje.noPermitido);
+			}
+		}
 	}
 
 	@Listen("onUpload = #fudImagen4")
 	public void processMedia4(UploadEvent event) {
 		media4 = event.getMedia();
-		imagen4.setContent((org.zkoss.image.Image) media4);
+		if (media4 != null) {
+			if (media4.getContentType().equals("image/jpeg")
+					|| media4.getContentType().equals("image/png")) {
+				if (media4.getByteData().length <= 104000) {
+					imagen4.setContent((org.zkoss.image.Image) media4);
+				} else {
+					msj.mensajeAlerta(Mensaje.tamanioMuyGrande);
+				}
+			} else {
+				msj.mensajeAlerta(Mensaje.noPermitido);
+			}
+		}
 	}
 }

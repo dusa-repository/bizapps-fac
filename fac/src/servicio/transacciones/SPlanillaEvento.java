@@ -47,21 +47,21 @@ public class SPlanillaEvento {
 	public List<PlanillaEvento> buscarUsuarioSessionYEstado(
 			Usuario usuarioSesion, String variable) {
 		return planillaEventoDAO
-				.findByUsuarioAndEstado(usuarioSesion, variable);
+				.findByUsuarioAndEstadoOrderByFechaEnvioAsc(usuarioSesion, variable);
 	}
 
 	public List<PlanillaEvento> buscarSupervisorYEstado(
 			String nombreUsuarioSesion, String variable) {
-		return planillaEventoDAO.findByUsuarioSupervisorAndEstado(
+		return planillaEventoDAO.findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
 				nombreUsuarioSesion, variable);
 	}
 
 	public List<PlanillaEvento> buscarAdminEstado(String variable,
 			String variable2, Usuario usuarioSesion) {
-		List<PlanillaEvento> planillas = planillaEventoDAO
-				.findByEstadoNotAndTipo(variable, variable2);
-		planillas.addAll(planillaEventoDAO.findByUsuarioAndEstado(
-				usuarioSesion, variable));
+		List<PlanillaEvento> planillas = planillaEventoDAO.findByUsuarioAndEstadoOrderByFechaEnvioAsc(
+				usuarioSesion, variable);
+		planillas.addAll(planillaEventoDAO
+				.findByEstadoNotAndTipoOrderByFechaEnvioAsc(variable, variable2));
 		return planillas;
 	}
 }

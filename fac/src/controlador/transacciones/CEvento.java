@@ -426,8 +426,9 @@ public class CEvento extends CGenerico {
 					planillaEvento.getIdPlanillaEvento(), usuario.getNombre(),
 					marca.getDescripcion(), nombreActividad, planillaEvento.getFechaEnvio(), string,
 					"Eventos Especiales");
+			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
-			listaGenerica.add(planillita);
+			listaGenerica.add(indice,planillita);
 			control.actualizar(listaGenerica,catalogoGenerico);
 		}
 		

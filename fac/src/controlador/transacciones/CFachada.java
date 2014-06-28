@@ -176,6 +176,7 @@ public class CFachada extends CGenerico {
 	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
 	Catalogo<PlanillaGenerica> catalogoGenerico;
 	Timestamp fechaInbox;
+
 	@Override
 	public void inicializar() throws IOException {
 
@@ -451,7 +452,7 @@ public class CFachada extends CGenerico {
 		Timestamp fechaEnvio = fechaHora;
 		if (estadoInbox.equals("Pendiente"))
 			fechaEnvio = fechaInbox;
-		
+
 		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion")
 				&& id == 0)
 			guardo = true;
@@ -490,8 +491,9 @@ public class CFachada extends CGenerico {
 					usuario.getNombre(), marca.getDescripcion(),
 					nombreActividad, planillaFachada.getFechaEnvio(), string,
 					"Fachada y Decoraciones");
+			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
-			listaGenerica.add(planillita);
+			listaGenerica.add(indice,planillita);
 			control.actualizar(listaGenerica, catalogoGenerico);
 		}
 
@@ -874,25 +876,69 @@ public class CFachada extends CGenerico {
 	@Listen("onUpload = #fudImagen1")
 	public void processMedia1(UploadEvent event) {
 		media1 = event.getMedia();
-		imagen1.setContent((org.zkoss.image.Image) media1);
+		if (media1 != null) {
+			if (media1.getContentType().equals("image/jpeg")
+					|| media1.getContentType().equals("image/png")) {
+				if (media1.getByteData().length <= 104000) {
+					imagen1.setContent((org.zkoss.image.Image) media1);
+				} else {
+					msj.mensajeAlerta(Mensaje.tamanioMuyGrande);
+				}
+			} else {
+				msj.mensajeAlerta(Mensaje.noPermitido);
+			}
+		}
 	}
 
 	@Listen("onUpload = #fudImagen2")
 	public void processMedia2(UploadEvent event) {
 		media2 = event.getMedia();
-		imagen2.setContent((org.zkoss.image.Image) media2);
+		if (media2 != null) {
+			if (media2.getContentType().equals("image/jpeg")
+					|| media2.getContentType().equals("image/png")) {
+				if (media2.getByteData().length <= 104000) {
+					imagen2.setContent((org.zkoss.image.Image) media2);
+				} else {
+					msj.mensajeAlerta(Mensaje.tamanioMuyGrande);
+				}
+			} else {
+				msj.mensajeAlerta(Mensaje.noPermitido);
+			}
+		}
 	}
 
 	@Listen("onUpload = #fudImagen3")
 	public void processMedia3(UploadEvent event) {
 		media3 = event.getMedia();
-		imagen3.setContent((org.zkoss.image.Image) media3);
+		if (media3 != null) {
+			if (media3.getContentType().equals("image/jpeg")
+					|| media3.getContentType().equals("image/png")) {
+				if (media3.getByteData().length <= 104000) {
+					imagen3.setContent((org.zkoss.image.Image) media3);
+				} else {
+					msj.mensajeAlerta(Mensaje.tamanioMuyGrande);
+				}
+			} else {
+				msj.mensajeAlerta(Mensaje.noPermitido);
+			}
+		}
 	}
 
 	@Listen("onUpload = #fudImagen4")
 	public void processMedia4(UploadEvent event) {
 		media4 = event.getMedia();
-		imagen4.setContent((org.zkoss.image.Image) media4);
+		if (media4 != null) {
+			if (media4.getContentType().equals("image/jpeg")
+					|| media4.getContentType().equals("image/png")) {
+				if (media4.getByteData().length <= 104000) {
+					imagen4.setContent((org.zkoss.image.Image) media4);
+				} else {
+					msj.mensajeAlerta(Mensaje.tamanioMuyGrande);
+				}
+			} else {
+				msj.mensajeAlerta(Mensaje.noPermitido);
+			}
+		}
 	}
 
 	/* Metodo que valida el formmato del telefono ingresado */
