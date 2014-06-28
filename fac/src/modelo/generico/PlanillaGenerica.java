@@ -17,6 +17,8 @@ public class PlanillaGenerica {
 	private String estado;
 	
 	private String tipoPlanilla;
+	
+	private String referencia;
 
 	public PlanillaGenerica() {
 		super();
@@ -92,6 +94,14 @@ public class PlanillaGenerica {
 		this.tipoPlanilla = tipoPlanilla;
 	}
 	
-	
+
+
+	public String getReferencia() {
+		return referencia;
+	}
+
+	public void setReferencia(String referencia) {
+		this.referencia = referencia;
+	}
 
 }
