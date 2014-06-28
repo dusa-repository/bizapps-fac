@@ -206,7 +206,7 @@ public class CEvento extends CGenerico {
 				estadoInbox = "";
 				tipoInbox = "";
 				inbox = false;
-				listaGenerica.clear();
+				listaGenerica = null;
 				planillaGenerica = null;
 				catalogoGenerico = null;
 				fechaInbox = null;

@@ -244,7 +244,7 @@ public class CFachada extends CGenerico {
 				inbox = false;
 				id = 0;
 				tabDatos.setSelected(true);
-				listaGenerica.clear();
+				listaGenerica = null;
 				planillaGenerica = null;
 				catalogoGenerico = null;
 				fechaInbox = null;

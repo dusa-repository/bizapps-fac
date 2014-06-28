@@ -126,6 +126,7 @@ public class CUniforme extends CGenerico {
 	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
 	Catalogo<PlanillaGenerica> catalogoGenerico;
 	Timestamp fechaInbox;
+
 	@Override
 	public void inicializar() throws IOException {
 
@@ -180,12 +181,12 @@ public class CUniforme extends CGenerico {
 				tipoInbox = "";
 				inbox = false;
 				id = 0;
-				listaGenerica.clear();
+				listaGenerica = null;
 				planillaGenerica = null;
 				catalogoGenerico = null;
 				fechaInbox = null;
 				llenarListas();
-				
+
 			}
 
 			@Override
@@ -338,11 +339,10 @@ public class CUniforme extends CGenerico {
 
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
-		
+
 		Timestamp fechaEnvio = fechaHora;
 		if (estadoInbox.equals("Pendiente"))
 			fechaEnvio = fechaInbox;
-			
 
 		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion")
 				&& id == 0)
@@ -387,7 +387,7 @@ public class CUniforme extends CGenerico {
 					"Uniformes");
 			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
-			listaGenerica.add(indice,planillita);
+			listaGenerica.add(indice, planillita);
 			control.actualizar(listaGenerica, catalogoGenerico);
 		}
 

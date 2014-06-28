@@ -177,7 +177,7 @@ public class CPromocion extends CGenerico {
 				tipoInbox = "";
 				inbox = false;
 				id = 0;
-				listaGenerica.clear();
+				listaGenerica = null;
 				planillaGenerica = null;
 				catalogoGenerico = null;
 				fechaInbox = null;

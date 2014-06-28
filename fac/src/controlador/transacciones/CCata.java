@@ -186,7 +186,7 @@ public class CCata extends CGenerico {
 				estadoInbox = "";
 				tipoInbox = "";
 				inbox = false;
-				listaGenerica.clear();
+				listaGenerica = null;
 				planillaGenerica = null;
 				catalogoGenerico = null;
 				fechaInbox = null;
@@ -287,7 +287,6 @@ public class CCata extends CGenerico {
 				estadoInbox = (String) map.get("estadoInbox");
 				tipoInbox = planilla.getTipo();
 				listaGenerica = (List<PlanillaGenerica>) map.get("lista");
-				System.out.println("size" + listaGenerica.size());
 				planillaGenerica = (PlanillaGenerica) map.get("planilla");
 				catalogoGenerico = (Catalogo<PlanillaGenerica>) map
 						.get("catalogo");
