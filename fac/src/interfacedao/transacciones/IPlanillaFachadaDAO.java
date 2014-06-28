@@ -1,5 +1,6 @@
 package interfacedao.transacciones;
 
+import java.util.Collection;
 import java.util.List;
 
 import modelo.seguridad.Usuario;
@@ -21,5 +22,14 @@ public interface IPlanillaFachadaDAO extends JpaRepository<PlanillaFachada, Long
 
 	List<PlanillaFachada> findByEstadoNotAndTipo(String variable,
 			String variable2);
+
+	List<PlanillaFachada> findByUsuarioAndEstadoOrderByFechaEnvioAsc(
+			Usuario usuarioSesion, String variable);
+
+	Collection<? extends PlanillaFachada> findByEstadoNotAndTipoOrderByFechaEnvioAsc(
+			String variable, String variable2);
+
+	List<PlanillaFachada> findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
+			String nombreUsuarioSesion, String variable);
 
 }

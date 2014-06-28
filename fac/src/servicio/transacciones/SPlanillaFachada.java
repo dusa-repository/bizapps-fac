@@ -47,21 +47,24 @@ public class SPlanillaFachada {
 	public List<PlanillaFachada> buscarAdminEstado(String variable,
 			String variable2, Usuario usuarioSesion) {
 		List<PlanillaFachada> planillas = planillaFachadaDAO
-				.findByEstadoNotAndTipo(variable, variable2);
-		planillas.addAll(planillaFachadaDAO.findByUsuarioAndEstado(
-				usuarioSesion, variable));
+				.findByUsuarioAndEstadoOrderByFechaEnvioAsc(usuarioSesion,
+						variable);
+		planillas
+				.addAll(planillaFachadaDAO
+						.findByEstadoNotAndTipoOrderByFechaEnvioAsc(variable,
+								variable2));
 		return planillas;
 	}
 
 	public List<PlanillaFachada> buscarSupervisorYEstado(
 			String nombreUsuarioSesion, String variable) {
-		return planillaFachadaDAO.findByUsuarioSupervisorAndEstado(
+		return planillaFachadaDAO.findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
 				nombreUsuarioSesion, variable);
 	}
 
 	public List<PlanillaFachada> buscarUsuarioSessionYEstado(
 			Usuario usuarioSesion, String variable) {
-		return planillaFachadaDAO.findByUsuarioAndEstado(usuarioSesion,
+		return planillaFachadaDAO.findByUsuarioAndEstadoOrderByFechaEnvioAsc(usuarioSesion,
 				variable);
 	}
 }

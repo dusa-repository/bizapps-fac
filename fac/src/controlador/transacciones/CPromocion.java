@@ -371,8 +371,9 @@ public class CPromocion extends CGenerico {
 					usuario.getNombre(), marca1.getDescripcion(),
 					nombreActividad, planillaPromocion.getFechaEnvio(), string,
 					"Promociones de Marca");
+			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
-			listaGenerica.add(planillita);
+			listaGenerica.add(indice,planillita);
 			control.actualizar(listaGenerica, catalogoGenerico);
 		}
 

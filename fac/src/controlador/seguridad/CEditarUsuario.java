@@ -51,7 +51,7 @@ public class CEditarUsuario extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-		
+
 		Usuario usuario = servicioUsuario.buscar(nombreUsuarioSesion());
 		id = usuario.getIdUsuario();
 		txtNombreUsuarioEditar.setValue(usuario.getIdUsuario());
@@ -85,7 +85,7 @@ public class CEditarUsuario extends CGenerico {
 			public void limpiar() {
 				Usuario usuario = servicioUsuario
 						.buscarUsuarioPorNombre(nombreUsuarioSesion());
-				id =usuario.getIdUsuario();
+				id = usuario.getIdUsuario();
 				txtNombreUsuarioEditar.setValue(usuario.getIdUsuario());
 				txtClaveUsuarioConfirmar.setValue("");
 				txtClaveUsuarioNueva.setValue("");
@@ -123,10 +123,10 @@ public class CEditarUsuario extends CGenerico {
 						usuario.setPassword(password);
 						usuario.setImagen(imagenUsuario);
 						servicioUsuario.guardar(usuario);
-					msj.mensajeInformacion(Mensaje.guardado);
+						msj.mensajeInformacion(Mensaje.guardado);
 						limpiar();
 					} else {
-				msj.mensajeAlerta(Mensaje.contrasennasNoCoinciden);
+						msj.mensajeAlerta(Mensaje.contrasennasNoCoinciden);
 					}
 				}
 			}
@@ -165,7 +165,7 @@ public class CEditarUsuario extends CGenerico {
 	protected boolean validar() {
 		if (txtClaveUsuarioConfirmar.getValue().equals("")
 				|| txtClaveUsuarioNueva.getValue().equals("")) {
-	msj.mensajeError(Mensaje.camposVacios);
+			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else
 			return true;
@@ -174,11 +174,23 @@ public class CEditarUsuario extends CGenerico {
 	@Listen("onUpload = #fudImagenUsuario")
 	public void processMedia(UploadEvent event) throws IOException {
 		media = event.getMedia();
-		imgUsuario.setContent(new AImage(url));
-				imgUsuario.setHeight("60px");
-				imgUsuario.setWidth("60px");
-				imgUsuario.setContent((org.zkoss.image.Image) media);
-				imgUsuario.setVisible(true);
+		if (media != null) {
+			if (media.getContentType().equals("image/jpeg")
+					|| media.getContentType().equals("image/png")) {
+				if (media.getByteData().length <= 104000) {
+					imgUsuario.setContent(new AImage(url));
+					imgUsuario.setHeight("60px");
+					imgUsuario.setWidth("60px");
+					imgUsuario.setContent((org.zkoss.image.Image) media);
+					imgUsuario.setVisible(true);
+				} else {
+					msj.mensajeAlerta(Mensaje.tamanioMuyGrande);
+				}
+			} else {
+				msj.mensajeAlerta(Mensaje.noPermitido);
+			}
+		}
+
 	}
 
 }

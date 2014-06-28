@@ -82,7 +82,7 @@ public class CSolicitud extends CGenerico {
 				}
 			}
 		}
-		if(variable.equals("Generales"))
+		if (variable.equals("Generales"))
 			variable = "En Edicion";
 		System.out.println("Grupo" + grupoDominante + "  Variable" + variable);
 		buscarCatalogoPropio();
@@ -91,7 +91,7 @@ public class CSolicitud extends CGenerico {
 
 	public void buscarCatalogoPropio() {
 		cargarLista();
-		System.out.println(listPlanilla.size());
+		System.out.println("catalogo"+listPlanilla.size());
 		final List<PlanillaGenerica> listaCatalogo = listPlanilla;
 		catalogo = new Catalogo<PlanillaGenerica>(catalogoSolicitud,
 				"PlanillaCata", listaCatalogo, false, "Usuario", "Estado",
@@ -100,25 +100,26 @@ public class CSolicitud extends CGenerico {
 
 			@Override
 			protected List<PlanillaGenerica> buscar(List<String> valores) {
-
+// cargarLista(); ESTA ES UNA ALTERNATIVA PARA EVITAR LO DEL CATALOGO SUCIO
+				listPlanilla = getListPlanilla();	
 				List<PlanillaGenerica> lista = new ArrayList<PlanillaGenerica>();
 
-				for (PlanillaGenerica planilla : listaCatalogo) {
+				for (PlanillaGenerica planilla : listPlanilla) {
 					if (planilla.getUsuario().toLowerCase()
-							.startsWith(valores.get(0))
+							.startsWith(valores.get(0).toLowerCase())
 							&& planilla.getEstado().toLowerCase()
-									.startsWith(valores.get(1))
+									.startsWith(valores.get(1).toLowerCase())
 							&& String
 									.valueOf(
 											formatoFecha.format(planilla
 													.getFecha())).toLowerCase()
 									.startsWith(valores.get(2))
 							&& planilla.getMarca().toLowerCase()
-									.startsWith(valores.get(3))
+									.startsWith(valores.get(3).toLowerCase())
 							&& planilla.getNombreActividad().toLowerCase()
-									.startsWith(valores.get(4))
+									.startsWith(valores.get(4).toLowerCase())
 							&& planilla.getTipoPlanilla().toLowerCase()
-									.startsWith(valores.get(5))) {
+									.startsWith(valores.get(5).toLowerCase())) {
 						lista.add(planilla);
 					}
 				}
@@ -128,13 +129,13 @@ public class CSolicitud extends CGenerico {
 			@Override
 			protected String[] crearRegistros(PlanillaGenerica planilla) {
 				String[] registros = new String[6];
-				registros[0] = planilla.getUsuario();
-				registros[1] = planilla.getEstado();
+				registros[0] = planilla.getUsuario().toLowerCase();
+				registros[1] = planilla.getEstado().toLowerCase();
 				registros[2] = String.valueOf(formatoFecha.format(planilla
 						.getFecha()));
-				registros[3] = planilla.getMarca();
-				registros[4] = planilla.getNombreActividad();
-				registros[5] = planilla.getTipoPlanilla();
+				registros[3] = planilla.getMarca().toLowerCase();
+				registros[4] = planilla.getNombreActividad().toLowerCase();
+				registros[5] = planilla.getTipoPlanilla().toLowerCase();
 				return registros;
 			}
 		};
@@ -435,7 +436,7 @@ public class CSolicitud extends CGenerico {
 		List<BitacoraEvento> listBitacoraEvento = new ArrayList<BitacoraEvento>();
 		List<BitacoraArte> listBitacoraArte = new ArrayList<BitacoraArte>();
 		List<BitacoraUniforme> listBitacoraUniforme = new ArrayList<BitacoraUniforme>();
-		
+
 		URL url = getClass().getResource("/imagenes/si.png");
 		try {
 			imagenSi.setContent(new AImage(url));
@@ -729,6 +730,18 @@ public class CSolicitud extends CGenerico {
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
 		}
+		for (int i = 0; i < listFachada.size(); i++) {
+			long id = listFachada.get(i).getIdPlanillaFachada();
+			String usuario = listFachada.get(i).getUsuario().getNombre();
+			String marca = listFachada.get(i).getMarca().getDescripcion();
+			String nombreActividad = listFachada.get(i).getNombreActividad();
+			String estado = listFachada.get(i).getEstado();
+			String tipoPlanilla = "Fachada y Decoraciones";
+			Timestamp fecha = listFachada.get(i).getFechaEnvio();
+			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
+					nombreActividad, fecha, estado, tipoPlanilla);
+			listPlanilla.add(plani);
+		}
 		for (int i = 0; i < listPromocion.size(); i++) {
 			long id = listPromocion.get(i).getIdPlanillaPromocion();
 			String usuario = listPromocion.get(i).getUsuario().getNombre();
@@ -761,18 +774,6 @@ public class CSolicitud extends CGenerico {
 			String estado = listUniforme.get(i).getEstado();
 			String tipoPlanilla = "Uniformes";
 			Timestamp fecha = listUniforme.get(i).getFechaEnvio();
-			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
-					nombreActividad, fecha, estado, tipoPlanilla);
-			listPlanilla.add(plani);
-		}
-		for (int i = 0; i < listFachada.size(); i++) {
-			long id = listFachada.get(i).getIdPlanillaFachada();
-			String usuario = listFachada.get(i).getUsuario().getNombre();
-			String marca = listFachada.get(i).getMarca().getDescripcion();
-			String nombreActividad = listFachada.get(i).getNombreActividad();
-			String estado = listFachada.get(i).getEstado();
-			String tipoPlanilla = "Fachada y Decoraciones";
-			Timestamp fecha = listFachada.get(i).getFechaEnvio();
 			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
 					nombreActividad, fecha, estado, tipoPlanilla);
 			listPlanilla.add(plani);
@@ -831,6 +832,18 @@ public class CSolicitud extends CGenerico {
 	public void actualizar(List<PlanillaGenerica> listilla,
 			Catalogo<PlanillaGenerica> catalogoGenerico) {
 		catalogo = catalogoGenerico;
-		catalogo.actualizarLista(listilla);
+		listPlanilla = listilla;
+		setListPlanilla(listPlanilla);
+		System.out.println("tamanio"+ listPlanilla.size());
+		catalogo.actualizarLista(listPlanilla);
+	}
+
+	public void setListPlanilla(List<PlanillaGenerica> listPlanilla) {
+		this.listPlanilla = listPlanilla;
+	}
+	
+	public List<PlanillaGenerica> getListPlanilla() {
+		System.out.println("vino"+listPlanilla.size());
+		return listPlanilla;
 	}
 }

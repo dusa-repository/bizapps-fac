@@ -1,5 +1,6 @@
 package interfacedao.transacciones;
 
+import java.util.Collection;
 import java.util.List;
 
 import modelo.seguridad.Usuario;
@@ -21,5 +22,14 @@ public interface IPlanillaEventoDAO extends JpaRepository<PlanillaEvento, Long> 
 
 	List<PlanillaEvento> findByEstadoNotAndTipo(String variable,
 			String variable2);
+
+	List<PlanillaEvento> findByUsuarioAndEstadoOrderByFechaEnvioAsc(
+			Usuario usuarioSesion, String variable);
+
+	Collection<? extends PlanillaEvento> findByEstadoNotAndTipoOrderByFechaEnvioAsc(
+			String variable, String variable2);
+
+	List<PlanillaEvento> findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
+			String nombreUsuarioSesion, String variable);
 
 }

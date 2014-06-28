@@ -34,6 +34,7 @@ import org.zkoss.zul.Window;
 
 import componente.Botonera;
 import componente.Catalogo;
+import componente.Mensaje;
 
 public class CUsuario extends CGenerico {
 
@@ -254,7 +255,20 @@ public class CUsuario extends CGenerico {
 	@Listen("onUpload = #fudImagenUsuario")
 	public void processMedia(UploadEvent event) {
 		media = event.getMedia();
-		imagen.setContent((org.zkoss.image.Image) media);
+		if (media != null) {
+			if (media.getContentType().equals("image/jpeg")
+					|| media.getContentType().equals("image/png")) {
+				if (media.getByteData().length <= 104000) {
+					imagen.setHeight("60px");
+					imagen.setWidth("60px");
+					imagen.setContent((org.zkoss.image.Image) media);
+				} else {
+					msj.mensajeAlerta(Mensaje.tamanioMuyGrande);
+				}
+			} else {
+				msj.mensajeAlerta(Mensaje.noPermitido);
+			}
+		}
 	}
 
 	@Listen("onClick =  #btnBuscarSupervisores")
