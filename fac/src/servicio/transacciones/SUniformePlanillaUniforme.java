@@ -4,6 +4,7 @@ import interfacedao.transacciones.IUniformePlanillaUniformeDAO;
 
 import java.util.List;
 
+import modelo.maestros.Uniforme;
 import modelo.transacciones.PlanillaUniforme;
 import modelo.transacciones.UniformePlanillaUniforme;
 
@@ -29,5 +30,9 @@ public class SUniformePlanillaUniforme {
 
 	public void guardar(List<UniformePlanillaUniforme> recursosPlanilla) {
 		uniformePlanillaDAO.save(recursosPlanilla);	
+	}
+
+	public List<UniformePlanillaUniforme> buscarPorUniforme(Uniforme uni) {
+		return uniformePlanillaDAO.findByUniforme(uni);
 	}
 }

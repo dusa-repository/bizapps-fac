@@ -13,4 +13,6 @@ public interface IConfiguracionDAO extends JpaRepository<Configuracion, Long> {
 
 	List<Configuracion> findDistinctByUsuarioAndTipo(Usuario u, String string);
 
+	List<Configuracion> findByUsuario(Usuario usuario);
+
 }

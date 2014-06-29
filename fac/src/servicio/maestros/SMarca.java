@@ -5,6 +5,7 @@ import interfacedao.maestros.IMarcaDAO;
 import java.util.List;
 
 import modelo.maestros.Marca;
+import modelo.maestros.Sku;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,5 +30,10 @@ public class SMarca {
 
 	public Marca buscar(String value) {
 		return marcaDAO.findOne(value);
+	}
+
+	public List<Marca> buscarPorSku(Sku sku) {
+		// TODO Auto-generated method stub
+		return marcaDAO.findByItems(sku);
 	}
 }

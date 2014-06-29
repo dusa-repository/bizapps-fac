@@ -59,7 +59,6 @@ public class CConfiguracion extends CGenerico {
 
 			@Override
 			public void salir() {
-				// llenarListas();
 				cerrarVentana(wdwConfiguracion);
 			}
 
@@ -230,7 +229,7 @@ public class CConfiguracion extends CGenerico {
 		final List<Usuario> listUsuario = servicioUsuario
 				.buscarAdministradores();
 		catalogo = new Catalogo<Usuario>(catalogoUsuario,
-				"Catalogo de Usuarios de tipo Administrador", listUsuario,
+				"Catalogo de Usuarios de Tipo Administrador", listUsuario,
 				true, "Codigo", "Nombre", "Email", "Supervisor", "Zona") {
 
 			@Override
@@ -240,15 +239,15 @@ public class CConfiguracion extends CGenerico {
 
 				for (Usuario usuario : listUsuario) {
 					if (usuario.getIdUsuario().toLowerCase()
-							.startsWith(valores.get(0))
+							.startsWith(valores.get(0).toLowerCase())
 							&& usuario.getNombre().toLowerCase()
-									.startsWith(valores.get(1))
+									.startsWith(valores.get(1).toLowerCase())
 							&& usuario.getMail().toLowerCase()
-									.startsWith(valores.get(2))
+									.startsWith(valores.get(2).toLowerCase())
 							&& usuario.getSupervisor().toLowerCase()
-									.startsWith(valores.get(3))
+									.startsWith(valores.get(3).toLowerCase())
 							&& usuario.getZona().getDescripcion().toLowerCase()
-									.startsWith(valores.get(4))) {
+									.startsWith(valores.get(4).toLowerCase())) {
 						lista.add(usuario);
 					}
 				}
@@ -258,11 +257,11 @@ public class CConfiguracion extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Usuario usuario) {
 				String[] registros = new String[5];
-				registros[0] = usuario.getIdUsuario();
-				registros[1] = usuario.getNombre();
-				registros[2] = usuario.getMail();
-				registros[3] = usuario.getSupervisor();
-				registros[4] = usuario.getZona().getDescripcion();
+				registros[0] = usuario.getIdUsuario().toLowerCase();
+				registros[1] = usuario.getNombre().toLowerCase();
+				registros[2] = usuario.getMail().toLowerCase();
+				registros[3] = usuario.getSupervisor().toLowerCase();
+				registros[4] = usuario.getZona().getDescripcion().toLowerCase();
 				return registros;
 			}
 		};

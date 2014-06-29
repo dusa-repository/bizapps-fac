@@ -12,8 +12,15 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import modelo.maestros.Zona;
+import modelo.seguridad.Configuracion;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
+import modelo.transacciones.PlanillaArte;
+import modelo.transacciones.PlanillaCata;
+import modelo.transacciones.PlanillaEvento;
+import modelo.transacciones.PlanillaFachada;
+import modelo.transacciones.PlanillaPromocion;
+import modelo.transacciones.PlanillaUniforme;
 
 import org.zkoss.image.AImage;
 import org.zkoss.util.media.Media;
@@ -154,10 +161,7 @@ public class CUsuario extends CGenerico {
 							true, fechaHora, horaAuditoria,
 							nombreUsuarioSesion(), gruposUsuario);
 					servicioUsuario.guardar(usuario);
-					Messagebox.show("Registro Guardado Exitosamente",
-							"Informacion", Messagebox.OK,
-							Messagebox.INFORMATION);
-
+					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
 				}
 			}
@@ -172,19 +176,40 @@ public class CUsuario extends CGenerico {
 								public void onEvent(Event evt)
 										throws InterruptedException {
 									if (evt.getName().equals("onOK")) {
-										servicioUsuario.eliminar(id);
-										limpiar();
-										Messagebox
-												.show("Registro Eliminado Exitosamente",
-														"Informacion",
-														Messagebox.OK,
-														Messagebox.INFORMATION);
+										Usuario usuario = servicioUsuario
+												.buscar(id);
+										List<PlanillaArte> planillaArte = servicioPlanillaArte
+												.buscarPorUsuario(usuario);
+										List<PlanillaCata> planillaCata = servicioPlanillaCata
+												.buscarPorUsuario(usuario);
+										List<PlanillaEvento> planillaEvento = servicioPlanillaEvento
+												.buscarPorUsuario(usuario);
+										List<PlanillaFachada> planillaFachada = servicioPlanillaFachada
+												.buscarPorUsuario(usuario);
+										List<PlanillaPromocion> planillaPromocion = servicioPlanillaPromocion
+												.buscarPorUsuario(usuario);
+										List<PlanillaUniforme> planillaUniforme = servicioPlanillaUniforme
+												.buscarPorUsuario(usuario);
+										List<Configuracion> conf = servicioConfiguracion
+												.buscarPorUsuario(usuario);
+										if (!planillaArte.isEmpty()
+												|| !planillaCata.isEmpty()
+												|| !planillaEvento.isEmpty()
+												|| !planillaFachada.isEmpty()
+												|| !planillaPromocion.isEmpty()
+												|| !planillaUniforme.isEmpty()
+												|| !conf.isEmpty())
+											msj.mensajeError(Mensaje.noEliminar);
+										else {
+											servicioUsuario.eliminar(id);
+											limpiar();
+											msj.mensajeInformacion(Mensaje.eliminado);
+										}
 									}
 								}
 							});
 				} else {
-					Messagebox.show("No ha Seleccionado Ningun Registro",
-							"Alerta", Messagebox.OK, Messagebox.EXCLAMATION);
+					msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 				}
 			}
 
@@ -219,12 +244,12 @@ public class CUsuario extends CGenerico {
 		gruposDisponibles = servicioGrupo.buscarDisponibles(usuario);
 		ltbGruposDisponibles.setModel(new ListModelList<Grupo>(
 				gruposDisponibles));
-		
+
 		if (usuario != null)
 			gruposOcupados = servicioGrupo.buscarGruposUsuario(usuario);
 		else
 			gruposOcupados.clear();
-		
+
 		ltbGruposAgregados.setModel(new ListModelList<Grupo>(gruposOcupados));
 
 		ltbGruposAgregados.setMultiple(false);
@@ -245,8 +270,7 @@ public class CUsuario extends CGenerico {
 				|| txtPasswordUsuario.getText().compareTo("") == 0
 				|| txtSupervisorUsuario.getText().compareTo("") == 0
 				|| txtZonaUsuario.getText().compareTo("") == 0) {
-			Messagebox.show("Debe Llenar Todos los Campos", "Informacion",
-					Messagebox.OK, Messagebox.INFORMATION);
+			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else
 			return true;
@@ -292,15 +316,15 @@ public class CUsuario extends CGenerico {
 
 				for (Usuario usuario : listUsuario) {
 					if (usuario.getIdUsuario().toLowerCase()
-							.startsWith(valores.get(0))
+							.startsWith(valores.get(0).toLowerCase())
 							&& usuario.getNombre().toLowerCase()
-									.startsWith(valores.get(1))
+									.startsWith(valores.get(1).toLowerCase())
 							&& usuario.getMail().toLowerCase()
-									.startsWith(valores.get(2))
+									.startsWith(valores.get(2).toLowerCase())
 							&& usuario.getSupervisor().toLowerCase()
-									.startsWith(valores.get(3))
+									.startsWith(valores.get(3).toLowerCase())
 							&& usuario.getZona().getDescripcion().toLowerCase()
-									.startsWith(valores.get(4))) {
+									.startsWith(valores.get(4).toLowerCase())) {
 						lista.add(usuario);
 					}
 				}
@@ -310,11 +334,11 @@ public class CUsuario extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Usuario usuario) {
 				String[] registros = new String[5];
-				registros[0] = usuario.getIdUsuario();
-				registros[1] = usuario.getNombre();
-				registros[2] = usuario.getMail();
-				registros[3] = usuario.getSupervisor();
-				registros[4] = usuario.getZona().getDescripcion();
+				registros[0] = usuario.getIdUsuario().toLowerCase();
+				registros[1] = usuario.getNombre().toLowerCase();
+				registros[2] = usuario.getMail().toLowerCase();
+				registros[3] = usuario.getSupervisor().toLowerCase();
+				registros[4] = usuario.getZona().getDescripcion().toLowerCase();
 				return registros;
 			}
 		};
@@ -334,8 +358,6 @@ public class CUsuario extends CGenerico {
 				setearUsuario(usuario1);
 			else {
 				txtCodigoUsuario.setFocus(true);
-				// msj.mensajeAlerta(Mensaje.noHayRegistros);
-				// txtCodigoUsuario.setValue("");
 				txtEmailUsuario.setValue("");
 				txtNombreUsuario.setValue("");
 				txtPasswordUsuario.setValue("");
@@ -347,13 +369,9 @@ public class CUsuario extends CGenerico {
 			}
 			break;
 		case "txtSupervisorUsuario":
-			if (usuario2 != null)
-				setearUsuario(usuario2);
-			else {
-				txtSupervisorUsuario.setFocus(true);
-				// txtSupervisorUsuario.setValue("");
-				// msj.mensajeAlerta(Mensaje.noHayRegistros);
-			}
+			if (usuario2 == null)
+				txtSupervisorUsuario.setValue("");
+			txtSupervisorUsuario.setFocus(true);
 			break;
 		default:
 			break;
@@ -415,9 +433,9 @@ public class CUsuario extends CGenerico {
 
 				for (Zona zona : listZona) {
 					if (zona.getIdZona().toLowerCase()
-							.startsWith(valores.get(0))
+							.startsWith(valores.get(0).toLowerCase())
 							&& zona.getDescripcion().toLowerCase()
-									.startsWith(valores.get(2))) {
+									.startsWith(valores.get(2).toLowerCase())) {
 						lista.add(zona);
 					}
 				}
@@ -427,8 +445,8 @@ public class CUsuario extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Zona zona) {
 				String[] registros = new String[2];
-				registros[0] = zona.getIdZona();
-				registros[1] = zona.getDescripcion();
+				registros[0] = zona.getIdZona().toLowerCase();
+				registros[1] = zona.getDescripcion().toLowerCase();
 				return registros;
 			}
 		};
@@ -446,8 +464,7 @@ public class CUsuario extends CGenerico {
 
 	@Listen("onChange = #txtZonaUsuario")
 	public void buscarPorNombreAjeno() {
-		Zona zona = servicioZona
-				.buscarPorDescripcion(txtZonaUsuario.getValue());
+		Zona zona = servicioZona.buscar(txtZonaUsuario.getValue());
 		if (zona != null) {
 			txtZonaUsuario.setValue(zona.getDescripcion());
 			idZona = zona.getIdZona();

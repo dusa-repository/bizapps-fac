@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelo.maestros.Recurso;
+import modelo.transacciones.PlanillaCata;
+import modelo.transacciones.PlanillaEvento;
+import modelo.transacciones.PlanillaFachada;
+import modelo.transacciones.RecursoPlanillaCata;
+import modelo.transacciones.RecursoPlanillaEvento;
+import modelo.transacciones.RecursoPlanillaFachada;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -16,6 +22,7 @@ import org.zkoss.zul.Window;
 
 import componente.Botonera;
 import componente.Catalogo;
+import componente.Mensaje;
 
 public class CRecurso extends CGenerico {
 
@@ -77,19 +84,28 @@ public class CRecurso extends CGenerico {
 								public void onEvent(Event evt)
 										throws InterruptedException {
 									if (evt.getName().equals("onOK")) {
-										servicioRecurso.eliminar(id);
+										Recurso recurso = servicioRecurso.buscar(id);
+										List<RecursoPlanillaCata> planillaCata = servicioRecursoPlanillaCata
+												.buscarPorRecurso(recurso);
+										List<RecursoPlanillaEvento> planillaEvento = servicioRecursoPlanillaEvento
+												.buscarPorRecurso(recurso);
+										List<RecursoPlanillaFachada> planillaFachada = servicioRecursoPlanillaFachada
+												.buscarPorRecurso(recurso);
+										if (!planillaCata.isEmpty()
+												|| !planillaEvento.isEmpty()
+												|| !planillaFachada.isEmpty())									
+										msj.mensajeError(Mensaje.noEliminar);
+										else
+										{
+											servicioRecurso.eliminar(id);
 										limpiar();
-										Messagebox
-												.show("Registro Eliminado Exitosamente",
-														"Informacion",
-														Messagebox.OK,
-														Messagebox.INFORMATION);
+										msj.mensajeInformacion(Mensaje.eliminado);
+										}
 									}
 								}
 							});
 				} else {
-					Messagebox.show("No ha Seleccionado Ningun Registro",
-							"Alerta", Messagebox.OK, Messagebox.EXCLAMATION);
+					msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 				}
 			}
 			
@@ -139,7 +155,7 @@ public class CRecurso extends CGenerico {
 
 				for (Recurso recurso : listRecurso) {
 					if (recurso.getDescripcion().toLowerCase()
-							.startsWith(valores.get(0))) {
+							.startsWith(valores.get(0).toLowerCase())) {
 						lista.add(recurso);
 					}
 				}
@@ -149,7 +165,7 @@ public class CRecurso extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Recurso recurso) {
 				String[] registros = new String[1];
-				registros[0] = recurso.getDescripcion();
+				registros[0] = recurso.getDescripcion().toLowerCase();
 				return registros;
 			}
 		};

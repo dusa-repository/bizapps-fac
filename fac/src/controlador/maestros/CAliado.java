@@ -17,6 +17,7 @@ import org.zkoss.zul.Window;
 
 import componente.Botonera;
 import componente.Catalogo;
+import componente.Mensaje;
 
 public class CAliado extends CGenerico {
 
@@ -72,10 +73,7 @@ public class CAliado extends CGenerico {
 					Aliado aliado = new Aliado(id, zona, descripcion, anexo,
 							fechaHora, horaAuditoria, nombreUsuarioSesion());
 					servicioAliado.guardar(aliado);
-					Messagebox.show("Registro Guardado Exitosamente",
-							"Informacion", Messagebox.OK,
-							Messagebox.INFORMATION);
-
+					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
 				}
 			}
@@ -92,17 +90,12 @@ public class CAliado extends CGenerico {
 									if (evt.getName().equals("onOK")) {
 										servicioAliado.eliminar(id);
 										limpiar();
-										Messagebox
-												.show("Registro Eliminado Exitosamente",
-														"Informacion",
-														Messagebox.OK,
-														Messagebox.INFORMATION);
+										msj.mensajeInformacion(Mensaje.eliminado);
 									}
 								}
 							});
 				} else {
-					Messagebox.show("No ha Seleccionado Ningun Registro",
-							"Alerta", Messagebox.OK, Messagebox.EXCLAMATION);
+					msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 				}
 			}
 
@@ -117,7 +110,7 @@ public class CAliado extends CGenerico {
 			@Override
 			public void enviar() {
 				// TODO Auto-generated method stub
-				
+
 			}
 		};
 		botonera.getChildren().get(4).setVisible(false);
@@ -131,8 +124,7 @@ public class CAliado extends CGenerico {
 		if (txtAnexoAliado.getText().compareTo("") == 0
 				|| txtDescripcionAliado.getText().compareTo("") == 0
 				|| txtZonaAliado.getText().compareTo("") == 0) {
-			Messagebox.show("Debe Llenar Todos los Campos", "Informacion",
-					Messagebox.OK, Messagebox.INFORMATION);
+			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else
 			return true;
@@ -140,8 +132,9 @@ public class CAliado extends CGenerico {
 
 	public void buscarCatalogoPropio() {
 		final List<Aliado> listAliado = servicioAliado.buscarTodosOrdenados();
-		catalogo = new Catalogo<Aliado>(DivCatalogoAliado, "Catalogo de Aliados",
-				listAliado, true, "Nombre", "Zona", "Anexo") {
+		catalogo = new Catalogo<Aliado>(DivCatalogoAliado,
+				"Catalogo de Aliados", listAliado, true, "Nombre", "Zona",
+				"Anexo") {
 
 			@Override
 			protected List<Aliado> buscar(List<String> valores) {
@@ -150,11 +143,11 @@ public class CAliado extends CGenerico {
 
 				for (Aliado aliado : listAliado) {
 					if (aliado.getNombre().toLowerCase()
-							.startsWith(valores.get(0))
+							.startsWith(valores.get(0).toLowerCase())
 							&& aliado.getZona().getDescripcion().toLowerCase()
-									.startsWith(valores.get(1))
+									.startsWith(valores.get(1).toLowerCase())
 							&& aliado.getAnexo().toLowerCase()
-									.startsWith(valores.get(2))) {
+									.startsWith(valores.get(2).toLowerCase())) {
 						lista.add(aliado);
 					}
 				}
@@ -164,9 +157,9 @@ public class CAliado extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Aliado aliado) {
 				String[] registros = new String[3];
-				registros[0] = aliado.getNombre();
-				registros[1] = aliado.getZona().getDescripcion();
-				registros[2] = aliado.getAnexo();
+				registros[0] = aliado.getNombre().toLowerCase();
+				registros[1] = aliado.getZona().getDescripcion().toLowerCase();
+				registros[2] = aliado.getAnexo().toLowerCase();
 				return registros;
 			}
 		};
@@ -177,8 +170,8 @@ public class CAliado extends CGenerico {
 	@Listen("onClick = #btnBuscarZonas")
 	public void buscarCatalogoAjeno() {
 		final List<Zona> listZona = servicioZona.buscarTodosOrdenados();
-		catalogoZona = new Catalogo<Zona>(DivCatalogoZona, "Catalogo de Zonas", listZona,
-				true, "Id", "Descripcion") {
+		catalogoZona = new Catalogo<Zona>(DivCatalogoZona, "Catalogo de Zonas",
+				listZona, true, "Id", "Descripcion") {
 
 			@Override
 			protected List<Zona> buscar(List<String> valores) {
@@ -187,9 +180,9 @@ public class CAliado extends CGenerico {
 
 				for (Zona zona : listZona) {
 					if (zona.getIdZona().toLowerCase()
-							.startsWith(valores.get(0))
+							.startsWith(valores.get(0).toLowerCase())
 							&& zona.getDescripcion().toLowerCase()
-									.startsWith(valores.get(2))) {
+									.startsWith(valores.get(2).toLowerCase())) {
 						lista.add(zona);
 					}
 				}
@@ -199,8 +192,8 @@ public class CAliado extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Zona zona) {
 				String[] registros = new String[2];
-				registros[0] = zona.getIdZona();
-				registros[1] = zona.getDescripcion();
+				registros[0] = zona.getIdZona().toLowerCase();
+				registros[1] = zona.getDescripcion().toLowerCase();
 				return registros;
 			}
 		};
@@ -232,9 +225,14 @@ public class CAliado extends CGenerico {
 
 	@Listen("onChange = #txtZonaAliado")
 	public void buscarPorNombreAjeno() {
-		Zona zona = servicioZona.buscarPorDescripcion(txtZonaAliado.getValue());
+		Zona zona = servicioZona.buscar(txtZonaAliado.getValue());
 		if (zona != null)
 			llenarCamposAjenos(zona);
+		else {
+			txtZonaAliado.setValue("");
+			txtZonaAliado.setFocus(true);
+			idZona = "";
+		}
 	}
 
 	public void llenarCamposAjenos(Zona zona) {

@@ -4,6 +4,7 @@ import interfacedao.transacciones.IPlanillaEventoDAO;
 
 import java.util.List;
 
+import modelo.maestros.Marca;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaEvento;
 
@@ -63,5 +64,13 @@ public class SPlanillaEvento {
 		planillas.addAll(planillaEventoDAO
 				.findByEstadoNotAndTipoOrderByFechaEnvioAsc(variable, variable2));
 		return planillas;
+	}
+
+	public List<PlanillaEvento> buscarPorUsuario(Usuario usuario) {
+		return planillaEventoDAO.findByUsuario(usuario);
+	}
+
+	public List<PlanillaEvento> buscarPorMarca(Marca marca) {
+		return planillaEventoDAO.findByMarca(marca);
 	}
 }

@@ -3,6 +3,7 @@ package interfacedao.transacciones;
 import java.util.Collection;
 import java.util.List;
 
+import modelo.maestros.Marca;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaFachada;
 
@@ -31,5 +32,9 @@ public interface IPlanillaFachadaDAO extends JpaRepository<PlanillaFachada, Long
 
 	List<PlanillaFachada> findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
 			String nombreUsuarioSesion, String variable);
+
+	List<PlanillaFachada> findByUsuario(Usuario usuario);
+
+	List<PlanillaFachada> findByMarca(Marca marca);
 
 }

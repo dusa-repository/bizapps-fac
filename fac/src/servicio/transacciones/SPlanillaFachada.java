@@ -4,6 +4,7 @@ import interfacedao.transacciones.IPlanillaFachadaDAO;
 
 import java.util.List;
 
+import modelo.maestros.Marca;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaFachada;
 
@@ -66,5 +67,13 @@ public class SPlanillaFachada {
 			Usuario usuarioSesion, String variable) {
 		return planillaFachadaDAO.findByUsuarioAndEstadoOrderByFechaEnvioAsc(usuarioSesion,
 				variable);
+	}
+
+	public List<PlanillaFachada> buscarPorUsuario(Usuario usuario) {
+		return planillaFachadaDAO.findByUsuario(usuario);
+	}
+
+	public List<PlanillaFachada> buscarPorMarca(Marca marca) {
+		return planillaFachadaDAO.findByMarca(marca);
 	}
 }

@@ -4,6 +4,8 @@ import interfacedao.transacciones.IPlanillaCataDAO;
 
 import java.util.List;
 
+import modelo.maestros.Marca;
+import modelo.maestros.Recurso;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaCata;
 
@@ -66,4 +68,13 @@ public class SPlanillaCata {
 								variable2));
 		return planillas;
 	}
+
+	public List<PlanillaCata> buscarPorUsuario(Usuario usuario) {
+		return planillaCataDAO.findByUsuario(usuario);
+	}
+
+	public List<PlanillaCata> buscarPorMarca(Marca marca) {
+		return planillaCataDAO.findByMarca(marca);
+	}
+
 }

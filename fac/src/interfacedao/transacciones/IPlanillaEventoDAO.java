@@ -3,6 +3,7 @@ package interfacedao.transacciones;
 import java.util.Collection;
 import java.util.List;
 
+import modelo.maestros.Marca;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaEvento;
 
@@ -31,5 +32,9 @@ public interface IPlanillaEventoDAO extends JpaRepository<PlanillaEvento, Long> 
 
 	List<PlanillaEvento> findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
 			String nombreUsuarioSesion, String variable);
+
+	List<PlanillaEvento> findByUsuario(Usuario usuario);
+
+	List<PlanillaEvento> findByMarca(Marca marca);
 
 }

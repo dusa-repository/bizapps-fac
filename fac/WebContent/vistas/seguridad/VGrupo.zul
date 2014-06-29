@@ -13,7 +13,11 @@
 				</columns>
 				<rows>
 					<row>
-						<label value="Nombre del Grupo :" class="etiqueta" />
+						<hbox>
+							<label value="Nombre del Grupo :" class="etiqueta" />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
 						<textbox maxlength="500" id="txtNombreGrupo" tooltiptext="Ingrese el Nombre del Grupo" />
 						<hbox />
 						<hbox />
@@ -23,8 +27,9 @@
 			<separator />
 
 			<hbox hflex="1" widths="60%, 40%">
-				<groupbox height="20%" mold="3d">
-					<caption label="Funcionalidades Disponibles" style="color:white; font-size: 14px" />
+				<groupbox style="background-color:white;">
+					<caption label="Funcionalidades Disponibles"
+						style="color:#661313;font-size: 20px; font-weight:bold;" />
 					<listbox height="450px" width="100%" id="ltbFuncionalidades"
 						model="${$composer.modelArbol}">
 						<listhead>
@@ -37,8 +42,9 @@
 						</template>
 					</listbox>
 				</groupbox>
-				<groupbox height="20%" mold="3d">
-					<caption label="Funcionalidades Seleccionadas" style="color:white; font-size: 14px" />
+				<groupbox style="background-color:white;">
+					<caption label="Funcionalidades Seleccionadas"
+						style="color:#661313;font-size: 20px; font-weight:bold;" />
 					<listbox height="450px" width="100%"
 						id="ltbFuncionalidadesSeleccionados">
 						<listhead>

@@ -8,6 +8,7 @@ import interfacedao.transacciones.IItemPlanillaCataDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelo.maestros.Marca;
 import modelo.maestros.Sku;
 import modelo.transacciones.ItemDegustacionPlanillaEvento;
 import modelo.transacciones.ItemEstimadoPlanillaEvento;
@@ -84,5 +85,10 @@ public class SSku {
 			}
 			return skuDAO.findByIdSkuNotIn(ids);
 		}
+	}
+
+	public List<Sku> buscarPorMarca(Marca marca) {
+		// TODO Auto-generated method stub
+		return skuDAO.findByMarca(marca);
 	}
 }

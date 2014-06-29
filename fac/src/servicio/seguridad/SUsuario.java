@@ -6,6 +6,7 @@ import interfacedao.seguridad.IUsuarioDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelo.maestros.Zona;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 
@@ -48,5 +49,13 @@ public class SUsuario {
 		if (grupo != null)
 			usuarios = usuarioDAO.findByGrupos(grupo);
 		return usuarios;
+	}
+
+	public List<Usuario> buscarPorZona(Zona zona) {
+		return usuarioDAO.findByZona(zona);
+	}
+
+	public List<Usuario> buscarPorGrupo(Grupo grupo) {
+		return usuarioDAO.findByGrupos(grupo);
 	}
 }

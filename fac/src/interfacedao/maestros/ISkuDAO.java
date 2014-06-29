@@ -2,6 +2,7 @@ package interfacedao.maestros;
 
 import java.util.List;
 
+import modelo.maestros.Marca;
 import modelo.maestros.Sku;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +14,7 @@ public interface ISkuDAO extends JpaRepository<Sku, String> {
 	List<Sku> findAllOrderByDescripcion();
 
 	List<Sku> findByIdSkuNotIn(List<String> ids);
+
+	List<Sku> findByMarca(Marca marca);
 	
 }

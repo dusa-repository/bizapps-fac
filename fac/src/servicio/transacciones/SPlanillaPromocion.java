@@ -4,6 +4,7 @@ import interfacedao.transacciones.IPlanillaPromocionDAO;
 
 import java.util.List;
 
+import modelo.maestros.Marca;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaPromocion;
 
@@ -66,5 +67,13 @@ public class SPlanillaPromocion {
 			Usuario usuarioSesion, String variable) {
 		return planillaPromocionDAO.findByUsuarioAndEstadoOrderByFechaEnvioAsc(usuarioSesion,
 				variable);
+	}
+
+	public List<PlanillaPromocion> buscarPorUsuario(Usuario usuario) {
+		return planillaPromocionDAO.findByUsuario(usuario);
+	}
+
+	public List<PlanillaPromocion> buscarPorMarca(Marca marca) {
+		return planillaPromocionDAO.findByMarcaA(marca);
 	}
 }

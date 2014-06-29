@@ -2,6 +2,7 @@ package interfacedao.transacciones;
 
 import java.util.List;
 
+import modelo.maestros.Uniforme;
 import modelo.pk.UniformePlanillaUniformeId;
 import modelo.transacciones.PlanillaUniforme;
 import modelo.transacciones.UniformePlanillaUniforme;
@@ -12,5 +13,7 @@ public interface IUniformePlanillaUniformeDAO extends JpaRepository<UniformePlan
 
 	List<UniformePlanillaUniforme> findByPlanillaUniforme(
 			PlanillaUniforme planilla);
+
+	List<UniformePlanillaUniforme> findByUniforme(Uniforme uni);
 
 }

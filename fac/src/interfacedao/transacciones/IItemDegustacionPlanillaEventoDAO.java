@@ -2,6 +2,7 @@ package interfacedao.transacciones;
 
 import java.util.List;
 
+import modelo.maestros.Sku;
 import modelo.pk.ItemDegustacionPlanillaEventoId;
 import modelo.transacciones.ItemDegustacionPlanillaEvento;
 import modelo.transacciones.PlanillaEvento;
@@ -12,5 +13,7 @@ public interface IItemDegustacionPlanillaEventoDAO extends JpaRepository<ItemDeg
 
 	List<ItemDegustacionPlanillaEvento> findByPlanillaEvento(
 			PlanillaEvento planilla);
+
+	List<ItemDegustacionPlanillaEvento> findBySku(Sku sku);
 
 }

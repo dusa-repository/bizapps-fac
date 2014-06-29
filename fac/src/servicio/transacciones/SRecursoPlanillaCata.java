@@ -4,6 +4,7 @@ import interfacedao.transacciones.IRecursoPlanillaCataDAO;
 
 import java.util.List;
 
+import modelo.maestros.Recurso;
 import modelo.transacciones.PlanillaCata;
 import modelo.transacciones.RecursoPlanillaCata;
 
@@ -28,5 +29,9 @@ public class SRecursoPlanillaCata {
 
 	public void guardar(List<RecursoPlanillaCata> recursosPlanilla) {
 		recursoPlanillaCataDAO.save(recursosPlanilla);
+	}
+
+	public List<RecursoPlanillaCata> buscarPorRecurso(Recurso recurso) {
+		return recursoPlanillaCataDAO.findByRecurso(recurso);
 	}
 }
