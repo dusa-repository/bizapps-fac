@@ -1,6 +1,8 @@
 package modelo.generico;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class PlanillaGenerica {
 	
@@ -104,4 +106,9 @@ public class PlanillaGenerica {
 		this.referencia = referencia;
 	}
 
+	public String traerFecha() {
+		DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+		return String.valueOf(formatoFecha.format(fecha));
+	}
+	
 }

@@ -278,17 +278,12 @@ public class CFachada extends CGenerico {
 												.limpiar(planilla);
 										servicioPlanillaFachada.eliminar(id);
 										limpiar();
-										Messagebox
-												.show("Registro Eliminado Exitosamente",
-														"Informacion",
-														Messagebox.OK,
-														Messagebox.INFORMATION);
+										msj.mensajeInformacion(Mensaje.eliminado);
 									}
 								}
 							});
 				} else {
-					Messagebox.show("No ha Seleccionado Ningun Registro",
-							"Alerta", Messagebox.OK, Messagebox.EXCLAMATION);
+					msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 				}
 			}
 
@@ -493,7 +488,7 @@ public class CFachada extends CGenerico {
 					"Fachada y Decoraciones");
 			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
-			listaGenerica.add(indice,planillita);
+			listaGenerica.add(indice, planillita);
 			control.actualizar(listaGenerica, catalogoGenerico);
 		}
 
@@ -627,18 +622,15 @@ public class CFachada extends CGenerico {
 				|| dspAlto.getText().compareTo("") == 0
 				|| dspAncho.getText().compareTo("") == 0
 				|| dspLargo.getText().compareTo("") == 0) {
-			Messagebox.show("Debe Llenar Todos los Campos", "Informacion",
-					Messagebox.OK, Messagebox.INFORMATION);
+			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else {
 			if (!Validador.validarCorreo(txtEmail.getValue())) {
-				Messagebox.show("Formato de Correo No Valido", "Alerta",
-						Messagebox.OK, Messagebox.EXCLAMATION);
+				msj.mensajeAlerta(Mensaje.correoInvalido);
 				return false;
 			} else {
 				if (!Validador.validarTelefono(txtTelefono.getValue())) {
-					Messagebox.show("Formato de Telefono No Valido", "Alerta",
-							Messagebox.OK, Messagebox.EXCLAMATION);
+					msj.mensajeAlerta(Mensaje.correoInvalido);
 					return false;
 				} else
 					return true;
@@ -761,7 +753,8 @@ public class CFachada extends CGenerico {
 							&& planilla.getCiudad().toLowerCase()
 									.startsWith(valores.get(1).toLowerCase())
 							&& planilla.getMarca().getDescripcion()
-									.toLowerCase().startsWith(valores.get(2).toLowerCase())
+									.toLowerCase()
+									.startsWith(valores.get(2).toLowerCase())
 							&& String
 									.valueOf(
 											formatoFecha.format(planilla
@@ -778,7 +771,8 @@ public class CFachada extends CGenerico {
 				String[] registros = new String[4];
 				registros[0] = planillaCata.getNombreActividad().toLowerCase();
 				registros[1] = planillaCata.getCiudad().toLowerCase();
-				registros[2] = planillaCata.getMarca().getDescripcion().toLowerCase();
+				registros[2] = planillaCata.getMarca().getDescripcion()
+						.toLowerCase();
 				registros[3] = String.valueOf(formatoFecha.format(planillaCata
 						.getFechaAuditoria()));
 				return registros;
@@ -945,8 +939,7 @@ public class CFachada extends CGenerico {
 	@Listen("onChange = #txtTelefono")
 	public void validarTelefono2E() throws IOException {
 		if (Validador.validarTelefono(txtTelefono.getValue()) == false) {
-			Messagebox.show("Formato de Telefono No Valido", "Alerta",
-					Messagebox.OK, Messagebox.EXCLAMATION);
+			msj.mensajeAlerta(Mensaje.telefonoInvalido);
 		}
 	}
 
@@ -954,8 +947,7 @@ public class CFachada extends CGenerico {
 	@Listen("onChange = #txtEmail")
 	public void validarCorreo() throws IOException {
 		if (Validador.validarCorreo(txtEmail.getValue()) == false) {
-			Messagebox.show("Correo Electronico Invalido", "Alerta",
-					Messagebox.OK, Messagebox.EXCLAMATION);
+			msj.mensajeAlerta(Mensaje.correoInvalido);
 		}
 	}
 

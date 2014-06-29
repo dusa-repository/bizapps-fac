@@ -20,7 +20,7 @@ public class Mensaje {
 	public static String enUso = "La interfaz esta siendo usada";
 	public static String articuloNoExiste = "El Codigo del Articulo no Existe.";
 	public static String enviado = "La solicitud ha sido enviada Correctamente";
-	public static String correoInvalido = "El Correo es Invalido.";
+	public static String correoInvalido = "Formato de Correo No Valido";
 	public static String usuarioNoRegistrado = "El Usuario no Esta Registrado.";
 	public static String correoNoConcuerda= "El Correo no Concuerda con los Datos del Usuario.";
 	public static String contrasennasNoCoinciden = "Las Contraseñas no Coinciden.";
@@ -32,6 +32,7 @@ public class Mensaje {
 	public static String tamanioMuyGrande = "El archivo que ha seleccionado excede el tamaño maximo establecido (100 KB)";
 	public static String listaVacia = "Debe añadir una referencia de pago para cada Solicitud";
 	public static String noEliminar = "El Registro no se puede Eliminar, Esta siendo Usado";
+	public static String telefonoInvalido = "Formato de Telefono No Valido";
 	
 	
 	public void mensajeInformacion(String msj) {
