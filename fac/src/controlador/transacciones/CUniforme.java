@@ -216,17 +216,12 @@ public class CUniforme extends CGenerico {
 												.limpiar(planilla);
 										servicioPlanillaUniforme.eliminar(id);
 										limpiar();
-										Messagebox
-												.show("Registro Eliminado Exitosamente",
-														"Informacion",
-														Messagebox.OK,
-														Messagebox.INFORMATION);
+										msj.mensajeInformacion(Mensaje.eliminado);
 									}
 								}
 							});
 				} else {
-					Messagebox.show("No ha Seleccionado Ningun Registro",
-							"Alerta", Messagebox.OK, Messagebox.EXCLAMATION);
+					msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 				}
 			}
 
@@ -515,18 +510,15 @@ public class CUniforme extends CGenerico {
 				|| cdtJustificacion.getValue().compareTo("") == 0
 				|| dtbActividad.getText().compareTo("") == 0
 				|| (!rdoNo.isChecked() && !rdoSi.isChecked())) {
-			Messagebox.show("Debe Llenar Todos los Campos Requeridos",
-					"Informacion", Messagebox.OK, Messagebox.INFORMATION);
+			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else {
 			if (!Validador.validarCorreo(txtEMail.getValue())) {
-				Messagebox.show("Formato de Correo No Valido", "Alerta",
-						Messagebox.OK, Messagebox.EXCLAMATION);
+				msj.mensajeAlerta(Mensaje.correoInvalido);
 				return false;
 			} else {
 				if (!Validador.validarTelefono(txtTelefono.getValue())) {
-					Messagebox.show("Formato de Telefono No Valido", "Alerta",
-							Messagebox.OK, Messagebox.EXCLAMATION);
+					msj.mensajeAlerta(Mensaje.telefonoInvalido);
 					return false;
 				} else
 					return true;
@@ -728,8 +720,7 @@ public class CUniforme extends CGenerico {
 	@Listen("onChange = #txtTelefono")
 	public void validarTelefono2E() throws IOException {
 		if (Validador.validarTelefono(txtTelefono.getValue()) == false) {
-			Messagebox.show("Formato de Telefono No Valido", "Alerta",
-					Messagebox.OK, Messagebox.EXCLAMATION);
+			msj.mensajeAlerta(Mensaje.telefonoInvalido);
 		}
 	}
 
@@ -737,8 +728,7 @@ public class CUniforme extends CGenerico {
 	@Listen("onChange = #txtEMail")
 	public void validarCorreo() throws IOException {
 		if (Validador.validarCorreo(txtEMail.getValue()) == false) {
-			Messagebox.show("Correo Electronico Invalido", "Alerta",
-					Messagebox.OK, Messagebox.EXCLAMATION);
+			msj.mensajeAlerta(Mensaje.correoInvalido);
 		}
 	}
 }

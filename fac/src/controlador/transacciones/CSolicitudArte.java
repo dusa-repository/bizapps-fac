@@ -213,17 +213,12 @@ public class CSolicitudArte extends CGenerico {
 												.eliminarPorPlanilla(planilla);
 										servicioPlanillaArte.eliminar(id);
 										limpiar();
-										Messagebox
-												.show("Registro Eliminado Exitosamente",
-														"Informacion",
-														Messagebox.OK,
-														Messagebox.INFORMATION);
+										msj.mensajeInformacion(Mensaje.eliminado);
 									}
 								}
 							});
 				} else {
-					Messagebox.show("No ha Seleccionado Ningun Registro",
-							"Alerta", Messagebox.OK, Messagebox.EXCLAMATION);
+					msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 				}
 			}
 
@@ -485,8 +480,7 @@ public class CSolicitudArte extends CGenerico {
 				|| dspAlto.getText().compareTo("") == 0
 				|| dspAncho.getText().compareTo("") == 0
 				|| dspLargo.getText().compareTo("") == 0) {
-			Messagebox.show("Debe Llenar Todos los Campos", "Informacion",
-					Messagebox.OK, Messagebox.INFORMATION);
+			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else
 			return true;
@@ -510,7 +504,8 @@ public class CSolicitudArte extends CGenerico {
 				.buscarTodosOrdenados(usuarioSesion(nombreUsuarioSesion()));
 		catalogo = new Catalogo<PlanillaArte>(catalogoSolicitudArte,
 				"Planillas de Arte y Publicaciones", listPlanilla, true,
-				"Nombre Actividad", "Marca", "Nombre de Cliente", "Fecha Edicion") {
+				"Nombre Actividad", "Marca", "Nombre de Cliente",
+				"Fecha Edicion") {
 
 			@Override
 			protected List<PlanillaArte> buscar(List<String> valores) {

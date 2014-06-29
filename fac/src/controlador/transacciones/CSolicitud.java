@@ -158,10 +158,6 @@ public class CSolicitud extends CGenerico {
 	@Listen("onClick= #btnCerrar")
 	public void salir() {
 		cerrarVentana(wdwSolicitud);
-		// synchronized(this){
-		// this.corre = true;
-		// notifyAll();
-		// }
 	}
 
 	@Listen("onClick= #btnProcesar")
@@ -314,7 +310,7 @@ public class CSolicitud extends CGenerico {
 
 	@Listen("onClick = #btnVer")
 	public void verPlanilla() {
-		if (listPlanilla.size() == 0){
+		if (listPlanilla.size() == 0) {
 			cargarLista();
 		}
 		final List<PlanillaGenerica> procesadas = catalogo

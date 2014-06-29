@@ -489,13 +489,11 @@ public class CPromocion extends CGenerico {
 			return false;
 		} else {
 			if (!Validador.validarCorreo(txtEMail.getValue())) {
-				Messagebox.show("Formato de Correo No Valido", "Alerta",
-						Messagebox.OK, Messagebox.EXCLAMATION);
+				msj.mensajeAlerta(Mensaje.correoInvalido);
 				return false;
 			} else {
 				if (!Validador.validarTelefono(txtTelefono.getValue())) {
-					Messagebox.show("Formato de Telefono No Valido", "Alerta",
-							Messagebox.OK, Messagebox.EXCLAMATION);
+					msj.mensajeAlerta(Mensaje.telefonoInvalido);
 					return false;
 				} else
 					return true;
@@ -618,8 +616,7 @@ public class CPromocion extends CGenerico {
 	@Listen("onChange = #txtTelefono")
 	public void validarTelefono2E() throws IOException {
 		if (Validador.validarTelefono(txtTelefono.getValue()) == false) {
-			Messagebox.show("Formato de Telefono No Valido", "Alerta",
-					Messagebox.OK, Messagebox.EXCLAMATION);
+			msj.mensajeAlerta(Mensaje.telefonoInvalido);
 		}
 	}
 
@@ -627,8 +624,7 @@ public class CPromocion extends CGenerico {
 	@Listen("onChange = #txtEMail")
 	public void validarCorreo() throws IOException {
 		if (Validador.validarCorreo(txtEMail.getValue()) == false) {
-			Messagebox.show("Correo Electronico Invalido", "Alerta",
-					Messagebox.OK, Messagebox.EXCLAMATION);
+			msj.mensajeAlerta(Mensaje.correoInvalido);
 		}
 	}
 

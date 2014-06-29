@@ -76,7 +76,7 @@ public class CInicio extends CGenerico {
 				.getAuthentication();
 
 		Usuario u = servicioUsuario.buscarUsuarioPorNombre(authe.getName());
-		
+
 		List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
 		for (int i = 0; i < grupos.size(); i++) {
 			if (grupos.get(i).getNombre().equals("Administrador"))
@@ -184,14 +184,14 @@ public class CInicio extends CGenerico {
 		}
 		Map params = new HashMap();
 		params.put("width", "500px");
-		params.put("height", "600px");
+		params.put("height", "800px");
 		params.put("style", "top:100px;");
 		String[] arreglo = { "TradeMark", "Marca" };
-		
+
 		Messagebox.Button[] boton = { Messagebox.Button.OK,
 				Messagebox.Button.CANCEL };
 
-		Messagebox.show("Seleccione un Tipo", "", boton, arreglo, Messagebox.QUESTION, null,
+		Messagebox.show("SELECCIONE UN TIPO", "", boton, arreglo, "", null,
 				new org.zkoss.zk.ui.event.EventListener() {
 					public void onEvent(Event evt) throws InterruptedException {
 						if (evt.getName().equals("onOK")) {
@@ -226,14 +226,14 @@ public class CInicio extends CGenerico {
 			}
 		});
 	}
-	
+
 	@Listen("onClick = #lblEditarCuenta")
-	public void abrirVentana(){
+	public void abrirVentana() {
 		Window window = (Window) Executions.createComponents(
 				"/vistas/seguridad/VEditarUsuario.zul", null, null);
-				window.doModal();
+		window.doModal();
 	}
-	
+
 	public void marca() {
 		List<Configuracion> configuracion = servicioConfiguracion
 				.buscar("Marca");

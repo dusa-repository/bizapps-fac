@@ -144,12 +144,13 @@ public class CEvento extends CGenerico {
 	private Image imagenSi;
 	@Wire
 	private Image imagenNo;
-	
+
 	CSolicitud control = new CSolicitud();
 	List<PlanillaGenerica> listaGenerica = new ArrayList<PlanillaGenerica>();
 	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
 	Catalogo<PlanillaGenerica> catalogoGenerico;
 	Timestamp fechaInbox;
+
 	@Override
 	public void inicializar() throws IOException {
 
@@ -243,17 +244,12 @@ public class CEvento extends CGenerico {
 												.limpiar(planilla);
 										servicioPlanillaEvento.eliminar(id);
 										limpiar();
-										Messagebox
-												.show("Registro Eliminado Exitosamente",
-														"Informacion",
-														Messagebox.OK,
-														Messagebox.INFORMATION);
+										msj.mensajeInformacion(Mensaje.eliminado);
 									}
 								}
 							});
 				} else {
-					Messagebox.show("No ha Seleccionado Ningun Registro",
-							"Alerta", Messagebox.OK, Messagebox.EXCLAMATION);
+					msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 				}
 			}
 
@@ -307,7 +303,8 @@ public class CEvento extends CGenerico {
 				tipoInbox = planilla.getTipo();
 				listaGenerica = (List<PlanillaGenerica>) map.get("lista");
 				planillaGenerica = (PlanillaGenerica) map.get("planilla");
-				catalogoGenerico =  (Catalogo<PlanillaGenerica>) map.get("catalogo");
+				catalogoGenerico = (Catalogo<PlanillaGenerica>) map
+						.get("catalogo");
 				fechaInbox = (Timestamp) map.get("fechaInbox");
 				settearCampos(planilla);
 				switch (estadoInbox) {
@@ -377,17 +374,18 @@ public class CEvento extends CGenerico {
 			usuario = usuarioEditador;
 		else
 			usuario = usuarioSesion(nombreUsuarioSesion());
-		
+
 		if (!estadoInbox.equals("Pendiente") && string.equals("Pendiente"))
 			envio = true;
 
 		Timestamp fechaEnvio = fechaHora;
 		if (estadoInbox.equals("Pendiente"))
 			fechaEnvio = fechaInbox;
-		
-		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion") && id==0)
+
+		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion")
+				&& id == 0)
 			guardo = true;
-		
+
 		if (estadoInbox.equals("Pendiente"))
 			string = "Pendiente";
 		String tipoConfig = "";
@@ -413,30 +411,31 @@ public class CEvento extends CGenerico {
 				nombreActividad, fechaInicio, fechaFin, ciudad, region,
 				horaEvento, direccion, personas, contacto, telefono, nivel,
 				edadTarget, medio, venta, costo, descripcion, mecanica,
-				fechaHora,fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
-				usuario.getZona().getDescripcion(), tipoConfig, "", 0);
+				fechaHora, fechaEnvio, horaAuditoria, nombreUsuarioSesion(),
+				string, usuario.getZona().getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaEvento.guardar(planillaEvento);
 		if (id != 0)
 			planillaEvento = servicioPlanillaEvento.buscar(id);
 		else
 			planillaEvento = servicioPlanillaEvento.buscarUltima();
-		
+
 		if (inbox) {
 			PlanillaGenerica planillita = new PlanillaGenerica(
 					planillaEvento.getIdPlanillaEvento(), usuario.getNombre(),
-					marca.getDescripcion(), nombreActividad, planillaEvento.getFechaEnvio(), string,
+					marca.getDescripcion(), nombreActividad,
+					planillaEvento.getFechaEnvio(), string,
 					"Eventos Especiales");
 			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
-			listaGenerica.add(indice,planillita);
-			control.actualizar(listaGenerica,catalogoGenerico);
+			listaGenerica.add(indice, planillita);
+			control.actualizar(listaGenerica, catalogoGenerico);
 		}
-		
+
 		if (guardo)
 			guardarBitacora(planillaEvento, true);
 		if (envio)
 			guardarBitacora(planillaEvento, false);
-		
+
 		guardarItemsDegustacion(planillaEvento);
 		guardarItemsEstimados(planillaEvento);
 		guardarRecursos(planillaEvento);
@@ -450,9 +449,9 @@ public class CEvento extends CGenerico {
 					marca, nombreActividad, fechaInicio, fechaFin, ciudad,
 					region, horaEvento, direccion, personas, contacto,
 					telefono, nivel, edadTarget, medio, venta, costo,
-					descripcion, mecanica, fechaHora,fechaEnvio, horaAuditoria,
-					nombreUsuarioSesion(), string, usuario.getZona()
-							.getDescripcion(), "Marca", "",
+					descripcion, mecanica, fechaHora, fechaEnvio,
+					horaAuditoria, nombreUsuarioSesion(), string, usuario
+							.getZona().getDescripcion(), "Marca", "",
 					planillaEvento.getIdPlanillaEvento());
 			servicioPlanillaEvento.guardar(planillaAdmin);
 			planillaAdmin = servicioPlanillaEvento.buscarUltima();
@@ -462,9 +461,8 @@ public class CEvento extends CGenerico {
 			guardarRecursos(planillaAdmin);
 		}
 	}
-	
-	private void guardarBitacora(PlanillaEvento planillaEvento,
-			boolean edicion) {
+
+	private void guardarBitacora(PlanillaEvento planillaEvento, boolean edicion) {
 
 		/* Busca las imagenes representativas de los estados */
 		URL url = getClass().getResource("/imagenes/si.png");
@@ -489,13 +487,12 @@ public class CEvento extends CGenerico {
 					nombreUsuarioSesion(), imagen);
 			servicioBitacoraEvento.guardar(bitacora);
 		} else {
-			if(id==0)
-			{
+			if (id == 0) {
 				BitacoraEvento bitacora = new BitacoraEvento(0, planillaEvento,
-						"Planilla en Edicion", fechaHora, fechaHora, horaAuditoria,
-						nombreUsuarioSesion(), imagen);
+						"Planilla en Edicion", fechaHora, fechaHora,
+						horaAuditoria, nombreUsuarioSesion(), imagen);
 				servicioBitacoraEvento.guardar(bitacora);
-				
+
 			}
 			List<BitacoraEvento> listaBitacoras = new ArrayList<BitacoraEvento>();
 			BitacoraEvento bitacora = new BitacoraEvento(0, planillaEvento,
@@ -578,7 +575,6 @@ public class CEvento extends CGenerico {
 		servicioRecursoPlanillaEvento.guardar(recursosPlanilla);
 	}
 
-
 	protected boolean validar() {
 		if (txtCiudad.getText().compareTo("") == 0
 				|| txtContacto.getText().compareTo("") == 0
@@ -598,13 +594,11 @@ public class CEvento extends CGenerico {
 				|| dtbInicio.getText().compareTo("") == 0
 				|| tmbHora.getText().compareTo("") == 0
 				|| spnPersonas.getText().compareTo("") == 0) {
-			Messagebox.show("Debe Llenar Todos los Campos", "Informacion",
-					Messagebox.OK, Messagebox.INFORMATION);
+			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else {
 			if (!Validador.validarTelefono(txtTelefono.getValue())) {
-				Messagebox.show("Formato de Telefono No Valido", "Alerta",
-						Messagebox.OK, Messagebox.EXCLAMATION);
+				msj.mensajeAlerta(Mensaje.telefonoInvalido);
 				return false;
 			} else
 				return true;
@@ -688,7 +682,8 @@ public class CEvento extends CGenerico {
 							&& planillaEvento.getCiudad().toLowerCase()
 									.startsWith(valores.get(1).toLowerCase())
 							&& planillaEvento.getMarca().getDescripcion()
-									.toLowerCase().startsWith(valores.get(2).toLowerCase())
+									.toLowerCase()
+									.startsWith(valores.get(2).toLowerCase())
 							&& String
 									.valueOf(
 											formatoFecha.format(planillaEvento
@@ -703,9 +698,11 @@ public class CEvento extends CGenerico {
 			@Override
 			protected String[] crearRegistros(PlanillaEvento planillaEvento) {
 				String[] registros = new String[4];
-				registros[0] = planillaEvento.getNombreActividad().toLowerCase();
+				registros[0] = planillaEvento.getNombreActividad()
+						.toLowerCase();
 				registros[1] = planillaEvento.getCiudad().toLowerCase();
-				registros[2] = planillaEvento.getMarca().getDescripcion().toLowerCase();
+				registros[2] = planillaEvento.getMarca().getDescripcion()
+						.toLowerCase();
 				registros[3] = String.valueOf(formatoFecha
 						.format(planillaEvento.getFechaAuditoria()));
 				return registros;
@@ -916,8 +913,7 @@ public class CEvento extends CGenerico {
 	@Listen("onChange = #txtTelefono")
 	public void validarTelefono2E() throws IOException {
 		if (Validador.validarTelefono(txtTelefono.getValue()) == false) {
-			Messagebox.show("Formato de Telefono No Valido", "Alerta",
-					Messagebox.OK, Messagebox.EXCLAMATION);
+			msj.mensajeAlerta(Mensaje.telefonoInvalido);
 		}
 	}
 

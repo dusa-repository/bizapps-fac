@@ -6,7 +6,7 @@
 		<div>
 			<space />
 			<vbox>
-				<listbox id="lista" height="450px" width="100%" span="true"
+				<listbox id="lista" height="400px" width="100%" span="true"
 					emptyMessage="No hay Recursos Registrados">
 					<listhead>
 						<listheader label="Usuario" hflex="min"/>
@@ -24,7 +24,7 @@
 							</listcell>
 							<listcell label="${each.nombreActividad}">
 							</listcell>
-							<listcell label="${each.fecha}">
+							<listcell label="${each.traerFecha()}">
 							</listcell>
 							<listcell label="${each.tipoPlanilla}">
 							</listcell>
@@ -41,8 +41,8 @@
 				</listbox>
 				<space />
 				<hbox>
-					<button id="btnAceptar" label="Aceptar"
-						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/procesar.png" />
+					<button id="btnAceptar" label="Pagar"
+						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/pagar.png" />
 					<button id="btnSalir" label="Salir"
 						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/salir.png" />
 				</hbox>

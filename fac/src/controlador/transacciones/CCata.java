@@ -133,6 +133,7 @@ public class CCata extends CGenerico {
 	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
 	Catalogo<PlanillaGenerica> catalogoGenerico;
 	Timestamp fechaInbox;
+
 	@Override
 	public void inicializar() throws IOException {
 
@@ -222,17 +223,12 @@ public class CCata extends CGenerico {
 												.limpiar(planilla);
 										servicioPlanillaCata.eliminar(id);
 										limpiar();
-										Messagebox
-												.show("Registro Eliminado Exitosamente",
-														"Informacion",
-														Messagebox.OK,
-														Messagebox.INFORMATION);
+										msj.mensajeInformacion(Mensaje.eliminado);
 									}
 								}
 							});
 				} else {
-					Messagebox.show("No ha Seleccionado Ningun Registro",
-							"Alerta", Messagebox.OK, Messagebox.EXCLAMATION);
+					msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 				}
 			}
 
@@ -360,7 +356,7 @@ public class CCata extends CGenerico {
 		Timestamp fechaEnvio = fechaHora;
 		if (estadoInbox.equals("Pendiente"))
 			fechaEnvio = fechaInbox;
-		
+
 		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion")
 				&& id == 0)
 			guardo = true;
@@ -401,11 +397,11 @@ public class CCata extends CGenerico {
 		if (inbox) {
 			PlanillaGenerica planillita = new PlanillaGenerica(
 					planilla.getIdPlanillaCata(), usuario.getNombre(),
-					marca.getDescripcion(), nombreActividad, planilla.getFechaEnvio(), string,
-					"Cata Induccion");
+					marca.getDescripcion(), nombreActividad,
+					planilla.getFechaEnvio(), string, "Cata Induccion");
 			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
-			listaGenerica.add(indice,planillita);
+			listaGenerica.add(indice, planillita);
 			control.actualizar(listaGenerica, catalogoGenerico);
 		}
 
@@ -548,18 +544,15 @@ public class CCata extends CGenerico {
 				|| cdtMecanica.getValue().compareTo("") == 0
 				|| dtbActividad.getText().compareTo("") == 0
 				|| spnPersonas.getText().compareTo("") == 0) {
-			Messagebox.show("Debe Llenar Todos los Campos", "Informacion",
-					Messagebox.OK, Messagebox.INFORMATION);
+			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else {
 			if (!Validador.validarCorreo(txtEMail.getValue())) {
-				Messagebox.show("Formato de Correo No Valido", "Alerta",
-						Messagebox.OK, Messagebox.EXCLAMATION);
+				msj.mensajeAlerta(Mensaje.correoInvalido);
 				return false;
 			} else {
 				if (!Validador.validarTelefono(txtTelefono.getValue())) {
-					Messagebox.show("Formato de Telefono No Valido", "Alerta",
-							Messagebox.OK, Messagebox.EXCLAMATION);
+					msj.mensajeAlerta(Mensaje.telefonoInvalido);
 					return false;
 				} else
 					return true;
@@ -635,7 +628,8 @@ public class CCata extends CGenerico {
 							&& planillaCata.getCiudad().toLowerCase()
 									.startsWith(valores.get(1).toLowerCase())
 							&& planillaCata.getMarca().getDescripcion()
-									.toLowerCase().startsWith(valores.get(2).toLowerCase())
+									.toLowerCase()
+									.startsWith(valores.get(2).toLowerCase())
 							&& String
 									.valueOf(
 											formatoFecha.format(planillaCata
@@ -652,7 +646,8 @@ public class CCata extends CGenerico {
 				String[] registros = new String[4];
 				registros[0] = planillaCata.getNombreActividad().toLowerCase();
 				registros[1] = planillaCata.getCiudad().toLowerCase();
-				registros[2] = planillaCata.getMarca().getDescripcion().toLowerCase();
+				registros[2] = planillaCata.getMarca().getDescripcion()
+						.toLowerCase();
 				registros[3] = String.valueOf(formatoFecha.format(planillaCata
 						.getFechaAuditoria()));
 				return registros;
@@ -795,8 +790,7 @@ public class CCata extends CGenerico {
 	@Listen("onChange = #txtTelefono")
 	public void validarTelefono2E() throws IOException {
 		if (Validador.validarTelefono(txtTelefono.getValue()) == false) {
-			Messagebox.show("Formato de Telefono No Valido", "Alerta",
-					Messagebox.OK, Messagebox.EXCLAMATION);
+			msj.mensajeAlerta(Mensaje.telefonoInvalido);
 		}
 	}
 
@@ -804,8 +798,7 @@ public class CCata extends CGenerico {
 	@Listen("onChange = #txtEMail")
 	public void validarCorreo() throws IOException {
 		if (Validador.validarCorreo(txtEMail.getValue()) == false) {
-			Messagebox.show("Correo Electronico Invalido", "Alerta",
-					Messagebox.OK, Messagebox.EXCLAMATION);
+			msj.mensajeAlerta(Mensaje.correoInvalido);
 		}
 	}
 
