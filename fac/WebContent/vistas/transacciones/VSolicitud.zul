@@ -25,7 +25,8 @@
 					<button id="btnVer" label="Ver Solicitud"
 						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/ver.png" />
 					<button id="btnBitacora" label="Ver Bitacora"
-						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/bitacora.png" />
+						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/bitacora.png"
+						autodisable="self" />
 					<button id="btnCerrar" label="Salir"
 						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/salir.png" />
 				</vbox>

@@ -11,6 +11,7 @@ import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 
 import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.SelectEvent;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Div;
@@ -19,6 +20,7 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Treeitem;
 import org.zkoss.zul.Window;
 
 import componente.Botonera;
@@ -273,27 +275,12 @@ public class CGrupo extends CGenerico {
 
 	@Listen("onSelect = #ltbFuncionalidades")
 	public void mostrarFuncionalidad() {
-		Listitem item = ltbFuncionalidades.getSelectedItem();
-		if (item != null) {
-			if (item.isSelected()) {
-				boolean error = false;
-				for (int i = 0; i < funcionalidades.size(); i++) {
-					if (funcionalidades.get(i).equals(item.getLabel()))
-						error = true;
-				}
-				if (!error)
-					funcionalidades.add(item.getLabel());
-				ltbFuncionalidadesSeleccionados
-						.setModel(new ListModelList<String>(funcionalidades));
-			} else {
-				for (int i = 0; i < ltbFuncionalidadesSeleccionados
-						.getItemCount(); i++) {
-					Listitem listItem = ltbFuncionalidades.getItemAtIndex(i);
-					if (listItem.getLabel().equals(item.getLabel())) {
-						ltbFuncionalidades.removeItemAt(i);
-					}
-				}
-				funcionalidades.remove(item.getLabel());
+		ltbFuncionalidadesSeleccionados.getItems().clear();
+		funcionalidades.clear();
+		for (int i = 0; i < ltbFuncionalidades.getItemCount(); i++) {
+			Listitem listItem = ltbFuncionalidades.getItemAtIndex(i);
+			if (listItem.isSelected()) {
+				funcionalidades.add(listItem.getLabel());
 				ltbFuncionalidadesSeleccionados
 						.setModel(new ListModelList<String>(funcionalidades));
 			}

@@ -120,6 +120,7 @@ public class CPromocion extends CGenerico {
 	PlanillaGenerica planillaGenerica = new PlanillaGenerica();
 	Catalogo<PlanillaGenerica> catalogoGenerico;
 	Timestamp fechaInbox;
+
 	@Override
 	public void inicializar() throws IOException {
 		cargarCombos();
@@ -327,7 +328,7 @@ public class CPromocion extends CGenerico {
 		Timestamp fechaEnvio = fechaHora;
 		if (estadoInbox.equals("Pendiente"))
 			fechaEnvio = fechaInbox;
-		
+
 		if (!estadoInbox.equals("Pendiente") && string.equals("En Edicion")
 				&& id == 0)
 			guardo = true;
@@ -373,7 +374,7 @@ public class CPromocion extends CGenerico {
 					"Promociones de Marca");
 			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
-			listaGenerica.add(indice,planillita);
+			listaGenerica.add(indice, planillita);
 			control.actualizar(listaGenerica, catalogoGenerico);
 		}
 
@@ -529,7 +530,7 @@ public class CPromocion extends CGenerico {
 				.buscarTodosOrdenados(usuarioSesion(nombreUsuarioSesion()));
 		catalogo = new Catalogo<PlanillaPromocion>(catalogoPromocion,
 				"Planillas de Promociones de Marca", listPlanilla, true,
-				"Nombre Actividad", "Marca", "Fecha Edicion") {
+				"Nombre Actividad", "Marca", "Ciudad", "Fecha Edicion") {
 
 			@Override
 			protected List<PlanillaPromocion> buscar(List<String> valores) {
@@ -538,14 +539,17 @@ public class CPromocion extends CGenerico {
 
 				for (PlanillaPromocion planilla : listPlanilla) {
 					if (planilla.getNombreActividad().toLowerCase()
-							.startsWith(valores.get(0))
+							.startsWith(valores.get(0).toLowerCase())
 							&& planilla.getMarcaA().getDescripcion()
-									.toLowerCase().startsWith(valores.get(1))
+									.toLowerCase()
+									.startsWith(valores.get(1).toLowerCase())
+							&& planilla.getCiudad().toLowerCase()
+									.startsWith(valores.get(2).toLowerCase())
 							&& String
 									.valueOf(
 											formatoFecha.format(planilla
 													.getFechaAuditoria()))
-									.toLowerCase().startsWith(valores.get(2))) {
+									.toLowerCase().startsWith(valores.get(3))) {
 						lista.add(planilla);
 					}
 				}
@@ -554,10 +558,12 @@ public class CPromocion extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(PlanillaPromocion planillaCata) {
-				String[] registros = new String[3];
-				registros[0] = planillaCata.getNombreActividad();
-				registros[1] = planillaCata.getMarcaA().getDescripcion();
-				registros[2] = String.valueOf(formatoFecha.format(planillaCata
+				String[] registros = new String[4];
+				registros[0] = planillaCata.getNombreActividad().toLowerCase();
+				registros[1] = planillaCata.getMarcaA().getDescripcion()
+						.toLowerCase();
+				registros[2] = planillaCata.getCiudad().toLowerCase();
+				registros[3] = String.valueOf(formatoFecha.format(planillaCata
 						.getFechaAuditoria()));
 				return registros;
 			}

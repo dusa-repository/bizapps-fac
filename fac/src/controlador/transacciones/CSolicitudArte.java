@@ -388,7 +388,7 @@ public class CSolicitudArte extends CGenerico {
 					"Solicitud de Arte y Publicaciones");
 			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
-			listaGenerica.add(indice,planillita);
+			listaGenerica.add(indice, planillita);
 			control.actualizar(listaGenerica, catalogoGenerico);
 		}
 
@@ -510,7 +510,7 @@ public class CSolicitudArte extends CGenerico {
 				.buscarTodosOrdenados(usuarioSesion(nombreUsuarioSesion()));
 		catalogo = new Catalogo<PlanillaArte>(catalogoSolicitudArte,
 				"Planillas de Arte y Publicaciones", listPlanilla, true,
-				"Nombre Actividad", "Marca", "Fecha Edicion") {
+				"Nombre Actividad", "Marca", "Nombre de Cliente", "Fecha Edicion") {
 
 			@Override
 			protected List<PlanillaArte> buscar(List<String> valores) {
@@ -519,14 +519,17 @@ public class CSolicitudArte extends CGenerico {
 
 				for (PlanillaArte planilla : listPlanilla) {
 					if (planilla.getNombreActividad().toLowerCase()
-							.startsWith(valores.get(0))
+							.startsWith(valores.get(0).toLowerCase())
 							&& planilla.getMarca().getDescripcion()
-									.toLowerCase().startsWith(valores.get(1))
+									.toLowerCase()
+									.startsWith(valores.get(1).toLowerCase())
+							&& planilla.getNombreCliente().toLowerCase()
+									.startsWith(valores.get(2).toLowerCase())
 							&& String
 									.valueOf(
 											formatoFecha.format(planilla
 													.getFechaAuditoria()))
-									.toLowerCase().startsWith(valores.get(2))) {
+									.toLowerCase().startsWith(valores.get(3))) {
 						lista.add(planilla);
 					}
 				}
@@ -535,10 +538,12 @@ public class CSolicitudArte extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(PlanillaArte planillaCata) {
-				String[] registros = new String[3];
-				registros[0] = planillaCata.getNombreActividad();
-				registros[1] = planillaCata.getMarca().getDescripcion();
-				registros[2] = String.valueOf(formatoFecha.format(planillaCata
+				String[] registros = new String[4];
+				registros[0] = planillaCata.getNombreActividad().toLowerCase();
+				registros[1] = planillaCata.getMarca().getDescripcion()
+						.toLowerCase();
+				registros[2] = planillaCata.getNombreCliente().toLowerCase();
+				registros[3] = String.valueOf(formatoFecha.format(planillaCata
 						.getFechaAuditoria()));
 				return registros;
 			}

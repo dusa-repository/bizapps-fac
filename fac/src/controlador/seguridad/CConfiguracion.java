@@ -287,8 +287,8 @@ public class CConfiguracion extends CGenerico {
 
 	@Listen("onChange = #txtAdminMarca, #txtAdminTrade")
 	public void buscarNombre(Event evento) {
-		Usuario usuario1 = servicioUsuario.buscar(txtAdminMarca.getValue());
-		Usuario usuario2 = servicioUsuario.buscar(txtAdminTrade.getValue());
+		Usuario usuario1 = servicioUsuario.buscarAdmin(txtAdminMarca.getValue());
+		Usuario usuario2 = servicioUsuario.buscarAdmin(txtAdminTrade.getValue());
 		Textbox txt = (Textbox) evento.getTarget();
 		switch (txt.getId()) {
 		case "txtAdminMarca":

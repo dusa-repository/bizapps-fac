@@ -39,7 +39,7 @@
 									</a>
 									<a style="color:white">
 										<space />
-										<label id="lblEditarCuenta" value="Editar Cuenta" />
+										<label id="lblEditarCuenta" value="Editar Cuenta" onDoubleClick="event.stopPropagation()"/>
 										<!-- onClick='contenido.src="../vistas/seguridad/VEditarUsuario.zul"' -->
 									</a>
 								</vbox>
@@ -77,17 +77,17 @@
 								<separator />
 								<hbox>
 									<button id="btnTiposUDC" class="btn" label="Tipos UDC"
-										orient="vertical" visible="false" />
+										orient="vertical" visible="false" autodisable="self" />
 									<button id="btnUDC" class="btn" label="UDC" orient="vertical"
-										visible="false" />
+										visible="false" autodisable="self" />
 									<button id="btnUsuario" class="btn" label="Usuario"
-										orient="vertical" visible="false" />
+										orient="vertical" visible="false" autodisable="self" />
 									<button id="btnRecurso" class="btn" label="Recurso"
-										orient="vertical" visible="false" />
+										orient="vertical" visible="false" autodisable="self" />
 									<button id="btnMarca" class="btn" label="Marca" orient="vertical"
-										visible="false" />
+										visible="false" autodisable="self" />
 									<button id="btnZona" class="btn" label="Zona" orient="vertical"
-										visible="false" />
+										visible="false" autodisable="self" />
 								</hbox>
 								<separator />
 								<separator />
@@ -95,24 +95,25 @@
 								<hbox>
 
 									<button id="btnSku" class="btn" label="Sku" orient="vertical"
-										visible="false" />
+										visible="false" autodisable="self" />
 									<button id="btnAliado" class="btn" label="Aliado"
-										orient="vertical" visible="false" />
+										orient="vertical" visible="false" autodisable="self" />
 									<button id="btnUnif" class="btn" label="Uniforme"
-										orient="vertical" visible="false" />
+										orient="vertical" visible="false" autodisable="self" />
 									<button id="btnGrupo" class="btn" label="Grupo" orient="vertical"
-										visible="false" />
+										visible="false" autodisable="self" />
 									<button id="btnFuncionalidad" class="btn" label="Funcionalidad"
-										orient="vertical" visible="false" />
+										orient="vertical" visible="false" autodisable="self" />
 									<button id="btnConfiguracion" class="btn" label="Configuracion"
-										orient="vertical" visible="false" />
+										orient="vertical" visible="false" autodisable="self" />
 								</hbox>
 								<space />
 								<space />
 								<space />
 								<div align="right" style="float: right;">
 									<button id="btnCerrar" class="btn-salir" label="Volver"
-										visible="true" image="/public/imagenes/botones/salir.png" />
+										visible="true" image="/public/imagenes/botones/salir.png"
+										autodisable="self" />
 								</div>
 							</vbox>
 						</groupbox>

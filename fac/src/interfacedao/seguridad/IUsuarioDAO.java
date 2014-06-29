@@ -19,4 +19,6 @@ public interface IUsuarioDAO extends JpaRepository<Usuario, String> {
 	List<Usuario> findByGrupos(Grupo grupo);
 
 	List<Usuario> findByZona(Zona zona);
+	
+	Usuario findByIdUsuarioAndGrupos(String value, Grupo grupo);
 }
