@@ -5,8 +5,8 @@
 			style="color:white; font-size: 16px; font-weight:bold; " />
 		<div>
 			<hbox hflex="1" widths="50%, 50%">
-				<groupbox mold="3d">
-					<caption label="TradeMark" style="color:white; font-size: 14px" />
+				<groupbox style="background-color:white;">
+					<caption label="TradeMark"  style="color:#661313; font-size: 20px; font-weight:bold;" />
 						<grid width="100%">
 							<columns visible="false">
 								<column label="" width="60%" />
@@ -22,8 +22,6 @@
 								</row>
 							</rows>
 						</grid>
-						<!-- 
-							 -->
 						<listbox model="${$composer.configuracion}" width="100%" id="ltbTradeMark"
 							tooltiptext="Seleccione las Planillas que se podran visualizar en el entorno de TradeMark">
 							<listhead>
@@ -36,8 +34,8 @@
 							</template>
 						</listbox>
 				</groupbox>
-				<groupbox mold="3d">
-					<caption label="Marca" style="color:white; font-size: 14px" />
+				<groupbox style="background-color:white;" >
+					<caption label="Marca" style="color:#661313;font-size: 20px; font-weight:bold;" />
 						<grid width="100%">
 							<columns visible="false">
 								<column label="" width="60%" />

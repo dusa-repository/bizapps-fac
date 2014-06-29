@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelo.maestros.Aliado;
 import modelo.maestros.Zona;
+import modelo.seguridad.Usuario;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -16,6 +18,7 @@ import org.zkoss.zul.Window;
 
 import componente.Botonera;
 import componente.Catalogo;
+import componente.Mensaje;
 
 public class CZona extends CGenerico {
 
@@ -63,10 +66,7 @@ public class CZona extends CGenerico {
 					Zona zona = new Zona(codigo, descripcion, fechaHora,
 							horaAuditoria, nombreUsuarioSesion());
 					servicioZona.guardar(zona);
-					Messagebox.show("Registro Guardado Exitosamente",
-							"Informacion", Messagebox.OK,
-							Messagebox.INFORMATION);
-
+					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
 				}
 			}
@@ -81,19 +81,26 @@ public class CZona extends CGenerico {
 								public void onEvent(Event evt)
 										throws InterruptedException {
 									if (evt.getName().equals("onOK")) {
-										servicioZona.eliminar(id);
-										limpiar();
-										Messagebox
-												.show("Registro Eliminado Exitosamente",
-														"Informacion",
-														Messagebox.OK,
-														Messagebox.INFORMATION);
+
+										Zona zona = servicioZona.buscar(id);
+										List<Usuario> usuarios = servicioUsuario
+												.buscarPorZona(zona);
+										List<Aliado> aliados = servicioAliado
+												.buscarPorZona(zona);
+
+										if (!usuarios.isEmpty()
+												|| !aliados.isEmpty())
+											msj.mensajeError(Mensaje.noEliminar);
+										else {
+											servicioZona.eliminar(id);
+											limpiar();
+											msj.mensajeInformacion(Mensaje.eliminado);
+										}
 									}
 								}
 							});
 				} else {
-					Messagebox.show("No ha Seleccionado Ningun Registro",
-							"Alerta", Messagebox.OK, Messagebox.EXCLAMATION);
+					msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 				}
 			}
 
@@ -112,7 +119,7 @@ public class CZona extends CGenerico {
 			@Override
 			public void enviar() {
 				// TODO Auto-generated method stub
-				
+
 			}
 		};
 		botonera.getChildren().get(4).setVisible(false);
@@ -125,8 +132,7 @@ public class CZona extends CGenerico {
 	protected boolean validar() {
 		if (txtCodigoZona.getText().compareTo("") == 0
 				|| txtDescripcionZona.getText().compareTo("") == 0) {
-			Messagebox.show("Debe Llenar Todos los Campos", "Informacion",
-					Messagebox.OK, Messagebox.INFORMATION);
+			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else
 			return true;
@@ -134,8 +140,8 @@ public class CZona extends CGenerico {
 
 	public void buscarCatalogoPropio() {
 		final List<Zona> listZona = servicioZona.buscarTodosOrdenados();
-		catalogo = new Catalogo<Zona>(DivCatalogoZona, "Catalogo de Zonas", listZona, true,
-				"Id", "Descripcion") {
+		catalogo = new Catalogo<Zona>(DivCatalogoZona, "Catalogo de Zonas",
+				listZona, true, "Id", "Descripcion") {
 
 			@Override
 			protected List<Zona> buscar(List<String> valores) {
@@ -144,10 +150,11 @@ public class CZona extends CGenerico {
 
 				for (Zona zona : listZona) {
 					if (zona.getIdZona().toLowerCase()
-							.startsWith(valores.get(0))
-							&& (zona.getDescripcion().startsWith(valores.get(1))
-							|| zona.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1)))) {
+							.startsWith(valores.get(0).toLowerCase())
+							&& (zona.getDescripcion()
+									.startsWith(valores.get(1)) || zona
+									.getDescripcion().toLowerCase()
+									.startsWith(valores.get(1).toLowerCase()))) {
 						lista.add(zona);
 					}
 				}
@@ -157,8 +164,8 @@ public class CZona extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Zona zona) {
 				String[] registros = new String[2];
-				registros[0] = zona.getIdZona();
-				registros[1] = zona.getDescripcion();
+				registros[0] = zona.getIdZona().toLowerCase();
+				registros[1] = zona.getDescripcion().toLowerCase();
 				return registros;
 			}
 		};

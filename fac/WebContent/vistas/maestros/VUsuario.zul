@@ -65,9 +65,8 @@
 							<label value="*" style="font-weight:bold;color:red" />
 						</hbox>
 						<textbox id="txtZonaUsuario" hflex="1" maxlength="50"
-							tooltiptext="Ingrese 
-							la Zona del Usuario" />
-						<button id="btnBuscarZonas" label="Buscar" tooltiptext="Catalogo 
+							tooltiptext="Ingrese el Codigo o Seleccione del Catalogo la Zona del Usuario" />
+						<button id="btnBuscarZonas" label="" tooltiptext="Catalogo 
 							Zonas"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
@@ -78,48 +77,48 @@
 							<label value="*" style="font-weight:bold;color:red" />
 						</hbox>
 						<textbox id="txtSupervisorUsuario" hflex="1" maxlength="50"
-							tooltiptext="Ingrese el Supervisor del Usuario" />
-						<button id="btnBuscarSupervisores" label="Buscar"
+							tooltiptext="Ingrese el Login o Seleccione del Catalogo el Supervisor del Usuario" />
+						<button id="btnBuscarSupervisores" label=""
 							tooltiptext="Catalogo Supervisores" image="/public/imagenes/botones/buscar.png" />
 					</row>
 				</rows>
 			</grid>
 			<separator />
-				<groupbox width="100%" mold="3d" >
+			<groupbox style="background-color:white;" >
 				<caption label="Seleccione los Grupos Correspondientes al Usuario"
-					style="color:white; font-size: 14px" />
-					<hbox>
-						<listbox id="ltbGruposDisponibles" height="160px"
-							emptyMessage="No hay Grupos registrados">
-							<template name="model">
-								<listitem>
-									<listcell label="${each.nombre}">
-									</listcell>
-								</listitem>
-							</template>
-						</listbox>
-						<vbox>
-							<button id="pasar1" image="/public/imagenes/botones/adelante.png"
-								tooltiptext="Agregar Grupos" width="30px" />
-							<separator />
-							<button id="pasar2" image="/public/imagenes/botones/atras.png"
-								tooltiptext="Quitar Grupos" width="30px" />
-						</vbox>
-						<listbox id="ltbGruposAgregados" height="160px"
-							emptyMessage="No ha Seleccionado ningun Grupo" checkmark="true">
-							<template name="model">
-								<listitem>
-									<listcell label="${each.nombre}">
-									</listcell>
-								</listitem>
-							</template>
-						</listbox>
-					</hbox>
-				</groupbox>
-				<separator />
-				<div id="botoneraUsuario" />
-				<div id="DivCatalogoUsuario" />
-				<div id="DivCatalogoZona" />
+					style="color:#661313;font-size: 14px; font-weight:bold;" />
+				<hbox>
+					<listbox id="ltbGruposDisponibles" height="160px"
+						emptyMessage="No hay Grupos registrados">
+						<template name="model">
+							<listitem>
+								<listcell label="${each.nombre}">
+								</listcell>
+							</listitem>
+						</template>
+					</listbox>
+					<vbox>
+						<button id="pasar1" image="/public/imagenes/botones/adelante.png"
+							tooltiptext="Agregar Grupos" width="30px" />
+						<separator />
+						<button id="pasar2" image="/public/imagenes/botones/atras.png"
+							tooltiptext="Quitar Grupos" width="30px" />
+					</vbox>
+					<listbox id="ltbGruposAgregados" height="160px"
+						emptyMessage="No ha Seleccionado ningun Grupo" checkmark="true">
+						<template name="model">
+							<listitem>
+								<listcell label="${each.nombre}">
+								</listcell>
+							</listitem>
+						</template>
+					</listbox>
+				</hbox>
+			</groupbox>
+			<separator />
+			<div id="botoneraUsuario" />
+			<div id="DivCatalogoUsuario" />
+			<div id="DivCatalogoZona" />
 		</div>
 	</window>
 </zk>

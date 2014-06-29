@@ -8,6 +8,7 @@ import java.util.Set;
 
 import modelo.seguridad.Arbol;
 import modelo.seguridad.Grupo;
+import modelo.seguridad.Usuario;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -96,9 +97,7 @@ public class CGrupo extends CGenerico {
 					String nombre = txtNombreGrupo.getValue();
 					Grupo grupo = new Grupo(id, estatus, nombre, arboles);
 					servicioGrupo.guardarGrupo(grupo);
-					Messagebox.show("Registro Guardado Exitosamente",
-							"Informacion", Messagebox.OK,
-							Messagebox.INFORMATION);
+					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
 				}
 			}
@@ -123,10 +122,18 @@ public class CGrupo extends CGenerico {
 													throws InterruptedException {
 												if (evt.getName()
 														.equals("onOK")) {
-													servicioGrupo.eliminar(id);
-													limpiar();
-													msj.mensajeInformacion(Mensaje.eliminado);
-
+													Grupo grupo = servicioGrupo
+															.buscar(id);
+													List<Usuario> usuario = servicioUsuario
+															.buscarPorGrupo(grupo);
+													if (!usuario.isEmpty())
+														msj.mensajeError(Mensaje.noEliminar);
+													else {
+														servicioGrupo
+																.eliminar(id);
+														limpiar();
+														msj.mensajeInformacion(Mensaje.eliminado);
+													}
 												}
 											}
 										});
@@ -148,7 +155,7 @@ public class CGrupo extends CGenerico {
 
 						for (Grupo grupo : listGrupo) {
 							if (grupo.getNombre().toLowerCase()
-									.startsWith(valores.get(0))) {
+									.startsWith(valores.get(0).toLowerCase())) {
 								lista.add(grupo);
 							}
 						}
@@ -158,7 +165,7 @@ public class CGrupo extends CGenerico {
 					@Override
 					protected String[] crearRegistros(Grupo grupo) {
 						String[] registros = new String[1];
-						registros[0] = grupo.getNombre();
+						registros[0] = grupo.getNombre().toLowerCase();
 						return registros;
 					}
 				};

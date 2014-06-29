@@ -3,6 +3,7 @@ package interfacedao.transacciones;
 import java.util.Collection;
 import java.util.List;
 
+import modelo.maestros.Marca;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaCata;
 
@@ -30,5 +31,9 @@ public interface IPlanillaCataDAO extends JpaRepository<PlanillaCata, Long> {
 
 	List<PlanillaCata> findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
 			String nombreUsuarioSesion, String variable);
+
+	List<PlanillaCata> findByUsuario(Usuario usuario);
+
+	List<PlanillaCata> findByMarca(Marca marca);
 
 }

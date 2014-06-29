@@ -4,6 +4,7 @@ import interfacedao.transacciones.IItemPlanillaCataDAO;
 
 import java.util.List;
 
+import modelo.maestros.Sku;
 import modelo.transacciones.ItemPlanillaCata;
 import modelo.transacciones.PlanillaCata;
 
@@ -29,5 +30,10 @@ public class SItemPlanillaCata {
 
 	public void guardar(List<ItemPlanillaCata> recursosPlanilla) {
 		itemPlanillaCataDAO.save(recursosPlanilla);
+	}
+
+	public List<ItemPlanillaCata> buscarPorSku(Sku sku) {
+		// TODO Auto-generated method stub
+		return 	itemPlanillaCataDAO.findBySku(sku);
 	}
 }

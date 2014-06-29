@@ -28,8 +28,8 @@
 							<label value="*" style="font-weight:bold;color:red" />
 						</hbox>
 						<textbox id="txtZonaAliado" hflex="1" maxlength="50"
-							tooltiptext="Ingrese el Nombre de la Zona" />
-						<button id="btnBuscarZonas" label="Buscar" tooltiptext="Catalogo Zonas"
+							tooltiptext="Ingrese el Codigo o Seleccione del Catalogo la Zona del Aliado"  />
+						<button id="btnBuscarZonas" label="" tooltiptext="Catalogo Zonas"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
 

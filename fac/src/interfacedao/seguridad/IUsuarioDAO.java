@@ -2,6 +2,7 @@ package interfacedao.seguridad;
 
 import java.util.List;
 
+import modelo.maestros.Zona;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 
@@ -16,4 +17,6 @@ public interface IUsuarioDAO extends JpaRepository<Usuario, String> {
 	List<Usuario> findAllOrderByDescripcion();
 
 	List<Usuario> findByGrupos(Grupo grupo);
+
+	List<Usuario> findByZona(Zona zona);
 }

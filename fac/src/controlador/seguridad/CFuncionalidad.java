@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelo.seguridad.Arbol;
+import modelo.seguridad.Grupo;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -85,9 +86,18 @@ public class CFuncionalidad extends CGenerico {
 								public void onEvent(Event evt)
 										throws InterruptedException {
 									if (evt.getName().equals("onOK")) {
-										servicioArbol.eliminar(id);
-										msj.mensajeInformacion(Mensaje.eliminado);
-										limpiar();
+
+										Arbol arbol = servicioArbol.buscar(id);
+										List<Grupo> grupo = servicioGrupo
+												.buscarPorArbol(arbol);
+
+										if (!grupo.isEmpty())
+											msj.mensajeError(Mensaje.noEliminar);
+										else {
+											servicioArbol.eliminar(id);
+											msj.mensajeInformacion(Mensaje.eliminado);
+											limpiar();
+										}
 									}
 								}
 							});
@@ -109,11 +119,17 @@ public class CFuncionalidad extends CGenerico {
 
 						for (Arbol arbol : listArbol) {
 							if (arbol.getNombre().toLowerCase()
-									.startsWith(valores.get(0))
-									&& arbol.getNombreBoton().toLowerCase()
-											.startsWith(valores.get(1))
-									&& arbol.getUrl().toLowerCase()
-											.startsWith(valores.get(2))) {
+									.startsWith(valores.get(0).toLowerCase())
+									&& arbol.getNombreBoton()
+											.toLowerCase()
+											.startsWith(
+													valores.get(1)
+															.toLowerCase())
+									&& arbol.getUrl()
+											.toLowerCase()
+											.startsWith(
+													valores.get(2)
+															.toLowerCase())) {
 								lista.add(arbol);
 							}
 						}
@@ -123,9 +139,9 @@ public class CFuncionalidad extends CGenerico {
 					@Override
 					protected String[] crearRegistros(Arbol arbol) {
 						String[] registros = new String[3];
-						registros[0] = arbol.getNombre();
-						registros[1] = arbol.getNombreBoton();
-						registros[2] = arbol.getUrl();
+						registros[0] = arbol.getNombre().toLowerCase();
+						registros[1] = arbol.getNombreBoton().toLowerCase();
+						registros[2] = arbol.getUrl().toLowerCase();
 						return registros;
 					}
 				};
@@ -156,21 +172,20 @@ public class CFuncionalidad extends CGenerico {
 		if (txtNombre.getText().compareTo("") == 0
 				|| txtNombreBoton.getText().compareTo("") == 0
 				|| txtUrl.getText().compareTo("") == 0) {
-			Messagebox.show("Debe Llenar Todos los Campos", "Informacion",
-					Messagebox.OK, Messagebox.INFORMATION);
+			msj.mensajeAlerta(Mensaje.camposVacios);
 			return false;
 		} else
 			return true;
 	}
-	
+
 	@Listen("onSeleccion = #catalogoFuncionalidad")
 	public void seleccionPropia() {
 		Arbol arbol = catalogo.objetoSeleccionadoDelCatalogo();
-		if(arbol!=null)
-			settear(arbol);		
+		if (arbol != null)
+			settear(arbol);
 		catalogo.setParent(null);
 	}
-	
+
 	private void settear(Arbol arbol) {
 		txtNombre.setValue(arbol.getNombre());
 		txtNombreBoton.setValue(arbol.getNombreBoton());
@@ -181,8 +196,8 @@ public class CFuncionalidad extends CGenerico {
 	@Listen("onChange = #txtNombre")
 	public void seleccionsPropia() {
 		Arbol arbol = servicioArbol.buscarPorNombre(txtNombre.getValue());
-		if(arbol!=null)
-			settear(arbol);	
+		if (arbol != null)
+			settear(arbol);
 	}
 
 }

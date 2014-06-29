@@ -4,6 +4,7 @@ import interfacedao.transacciones.IItemDegustacionPlanillaEventoDAO;
 
 import java.util.List;
 
+import modelo.maestros.Sku;
 import modelo.transacciones.ItemDegustacionPlanillaEvento;
 import modelo.transacciones.PlanillaEvento;
 
@@ -29,5 +30,10 @@ public class SItemDegustacionPlanillaEvento {
 
 	public void guardar(List<ItemDegustacionPlanillaEvento> recursosPlanilla) {
 		itemDegustacionDAO.save(recursosPlanilla);
+	}
+
+	public List<ItemDegustacionPlanillaEvento> buscarPorSku(Sku sku) {
+		// TODO Auto-generated method stub
+		return itemDegustacionDAO.findBySku(sku);
 	}
 }

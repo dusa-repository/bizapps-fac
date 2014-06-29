@@ -4,6 +4,7 @@ import interfacedao.transacciones.IPlanillaUniformeDAO;
 
 import java.util.List;
 
+import modelo.maestros.Marca;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaUniforme;
 
@@ -66,5 +67,13 @@ public class SPlanillaUniforme {
 						.findByEstadoNotAndTipoOrderByFechaEnvioAsc(variable,
 								variable2));
 		return planillas;
+	}
+
+	public List<PlanillaUniforme> buscarPorUsuario(Usuario usuario) {
+		return planillaUniformeDAO.findByUsuario(usuario);
+	}
+
+	public List<PlanillaUniforme> buscarPorMarca(Marca marca) {
+		return planillaUniformeDAO.findByMarca(marca);
 	}
 }

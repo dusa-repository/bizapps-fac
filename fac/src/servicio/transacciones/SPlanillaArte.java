@@ -4,6 +4,7 @@ import interfacedao.transacciones.IPlanillaArteDAO;
 
 import java.util.List;
 
+import modelo.maestros.Marca;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaArte;
 
@@ -65,5 +66,13 @@ public class SPlanillaArte {
 						.findByEstadoNotAndTipoOrderByFechaEnvioAsc(variable,
 								variable2));
 		return planillas;
+	}
+
+	public List<PlanillaArte> buscarPorUsuario(Usuario usuario) {
+		return planillaArteDAO.findByUsuario(usuario);
+	}
+
+	public List<PlanillaArte> buscarPorMarca(Marca marca) {
+		return planillaArteDAO.findByMarca(marca);
 	}
 }

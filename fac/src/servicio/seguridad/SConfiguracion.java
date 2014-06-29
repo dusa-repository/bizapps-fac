@@ -48,4 +48,9 @@ public class SConfiguracion {
 	public void guardar(List<Configuracion> lista) {
 		configuracionDAO.save(lista);
 	}
+
+	public List<Configuracion> buscarPorUsuario(Usuario usuario) {
+		// TODO Auto-generated method stub
+		return configuracionDAO.findByUsuario(usuario);
+	}
 }

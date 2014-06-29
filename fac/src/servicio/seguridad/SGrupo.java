@@ -5,6 +5,7 @@ import interfacedao.seguridad.IGrupoDAO;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelo.seguridad.Arbol;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 
@@ -56,6 +57,11 @@ public class SGrupo {
 			}
 			return grupoDAO.findByIdGrupoNotIn(ids);
 		}
+	}
+
+	public List<Grupo> buscarPorArbol(Arbol arbol) {
+		// TODO Auto-generated method stub
+		return grupoDAO.findByArbols(arbol);
 	}
 
 }

@@ -3,6 +3,7 @@ package interfacedao.transacciones;
 import java.util.Collection;
 import java.util.List;
 
+import modelo.maestros.Marca;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaPromocion;
 
@@ -31,5 +32,9 @@ public interface IPlanillaPromocionDAO extends JpaRepository<PlanillaPromocion, 
 
 	List<PlanillaPromocion> findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
 			String nombreUsuarioSesion, String variable);
+
+	List<PlanillaPromocion> findByUsuario(Usuario usuario);
+
+	List<PlanillaPromocion> findByMarcaA(Marca marca);
 
 }

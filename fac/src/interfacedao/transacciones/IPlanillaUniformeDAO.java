@@ -3,6 +3,7 @@ package interfacedao.transacciones;
 import java.util.Collection;
 import java.util.List;
 
+import modelo.maestros.Marca;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaUniforme;
 
@@ -31,5 +32,9 @@ public interface IPlanillaUniformeDAO extends JpaRepository<PlanillaUniforme, Lo
 
 	List<PlanillaUniforme> findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
 			String nombreUsuarioSesion, String variable);
+
+	List<PlanillaUniforme> findByUsuario(Usuario usuario);
+
+	List<PlanillaUniforme> findByMarca(Marca marca);
 
 }

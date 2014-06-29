@@ -4,6 +4,7 @@ import interfacedao.transacciones.IItemEstimadoPlanillaEventoDAO;
 
 import java.util.List;
 
+import modelo.maestros.Sku;
 import modelo.transacciones.ItemEstimadoPlanillaEvento;
 import modelo.transacciones.PlanillaEvento;
 
@@ -29,5 +30,10 @@ public class SItemEstimadoPlanillaEvento {
 
 	public void guardar(List<ItemEstimadoPlanillaEvento> recursosPlanilla) {
 		itemEstimadoDAO.save(recursosPlanilla);
+	}
+
+	public List<ItemEstimadoPlanillaEvento> buscarPorSku(Sku sku) {
+		// TODO Auto-generated method stub
+		return itemEstimadoDAO.findBySku(sku);
 	}
 }

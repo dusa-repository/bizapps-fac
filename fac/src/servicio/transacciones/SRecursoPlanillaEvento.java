@@ -4,6 +4,8 @@ import interfacedao.transacciones.IRecursoPlanillaEventoDAO;
 
 import java.util.List;
 
+import modelo.maestros.Marca;
+import modelo.maestros.Recurso;
 import modelo.transacciones.PlanillaEvento;
 import modelo.transacciones.RecursoPlanillaEvento;
 
@@ -28,5 +30,13 @@ public class SRecursoPlanillaEvento {
 
 	public void guardar(List<RecursoPlanillaEvento> recursosPlanilla) {
 		recursoPlanillaEventoDAO.save(recursosPlanilla);
+	}
+
+	public List<RecursoPlanillaEvento> buscarPorRecurso(Recurso recurso) {
+		return recursoPlanillaEventoDAO.findByRecurso(recurso);
+	}
+
+	public List<RecursoPlanillaEvento> buscarPorMarca(Marca marca) {
+		return recursoPlanillaEventoDAO.findByMarca(marca);
 	}
 }

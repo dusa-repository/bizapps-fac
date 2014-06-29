@@ -24,7 +24,6 @@ import componente.Mensaje;
 
 public class CF0005 extends CGenerico {
 
-
 	private static final long serialVersionUID = 4858496432716297913L;
 	@Wire
 	private Textbox txtSYF0005;
@@ -79,7 +78,7 @@ public class CF0005 extends CGenerico {
 				clave = null;
 				limpiarCampos();
 				habilitarTextClave();
-			
+
 			}
 
 			@Override
@@ -122,19 +121,19 @@ public class CF0005 extends CGenerico {
 			@Override
 			public void atras() {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void adelante() {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void enviar() {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 		};
@@ -146,7 +145,6 @@ public class CF0005 extends CGenerico {
 		botoneraF0005.appendChild(botonera);
 
 	}
-
 
 	public void limpiarCampos() {
 		clave = null;
@@ -197,9 +195,10 @@ public class CF0005 extends CGenerico {
 					lblDescripcionF0004.setValue("");
 					txtRTF0005.setFocus(true);
 					return true;
-				}
-				else
-					lblDescripcionF0004.setValue(servicioF0004.buscar(txtSYF0005.getValue(),txtRTF0005.getValue()).getDtdl01());
+				} else
+					lblDescripcionF0004.setValue(servicioF0004.buscar(
+							txtSYF0005.getValue(), txtRTF0005.getValue())
+							.getDtdl01());
 			}
 		}
 		return false;
@@ -214,9 +213,10 @@ public class CF0005 extends CGenerico {
 				txtRTF0005.setFocus(true);
 				lblDescripcionF0004.setValue("");
 				return true;
-			}
-			else 
-				lblDescripcionF0004.setValue(servicioF0004.buscar(txtSYF0005.getValue(),txtRTF0005.getValue()).getDtdl01());
+			} else
+				lblDescripcionF0004.setValue(servicioF0004.buscar(
+						txtSYF0005.getValue(), txtRTF0005.getValue())
+						.getDtdl01());
 		}
 		return false;
 	}
@@ -259,12 +259,11 @@ public class CF0005 extends CGenerico {
 			return false;
 	}
 
-
 	public void mostrarCatalogo() {
 		final List<F0005> listF0005 = servicioF0005.buscarTodosOrdenados();
-		catalogo = new Catalogo<F0005>(divCatalogoF0005, "Catalogo de F0005", listF0005,true, "SY",
-				"RT", "KY", "Descripcion 01", "Descripcion 02",
-				"Gestion Especial", "Codificacion Fija") {
+		catalogo = new Catalogo<F0005>(divCatalogoF0005, "Catalogo de F0005",
+				listF0005, true, "SY", "RT", "KY", "Descripcion 01",
+				"Descripcion 02", "Gestion Especial", "Codificacion Fija") {
 
 			@Override
 			protected List<F0005> buscar(List<String> valores) {
@@ -273,13 +272,13 @@ public class CF0005 extends CGenerico {
 
 				for (F0005 f0005 : listF0005) {
 					if (f0005.getId().getDrsy().toLowerCase()
-							.startsWith(valores.get(0))
+							.startsWith(valores.get(0).toLowerCase())
 							&& f0005.getId().getDrrt().toLowerCase()
-									.startsWith(valores.get(1))
+									.startsWith(valores.get(1).toLowerCase())
 							&& f0005.getId().getDrky().toLowerCase()
-									.startsWith(valores.get(2))
+									.startsWith(valores.get(2).toLowerCase())
 							&& f0005.getDrdl01().toLowerCase()
-									.startsWith(valores.get(3))
+									.startsWith(valores.get(3).toLowerCase())
 							&& f0005.getDrdl02().toLowerCase()
 									.startsWith(valores.get(4))
 							&& f0005.getDrsphd().toLowerCase()
@@ -295,10 +294,10 @@ public class CF0005 extends CGenerico {
 			@Override
 			protected String[] crearRegistros(F0005 f0005) {
 				String[] registros = new String[7];
-				registros[0] = f0005.getId().getDrsy();
-				registros[1] = f0005.getId().getDrrt();
-				registros[2] = f0005.getId().getDrky();
-				registros[3] = f0005.getDrdl01();
+				registros[0] = f0005.getId().getDrsy().toLowerCase();
+				registros[1] = f0005.getId().getDrrt().toLowerCase();
+				registros[2] = f0005.getId().getDrky().toLowerCase();
+				registros[3] = f0005.getDrdl01().toLowerCase();
 				registros[4] = f0005.getDrdl02();
 				registros[5] = f0005.getDrsphd();
 				registros[6] = f0005.getDrhrdc();
@@ -308,13 +307,13 @@ public class CF0005 extends CGenerico {
 		catalogo.setParent(divCatalogoF0005);
 		catalogo.doModal();
 	}
-	
 
 	@Listen("onClick = #btnBuscarF0004")
 	public void mostrarCatalogoF0004() {
 		final List<F0004> listF0004 = servicioF0004.buscarTodosOrdenados();
-		catalogoF0004 = new Catalogo<F0004>(divCatalogoF0004, "Catalogo de F0004", listF0004, true, "SY",
-				"RT", "Descripcion", "Codigo", "2 Linea", "Numerico") {
+		catalogoF0004 = new Catalogo<F0004>(divCatalogoF0004,
+				"Catalogo de F0004", listF0004, true, "SY", "RT",
+				"Descripcion", "Codigo", "2 Linea", "Numerico") {
 
 			@Override
 			protected List<F0004> buscar(List<String> valores) {
@@ -323,11 +322,11 @@ public class CF0005 extends CGenerico {
 
 				for (F0004 f0004 : listF0004) {
 					if (f0004.getId().getDtsy().toLowerCase()
-							.startsWith(valores.get(0))
+							.startsWith(valores.get(0).toLowerCase())
 							&& f0004.getId().getDtrt().toLowerCase()
-									.startsWith(valores.get(1))
+									.startsWith(valores.get(1).toLowerCase())
 							&& f0004.getDtdl01().toLowerCase()
-									.startsWith(valores.get(2))
+									.startsWith(valores.get(2).toLowerCase())
 							&& String.valueOf(f0004.getDtcdl()).toLowerCase()
 									.startsWith(valores.get(3))
 							&& f0004.getDtln2().toLowerCase()
@@ -343,18 +342,18 @@ public class CF0005 extends CGenerico {
 			@Override
 			protected String[] crearRegistros(F0004 f0004) {
 				String[] registros = new String[6];
-				registros[0] = f0004.getId().getDtsy();
-				registros[1] = f0004.getId().getDtrt();
-				registros[2] = f0004.getDtdl01();
+				registros[0] = f0004.getId().getDtsy().toLowerCase();
+				registros[1] = f0004.getId().getDtrt().toLowerCase();
+				registros[2] = f0004.getDtdl01().toLowerCase();
 				registros[3] = String.valueOf(f0004.getDtcdl());
 				registros[4] = f0004.getDtln2();
 				registros[5] = f0004.getDtcnum();
 				return registros;
 			}
 		};
-//		catalogoF0004.setClosable(true);
-//		catalogoF0004.setWidth("80%");
-//		catalogoF0004.setTitle("Registros");
+		// catalogoF0004.setClosable(true);
+		// catalogoF0004.setWidth("80%");
+		// catalogoF0004.setTitle("Registros");
 		catalogoF0004.setParent(divCatalogoF0004);
 		catalogoF0004.doModal();
 	}
@@ -364,15 +363,17 @@ public class CF0005 extends CGenerico {
 		F0004 f0004 = catalogoF0004.objetoSeleccionadoDelCatalogo();
 		txtSYF0005.setValue(f0004.getId().getDtsy());
 		txtRTF0005.setValue(f0004.getId().getDtrt());
-		lblDescripcionF0004.setValue(servicioF0004.buscar(f0004.getId().getDtsy(),f0004.getId().getDtrt()).getDtdl01());
+		lblDescripcionF0004.setValue(servicioF0004.buscar(
+				f0004.getId().getDtsy(), f0004.getId().getDtrt()).getDtdl01());
 		catalogoF0004.setParent(null);
 	}
-	
+
 	@Listen("onSeleccion = #divCatalogoF0005")
 	public void seleccionPropia() {
-		F0005 f05 = catalogo.objetoSeleccionadoDelCatalogo();				
-		clave = f05.getId();			
-		F0004 f04 = servicioF0004.buscar(f05.getId().getDrsy(), f05.getId().getDrrt());
+		F0005 f05 = catalogo.objetoSeleccionadoDelCatalogo();
+		clave = f05.getId();
+		F0004 f04 = servicioF0004.buscar(f05.getId().getDrsy(), f05.getId()
+				.getDrrt());
 		txtRTF0005.setValue(f05.getId().getDrrt());
 		txtRTF0005.setDisabled(true);
 		txtSYF0005.setValue(f05.getId().getDrsy());

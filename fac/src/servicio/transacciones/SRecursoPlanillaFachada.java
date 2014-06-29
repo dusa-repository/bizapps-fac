@@ -4,6 +4,7 @@ import interfacedao.transacciones.IRecursoPlanillaFachadaDAO;
 
 import java.util.List;
 
+import modelo.maestros.Recurso;
 import modelo.transacciones.PlanillaFachada;
 import modelo.transacciones.RecursoPlanillaFachada;
 
@@ -30,5 +31,9 @@ public class SRecursoPlanillaFachada {
 
 	public void guardar(List<RecursoPlanillaFachada> recursosPlanilla) {
 		recursoPlanillaFachadaDAO.save(recursosPlanilla);
+	}
+
+	public List<RecursoPlanillaFachada> buscarPorRecurso(Recurso recurso) {
+		return recursoPlanillaFachadaDAO.findByRecurso(recurso);
 	}
 }

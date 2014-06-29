@@ -5,6 +5,7 @@ import interfacedao.maestros.IAliadoDAO;
 import java.util.List;
 
 import modelo.maestros.Aliado;
+import modelo.maestros.Zona;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,5 +30,9 @@ public class SAliado {
 
 	public Aliado buscarPorDescripcion(String value) {
 		return aliadoDAO.findByNombre(value);
+	}
+
+	public List<Aliado> buscarPorZona(Zona zona) {
+		return aliadoDAO.findByZona(zona);
 	}
 }

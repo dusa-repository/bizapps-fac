@@ -31,6 +31,7 @@ public class Mensaje {
 	public static String noPermitido = "El tipo de archivo que ha seleccionado no esta permitido, solo archivos con extension .jpeg y .png son permitidos";
 	public static String tamanioMuyGrande = "El archivo que ha seleccionado excede el tamaño maximo establecido (100 KB)";
 	public static String listaVacia = "Debe añadir una referencia de pago para cada Solicitud";
+	public static String noEliminar = "El Registro no se puede Eliminar, Esta siendo Usado";
 	
 	
 	public void mensajeInformacion(String msj) {

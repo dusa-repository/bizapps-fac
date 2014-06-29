@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelo.maestros.Uniforme;
+import modelo.transacciones.UniformePlanillaUniforme;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -16,6 +17,7 @@ import org.zkoss.zul.Window;
 
 import componente.Botonera;
 import componente.Catalogo;
+import componente.Mensaje;
 
 public class CUnif extends CGenerico {
 
@@ -59,10 +61,7 @@ public class CUnif extends CGenerico {
 					Uniforme uniforme = new Uniforme(id, descripcion,
 							fechaHora, horaAuditoria, nombreUsuarioSesion());
 					servicioUniforme.guardar(uniforme);
-					Messagebox.show("Registro Guardado Exitosamente",
-							"Informacion", Messagebox.OK,
-							Messagebox.INFORMATION);
-
+					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
 				}
 			}
@@ -77,19 +76,23 @@ public class CUnif extends CGenerico {
 								public void onEvent(Event evt)
 										throws InterruptedException {
 									if (evt.getName().equals("onOK")) {
-										servicioUniforme.eliminar(id);
-										limpiar();
-										Messagebox
-												.show("Registro Eliminado Exitosamente",
-														"Informacion",
-														Messagebox.OK,
-														Messagebox.INFORMATION);
+
+										Uniforme uni = servicioUniforme
+												.buscar(id);
+										List<UniformePlanillaUniforme> planillas = servicioUniformePlanillaUniforme
+												.buscarPorUniforme(uni);
+										if (!planillas.isEmpty())
+											msj.mensajeError(Mensaje.noEliminar);
+										else {
+											servicioUniforme.eliminar(id);
+											limpiar();
+											msj.mensajeInformacion(Mensaje.eliminado);
+										}
 									}
 								}
 							});
 				} else {
-					Messagebox.show("No ha Seleccionado Ningun Registro",
-							"Alerta", Messagebox.OK, Messagebox.EXCLAMATION);
+					msj.mensajeAlerta(Mensaje.noSeleccionoRegistro);
 				}
 			}
 
@@ -108,7 +111,7 @@ public class CUnif extends CGenerico {
 			@Override
 			public void enviar() {
 				// TODO Auto-generated method stub
-				
+
 			}
 		};
 		botonera.getChildren().get(4).setVisible(false);
@@ -120,8 +123,7 @@ public class CUnif extends CGenerico {
 
 	protected boolean validar() {
 		if (txtDescripcionUniforme.getText().compareTo("") == 0) {
-			Messagebox.show("Debe Llenar Todos los Campos", "Informacion",
-					Messagebox.OK, Messagebox.INFORMATION);
+			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else
 			return true;
@@ -130,8 +132,8 @@ public class CUnif extends CGenerico {
 	public void buscarCatalogoPropio() {
 		final List<Uniforme> listUniforme = servicioUniforme
 				.buscarTodosOrdenados();
-		catalogo = new Catalogo<Uniforme>(DivCatalogoUniforme, "Catalogo de Uniformes",
-				listUniforme, true, "Descripcion") {
+		catalogo = new Catalogo<Uniforme>(DivCatalogoUniforme,
+				"Catalogo de Uniformes", listUniforme, true, "Descripcion") {
 
 			@Override
 			protected List<Uniforme> buscar(List<String> valores) {
@@ -139,9 +141,9 @@ public class CUnif extends CGenerico {
 				List<Uniforme> lista = new ArrayList<Uniforme>();
 
 				for (Uniforme recurso : listUniforme) {
-					if (recurso.getDescripcion().startsWith(valores.get(0))
-							|| recurso.getDescripcion().toLowerCase()
-									.startsWith(valores.get(0))) {
+
+					if (recurso.getDescripcion().toLowerCase()
+							.startsWith(valores.get(0).toLowerCase())) {
 						lista.add(recurso);
 					}
 				}
@@ -151,7 +153,7 @@ public class CUnif extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Uniforme recurso) {
 				String[] registros = new String[1];
-				registros[0] = recurso.getDescripcion();
+				registros[0] = recurso.getDescripcion().toLowerCase();
 				return registros;
 			}
 		};

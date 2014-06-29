@@ -2,6 +2,7 @@ package interfacedao.seguridad;
 
 import java.util.List;
 
+import modelo.seguridad.Arbol;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 
@@ -22,5 +23,7 @@ public interface IGrupoDAO extends JpaRepository<Grupo, Long> {
 	List<Grupo> findByUsuarios(Usuario usuario);
 
 	List<Grupo> findByIdGrupoNotIn(List<Long> ids);
+
+	List<Grupo> findByArbols(Arbol arbol);
 
 }
