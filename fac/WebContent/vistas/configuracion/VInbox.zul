@@ -39,7 +39,7 @@
 									</a>
 									<a style="color:white">
 										<space />
-										<label id="lblEditarCuenta" value="Editar Cuenta" />
+										<label id="lblEditarCuenta" value="Editar Cuenta" onDoubleClick="event.stopPropagation()"/>
 									</a>
 								</vbox>
 								<separator />

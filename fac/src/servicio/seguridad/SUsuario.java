@@ -39,6 +39,11 @@ public class SUsuario {
 		return usuarioDAO.findAllOrderByDescripcion();
 	}
 
+	public Usuario buscarAdmin(String id) {
+		Grupo grupo = grupoDAO.findByNombre("Administrador");
+		return usuarioDAO.findByIdUsuarioAndGrupos(id, grupo);
+	}
+
 	public Usuario buscar(String value) {
 		return usuarioDAO.findOne(value);
 	}
