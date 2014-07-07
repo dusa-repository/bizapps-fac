@@ -101,7 +101,7 @@
 										label="Canceladas (${$composer.cancelada})" orient="vertical"
 										visible="false" />
 									<space />
-									<button id="btnPagada" class="btn" label="Pagadas"
+									<button id="btnPagada" class="btn" label="Pagadas (${$composer.pagadas})"
 										orient="vertical" visible="false" />
 								</hbox>
 								<space />

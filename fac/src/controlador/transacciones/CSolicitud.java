@@ -97,7 +97,6 @@ public class CSolicitud extends CGenerico {
 		}
 		if (variable.equals("Generales"))
 			variable = "En Edicion";
-		System.out.println("Grupo" + grupoDominante + "  Variable" + variable);
 		buscarCatalogoPropio();
 
 	}

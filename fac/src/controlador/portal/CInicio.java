@@ -237,7 +237,6 @@ public class CInicio extends CGenerico {
 	public void marca() {
 		List<Configuracion> configuracion = servicioConfiguracion
 				.buscar("Marca");
-		System.out.println("vino");
 		tipo = "Marca";
 		recorrer(configuracion);
 
@@ -246,7 +245,6 @@ public class CInicio extends CGenerico {
 	public void trade() {
 		List<Configuracion> configuracion = servicioConfiguracion
 				.buscar("TradeMark");
-		System.out.println("vino");
 		recorrer(configuracion);
 		tipo = "TradeMark";
 	}
