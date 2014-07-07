@@ -63,6 +63,9 @@ public class CInbox extends CGenerico {
 	int finalizada = 0;
 	int rechazada = 0;
 	int edicion = 0;
+	int pagadas = 0;
+	
+
 	boolean coordinador = false;
 
 	public int getEdicion() {
@@ -71,6 +74,18 @@ public class CInbox extends CGenerico {
 		return edicion;
 	}
 
+	public int getPagadas() {
+		if (buscarCoordinador())
+			pagadas = servicioPlanillaGenerica
+					.buscarCantidadPorCoordinadorYEstado(nombreUsuarioSesion(),
+							"Pagada");
+		else
+			pagadas = servicioPlanillaGenerica
+					.buscarCantidadPorUsuarioYEstado(
+							usuarioSesion(nombreUsuarioSesion()), "Pagada");
+		return pagadas;
+	}
+	
 	public int getRechazada() {
 		if (buscarCoordinador())
 			rechazada = servicioPlanillaGenerica
@@ -178,7 +193,6 @@ public class CInbox extends CGenerico {
 				w = grupos.size();
 			}
 		}
-		System.out.println("Coordinador" + coordinador);
 		getRechazada();
 		if (u.getImagen() == null) {
 			imagenes.setContent(new AImage(url));

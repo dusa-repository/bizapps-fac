@@ -158,7 +158,6 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 
 	public void recibir(String string){
 		valor = string;
-		System.out.println(valor);
 	}
 	
 	public String nombreUsuarioSesion() {
