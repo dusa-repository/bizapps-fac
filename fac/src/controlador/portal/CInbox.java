@@ -150,7 +150,7 @@ public class CInbox extends CGenerico {
 		List<Grupo> grupos = servicioGrupo
 				.buscarGruposUsuario(usuarioSesion(nombreUsuarioSesion()));
 		for (int w = 0; w < grupos.size(); w++) {
-			if (grupos.get(w).getNombre().equals("Coordinador")) {
+			if (grupos.get(w).getNombre().equals("Gerente Regional")) {
 				return true;
 			}
 		}
@@ -188,7 +188,7 @@ public class CInbox extends CGenerico {
 		List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
 		ltbRoles.setModel(new ListModelList<Grupo>(grupos));
 		for (int w = 0; w < grupos.size(); w++) {
-			if (grupos.get(w).getNombre().equals("Coordinador")) {
+			if (grupos.get(w).getNombre().equals("Gerente Regional")) {
 				coordinador = true;
 				w = grupos.size();
 			}

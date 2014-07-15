@@ -4,10 +4,10 @@
 		<caption label="Configuracion de Portal TradeMark/Marca"
 			style="color:white; font-size: 16px; font-weight:bold; " />
 		<div>
-			<hbox hflex="1" widths="50%, 50%">
+			<hbox width="100%" widths="50%, 50%">
 				<groupbox style="background-color:white;">
 					<caption label="TradeMark"  style="color:#661313; font-size: 20px; font-weight:bold;" />
-						<grid width="100%">
+						<grid>
 							<columns visible="false">
 								<column label="" width="60%" />
 								<column label="" width="40%" />
@@ -36,7 +36,7 @@
 				</groupbox>
 				<groupbox style="background-color:white;" >
 					<caption label="Marca" style="color:#661313;font-size: 20px; font-weight:bold;" />
-						<grid width="100%">
+						<grid>
 							<columns visible="false">
 								<column label="" width="60%" />
 								<column label="" width="40%" />
