@@ -84,11 +84,11 @@ public class CSolicitud extends CGenerico {
 						"TradeMark") != null)
 					tradeMark = true;
 			} else {
-				if (grupos.get(i).getNombre().equals("Coordinador")) {
+				if (grupos.get(i).getNombre().equals("Gerente Regional")) {
 					grupoDominante = grupos.get(i).getNombre();
 					i = grupos.size();
 				} else {
-					if (grupos.get(i).getNombre().equals("Supervisor")) {
+					if (grupos.get(i).getNombre().equals("Solicitante")) {
 						grupoDominante = grupos.get(i).getNombre();
 						i = grupos.size();
 					}
@@ -701,7 +701,7 @@ public class CSolicitud extends CGenerico {
 					tipoConfig, usuarioSesion(nombreUsuarioSesion()));
 			break;
 
-		case "Coordinador":
+		case "Gerente Regional":
 			listCata = servicioPlanillaCata.buscarSupervisorYEstado(
 					nombreUsuarioSesion(), variable);
 			listEvento = servicioPlanillaEvento.buscarSupervisorYEstado(
@@ -716,7 +716,7 @@ public class CSolicitud extends CGenerico {
 					nombreUsuarioSesion(), variable);
 			break;
 
-		case "Supervisor":
+		case "Solicitante":
 			listCata = servicioPlanillaCata.buscarUsuarioSessionYEstado(
 					usuarioSesion(nombreUsuarioSesion()), variable);
 			listEvento = servicioPlanillaEvento.buscarUsuarioSessionYEstado(

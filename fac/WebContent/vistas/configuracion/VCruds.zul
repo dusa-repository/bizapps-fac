@@ -68,7 +68,7 @@
 			<center border="none">
 				<div height="100%" width="100%" style="background:#500101">
 					<hbox align="center" pack="center" height="100%" width="100%">
-						<groupbox closable="false" height="80%" width="100%"
+						<groupbox closable="false" height="100%" width="100%"
 							mold="3d">
 							<caption label="PANEL ADMINISTRATIVO"
 								style="color:white; font-size: 17px; font-weight:bold; background: #3A0202" />
