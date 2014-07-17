@@ -219,6 +219,7 @@ public class CEvento extends CGenerico {
 					guardarDatos("En Edicion");
 					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
+					salir();
 				}
 			}
 
@@ -288,6 +289,7 @@ public class CEvento extends CGenerico {
 					guardarDatos("Pendiente");
 					msj.mensajeInformacion(Mensaje.enviado);
 					limpiar();
+					salir();
 				}
 			}
 		};
@@ -439,27 +441,27 @@ public class CEvento extends CGenerico {
 		guardarItemsDegustacion(planillaEvento);
 		guardarItemsEstimados(planillaEvento);
 		guardarRecursos(planillaEvento);
-		if (tipoConfig.equals("TradeMark") && envio) {
-			Configuracion con = servicioConfiguracion
-					.buscarTradeMark("TradeMark");
-			Usuario usuarioAdmin = new Usuario();
-			if (con != null)
-				usuarioAdmin = con.getUsuario();
-			PlanillaEvento planillaAdmin = new PlanillaEvento(0, usuarioAdmin,
-					marca, nombreActividad, fechaInicio, fechaFin, ciudad,
-					region, horaEvento, direccion, personas, contacto,
-					telefono, nivel, edadTarget, medio, venta, costo,
-					descripcion, mecanica, fechaHora, fechaEnvio,
-					horaAuditoria, nombreUsuarioSesion(), string, usuario
-							.getZona().getDescripcion(), "Marca", "",
-					planillaEvento.getIdPlanillaEvento());
-			servicioPlanillaEvento.guardar(planillaAdmin);
-			planillaAdmin = servicioPlanillaEvento.buscarUltima();
-			guardarBitacora(planillaAdmin, false);
-			guardarItemsDegustacion(planillaAdmin);
-			guardarItemsEstimados(planillaAdmin);
-			guardarRecursos(planillaAdmin);
-		}
+//		if (tipoConfig.equals("TradeMark") && envio) {
+//			Configuracion con = servicioConfiguracion
+//					.buscarTradeMark("TradeMark");
+//			Usuario usuarioAdmin = new Usuario();
+//			if (con != null)
+//				usuarioAdmin = con.getUsuario();
+//			PlanillaEvento planillaAdmin = new PlanillaEvento(0, usuarioAdmin,
+//					marca, nombreActividad, fechaInicio, fechaFin, ciudad,
+//					region, horaEvento, direccion, personas, contacto,
+//					telefono, nivel, edadTarget, medio, venta, costo,
+//					descripcion, mecanica, fechaHora, fechaEnvio,
+//					horaAuditoria, nombreUsuarioSesion(), string, usuario
+//							.getZona().getDescripcion(), "Marca", "",
+//					planillaEvento.getIdPlanillaEvento());
+//			servicioPlanillaEvento.guardar(planillaAdmin);
+//			planillaAdmin = servicioPlanillaEvento.buscarUltima();
+//			guardarBitacora(planillaAdmin, false);
+//			guardarItemsDegustacion(planillaAdmin);
+//			guardarItemsEstimados(planillaAdmin);
+//			guardarRecursos(planillaAdmin);
+//		}
 	}
 
 	private void guardarBitacora(PlanillaEvento planillaEvento, boolean edicion) {

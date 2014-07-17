@@ -10,7 +10,7 @@
 				<div id="catalogoSolicitud" />
 				<space />
 				<vbox>
-					<zk if="${sec:isAnyGranted('Administrador')}">
+					<zk if="${sec:isAnyGranted('MARCA, TRADE MARKETING')}">
 						<button id="btnProcesar" label="Procesar"
 							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/procesar.png" />
 						<button id="btnFinalizar" label="Finalizar"

@@ -1,10 +1,12 @@
 package servicio.seguridad;
 
 import interfacedao.seguridad.IConfiguracionDAO;
+import interfacedao.seguridad.IGrupoDAO;
 
 import java.util.List;
 
 import modelo.seguridad.Configuracion;
+import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,15 @@ public class SConfiguracion {
 
 	@Autowired
 	private IConfiguracionDAO configuracionDAO;
+	@Autowired
+	private IGrupoDAO grupoDAO;
 
 	public List<Configuracion> buscar(String string) {
 		return configuracionDAO.findByTipo(string);
 	}
 
 	public Configuracion buscarAdministradorTradeMark(Usuario u, String string) {
+//		Grupo grupo = grupoDAO.findByNombre("");
 		List<Configuracion> configuracion = configuracionDAO
 				.findDistinctByUsuarioAndTipo(u, string);
 		if (!configuracion.isEmpty())

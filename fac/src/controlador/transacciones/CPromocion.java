@@ -190,6 +190,7 @@ public class CPromocion extends CGenerico {
 					guardarDatos("En Edicion");
 					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
+					salir();
 				}
 			}
 
@@ -236,6 +237,7 @@ public class CPromocion extends CGenerico {
 					guardarDatos("Pendiente");
 					msj.mensajeInformacion(Mensaje.enviado);
 					limpiar();
+					salir();
 				}
 			}
 		};
@@ -383,25 +385,25 @@ public class CPromocion extends CGenerico {
 		if (envio)
 			guardarBitacora(planillaPromocion, false);
 
-		if (tipoConfig.equals("TradeMark") && envio) {
-			Configuracion con = servicioConfiguracion
-					.buscarTradeMark("TradeMark");
-			Usuario usuarioAdmin = new Usuario();
-			if (con != null)
-				usuarioAdmin = con.getUsuario();
-			PlanillaPromocion planillaAdmin = new PlanillaPromocion(0,
-					usuarioAdmin, marca1, marca2, nombreActividad,
-					tipoActividad, local, ciudad, estado, responsable,
-					nombreLocal, rif, telefono, email, direccion, fechaInicio,
-					fechaFin, modalidad, frecuencia, material, extra, costo,
-					descripcion1, descripcion2, fechaHora, fechaEnvio,
-					horaAuditoria, nombreUsuarioSesion(), string, usuario
-							.getZona().getDescripcion(), "Marca", "",
-					planillaPromocion.getIdPlanillaPromocion());
-			servicioPlanillaPromocion.guardar(planillaAdmin);
-			planillaAdmin = servicioPlanillaPromocion.buscarUltima();
-			guardarBitacora(planillaAdmin, false);
-		}
+//		if (tipoConfig.equals("TradeMark") && envio) {
+//			Configuracion con = servicioConfiguracion
+//					.buscarTradeMark("TradeMark");
+//			Usuario usuarioAdmin = new Usuario();
+//			if (con != null)
+//				usuarioAdmin = con.getUsuario();
+//			PlanillaPromocion planillaAdmin = new PlanillaPromocion(0,
+//					usuarioAdmin, marca1, marca2, nombreActividad,
+//					tipoActividad, local, ciudad, estado, responsable,
+//					nombreLocal, rif, telefono, email, direccion, fechaInicio,
+//					fechaFin, modalidad, frecuencia, material, extra, costo,
+//					descripcion1, descripcion2, fechaHora, fechaEnvio,
+//					horaAuditoria, nombreUsuarioSesion(), string, usuario
+//							.getZona().getDescripcion(), "Marca", "",
+//					planillaPromocion.getIdPlanillaPromocion());
+//			servicioPlanillaPromocion.guardar(planillaAdmin);
+//			planillaAdmin = servicioPlanillaPromocion.buscarUltima();
+//			guardarBitacora(planillaAdmin, false);
+//		}
 	}
 
 	private void guardarBitacora(PlanillaPromocion planillaPromocion,

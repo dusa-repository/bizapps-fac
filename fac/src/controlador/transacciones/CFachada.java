@@ -257,6 +257,7 @@ public class CFachada extends CGenerico {
 					guardarDatos("En Edicion");
 					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
+					salir();
 				}
 			}
 
@@ -321,6 +322,7 @@ public class CFachada extends CGenerico {
 					guardarDatos("Pendiente");
 					msj.mensajeInformacion(Mensaje.enviado);
 					limpiar();
+					salir();
 				}
 			}
 		};
@@ -498,27 +500,27 @@ public class CFachada extends CGenerico {
 			guardarBitacora(planillaFachada, false);
 
 		guardarRecursos(planillaFachada);
-		if (tipoConfig.equals("TradeMark") && envio) {
-			Configuracion con = servicioConfiguracion
-					.buscarTradeMark("TradeMark");
-			Usuario usuarioAdmin = new Usuario();
-			if (con != null)
-				usuarioAdmin = con.getUsuario();
-			PlanillaFachada planillaAdmin = new PlanillaFachada(0,
-					usuarioAdmin, marca, nombreActividad, fechaActividad,
-					tipoActividad, ciudad, contacto, nombre, rif, telefono,
-					direccion, mail, personas, duracion, nivel, patente, costo,
-					descripcion, justificacion, tipoDecoracion, formato,
-					salidaArte, alto, largo, ancho, imagenUsuario1,
-					imagenUsuario2, imagenUsuario3, imagenUsuario4, fechaHora,
-					fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
-					usuario.getZona().getDescripcion(), "Marca", "",
-					planillaFachada.getIdPlanillaFachada());
-			servicioPlanillaFachada.guardar(planillaAdmin);
-			planillaAdmin = servicioPlanillaFachada.buscarUltima();
-			guardarBitacora(planillaAdmin, false);
-			guardarRecursos(planillaAdmin);
-		}
+//		if (tipoConfig.equals("TradeMark") && envio) {
+//			Configuracion con = servicioConfiguracion
+//					.buscarTradeMark("TradeMark");
+//			Usuario usuarioAdmin = new Usuario();
+//			if (con != null)
+//				usuarioAdmin = con.getUsuario();
+//			PlanillaFachada planillaAdmin = new PlanillaFachada(0,
+//					usuarioAdmin, marca, nombreActividad, fechaActividad,
+//					tipoActividad, ciudad, contacto, nombre, rif, telefono,
+//					direccion, mail, personas, duracion, nivel, patente, costo,
+//					descripcion, justificacion, tipoDecoracion, formato,
+//					salidaArte, alto, largo, ancho, imagenUsuario1,
+//					imagenUsuario2, imagenUsuario3, imagenUsuario4, fechaHora,
+//					fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
+//					usuario.getZona().getDescripcion(), "Marca", "",
+//					planillaFachada.getIdPlanillaFachada());
+//			servicioPlanillaFachada.guardar(planillaAdmin);
+//			planillaAdmin = servicioPlanillaFachada.buscarUltima();
+//			guardarBitacora(planillaAdmin, false);
+//			guardarRecursos(planillaAdmin);
+//		}
 	}
 
 	private void guardarRecursos(PlanillaFachada planillaFachada) {

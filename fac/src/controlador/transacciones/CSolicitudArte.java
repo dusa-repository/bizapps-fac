@@ -194,6 +194,7 @@ public class CSolicitudArte extends CGenerico {
 					guardarDatos("En Edicion");
 					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
+					salir();
 				}
 			}
 
@@ -244,6 +245,7 @@ public class CSolicitudArte extends CGenerico {
 					guardarDatos("Pendiente");
 					msj.mensajeInformacion(Mensaje.enviado);
 					limpiar();
+					salir();
 				}
 			}
 		};
@@ -392,24 +394,24 @@ public class CSolicitudArte extends CGenerico {
 		if (envio)
 			guardarBitacora(planillaArte, false);
 
-		if (tipoConfig.equals("TradeMark") && envio) {
-			Configuracion con = servicioConfiguracion
-					.buscarTradeMark("TradeMark");
-			Usuario usuarioAdmin = new Usuario();
-			if (con != null)
-				usuarioAdmin = con.getUsuario();
-			PlanillaArte planillaAdmin = new PlanillaArte(0, usuarioAdmin,
-					marca, nombreActividad, nombreLocal, salidaArte, rif,
-					patente, formato, alto, largo, ancho, imagenUsuario1,
-					imagenUsuario2, imagenUsuario3, imagenUsuario4,
-					lineamiento, fechaHora, fechaEnvio, horaAuditoria,
-					nombreUsuarioSesion(), string, usuario.getZona()
-							.getDescripcion(), "Marca", "",
-					planillaArte.getIdPlanillaArte());
-			servicioPlanillaArte.guardar(planillaAdmin);
-			planillaAdmin = servicioPlanillaArte.buscarUltima();
-			guardarBitacora(planillaAdmin, false);
-		}
+//		if (tipoConfig.equals("TradeMark") && envio) {
+//			Configuracion con = servicioConfiguracion
+//					.buscarTradeMark("TradeMark");
+//			Usuario usuarioAdmin = new Usuario();
+//			if (con != null)
+//				usuarioAdmin = con.getUsuario();
+//			PlanillaArte planillaAdmin = new PlanillaArte(0, usuarioAdmin,
+//					marca, nombreActividad, nombreLocal, salidaArte, rif,
+//					patente, formato, alto, largo, ancho, imagenUsuario1,
+//					imagenUsuario2, imagenUsuario3, imagenUsuario4,
+//					lineamiento, fechaHora, fechaEnvio, horaAuditoria,
+//					nombreUsuarioSesion(), string, usuario.getZona()
+//							.getDescripcion(), "Marca", "",
+//					planillaArte.getIdPlanillaArte());
+//			servicioPlanillaArte.guardar(planillaAdmin);
+//			planillaAdmin = servicioPlanillaArte.buscarUltima();
+//			guardarBitacora(planillaAdmin, false);
+//		}
 	}
 
 	private void guardarBitacora(PlanillaArte planillaArte, boolean edicion) {
