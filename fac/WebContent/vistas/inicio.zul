@@ -46,7 +46,8 @@
 									</a>
 									<a style="color:white">
 										<space />
-										<label id="lblEditarCuenta" value="Editar Cuenta" onDoubleClick="event.stopPropagation()"/>
+										<label id="lblEditarCuenta" value="Editar Cuenta"
+											onDoubleClick="event.stopPropagation()" />
 
 									</a>
 								</vbox>
@@ -85,30 +86,30 @@
 								<separator />
 								<hbox>
 									<button id="btnEvento" class="btn" label="Eventos Especiales"
-										orient="vertical" visible="false" autodisable="self"/>
-										<space/>
+										orient="vertical" visible="false" autodisable="self" />
+									<space />
 									<button id="btnUniforme" class="btn" label="Uniformes"
-										orient="vertical" visible="false" autodisable="self"/>
-										<space/>
+										orient="vertical" visible="false" autodisable="self" />
+									<space />
 									<button id="btnPromocion" class="btn" label="Promociones de Marca"
-										orient="vertical" visible="false" autodisable="self"/>
-										<space/>
+										orient="vertical" visible="false" autodisable="self" />
+									<space />
 									<button id="btnSolicitudArte" class="btn"
 										label="Solicitud de Arte y Publicaciones" orient="vertical"
-										visible="false" autodisable="self"/>
+										visible="false" autodisable="self" />
 								</hbox>
 								<separator />
 								<separator />
 								<separator />
 								<hbox>
 									<button id="btnCataInduccion" class="btn" label="Cata Induccion"
-										orient="vertical" visible="false" autodisable="self"/>
-										<space/>
+										orient="vertical" visible="false" autodisable="self" />
+									<space />
 									<button id="btnFachada" class="btn" label="Fachadas y Decoraciones"
-										orient="vertical" visible="false" autodisable="self"/>
-										<space/>
+										orient="vertical" visible="false" autodisable="self" />
+									<space />
 									<button id="btnMarca" class="btn" label="Marca" orient="vertical"
-										visible="false" autodisable="self"/>
+										visible="false" autodisable="self" />
 								</hbox>
 							</vbox>
 						</groupbox>
@@ -120,12 +121,12 @@
 								<separator />
 								<separator />
 								<button id="btnInBox" class="btn" label="Inbox" orient="vertical"
-									visible="false" autodisable="self"/>
+									visible="false" autodisable="self" />
 								<separator />
 								<separator />
 								<separator />
 								<button id="btnCruds" class="btn" label="Admin" orient="vertical"
-									visible="false" autodisable="self"/>
+									visible="false" autodisable="self" />
 							</vbox>
 						</groupbox>
 					</hbox>

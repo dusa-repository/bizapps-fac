@@ -19,14 +19,22 @@ import modelo.seguridad.Arbol;
 import modelo.seguridad.Configuracion;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
+import modelo.transacciones.ItemDegustacionPlanillaEvento;
+import modelo.transacciones.ItemEstimadoPlanillaEvento;
+import modelo.transacciones.ItemPlanillaCata;
 import modelo.transacciones.PlanillaArte;
 import modelo.transacciones.PlanillaCata;
 import modelo.transacciones.PlanillaEvento;
 import modelo.transacciones.PlanillaFachada;
 import modelo.transacciones.PlanillaPromocion;
 import modelo.transacciones.PlanillaUniforme;
+import modelo.transacciones.RecursoPlanillaCata;
+import modelo.transacciones.RecursoPlanillaEvento;
+import modelo.transacciones.RecursoPlanillaFachada;
+import modelo.transacciones.UniformePlanillaUniforme;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.image.AImage;
 import org.zkoss.zk.ui.Executions;
@@ -74,27 +82,54 @@ public class CSolicitud extends CGenerico {
 	public void inicializar() throws IOException {
 		Authentication authe = SecurityContextHolder.getContext()
 				.getAuthentication();
-		Usuario u = servicioUsuario.buscarUsuarioPorNombre(authe.getName());
-		List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
-		for (int i = 0; i < grupos.size(); i++) {
-			if (grupos.get(i).getNombre().equals("Administrador")) {
-				grupoDominante = grupos.get(i).getNombre();
-				i = grupos.size();
-				if (servicioConfiguracion.buscarAdministradorTradeMark(u,
-						"TradeMark") != null)
-					tradeMark = true;
+		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(
+				authe.getAuthorities());
+		for (int i = 0; i < authorities.size(); i++) {
+			if (authorities.get(i).getAuthority().equals("TRADE MARKETING")) {
+				tradeMark = true;
+				grupoDominante = "Administrador";
+				i = authorities.size();
 			} else {
-				if (grupos.get(i).getNombre().equals("Gerente Regional")) {
-					grupoDominante = grupos.get(i).getNombre();
-					i = grupos.size();
+
+				if (authorities.get(i).getAuthority().equals("MARCA")) {
+					grupoDominante = "Administrador";
+					i = authorities.size();
 				} else {
-					if (grupos.get(i).getNombre().equals("Solicitante")) {
-						grupoDominante = grupos.get(i).getNombre();
-						i = grupos.size();
+					if (authorities.get(i).getAuthority()
+							.equals("Gerente Regional")) {
+						grupoDominante = "Gerente Regional";
+						i = authorities.size();
+					} else {
+						if (authorities.get(i).getAuthority()
+								.equals("Solicitante")) {
+							grupoDominante = "Solicitante";
+							i = authorities.size();
+						}
 					}
 				}
 			}
 		}
+		// Usuario u = servicioUsuario.buscarUsuarioPorNombre(authe.getName());
+		// List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
+		// for (int i = 0; i < grupos.size(); i++) {
+		// if (grupos.get(i).getNombre().equals("Administrador")) {
+		// grupoDominante = grupos.get(i).getNombre();
+		// i = grupos.size();
+		// // if (servicioConfiguracion.buscarAdministradorTradeMark(u,
+		// // "TradeMark") != null)
+		// // tradeMark = true;
+		// } else {
+		// if (grupos.get(i).getNombre().equals("Gerente Regional")) {
+		// grupoDominante = grupos.get(i).getNombre();
+		// i = grupos.size();
+		// } else {
+		// if (grupos.get(i).getNombre().equals("Solicitante")) {
+		// grupoDominante = grupos.get(i).getNombre();
+		// i = grupos.size();
+		// }
+		// }
+		// }
+		// }
 		if (variable.equals("Generales"))
 			variable = "En Edicion";
 		buscarCatalogoPropio();
@@ -485,6 +520,9 @@ public class CSolicitud extends CGenerico {
 						.buscar(procesadas.get(i).getId());
 				planillaEvento.setEstado(estado);
 				planillaEvento.setRefencia(procesadas.get(i).getReferencia());
+				planillaEvento.setHoraAuditoria(horaAuditoria);
+				planillaEvento.setUsuarioAuditoria(nombreUsuarioSesion());
+				planillaEvento.setFechaAuditoria(fechaHora);
 				if (estado.equals("Rechazada") || estado.equals("Cancelada")) {
 					BitacoraEvento bitacoraE = new BitacoraEvento(0,
 							planillaEvento, estadoNuevo, fechaHora, fechaHora,
@@ -505,6 +543,61 @@ public class CSolicitud extends CGenerico {
 				}
 
 				listEvento.add(planillaEvento);
+
+				if (estado.equals("Aprobada")
+						&& planillaEvento.getTipo().equals("TradeMark")) {
+					Usuario user = usuarioSesion(nombreUsuarioSesion());
+					PlanillaEvento nueva = new PlanillaEvento(0, user,
+							planillaEvento.getMarca(),
+							planillaEvento.getNombreActividad(),
+							planillaEvento.getFechaDesde(),
+							planillaEvento.getFechaHasta(),
+							planillaEvento.getCiudad(),
+							planillaEvento.getRegion(),
+							planillaEvento.getHoraEvento(),
+							planillaEvento.getDireccion(),
+							planillaEvento.getPersonas(),
+							planillaEvento.getPersonaContacto(),
+							planillaEvento.getTelefono(),
+							planillaEvento.getNivel(),
+							planillaEvento.getEdadTarget(),
+							planillaEvento.getMedio(),
+							planillaEvento.getVenta(),
+							planillaEvento.getCosto(),
+							planillaEvento.getDescripcion(),
+							planillaEvento.getMecanica(), fechaHora,
+							planillaEvento.getFechaEnvio(), horaAuditoria,
+							nombreUsuarioSesion(), estado,
+							planillaEvento.getZona(), "Marca", "",
+							planillaEvento.getIdPlanillaEvento());
+					servicioPlanillaEvento.guardar(nueva);
+					nueva = servicioPlanillaEvento.buscarUltima();
+
+					List<ItemDegustacionPlanillaEvento> itemsDegustacionAgregados = servicioItemDegustacionPlanillaEvento
+							.buscarPorPlanilla(planillaEvento);
+					for (int j = 0; j < itemsDegustacionAgregados.size(); j++) {
+						itemsDegustacionAgregados.get(j).setPlanillaEvento(
+								nueva);
+					}
+					List<ItemEstimadoPlanillaEvento> itemsEstimacionAgregados = servicioItemEstimadoPlanillaEvento
+							.buscarPorPlanilla(planillaEvento);
+					for (int j = 0; j < itemsEstimacionAgregados.size(); j++) {
+						itemsEstimacionAgregados.get(j)
+								.setPlanillaEvento(nueva);
+					}
+					List<RecursoPlanillaEvento> recursosAgregados = servicioRecursoPlanillaEvento
+							.buscarPorPlanilla(planillaEvento);
+					for (int j = 0; j < recursosAgregados.size(); j++) {
+						recursosAgregados.get(j).setPlanillaEvento(nueva);
+					}
+
+					servicioItemEstimadoPlanillaEvento
+							.guardar(itemsEstimacionAgregados);
+					servicioItemDegustacionPlanillaEvento
+							.guardar(itemsDegustacionAgregados);
+					servicioRecursoPlanillaEvento.guardar(recursosAgregados);
+				}
+
 				break;
 
 			case "Uniformes":
@@ -512,6 +605,9 @@ public class CSolicitud extends CGenerico {
 						.buscar(procesadas.get(i).getId());
 				planillaUniforme.setEstado(estado);
 				planillaUniforme.setRefencia(procesadas.get(i).getReferencia());
+				planillaUniforme.setHoraAuditoria(horaAuditoria);
+				planillaUniforme.setUsuarioAuditoria(nombreUsuarioSesion());
+				planillaUniforme.setFechaAuditoria(fechaHora);
 				if (estado.equals("Rechazada") || estado.equals("Cancelada")) {
 					BitacoraUniforme bitacoraU = new BitacoraUniforme(0,
 							planillaUniforme, estadoNuevo, fechaHora,
@@ -531,7 +627,43 @@ public class CSolicitud extends CGenerico {
 					bitacoraUniforme.setImagen(imagen);
 					listBitacoraUniforme.add(bitacoraUniforme);
 				}
+
 				listUniforme.add(planillaUniforme);
+				if (estado.equals("Aprobada")
+						&& planillaUniforme.getTipo().equals("TradeMark")) {
+					Usuario user = usuarioSesion(nombreUsuarioSesion());
+					PlanillaUniforme nueva = new PlanillaUniforme(0, user,
+							planillaUniforme.getMarca(),
+							planillaUniforme.getNombreActividad(),
+							planillaUniforme.getFechaEntrega(),
+							planillaUniforme.getTipoActividad(),
+							planillaUniforme.getCiudad(),
+							planillaUniforme.getNombreCliente(),
+							planillaUniforme.getNombrePdv(),
+							planillaUniforme.getRifPdv(),
+							planillaUniforme.getTelefonoPdv(),
+							planillaUniforme.getCorreoPdv(),
+							planillaUniforme.getDireccionPdv(),
+							planillaUniforme.getLogo(),
+							planillaUniforme.getCosto(),
+							planillaUniforme.getJustificacion(),
+							planillaUniforme.getContrato(), fechaHora,
+							planillaUniforme.getFechaEnvio(), horaAuditoria,
+							nombreUsuarioSesion(), estado, planillaUniforme
+									.getUsuario().getZona().getDescripcion(),
+							"Marca", "",
+							planillaUniforme.getIdPlanillaUniforme());
+					servicioPlanillaUniforme.guardar(nueva);
+					nueva = servicioPlanillaUniforme.buscarUltima();
+					List<UniformePlanillaUniforme> uniformesAgregados = servicioUniformePlanillaUniforme
+							.buscarPorPlanilla(planillaUniforme);
+					for (int j = 0; j < uniformesAgregados.size(); j++) {
+						uniformesAgregados.get(j).setPlanillaUniforme(nueva);
+					}
+					servicioUniformePlanillaUniforme
+							.guardar(uniformesAgregados);
+				}
+
 				break;
 
 			case "Promociones de Marca":
@@ -540,6 +672,9 @@ public class CSolicitud extends CGenerico {
 				planillaPromocion.setEstado(estado);
 				planillaPromocion
 						.setRefencia(procesadas.get(i).getReferencia());
+				planillaPromocion.setHoraAuditoria(horaAuditoria);
+				planillaPromocion.setUsuarioAuditoria(nombreUsuarioSesion());
+				planillaPromocion.setFechaAuditoria(fechaHora);
 				if (estado.equals("Rechazada") || estado.equals("Cancelada")) {
 					BitacoraPromocion bitacoraP = new BitacoraPromocion(0,
 							planillaPromocion, estadoNuevo, fechaHora,
@@ -561,6 +696,42 @@ public class CSolicitud extends CGenerico {
 					listBitacoraPromocion.add(bitacoraPromocion);
 				}
 				listPromocion.add(planillaPromocion);
+
+				if (estado.equals("Aprobada")
+						&& planillaPromocion.getTipo().equals("TradeMark")) {
+					Usuario user = usuarioSesion(nombreUsuarioSesion());
+					PlanillaPromocion nueva = new PlanillaPromocion(0, user,
+							planillaPromocion.getMarcaA(),
+							planillaPromocion.getMarcaB(),
+							planillaPromocion.getNombreActividad(),
+							planillaPromocion.getTipoActividad(),
+							planillaPromocion.getTipoLocal(),
+							planillaPromocion.getCiudad(),
+							planillaPromocion.getEstadoPdv(),
+							planillaPromocion.getNombreCliente(),
+							planillaPromocion.getNombrePdv(),
+							planillaPromocion.getRifPdv(),
+							planillaPromocion.getTelefonoPdv(),
+							planillaPromocion.getCorreoPdv(),
+							planillaPromocion.getDireccionPdv(),
+							planillaPromocion.getFechaDesde(),
+							planillaPromocion.getFechaHasta(),
+							planillaPromocion.getModalidadPago(),
+							planillaPromocion.getFrecuenciaPago(),
+							planillaPromocion.getMaterial(),
+							planillaPromocion.getComunicacion(),
+							planillaPromocion.getCosto(),
+							planillaPromocion.getDescripcionMarcaA(),
+							planillaPromocion.getDescripcionMarcaB(),
+							fechaHora, planillaPromocion.getFechaEnvio(),
+							horaAuditoria, nombreUsuarioSesion(), estado,
+							planillaPromocion.getZona(), "Marca", "",
+							planillaPromocion.getIdPlanillaPromocion());
+					servicioPlanillaPromocion.guardar(nueva);
+
+					nueva = servicioPlanillaPromocion.buscarUltima();
+				}
+
 				break;
 
 			case "Solicitud de Arte y Publicaciones":
@@ -568,6 +739,9 @@ public class CSolicitud extends CGenerico {
 						.buscar(procesadas.get(i).getId());
 				planillaArte.setEstado(estado);
 				planillaArte.setRefencia(procesadas.get(i).getReferencia());
+				planillaArte.setHoraAuditoria(horaAuditoria);
+				planillaArte.setUsuarioAuditoria(nombreUsuarioSesion());
+				planillaArte.setFechaAuditoria(fechaHora);
 				if (estado.equals("Rechazada") || estado.equals("Cancelada")) {
 					BitacoraArte bitacoraA = new BitacoraArte(0, planillaArte,
 							estadoNuevo, fechaHora, fechaHora, horaAuditoria,
@@ -587,6 +761,32 @@ public class CSolicitud extends CGenerico {
 					listBitacoraArte.add(bitacoraArte);
 				}
 				listArte.add(planillaArte);
+
+				if (estado.equals("Aprobada")
+						&& planillaArte.getTipo().equals("TradeMark")) {
+					Usuario user = usuarioSesion(nombreUsuarioSesion());
+					PlanillaArte nueva = new PlanillaArte(0, user,
+							planillaArte.getMarca(),
+							planillaArte.getNombreActividad(),
+							planillaArte.getNombreCliente(),
+							planillaArte.getTipoArte(), planillaArte.getRif(),
+							planillaArte.getPatente(),
+							planillaArte.getFormato(), planillaArte.getAlto(),
+							planillaArte.getLargo(), planillaArte.getAncho(),
+							planillaArte.getImagenA(),
+							planillaArte.getImagenB(),
+							planillaArte.getImagenC(),
+							planillaArte.getImagenD(),
+							planillaArte.getLineamiento(), fechaHora,
+							planillaArte.getFechaEnvio(), horaAuditoria,
+							nombreUsuarioSesion(), estado,
+							planillaArte.getZona(), "Marca", "",
+							planillaArte.getIdPlanillaArte());
+					servicioPlanillaArte.guardar(nueva);
+
+					nueva = servicioPlanillaArte.buscarUltima();
+				}
+
 				break;
 
 			case "Cata Induccion":
@@ -594,6 +794,9 @@ public class CSolicitud extends CGenerico {
 						.buscar(procesadas.get(i).getId());
 				planillaCata.setEstado(estado);
 				planillaCata.setRefencia(procesadas.get(i).getReferencia());
+				planillaCata.setHoraAuditoria(horaAuditoria);
+				planillaCata.setUsuarioAuditoria(nombreUsuarioSesion());
+				planillaCata.setFechaAuditoria(fechaHora);
 				if (estado.equals("Rechazada") || estado.equals("Cancelada")) {
 					BitacoraCata bitacoraC = new BitacoraCata(0, planillaCata,
 							estadoNuevo, fechaHora, fechaHora, horaAuditoria,
@@ -613,6 +816,49 @@ public class CSolicitud extends CGenerico {
 					listBitacoraCata.add(bitacoraCata);
 				}
 				listCata.add(planillaCata);
+
+				if (estado.equals("Aprobada")
+						&& planillaCata.getTipo().equals("TradeMark")) {
+					Usuario user = usuarioSesion(nombreUsuarioSesion());
+					PlanillaCata nueva = new PlanillaCata(0, user,
+							planillaCata.getMarca(),
+							planillaCata.getNombreActividad(),
+							planillaCata.getFechaActividad(),
+							planillaCata.getCata(), planillaCata.getCiudad(),
+							planillaCata.getNombreCliente(),
+							planillaCata.getTelefonoPdv(),
+							planillaCata.getCorreoPdv(),
+							planillaCata.getDireccionPdv(),
+							planillaCata.getPersonas(),
+							planillaCata.getMotivo(), planillaCata.getNivel(),
+							planillaCata.getEdadTarget(),
+							planillaCata.getCosto(),
+							planillaCata.getDescripcion(),
+							planillaCata.getMecanica(), fechaHora,
+							planillaCata.getFechaEnvio(), horaAuditoria,
+							nombreUsuarioSesion(), estado,
+							planillaCata.getZona(), "Marca", "",
+							planillaCata.getIdPlanillaCata());
+					servicioPlanillaCata.guardar(nueva);
+					nueva = servicioPlanillaCata.buscarUltima();
+
+					List<ItemPlanillaCata> itemsAgregados = servicioItemPlanillaCata
+							.buscarPorPlanilla(planillaCata);
+					for (int j = 0; j < itemsAgregados.size(); j++) {
+						itemsAgregados.get(j).setPlanillaCata(nueva);
+					}
+
+					List<RecursoPlanillaCata> recursosAgregados = servicioRecursoPlanillaCata
+							.buscarPorPlanilla(planillaCata);
+
+					for (int j = 0; j < recursosAgregados.size(); j++) {
+						recursosAgregados.get(j).setPlanillaCata(nueva);
+					}
+
+					servicioItemPlanillaCata.guardar(itemsAgregados);
+					servicioRecursoPlanillaCata.guardar(recursosAgregados);
+				}
+
 				break;
 
 			case "Fachada y Decoraciones":
@@ -620,6 +866,9 @@ public class CSolicitud extends CGenerico {
 						.buscar(procesadas.get(i).getId());
 				planillaFachada.setEstado(estado);
 				planillaFachada.setRefencia(procesadas.get(i).getReferencia());
+				planillaFachada.setHoraAuditoria(horaAuditoria);
+				planillaFachada.setUsuarioAuditoria(nombreUsuarioSesion());
+				planillaFachada.setFechaAuditoria(fechaHora);
 				if (estado.equals("Rechazada") || estado.equals("Cancelada")) {
 					BitacoraFachada bitacoraF = new BitacoraFachada(0,
 							planillaFachada, estadoNuevo, fechaHora, fechaHora,
@@ -639,6 +888,53 @@ public class CSolicitud extends CGenerico {
 					listBitacoraFachada.add(bitacoraFachada);
 				}
 				listFachada.add(planillaFachada);
+
+				if (estado.equals("Aprobada")
+						&& planillaFachada.getTipo().equals("TradeMark")) {
+					Usuario user = usuarioSesion(nombreUsuarioSesion());
+					PlanillaFachada nueva = new PlanillaFachada(0, user,
+							planillaFachada.getMarca(),
+							planillaFachada.getNombreActividad(),
+							planillaFachada.getFechaActividad(),
+							planillaFachada.getTipoActividad(),
+							planillaFachada.getCiudad(),
+							planillaFachada.getNombreCliente(),
+							planillaFachada.getNombrePdv(),
+							planillaFachada.getRifPdv(),
+							planillaFachada.getTelefonoPdv(),
+							planillaFachada.getDireccionPdv(),
+							planillaFachada.getCorreoPdv(),
+							planillaFachada.getPersonas(),
+							planillaFachada.getDuracion(),
+							planillaFachada.getNivel(),
+							planillaFachada.getPatente(),
+							planillaFachada.getCosto(),
+							planillaFachada.getDescripcion(),
+							planillaFachada.getJustificacion(),
+							planillaFachada.getTipoDecoracion(),
+							planillaFachada.getFormato(),
+							planillaFachada.getArte(),
+							planillaFachada.getAlto(),
+							planillaFachada.getLargo(),
+							planillaFachada.getAncho(),
+							planillaFachada.getImagenA(),
+							planillaFachada.getImagenB(),
+							planillaFachada.getImagenC(),
+							planillaFachada.getImagenD(), fechaHora,
+							planillaFachada.getFechaEnvio(), horaAuditoria,
+							nombreUsuarioSesion(), estado,
+							planillaFachada.getZona(), "Marca", "",
+							planillaFachada.getIdPlanillaFachada());
+					servicioPlanillaFachada.guardar(nueva);
+					nueva = servicioPlanillaFachada.buscarUltima();
+					List<RecursoPlanillaFachada> recursosAgregados = servicioRecursoPlanillaFachada
+							.buscarPorPlanilla(planillaFachada);
+					for (int j = 0; j < recursosAgregados.size(); j++) {
+						recursosAgregados.get(j).setPlanillaFachada(nueva);
+					}
+					servicioRecursoPlanillaFachada.guardar(recursosAgregados);
+				}
+
 				break;
 
 			default:
@@ -655,8 +951,9 @@ public class CSolicitud extends CGenerico {
 			servicioPlanillaFachada.guardarVarias(listFachada);
 		if (!listPromocion.isEmpty())
 			servicioPlanillaPromocion.guardarVarias(listPromocion);
-		if (!listUniforme.isEmpty())
+		if (!listUniforme.isEmpty()) {
 			servicioPlanillaUniforme.guardarVarias(listUniforme);
+		}
 		// Listas de Bitacora
 		if (!listBitacoraArte.isEmpty())
 			servicioBitacoraArte.guardarVarias(listBitacoraArte);

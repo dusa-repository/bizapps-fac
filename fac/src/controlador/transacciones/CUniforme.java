@@ -195,6 +195,7 @@ public class CUniforme extends CGenerico {
 					guardarDatos("En Edicion");
 					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
+					salir();
 				}
 			}
 
@@ -247,6 +248,7 @@ public class CUniforme extends CGenerico {
 					guardarDatos("Pendiente");
 					msj.mensajeInformacion(Mensaje.enviado);
 					limpiar();
+					salir();
 				}
 			}
 		};
@@ -365,7 +367,7 @@ public class CUniforme extends CGenerico {
 		PlanillaUniforme planillaUniforme = new PlanillaUniforme(id, usuario,
 				marca, nombreActividad, fechaActividad, tipoActividad, ciudad,
 				cliente, nombre, rif, telefono, mail, direccion, logo, costo,
-				justificacion, contrato, fechaHora, fechaEnvio, rif,
+				justificacion, contrato, fechaHora, fechaEnvio, horaAuditoria,
 				nombreUsuarioSesion(), string, usuario.getZona()
 						.getDescripcion(), tipoConfig, "", 0);
 		servicioPlanillaUniforme.guardar(planillaUniforme);
@@ -392,24 +394,24 @@ public class CUniforme extends CGenerico {
 			guardarBitacora(planillaUniforme, false);
 
 		guardarUniformes(planillaUniforme);
-		if (tipoConfig.equals("TradeMark") && envio) {
-			Configuracion con = servicioConfiguracion
-					.buscarTradeMark("TradeMark");
-			Usuario usuarioAdmin = new Usuario();
-			if (con != null)
-				usuarioAdmin = con.getUsuario();
-			PlanillaUniforme planillaAdmin = new PlanillaUniforme(0,
-					usuarioAdmin, marca, nombreActividad, fechaActividad,
-					tipoActividad, ciudad, cliente, nombre, rif, telefono,
-					mail, direccion, logo, costo, justificacion, contrato,
-					fechaHora, fechaEnvio, rif, nombreUsuarioSesion(), string,
-					usuario.getZona().getDescripcion(), "Marca", "",
-					planillaUniforme.getIdPlanillaUniforme());
-			servicioPlanillaUniforme.guardar(planillaAdmin);
-			planillaAdmin = servicioPlanillaUniforme.buscarUltima();
-			guardarBitacora(planillaAdmin, false);
-			guardarUniformes(planillaAdmin);
-		}
+//		if (tipoConfig.equals("TradeMark") && envio) {
+//			Configuracion con = servicioConfiguracion
+//					.buscarTradeMark("TradeMark");
+//			Usuario usuarioAdmin = new Usuario();
+//			if (con != null)
+//				usuarioAdmin = con.getUsuario();
+//			PlanillaUniforme planillaAdmin = new PlanillaUniforme(0,
+//					usuarioAdmin, marca, nombreActividad, fechaActividad,
+//					tipoActividad, ciudad, cliente, nombre, rif, telefono,
+//					mail, direccion, logo, costo, justificacion, contrato,
+//					fechaHora, fechaEnvio, rif, nombreUsuarioSesion(), string,
+//					usuario.getZona().getDescripcion(), "Marca", "",
+//					planillaUniforme.getIdPlanillaUniforme());
+//			servicioPlanillaUniforme.guardar(planillaAdmin);
+//			planillaAdmin = servicioPlanillaUniforme.buscarUltima();
+//			guardarBitacora(planillaAdmin, false);
+//			guardarUniformes(planillaAdmin);
+//		}
 	}
 
 	private void guardarUniformes(PlanillaUniforme planillaUniforme) {

@@ -66,19 +66,7 @@ public class CGrupo extends CGenerico {
 
 			@Override
 			public void limpiar() {
-				txtNombreGrupo.setValue("");
-				txtNombreGrupo.setDisabled(false);
-				for (int i = 0; i < ltbFuncionalidades.getItemCount(); i++) {
-					Listitem listItem = ltbFuncionalidades.getItemAtIndex(i);
-					if (listItem.isSelected()) {
-						listItem.setSelected(false);
-					}
-				}
-				id = 0;
-				funcionalidades.clear();
-				ltbFuncionalidadesSeleccionados.getItems().clear();
-				if (txtNombreGrupo.isDisabled())
-					txtNombreGrupo.setDisabled(false);
+				limpiarCampos();
 			}
 
 			@Override
@@ -251,9 +239,26 @@ public class CGrupo extends CGenerico {
 
 	@Listen("onSeleccion = #catalogoGrupo")
 	public void seleccionGrupo() {
+		limpiarCampos();
 		Grupo grupo = catalogo.objetoSeleccionadoDelCatalogo();
 		llenarCampos(grupo);
 		catalogo.setParent(null);
+	}
+
+	private void limpiarCampos() {
+		txtNombreGrupo.setValue("");
+		txtNombreGrupo.setDisabled(false);
+		for (int i = 0; i < ltbFuncionalidades.getItemCount(); i++) {
+			Listitem listItem = ltbFuncionalidades.getItemAtIndex(i);
+			if (listItem.isSelected()) {
+				listItem.setSelected(false);
+			}
+		}
+		id = 0;
+		funcionalidades.clear();
+		ltbFuncionalidadesSeleccionados.getItems().clear();
+		if (txtNombreGrupo.isDisabled())
+			txtNombreGrupo.setDisabled(false);
 	}
 
 	private void llenarCampos(Grupo grupo) {

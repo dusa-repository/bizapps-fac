@@ -1,5 +1,6 @@
 package controlador.portal;
 
+import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -20,12 +21,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.image.AImage;
+import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.Borderlayout;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.ListModelList;
@@ -71,7 +75,18 @@ public class CInicio extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-
+		
+//		wdwInicio.addEventListener(Events.ON_BOOKMARK_CHANGE,
+//				new EventListener<Event>() {
+//					@Override
+//					public void onEvent(Event arg0)
+//							throws Exception {
+//						System.out.println("entro");
+//						Borderlayout vor = (Borderlayout) wdwInicio.getChildren().get(0);
+//						vor.setVisible(true);
+//					}
+//				});
+		System.out.println(wdwInicio.getParent());
 		Authentication authe = SecurityContextHolder.getContext()
 				.getAuthentication();
 
@@ -79,7 +94,8 @@ public class CInicio extends CGenerico {
 
 		List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
 		for (int i = 0; i < grupos.size(); i++) {
-			if (grupos.get(i).getNombre().equals("Administrador"))
+			if (grupos.get(i).getNombre().equals("MARCA")
+					|| grupos.get(i).getNombre().equals("TRADE MARKETING"))
 				admin = true;
 		}
 		ltbRoles.setModel(new ListModelList<Grupo>(grupos));
