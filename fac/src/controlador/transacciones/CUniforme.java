@@ -394,24 +394,24 @@ public class CUniforme extends CGenerico {
 			guardarBitacora(planillaUniforme, false);
 
 		guardarUniformes(planillaUniforme);
-//		if (tipoConfig.equals("TradeMark") && envio) {
-//			Configuracion con = servicioConfiguracion
-//					.buscarTradeMark("TradeMark");
-//			Usuario usuarioAdmin = new Usuario();
-//			if (con != null)
-//				usuarioAdmin = con.getUsuario();
-//			PlanillaUniforme planillaAdmin = new PlanillaUniforme(0,
-//					usuarioAdmin, marca, nombreActividad, fechaActividad,
-//					tipoActividad, ciudad, cliente, nombre, rif, telefono,
-//					mail, direccion, logo, costo, justificacion, contrato,
-//					fechaHora, fechaEnvio, rif, nombreUsuarioSesion(), string,
-//					usuario.getZona().getDescripcion(), "Marca", "",
-//					planillaUniforme.getIdPlanillaUniforme());
-//			servicioPlanillaUniforme.guardar(planillaAdmin);
-//			planillaAdmin = servicioPlanillaUniforme.buscarUltima();
-//			guardarBitacora(planillaAdmin, false);
-//			guardarUniformes(planillaAdmin);
-//		}
+		// if (tipoConfig.equals("TradeMark") && envio) {
+		// Configuracion con = servicioConfiguracion
+		// .buscarTradeMark("TradeMark");
+		// Usuario usuarioAdmin = new Usuario();
+		// if (con != null)
+		// usuarioAdmin = con.getUsuario();
+		// PlanillaUniforme planillaAdmin = new PlanillaUniforme(0,
+		// usuarioAdmin, marca, nombreActividad, fechaActividad,
+		// tipoActividad, ciudad, cliente, nombre, rif, telefono,
+		// mail, direccion, logo, costo, justificacion, contrato,
+		// fechaHora, fechaEnvio, rif, nombreUsuarioSesion(), string,
+		// usuario.getZona().getDescripcion(), "Marca", "",
+		// planillaUniforme.getIdPlanillaUniforme());
+		// servicioPlanillaUniforme.guardar(planillaAdmin);
+		// planillaAdmin = servicioPlanillaUniforme.buscarUltima();
+		// guardarBitacora(planillaAdmin, false);
+		// guardarUniformes(planillaAdmin);
+		// }
 	}
 
 	private void guardarUniformes(PlanillaUniforme planillaUniforme) {
@@ -571,10 +571,33 @@ public class CUniforme extends CGenerico {
 					uniformes.remove(uniforme);
 					UniformePlanillaUniforme uniformePlanilla = new UniformePlanillaUniforme();
 					uniformePlanilla.setUniforme(uniforme);
+					uniformesAgregados.clear();
+					for (int j = 0; j < ltbUniformesAgregados.getItemCount(); j++) {
+						Listitem listItemj = ltbUniformesAgregados
+								.getItemAtIndex(j);
+						String genero = ((Combobox) ((listItemj.getChildren()
+								.get(1))).getFirstChild()).getValue();
+						String talla = ((Combobox) ((listItemj.getChildren()
+								.get(2))).getFirstChild()).getValue();
+						int cantidad = ((Spinner) ((listItemj.getChildren()
+								.get(3))).getFirstChild()).getValue();
+						double precioUnitario = ((Doublespinner) ((listItemj
+								.getChildren().get(4))).getFirstChild())
+								.getValue();
+						long idUniforme = ((Spinner) ((listItemj.getChildren()
+								.get(6))).getFirstChild()).getValue();
+						Uniforme uniformej = servicioUniforme
+								.buscar(idUniforme);
+						UniformePlanillaUniforme uniformePlanillaj = new UniformePlanillaUniforme(
+								uniformej, null, genero, talla, cantidad,
+								precioUnitario);
+						uniformesAgregados.add(uniformePlanillaj);
+					}
 					uniformesAgregados.add(uniformePlanilla);
 					ltbUniformesAgregados
 							.setModel(new ListModelList<UniformePlanillaUniforme>(
 									uniformesAgregados));
+					ltbUniformesAgregados.renderAll();
 					listitemEliminar.add(listItem.get(i));
 				}
 			}
@@ -638,7 +661,8 @@ public class CUniforme extends CGenerico {
 							&& planilla.getCiudad().toLowerCase()
 									.startsWith(valores.get(1).toLowerCase())
 							&& planilla.getMarca().getDescripcion()
-									.toLowerCase().startsWith(valores.get(2).toLowerCase())
+									.toLowerCase()
+									.startsWith(valores.get(2).toLowerCase())
 							&& String
 									.valueOf(
 											formatoFecha.format(planilla
@@ -655,7 +679,8 @@ public class CUniforme extends CGenerico {
 				String[] registros = new String[4];
 				registros[0] = planillaCata.getNombreActividad().toLowerCase();
 				registros[1] = planillaCata.getCiudad().toLowerCase();
-				registros[2] = planillaCata.getMarca().getDescripcion().toLowerCase();
+				registros[2] = planillaCata.getMarca().getDescripcion()
+						.toLowerCase();
 				registros[3] = String.valueOf(formatoFecha.format(planillaCata
 						.getFechaAuditoria()));
 				return registros;

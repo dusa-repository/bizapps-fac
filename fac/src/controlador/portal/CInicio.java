@@ -21,16 +21,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.image.AImage;
+import org.zkoss.web.servlet.dsp.action.Page;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
+import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Borderlayout;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
@@ -75,18 +78,9 @@ public class CInicio extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-		
-//		wdwInicio.addEventListener(Events.ON_BOOKMARK_CHANGE,
-//				new EventListener<Event>() {
-//					@Override
-//					public void onEvent(Event arg0)
-//							throws Exception {
-//						System.out.println("entro");
-//						Borderlayout vor = (Borderlayout) wdwInicio.getChildren().get(0);
-//						vor.setVisible(true);
-//					}
-//				});
-		System.out.println(wdwInicio.getParent());
+//		System.out.println(page);
+//		System.out.println("book"+Executions.getCurrent().getDesktop().getPages());
+		Executions.getCurrent().getDesktop().setBookmark("/vistas/inicio.zul");;
 		Authentication authe = SecurityContextHolder.getContext()
 				.getAuthentication();
 

@@ -14,26 +14,25 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="configuracion")
+@Table(name = "configuracion")
 public class Configuracion implements Serializable {
 
 	private static final long serialVersionUID = -8635096277773855746L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_configuracion", unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_configuracion", unique = true, nullable = false)
 	private long idConfiguracion;
 
-	@Column(length=500)
+	@Column(length = 500)
 	private String planilla;
-	
-	@Column(length=500)
+
+	@Column(length = 500)
 	private String tipo;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_usuario")
-	private Usuario usuario;
-	
+	@Column(length = 100)
+	private String correo;
+
 	@Column(name = "fecha_auditoria")
 	private Timestamp fechaAuditoria;
 
@@ -48,14 +47,14 @@ public class Configuracion implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Configuracion(long idConfiguracion, String planilla, String tipo,
-			Usuario usuario, Timestamp fechaAuditoria, String horaAuditoria,
+	public Configuracion(long idConfiguracion, String planilla, String tipo,String correo,
+			Timestamp fechaAuditoria, String horaAuditoria,
 			String usuarioAuditoria) {
 		super();
 		this.idConfiguracion = idConfiguracion;
 		this.planilla = planilla;
+		this.correo = correo;
 		this.tipo = tipo;
-		this.usuario = usuario;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
 		this.usuarioAuditoria = usuarioAuditoria;
@@ -85,14 +84,6 @@ public class Configuracion implements Serializable {
 		this.tipo = tipo;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
 	public Timestamp getFechaAuditoria() {
 		return fechaAuditoria;
 	}
@@ -116,7 +107,13 @@ public class Configuracion implements Serializable {
 	public void setUsuarioAuditoria(String usuarioAuditoria) {
 		this.usuarioAuditoria = usuarioAuditoria;
 	}
-	
-	
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
 
 }

@@ -414,25 +414,25 @@ public class CCata extends CGenerico {
 
 		guardarItems(planilla);
 		guardarRecursos(planilla);
-//		if (tipoConfig.equals("TradeMark") && envio) {
-//			Configuracion con = servicioConfiguracion
-//					.buscarTradeMark("TradeMark");
-//			Usuario usuarioAdmin = new Usuario();
-//			if (con != null)
-//				usuarioAdmin = con.getUsuario();
-//			PlanillaCata planillaAdmin = new PlanillaCata(0, usuarioAdmin,
-//					marca, nombreActividad, fechaActividad, cata, ciudad,
-//					contacto, telefono, mail, direccion, personas, motivo,
-//					nivel, edadTarget, costo, descripcion, mecanica, fechaHora,
-//					fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
-//					usuario.getZona().getDescripcion(), "Marca", "",
-//					planilla.getIdPlanillaCata());
-//			servicioPlanillaCata.guardar(planillaAdmin);
-//			planillaAdmin = servicioPlanillaCata.buscarUltima();
-//			guardarBitacora(planillaAdmin, false);
-//			guardarItems(planillaAdmin);
-//			guardarRecursos(planillaAdmin);
-//		}
+		// if (tipoConfig.equals("TradeMark") && envio) {
+		// Configuracion con = servicioConfiguracion
+		// .buscarTradeMark("TradeMark");
+		// Usuario usuarioAdmin = new Usuario();
+		// if (con != null)
+		// usuarioAdmin = con.getUsuario();
+		// PlanillaCata planillaAdmin = new PlanillaCata(0, usuarioAdmin,
+		// marca, nombreActividad, fechaActividad, cata, ciudad,
+		// contacto, telefono, mail, direccion, personas, motivo,
+		// nivel, edadTarget, costo, descripcion, mecanica, fechaHora,
+		// fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
+		// usuario.getZona().getDescripcion(), "Marca", "",
+		// planilla.getIdPlanillaCata());
+		// servicioPlanillaCata.guardar(planillaAdmin);
+		// planillaAdmin = servicioPlanillaCata.buscarUltima();
+		// guardarBitacora(planillaAdmin, false);
+		// guardarItems(planillaAdmin);
+		// guardarRecursos(planillaAdmin);
+		// }
 	}
 
 	private void guardarBitacora(PlanillaCata planillaCata, boolean edicion) {
@@ -704,10 +704,28 @@ public class CCata extends CGenerico {
 					items.remove(sku);
 					ItemPlanillaCata itemPlanilla = new ItemPlanillaCata();
 					itemPlanilla.setSku(sku);
+					itemsAgregados.clear();
+					for (int j = 0; j < ltbProductosAgregados.getItemCount(); j++) {
+
+						Listitem listItemj = ltbProductosAgregados
+								.getItemAtIndex(j);
+						Integer solicitado = ((Spinner) ((listItemj
+								.getChildren().get(1))).getFirstChild())
+								.getValue();
+						Integer aprobado = ((Spinner) ((listItemj.getChildren()
+								.get(2))).getFirstChild()).getValue();
+						String skyId = ((Textbox) ((listItemj.getChildren()
+								.get(3))).getFirstChild()).getValue();
+						Sku sku2 = servicioSku.buscar(skyId);
+						ItemPlanillaCata planillaCata = new ItemPlanillaCata(
+								sku2, null, solicitado, aprobado);
+						itemsAgregados.add(planillaCata);
+					}
 					itemsAgregados.add(itemPlanilla);
 					ltbProductosAgregados
 							.setModel(new ListModelList<ItemPlanillaCata>(
 									itemsAgregados));
+					ltbProductosAgregados.renderAll();
 					listitemEliminar.add(listItem.get(i));
 				}
 			}
@@ -751,10 +769,25 @@ public class CCata extends CGenerico {
 					recursos.remove(recurso);
 					RecursoPlanillaCata recursoPlanilla = new RecursoPlanillaCata();
 					recursoPlanilla.setRecurso(recurso);
+					recursosAgregados.clear();
+					for (int j = 0; j < ltbRecursosAgregados.getItemCount(); j++) {
+						Listitem listItemj = ltbRecursosAgregados.getItemAtIndex(j);
+						Integer solicitado = ((Spinner) ((listItemj.getChildren().get(1)))
+								.getFirstChild()).getValue();
+						Integer aprobado = ((Spinner) ((listItemj.getChildren().get(2)))
+								.getFirstChild()).getValue();
+						long recursoId = ((Spinner) ((listItemj.getChildren().get(3)))
+								.getFirstChild()).getValue();
+						Recurso recursoa = servicioRecurso.buscar(recursoId);
+						RecursoPlanillaCata recursoPlanillas = new RecursoPlanillaCata(
+								recursoa, null, solicitado, aprobado);
+						recursosAgregados.add(recursoPlanillas);
+					}
 					recursosAgregados.add(recursoPlanilla);
 					ltbRecursosAgregados
 							.setModel(new ListModelList<RecursoPlanillaCata>(
 									recursosAgregados));
+					ltbRecursosAgregados.renderAll();
 					listitemEliminar.add(listItem.get(i));
 				}
 			}

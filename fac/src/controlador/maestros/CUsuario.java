@@ -190,15 +190,12 @@ public class CUsuario extends CGenerico {
 												.buscarPorUsuario(usuario);
 										List<PlanillaUniforme> planillaUniforme = servicioPlanillaUniforme
 												.buscarPorUsuario(usuario);
-										List<Configuracion> conf = servicioConfiguracion
-												.buscarPorUsuario(usuario);
 										if (!planillaArte.isEmpty()
 												|| !planillaCata.isEmpty()
 												|| !planillaEvento.isEmpty()
 												|| !planillaFachada.isEmpty()
 												|| !planillaPromocion.isEmpty()
-												|| !planillaUniforme.isEmpty()
-												|| !conf.isEmpty())
+												|| !planillaUniforme.isEmpty())
 											msj.mensajeError(Mensaje.noEliminar);
 										else {
 											servicioUsuario.eliminar(id);

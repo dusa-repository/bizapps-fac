@@ -417,22 +417,22 @@ public class CFachada extends CGenerico {
 		double largo = dspLargo.getValue();
 		Timestamp fechaActividad = new Timestamp(valorFecha.getTime());
 		byte[] imagenUsuario1 = null;
-		if (media1 instanceof org.zkoss.image.Image) {
+		if (media1 instanceof org.zkoss.image.Image && imagen1.getContent() != null) {
 			imagenUsuario1 = imagen1.getContent().getByteData();
 
 		}
 		byte[] imagenUsuario2 = null;
-		if (media2 instanceof org.zkoss.image.Image) {
+		if (media2 instanceof org.zkoss.image.Image && imagen2.getContent() != null) {
 			imagenUsuario2 = imagen2.getContent().getByteData();
 
 		}
 		byte[] imagenUsuario3 = null;
-		if (media3 instanceof org.zkoss.image.Image) {
+		if (media3 instanceof org.zkoss.image.Image && imagen3.getContent() != null) {
 			imagenUsuario3 = imagen3.getContent().getByteData();
 
 		}
 		byte[] imagenUsuario4 = null;
-		if (media4 instanceof org.zkoss.image.Image) {
+		if (media4 instanceof org.zkoss.image.Image && imagen4.getContent() != null) {
 			imagenUsuario4 = imagen4.getContent().getByteData();
 
 		}
@@ -500,27 +500,27 @@ public class CFachada extends CGenerico {
 			guardarBitacora(planillaFachada, false);
 
 		guardarRecursos(planillaFachada);
-//		if (tipoConfig.equals("TradeMark") && envio) {
-//			Configuracion con = servicioConfiguracion
-//					.buscarTradeMark("TradeMark");
-//			Usuario usuarioAdmin = new Usuario();
-//			if (con != null)
-//				usuarioAdmin = con.getUsuario();
-//			PlanillaFachada planillaAdmin = new PlanillaFachada(0,
-//					usuarioAdmin, marca, nombreActividad, fechaActividad,
-//					tipoActividad, ciudad, contacto, nombre, rif, telefono,
-//					direccion, mail, personas, duracion, nivel, patente, costo,
-//					descripcion, justificacion, tipoDecoracion, formato,
-//					salidaArte, alto, largo, ancho, imagenUsuario1,
-//					imagenUsuario2, imagenUsuario3, imagenUsuario4, fechaHora,
-//					fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
-//					usuario.getZona().getDescripcion(), "Marca", "",
-//					planillaFachada.getIdPlanillaFachada());
-//			servicioPlanillaFachada.guardar(planillaAdmin);
-//			planillaAdmin = servicioPlanillaFachada.buscarUltima();
-//			guardarBitacora(planillaAdmin, false);
-//			guardarRecursos(planillaAdmin);
-//		}
+		// if (tipoConfig.equals("TradeMark") && envio) {
+		// Configuracion con = servicioConfiguracion
+		// .buscarTradeMark("TradeMark");
+		// Usuario usuarioAdmin = new Usuario();
+		// if (con != null)
+		// usuarioAdmin = con.getUsuario();
+		// PlanillaFachada planillaAdmin = new PlanillaFachada(0,
+		// usuarioAdmin, marca, nombreActividad, fechaActividad,
+		// tipoActividad, ciudad, contacto, nombre, rif, telefono,
+		// direccion, mail, personas, duracion, nivel, patente, costo,
+		// descripcion, justificacion, tipoDecoracion, formato,
+		// salidaArte, alto, largo, ancho, imagenUsuario1,
+		// imagenUsuario2, imagenUsuario3, imagenUsuario4, fechaHora,
+		// fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
+		// usuario.getZona().getDescripcion(), "Marca", "",
+		// planillaFachada.getIdPlanillaFachada());
+		// servicioPlanillaFachada.guardar(planillaAdmin);
+		// planillaAdmin = servicioPlanillaFachada.buscarUltima();
+		// guardarBitacora(planillaAdmin, false);
+		// guardarRecursos(planillaAdmin);
+		// }
 	}
 
 	private void guardarRecursos(PlanillaFachada planillaFachada) {
@@ -695,10 +695,27 @@ public class CFachada extends CGenerico {
 					recursos.remove(recurso);
 					RecursoPlanillaFachada recursoPlanilla = new RecursoPlanillaFachada();
 					recursoPlanilla.setRecurso(recurso);
+					recursosAgregados.clear();
+					for (int j = 0; j < ltbRecursosAgregados.getItemCount(); j++) {
+						Listitem listItemj = ltbRecursosAgregados
+								.getItemAtIndex(j);
+						Integer solicitado = ((Spinner) ((listItemj
+								.getChildren().get(1))).getFirstChild())
+								.getValue();
+						Integer aprobado = ((Spinner) ((listItemj.getChildren()
+								.get(2))).getFirstChild()).getValue();
+						long recursoId = ((Spinner) ((listItemj.getChildren()
+								.get(3))).getFirstChild()).getValue();
+						Recurso recursoj = servicioRecurso.buscar(recursoId);
+						RecursoPlanillaFachada recursoPlanillaj = new RecursoPlanillaFachada(
+								recursoj, null, solicitado, aprobado);
+						recursosAgregados.add(recursoPlanillaj);
+					}
 					recursosAgregados.add(recursoPlanilla);
 					ltbRecursosAgregados
 							.setModel(new ListModelList<RecursoPlanillaFachada>(
 									recursosAgregados));
+					ltbRecursosAgregados.renderAll();
 					listitemEliminar.add(listItem.get(i));
 				}
 			}
@@ -951,6 +968,30 @@ public class CFachada extends CGenerico {
 		if (Validador.validarCorreo(txtEmail.getValue()) == false) {
 			msj.mensajeAlerta(Mensaje.correoInvalido);
 		}
+	}
+	
+	@Listen("onClick = #btnRemover1")
+	public void limpiar1() {
+		org.zkoss.image.Image imagenUsuario1 = null;
+		imagen1.setContent(imagenUsuario1);
+	}
+	
+	@Listen("onClick = #btnRemover2")
+	public void limpiar2() {
+		org.zkoss.image.Image imagenUsuario1 = null;
+		imagen2.setContent(imagenUsuario1);
+	}
+	
+	@Listen("onClick = #btnRemover3")
+	public void limpiar3() {
+		org.zkoss.image.Image imagenUsuario1 = null;
+		imagen3.setContent(imagenUsuario1);
+	}
+	
+	@Listen("onClick = #btnRemover4")
+	public void limpiar4() {
+		org.zkoss.image.Image imagenUsuario1 = null;
+		imagen4.setContent(imagenUsuario1);
 	}
 
 }

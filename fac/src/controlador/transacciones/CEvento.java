@@ -441,27 +441,27 @@ public class CEvento extends CGenerico {
 		guardarItemsDegustacion(planillaEvento);
 		guardarItemsEstimados(planillaEvento);
 		guardarRecursos(planillaEvento);
-//		if (tipoConfig.equals("TradeMark") && envio) {
-//			Configuracion con = servicioConfiguracion
-//					.buscarTradeMark("TradeMark");
-//			Usuario usuarioAdmin = new Usuario();
-//			if (con != null)
-//				usuarioAdmin = con.getUsuario();
-//			PlanillaEvento planillaAdmin = new PlanillaEvento(0, usuarioAdmin,
-//					marca, nombreActividad, fechaInicio, fechaFin, ciudad,
-//					region, horaEvento, direccion, personas, contacto,
-//					telefono, nivel, edadTarget, medio, venta, costo,
-//					descripcion, mecanica, fechaHora, fechaEnvio,
-//					horaAuditoria, nombreUsuarioSesion(), string, usuario
-//							.getZona().getDescripcion(), "Marca", "",
-//					planillaEvento.getIdPlanillaEvento());
-//			servicioPlanillaEvento.guardar(planillaAdmin);
-//			planillaAdmin = servicioPlanillaEvento.buscarUltima();
-//			guardarBitacora(planillaAdmin, false);
-//			guardarItemsDegustacion(planillaAdmin);
-//			guardarItemsEstimados(planillaAdmin);
-//			guardarRecursos(planillaAdmin);
-//		}
+		// if (tipoConfig.equals("TradeMark") && envio) {
+		// Configuracion con = servicioConfiguracion
+		// .buscarTradeMark("TradeMark");
+		// Usuario usuarioAdmin = new Usuario();
+		// if (con != null)
+		// usuarioAdmin = con.getUsuario();
+		// PlanillaEvento planillaAdmin = new PlanillaEvento(0, usuarioAdmin,
+		// marca, nombreActividad, fechaInicio, fechaFin, ciudad,
+		// region, horaEvento, direccion, personas, contacto,
+		// telefono, nivel, edadTarget, medio, venta, costo,
+		// descripcion, mecanica, fechaHora, fechaEnvio,
+		// horaAuditoria, nombreUsuarioSesion(), string, usuario
+		// .getZona().getDescripcion(), "Marca", "",
+		// planillaEvento.getIdPlanillaEvento());
+		// servicioPlanillaEvento.guardar(planillaAdmin);
+		// planillaAdmin = servicioPlanillaEvento.buscarUltima();
+		// guardarBitacora(planillaAdmin, false);
+		// guardarItemsDegustacion(planillaAdmin);
+		// guardarItemsEstimados(planillaAdmin);
+		// guardarRecursos(planillaAdmin);
+		// }
 	}
 
 	private void guardarBitacora(PlanillaEvento planillaEvento, boolean edicion) {
@@ -602,10 +602,26 @@ public class CEvento extends CGenerico {
 			if (!Validador.validarTelefono(txtTelefono.getValue())) {
 				msj.mensajeAlerta(Mensaje.telefonoInvalido);
 				return false;
-			} else
-				return true;
+			} else {
+				if (!validarLista()) {
+					msj.mensajeAlerta(Mensaje.faltaMarca);
+					return false;
+				} else
+					return true;
+			}
 		}
 
+	}
+
+	private boolean validarLista() {
+		for (int j = 0; j < ltbRecursosAgregados.getItemCount(); j++) {
+			Listitem listItemj = ltbRecursosAgregados.getItemAtIndex(j);
+			if (((Combobox) ((listItemj.getChildren().get(1))).getFirstChild())
+					.getSelectedItem() == null) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private void llenarListas() {
@@ -770,10 +786,28 @@ public class CEvento extends CGenerico {
 					itemsDegustacion.remove(sku);
 					ItemDegustacionPlanillaEvento itemPlanilla = new ItemDegustacionPlanillaEvento();
 					itemPlanilla.setSku(sku);
+					itemsDegustacionAgregados.clear();
+					for (int j = 0; j < ltbProductosDegustacionAgregados
+							.getItemCount(); j++) {
+						Listitem listItemj = ltbProductosDegustacionAgregados
+								.getItemAtIndex(j);
+						Integer solicitado = ((Spinner) ((listItemj
+								.getChildren().get(1))).getFirstChild())
+								.getValue();
+						Integer aprobado = ((Spinner) ((listItemj.getChildren()
+								.get(2))).getFirstChild()).getValue();
+						String skyId = ((Textbox) ((listItemj.getChildren()
+								.get(3))).getFirstChild()).getValue();
+						Sku skus = servicioSku.buscar(skyId);
+						ItemDegustacionPlanillaEvento planillaItem = new ItemDegustacionPlanillaEvento(
+								skus, null, solicitado, aprobado);
+						itemsDegustacionAgregados.add(planillaItem);
+					}
 					itemsDegustacionAgregados.add(itemPlanilla);
 					ltbProductosDegustacionAgregados
 							.setModel(new ListModelList<ItemDegustacionPlanillaEvento>(
 									itemsDegustacionAgregados));
+					ltbProductosDegustacionAgregados.renderAll();
 					listitemEliminar.add(listItem.get(i));
 				}
 			}
@@ -820,10 +854,25 @@ public class CEvento extends CGenerico {
 					itemsEstimacion.remove(sku);
 					ItemEstimadoPlanillaEvento itemPlanilla = new ItemEstimadoPlanillaEvento();
 					itemPlanilla.setSku(sku);
+					itemsEstimacionAgregados.clear();
+					for (int j = 0; j < ltbProductosVentaAgregados
+							.getItemCount(); j++) {
+						Listitem listItemj = ltbProductosVentaAgregados
+								.getItemAtIndex(j);
+						Integer estimado = ((Spinner) ((listItemj.getChildren()
+								.get(1))).getFirstChild()).getValue();
+						String skyId = ((Textbox) ((listItemj.getChildren()
+								.get(2))).getFirstChild()).getValue();
+						Sku skus = servicioSku.buscar(skyId);
+						ItemEstimadoPlanillaEvento planillaItem = new ItemEstimadoPlanillaEvento(
+								skus, null, estimado);
+						itemsEstimacionAgregados.add(planillaItem);
+					}
 					itemsEstimacionAgregados.add(itemPlanilla);
 					ltbProductosVentaAgregados
 							.setModel(new ListModelList<ItemEstimadoPlanillaEvento>(
 									itemsEstimacionAgregados));
+					ltbProductosVentaAgregados.renderAll();
 					listitemEliminar.add(listItem.get(i));
 				}
 			}
@@ -869,10 +918,37 @@ public class CEvento extends CGenerico {
 					recursos.remove(recurso);
 					RecursoPlanillaEvento recursoPlanilla = new RecursoPlanillaEvento();
 					recursoPlanilla.setRecurso(recurso);
+					recursosAgregados.clear();
+					for (int j = 0; j < ltbRecursosAgregados.getItemCount(); j++) {
+						Listitem listItemj = ltbRecursosAgregados
+								.getItemAtIndex(j);
+						String idMarca = "";
+						if (((Combobox) ((listItemj.getChildren().get(1)))
+								.getFirstChild()).getSelectedItem() != null) {
+							System.out.println("entro");
+							idMarca = ((Combobox) ((listItemj.getChildren()
+									.get(1))).getFirstChild())
+									.getSelectedItem().getContext();
+							System.out.println("id" + idMarca);
+						}
+						Marca marca = servicioMarca.buscar(idMarca);
+						Integer solicitado = ((Spinner) ((listItemj
+								.getChildren().get(2))).getFirstChild())
+								.getValue();
+						Integer aprobado = ((Spinner) ((listItemj.getChildren()
+								.get(3))).getFirstChild()).getValue();
+						long recursoId = ((Spinner) ((listItemj.getChildren()
+								.get(4))).getFirstChild()).getValue();
+						Recurso recursos = servicioRecurso.buscar(recursoId);
+						RecursoPlanillaEvento recursoPlanillaj = new RecursoPlanillaEvento(
+								recursos, null, marca, solicitado, aprobado);
+						recursosAgregados.add(recursoPlanillaj);
+					}
 					recursosAgregados.add(recursoPlanilla);
 					ltbRecursosAgregados
 							.setModel(new ListModelList<RecursoPlanillaEvento>(
 									recursosAgregados));
+					ltbRecursosAgregados.renderAll();
 					listitemEliminar.add(listItem.get(i));
 				}
 			}
