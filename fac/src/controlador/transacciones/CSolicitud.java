@@ -85,6 +85,8 @@ public class CSolicitud extends CGenerico {
 	private List<PlanillaGenerica> items = new ArrayList<PlanillaGenerica>();
 	private List<PlanillaGenerica> items2 = new ArrayList<PlanillaGenerica>();
 	ListModelList<F0005> motivos;
+	byte[] imagen;
+	byte[] imagenX;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -117,27 +119,6 @@ public class CSolicitud extends CGenerico {
 				}
 			}
 		}
-		// Usuario u = servicioUsuario.buscarUsuarioPorNombre(authe.getName());
-		// List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
-		// for (int i = 0; i < grupos.size(); i++) {
-		// if (grupos.get(i).getNombre().equals("Administrador")) {
-		// grupoDominante = grupos.get(i).getNombre();
-		// i = grupos.size();
-		// // if (servicioConfiguracion.buscarAdministradorTradeMark(u,
-		// // "TradeMark") != null)
-		// // tradeMark = true;
-		// } else {
-		// if (grupos.get(i).getNombre().equals("Gerente Regional")) {
-		// grupoDominante = grupos.get(i).getNombre();
-		// i = grupos.size();
-		// } else {
-		// if (grupos.get(i).getNombre().equals("Solicitante")) {
-		// grupoDominante = grupos.get(i).getNombre();
-		// i = grupos.size();
-		// }
-		// }
-		// }
-		// }
 		if (variable.equals("Generales"))
 			variable = "En Edicion";
 		buscarCatalogoPropio();
@@ -250,7 +231,8 @@ public class CSolicitud extends CGenerico {
 									HashMap<String, Object> mapaRechazo = new HashMap<String, Object>();
 									mapaRechazo.put("catalogo", catalogo);
 									mapaRechazo.put("estatusViejo", estatus);
-									mapaRechazo.put("estatusNuevo", estadoNuevo);
+									mapaRechazo
+											.put("estatusNuevo", estadoNuevo);
 									Sessions.getCurrent().setAttribute(
 											"rechazador", mapaRechazo);
 									Window window = (Window) Executions
@@ -258,15 +240,12 @@ public class CSolicitud extends CGenerico {
 													"/vistas/componentes/VMotivo.zul",
 													wdwSolicitud, mapaRechazo);
 									window.doModal();
-									listaMotivo = (Listbox) window.getChildren()
-											.get(1).getChildren().get(1)
-											.getChildren().get(0);
-									listaMotivo.setModel(new ListModelList<PlanillaGenerica>(
-											procesadas));
-//									cambiarEstado(procesadas, estatus,
-//											estadoDefecto, estadoNuevo);
-//									cargarLista();
-//									catalogo.actualizarLista(listPlanilla);
+									listaMotivo = (Listbox) window
+											.getChildren().get(1).getChildren()
+											.get(1).getChildren().get(0);
+									listaMotivo
+											.setModel(new ListModelList<PlanillaGenerica>(
+													procesadas));
 								}
 							}
 						});
@@ -294,7 +273,8 @@ public class CSolicitud extends CGenerico {
 									HashMap<String, Object> mapaRechazo = new HashMap<String, Object>();
 									mapaRechazo.put("catalogo", catalogo);
 									mapaRechazo.put("estatusViejo", estatus);
-									mapaRechazo.put("estatusNuevo", estadoNuevo);
+									mapaRechazo
+											.put("estatusNuevo", estadoNuevo);
 									Sessions.getCurrent().setAttribute(
 											"rechazador", mapaRechazo);
 									Window window = (Window) Executions
@@ -302,15 +282,12 @@ public class CSolicitud extends CGenerico {
 													"/vistas/componentes/VMotivo.zul",
 													wdwSolicitud, mapaRechazo);
 									window.doModal();
-									listaMotivo = (Listbox) window.getChildren()
-											.get(1).getChildren().get(1)
-											.getChildren().get(0);
-									listaMotivo.setModel(new ListModelList<PlanillaGenerica>(
-											procesadas));
-//									cambiarEstado(procesadas, estatus,
-//											estadoDefecto, estadoNuevo);
-//									cargarLista();
-//									catalogo.actualizarLista(listPlanilla);
+									listaMotivo = (Listbox) window
+											.getChildren().get(1).getChildren()
+											.get(1).getChildren().get(0);
+									listaMotivo
+											.setModel(new ListModelList<PlanillaGenerica>(
+													procesadas));
 								}
 							}
 						});
@@ -543,7 +520,7 @@ public class CSolicitud extends CGenerico {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		byte[] imagen = imagenSi.getContent().getByteData();
+		imagen = imagenSi.getContent().getByteData();
 
 		URL url2 = getClass().getResource("/imagenes/no.png");
 		try {
@@ -551,7 +528,7 @@ public class CSolicitud extends CGenerico {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		byte[] imagenX = imagenNo.getContent().getByteData();
+		imagenX = imagenNo.getContent().getByteData();
 
 		for (int i = 0; i < procesadas.size(); i++) {
 			switch (procesadas.get(i).getTipoPlanilla()) {
@@ -560,7 +537,8 @@ public class CSolicitud extends CGenerico {
 						.buscar(procesadas.get(i).getId());
 				planillaEvento.setEstado(estado);
 				planillaEvento.setRefencia(procesadas.get(i).getReferencia());
-				planillaEvento.setMotivoCancelacion(procesadas.get(i).getMotivo());
+				planillaEvento.setMotivoCancelacion(procesadas.get(i)
+						.getMotivo());
 				planillaEvento.setHoraAuditoria(horaAuditoria);
 				planillaEvento.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaEvento.setFechaAuditoria(fechaHora);
@@ -610,9 +588,10 @@ public class CSolicitud extends CGenerico {
 							planillaEvento.getFechaEnvio(), horaAuditoria,
 							nombreUsuarioSesion(), estado,
 							planillaEvento.getZona(), "Marca", "",
-							planillaEvento.getIdPlanillaEvento(),"");
+							planillaEvento.getIdPlanillaEvento(), "");
 					servicioPlanillaEvento.guardar(nueva);
 					nueva = servicioPlanillaEvento.buscarUltima();
+					bitacoraEventos(nueva);
 
 					List<ItemDegustacionPlanillaEvento> itemsDegustacionAgregados = servicioItemDegustacionPlanillaEvento
 							.buscarPorPlanilla(planillaEvento);
@@ -646,7 +625,8 @@ public class CSolicitud extends CGenerico {
 						.buscar(procesadas.get(i).getId());
 				planillaUniforme.setEstado(estado);
 				planillaUniforme.setRefencia(procesadas.get(i).getReferencia());
-				planillaUniforme.setMotivoCancelacion(procesadas.get(i).getMotivo());
+				planillaUniforme.setMotivoCancelacion(procesadas.get(i)
+						.getMotivo());
 				planillaUniforme.setHoraAuditoria(horaAuditoria);
 				planillaUniforme.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaUniforme.setFechaAuditoria(fechaHora);
@@ -694,9 +674,10 @@ public class CSolicitud extends CGenerico {
 							nombreUsuarioSesion(), estado, planillaUniforme
 									.getUsuario().getZona().getDescripcion(),
 							"Marca", "",
-							planillaUniforme.getIdPlanillaUniforme(),"");
+							planillaUniforme.getIdPlanillaUniforme(), "");
 					servicioPlanillaUniforme.guardar(nueva);
 					nueva = servicioPlanillaUniforme.buscarUltima();
+					bitacoraUniformes(nueva);
 					List<UniformePlanillaUniforme> uniformesAgregados = servicioUniformePlanillaUniforme
 							.buscarPorPlanilla(planillaUniforme);
 					for (int j = 0; j < uniformesAgregados.size(); j++) {
@@ -714,7 +695,8 @@ public class CSolicitud extends CGenerico {
 				planillaPromocion.setEstado(estado);
 				planillaPromocion
 						.setRefencia(procesadas.get(i).getReferencia());
-				planillaPromocion.setMotivoCancelacion(procesadas.get(i).getMotivo());
+				planillaPromocion.setMotivoCancelacion(procesadas.get(i)
+						.getMotivo());
 				planillaPromocion.setHoraAuditoria(horaAuditoria);
 				planillaPromocion.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaPromocion.setFechaAuditoria(fechaHora);
@@ -769,10 +751,11 @@ public class CSolicitud extends CGenerico {
 							fechaHora, planillaPromocion.getFechaEnvio(),
 							horaAuditoria, nombreUsuarioSesion(), estado,
 							planillaPromocion.getZona(), "Marca", "",
-							planillaPromocion.getIdPlanillaPromocion(),"");
+							planillaPromocion.getIdPlanillaPromocion(), "");
 					servicioPlanillaPromocion.guardar(nueva);
 
 					nueva = servicioPlanillaPromocion.buscarUltima();
+					bitacoraPromociones(nueva);
 				}
 
 				break;
@@ -782,7 +765,8 @@ public class CSolicitud extends CGenerico {
 						.buscar(procesadas.get(i).getId());
 				planillaArte.setEstado(estado);
 				planillaArte.setRefencia(procesadas.get(i).getReferencia());
-				planillaArte.setMotivoCancelacion(procesadas.get(i).getMotivo());
+				planillaArte
+						.setMotivoCancelacion(procesadas.get(i).getMotivo());
 				planillaArte.setHoraAuditoria(horaAuditoria);
 				planillaArte.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaArte.setFechaAuditoria(fechaHora);
@@ -825,10 +809,11 @@ public class CSolicitud extends CGenerico {
 							planillaArte.getFechaEnvio(), horaAuditoria,
 							nombreUsuarioSesion(), estado,
 							planillaArte.getZona(), "Marca", "",
-							planillaArte.getIdPlanillaArte(),"");
+							planillaArte.getIdPlanillaArte(), "");
 					servicioPlanillaArte.guardar(nueva);
 
 					nueva = servicioPlanillaArte.buscarUltima();
+					bitacoraArte(nueva);
 				}
 
 				break;
@@ -838,7 +823,8 @@ public class CSolicitud extends CGenerico {
 						.buscar(procesadas.get(i).getId());
 				planillaCata.setEstado(estado);
 				planillaCata.setRefencia(procesadas.get(i).getReferencia());
-				planillaCata.setMotivoCancelacion(procesadas.get(i).getMotivo());
+				planillaCata
+						.setMotivoCancelacion(procesadas.get(i).getMotivo());
 				planillaCata.setHoraAuditoria(horaAuditoria);
 				planillaCata.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaCata.setFechaAuditoria(fechaHora);
@@ -883,10 +869,10 @@ public class CSolicitud extends CGenerico {
 							planillaCata.getFechaEnvio(), horaAuditoria,
 							nombreUsuarioSesion(), estado,
 							planillaCata.getZona(), "Marca", "",
-							planillaCata.getIdPlanillaCata(),"");
+							planillaCata.getIdPlanillaCata(), "");
 					servicioPlanillaCata.guardar(nueva);
 					nueva = servicioPlanillaCata.buscarUltima();
-
+					bitacoraCata(nueva);
 					List<ItemPlanillaCata> itemsAgregados = servicioItemPlanillaCata
 							.buscarPorPlanilla(planillaCata);
 					for (int j = 0; j < itemsAgregados.size(); j++) {
@@ -911,7 +897,8 @@ public class CSolicitud extends CGenerico {
 						.buscar(procesadas.get(i).getId());
 				planillaFachada.setEstado(estado);
 				planillaFachada.setRefencia(procesadas.get(i).getReferencia());
-				planillaFachada.setMotivoCancelacion(procesadas.get(i).getMotivo());
+				planillaFachada.setMotivoCancelacion(procesadas.get(i)
+						.getMotivo());
 				planillaFachada.setHoraAuditoria(horaAuditoria);
 				planillaFachada.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaFachada.setFechaAuditoria(fechaHora);
@@ -973,6 +960,7 @@ public class CSolicitud extends CGenerico {
 							planillaFachada.getIdPlanillaFachada(), "");
 					servicioPlanillaFachada.guardar(nueva);
 					nueva = servicioPlanillaFachada.buscarUltima();
+					bitacoraFachada(nueva);
 					List<RecursoPlanillaFachada> recursosAgregados = servicioRecursoPlanillaFachada
 							.buscarPorPlanilla(planillaFachada);
 					for (int j = 0; j < recursosAgregados.size(); j++) {
@@ -1269,8 +1257,8 @@ public class CSolicitud extends CGenerico {
 
 	@Listen("onClick = #btnAceptarMotivo")
 	public void aceptarMotivo() {
-		String estatusNuevo="";
-		String estatusViejo="";
+		String estatusNuevo = "";
+		String estatusViejo = "";
 		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
 				.getCurrent().getAttribute("rechazador");
 		if (map != null) {
@@ -1311,4 +1299,162 @@ public class CSolicitud extends CGenerico {
 			cerrarVentana(wdwMotivo);
 		}
 	}
+
+	public void bitacoraEventos(PlanillaEvento planillaEvento) {
+		List<BitacoraEvento> listaBitacoras = new ArrayList<BitacoraEvento>();
+		BitacoraEvento bitacora = new BitacoraEvento(0, planillaEvento,
+				"Planilla Enviada", planillaEvento.getFechaEnvio(), fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagen);
+		listaBitacoras.add(bitacora);
+
+		BitacoraEvento bitacora2 = new BitacoraEvento(0, planillaEvento,
+				"Planilla Aprobada", fechaHora, fechaHora, horaAuditoria,
+				nombreUsuarioSesion(), imagen);
+		listaBitacoras.add(bitacora2);
+
+		BitacoraEvento bitacora3 = new BitacoraEvento(0, planillaEvento,
+				"Esperando Finalizacion de Planilla", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagenX);
+		listaBitacoras.add(bitacora3);
+
+		BitacoraEvento bitacora4 = new BitacoraEvento(0, planillaEvento,
+				"Esperando Pago de Planilla", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagenX);
+		listaBitacoras.add(bitacora4);
+
+		servicioBitacoraEvento.guardarBitacoras(listaBitacoras);
+
+	}
+
+	public void bitacoraUniformes(PlanillaUniforme planillaUniforme) {
+		List<BitacoraUniforme> listaBitacoras = new ArrayList<BitacoraUniforme>();
+		BitacoraUniforme bitacora = new BitacoraUniforme(0, planillaUniforme,
+				"Planilla Enviada", planillaUniforme.getFechaEnvio(),
+				fechaHora, horaAuditoria, nombreUsuarioSesion(), imagen);
+		listaBitacoras.add(bitacora);
+
+		BitacoraUniforme bitacora2 = new BitacoraUniforme(0, planillaUniforme,
+				"Planilla Aprobada", fechaHora, fechaHora, horaAuditoria,
+				nombreUsuarioSesion(), imagen);
+		listaBitacoras.add(bitacora2);
+
+		BitacoraUniforme bitacora3 = new BitacoraUniforme(0, planillaUniforme,
+				"Esperando Finalizacion de Planilla", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagenX);
+		listaBitacoras.add(bitacora3);
+
+		BitacoraUniforme bitacora4 = new BitacoraUniforme(0, planillaUniforme,
+				"Esperando Pago de Planilla", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagenX);
+		listaBitacoras.add(bitacora4);
+
+		servicioBitacoraUniforme.guardarBitacoras(listaBitacoras);
+	}
+
+	public void bitacoraPromociones(PlanillaPromocion planillaPromocion) {
+
+		List<BitacoraPromocion> listaBitacoras = new ArrayList<BitacoraPromocion>();
+		BitacoraPromocion bitacora = new BitacoraPromocion(0,
+				planillaPromocion, "Planilla Enviada",
+				planillaPromocion.getFechaEnvio(), fechaHora, horaAuditoria,
+				nombreUsuarioSesion(), imagen);
+		listaBitacoras.add(bitacora);
+
+		BitacoraPromocion bitacora2 = new BitacoraPromocion(0,
+				planillaPromocion, "Planilla Aprobacion", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagen);
+		listaBitacoras.add(bitacora2);
+
+		BitacoraPromocion bitacora3 = new BitacoraPromocion(0,
+				planillaPromocion, "Esperando Finalizacion de Planilla",
+				fechaHora, fechaHora, horaAuditoria, nombreUsuarioSesion(),
+				imagenX);
+		listaBitacoras.add(bitacora3);
+
+		BitacoraPromocion bitacora4 = new BitacoraPromocion(0,
+				planillaPromocion, "Esperando Pago de Planilla", fechaHora,
+				fechaHora, horaAuditoria, nombreUsuarioSesion(), imagenX);
+		listaBitacoras.add(bitacora4);
+
+		servicioBitacoraPromocion.guardarBitacoras(listaBitacoras);
+
+	}
+
+	public void bitacoraArte(PlanillaArte planillaArte) {
+		List<BitacoraArte> listaBitacoras = new ArrayList<BitacoraArte>();
+		BitacoraArte bitacora = new BitacoraArte(0, planillaArte,
+				"Planilla Enviada", planillaArte.getFechaEnvio(), fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagen);
+		listaBitacoras.add(bitacora);
+
+		BitacoraArte bitacora2 = new BitacoraArte(0, planillaArte,
+				"Planilla Aprobada", fechaHora, fechaHora, horaAuditoria,
+				nombreUsuarioSesion(), imagen);
+		listaBitacoras.add(bitacora2);
+
+		BitacoraArte bitacora3 = new BitacoraArte(0, planillaArte,
+				"Esperando Finalizacion de Planilla", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagenX);
+		listaBitacoras.add(bitacora3);
+
+		BitacoraArte bitacora4 = new BitacoraArte(0, planillaArte,
+				"Esperando Pago de Planilla", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagenX);
+		listaBitacoras.add(bitacora4);
+
+		servicioBitacoraArte.guardarBitacoras(listaBitacoras);
+	}
+
+	public void bitacoraCata(PlanillaCata planillaCata) {
+
+		List<BitacoraCata> listaBitacoras = new ArrayList<BitacoraCata>();
+		BitacoraCata bitacora = new BitacoraCata(0, planillaCata,
+				"Planilla Enviada", planillaCata.getFechaEnvio(), fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagen);
+		listaBitacoras.add(bitacora);
+
+		BitacoraCata bitacora2 = new BitacoraCata(0, planillaCata,
+				"Planilla Aprobada", fechaHora, fechaHora, horaAuditoria,
+				nombreUsuarioSesion(), imagen);
+		listaBitacoras.add(bitacora2);
+
+		BitacoraCata bitacora3 = new BitacoraCata(0, planillaCata,
+				"Esperando Finalizacion de Planilla", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagenX);
+		listaBitacoras.add(bitacora3);
+
+		BitacoraCata bitacora4 = new BitacoraCata(0, planillaCata,
+				"Esperando Pago de Planilla", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagenX);
+		listaBitacoras.add(bitacora4);
+
+		servicioBitacoraCata.guardarBitacoras(listaBitacoras);
+	}
+
+	public void bitacoraFachada(PlanillaFachada planillaFachada) {
+		List<BitacoraFachada> listaBitacoras = new ArrayList<BitacoraFachada>();
+		BitacoraFachada bitacora = new BitacoraFachada(0, planillaFachada,
+				"Planilla Enviada", planillaFachada.getFechaEnvio(), fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagen);
+		listaBitacoras.add(bitacora);
+
+		BitacoraFachada bitacora2 = new BitacoraFachada(0, planillaFachada,
+				"Planilla Aprobada", fechaHora, fechaHora, horaAuditoria,
+				nombreUsuarioSesion(), imagen);
+		listaBitacoras.add(bitacora2);
+
+		BitacoraFachada bitacora3 = new BitacoraFachada(0, planillaFachada,
+				"Esperando Finalizacion de Planilla", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagenX);
+		listaBitacoras.add(bitacora3);
+
+		BitacoraFachada bitacora4 = new BitacoraFachada(0, planillaFachada,
+				"Esperando Pago de Planilla", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagenX);
+		listaBitacoras.add(bitacora4);
+
+		servicioBitacoraFachada.guardarBitacoras(listaBitacoras);
+
+	}
+
 }

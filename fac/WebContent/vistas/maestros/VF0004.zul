@@ -1,5 +1,5 @@
 <zk>
-	<window width="40em" closable="false" id="wdwF0004"
+	<window width="50em" closable="false" id="wdwF0004"
 		apply="controlador.maestros.CF0004">
 		<caption label="Tipos de Codigos Definido por el Usuario"
 			style="color:white; font-size: 16px; font-weight:bold; " />
@@ -40,7 +40,7 @@
 							<label value="*" style="font-weight:bold;color:red">
 							</label>
 						</hbox>
-						<textbox id="txtDL01F0004" hflex="1" maxlength="30"
+						<textbox id="txtDL01F0004" hflex="1" maxlength="100"
 							tooltiptext="Ingrese la Descripcion del Tipo de Codigo"
 							multiline="true" class="multilinea" />
 						<hbox />

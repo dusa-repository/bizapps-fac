@@ -417,22 +417,26 @@ public class CFachada extends CGenerico {
 		double largo = dspLargo.getValue();
 		Timestamp fechaActividad = new Timestamp(valorFecha.getTime());
 		byte[] imagenUsuario1 = null;
-		if (media1 instanceof org.zkoss.image.Image && imagen1.getContent() != null) {
+		if (media1 instanceof org.zkoss.image.Image
+				&& imagen1.getContent() != null) {
 			imagenUsuario1 = imagen1.getContent().getByteData();
 
 		}
 		byte[] imagenUsuario2 = null;
-		if (media2 instanceof org.zkoss.image.Image && imagen2.getContent() != null) {
+		if (media2 instanceof org.zkoss.image.Image
+				&& imagen2.getContent() != null) {
 			imagenUsuario2 = imagen2.getContent().getByteData();
 
 		}
 		byte[] imagenUsuario3 = null;
-		if (media3 instanceof org.zkoss.image.Image && imagen3.getContent() != null) {
+		if (media3 instanceof org.zkoss.image.Image
+				&& imagen3.getContent() != null) {
 			imagenUsuario3 = imagen3.getContent().getByteData();
 
 		}
 		byte[] imagenUsuario4 = null;
-		if (media4 instanceof org.zkoss.image.Image && imagen4.getContent() != null) {
+		if (media4 instanceof org.zkoss.image.Image
+				&& imagen4.getContent() != null) {
 			imagenUsuario4 = imagen4.getContent().getByteData();
 
 		}
@@ -474,7 +478,8 @@ public class CFachada extends CGenerico {
 				tipoDecoracion, formato, salidaArte, alto, largo, ancho,
 				imagenUsuario1, imagenUsuario2, imagenUsuario3, imagenUsuario4,
 				fechaHora, fechaEnvio, horaAuditoria, nombreUsuarioSesion(),
-				string, usuario.getZona().getDescripcion(), tipoConfig, "", 0,"");
+				string, usuario.getZona().getDescripcion(), tipoConfig, "", 0,
+				"");
 		servicioPlanillaFachada.guardar(planillaFachada);
 
 		if (id != 0)
@@ -500,27 +505,6 @@ public class CFachada extends CGenerico {
 			guardarBitacora(planillaFachada, false);
 
 		guardarRecursos(planillaFachada);
-		// if (tipoConfig.equals("TradeMark") && envio) {
-		// Configuracion con = servicioConfiguracion
-		// .buscarTradeMark("TradeMark");
-		// Usuario usuarioAdmin = new Usuario();
-		// if (con != null)
-		// usuarioAdmin = con.getUsuario();
-		// PlanillaFachada planillaAdmin = new PlanillaFachada(0,
-		// usuarioAdmin, marca, nombreActividad, fechaActividad,
-		// tipoActividad, ciudad, contacto, nombre, rif, telefono,
-		// direccion, mail, personas, duracion, nivel, patente, costo,
-		// descripcion, justificacion, tipoDecoracion, formato,
-		// salidaArte, alto, largo, ancho, imagenUsuario1,
-		// imagenUsuario2, imagenUsuario3, imagenUsuario4, fechaHora,
-		// fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
-		// usuario.getZona().getDescripcion(), "Marca", "",
-		// planillaFachada.getIdPlanillaFachada());
-		// servicioPlanillaFachada.guardar(planillaAdmin);
-		// planillaAdmin = servicioPlanillaFachada.buscarUltima();
-		// guardarBitacora(planillaAdmin, false);
-		// guardarRecursos(planillaAdmin);
-		// }
 	}
 
 	private void guardarRecursos(PlanillaFachada planillaFachada) {
@@ -658,13 +642,13 @@ public class CFachada extends CGenerico {
 		List<F0005> udc = servicioF0005.buscarParaUDCOrdenados("00", "00");
 		cmbFormato.setModel(new ListModelList<F0005>(udc));
 
-		udc = servicioF0005.buscarParaUDCOrdenados("00", "01");
+		udc = servicioF0005.buscarParaUDCOrdenados("00", "16");
 		cmbArte.setModel(new ListModelList<F0005>(udc));
 
-		udc = servicioF0005.buscarParaUDCOrdenados("00", "02");
+		udc = servicioF0005.buscarParaUDCOrdenados("00", "01");
 		cmbDecoracion.setModel(new ListModelList<F0005>(udc));
 
-		udc = servicioF0005.buscarParaUDCOrdenados("00", "03");
+		udc = servicioF0005.buscarParaUDCOrdenados("00", "17");
 		cmbActividad.setModel(new ListModelList<F0005>(udc));
 
 		udc = servicioF0005.buscarParaUDCOrdenados("00", "04");
@@ -825,11 +809,11 @@ public class CFachada extends CGenerico {
 		txtTelefono.setValue(planilla.getTelefonoPdv());
 		F0005 f05 = servicioF0005.buscar("00", "00", planilla.getFormato());
 		cmbFormato.setValue(f05.getDrdl01());
-		f05 = servicioF0005.buscar("00", "01", planilla.getArte());
+		f05 = servicioF0005.buscar("00", "16", planilla.getArte());
 		cmbArte.setValue(f05.getDrdl01());
-		f05 = servicioF0005.buscar("00", "02", planilla.getTipoDecoracion());
+		f05 = servicioF0005.buscar("00", "01", planilla.getTipoDecoracion());
 		cmbDecoracion.setValue(f05.getDrdl01());
-		f05 = servicioF0005.buscar("00", "03", planilla.getTipoActividad());
+		f05 = servicioF0005.buscar("00", "17", planilla.getTipoActividad());
 		cmbActividad.setValue(f05.getDrdl01());
 		f05 = servicioF0005.buscar("00", "04", planilla.getNivel());
 		cmbNivelEconomico.setValue(f05.getDrdl01());
@@ -969,25 +953,25 @@ public class CFachada extends CGenerico {
 			msj.mensajeAlerta(Mensaje.correoInvalido);
 		}
 	}
-	
+
 	@Listen("onClick = #btnRemover1")
 	public void limpiar1() {
 		org.zkoss.image.Image imagenUsuario1 = null;
 		imagen1.setContent(imagenUsuario1);
 	}
-	
+
 	@Listen("onClick = #btnRemover2")
 	public void limpiar2() {
 		org.zkoss.image.Image imagenUsuario1 = null;
 		imagen2.setContent(imagenUsuario1);
 	}
-	
+
 	@Listen("onClick = #btnRemover3")
 	public void limpiar3() {
 		org.zkoss.image.Image imagenUsuario1 = null;
 		imagen3.setContent(imagenUsuario1);
 	}
-	
+
 	@Listen("onClick = #btnRemover4")
 	public void limpiar4() {
 		org.zkoss.image.Image imagenUsuario1 = null;

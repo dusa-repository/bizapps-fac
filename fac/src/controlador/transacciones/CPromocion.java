@@ -384,26 +384,6 @@ public class CPromocion extends CGenerico {
 			guardarBitacora(planillaPromocion, true);
 		if (envio)
 			guardarBitacora(planillaPromocion, false);
-
-//		if (tipoConfig.equals("TradeMark") && envio) {
-//			Configuracion con = servicioConfiguracion
-//					.buscarTradeMark("TradeMark");
-//			Usuario usuarioAdmin = new Usuario();
-//			if (con != null)
-//				usuarioAdmin = con.getUsuario();
-//			PlanillaPromocion planillaAdmin = new PlanillaPromocion(0,
-//					usuarioAdmin, marca1, marca2, nombreActividad,
-//					tipoActividad, local, ciudad, estado, responsable,
-//					nombreLocal, rif, telefono, email, direccion, fechaInicio,
-//					fechaFin, modalidad, frecuencia, material, extra, costo,
-//					descripcion1, descripcion2, fechaHora, fechaEnvio,
-//					horaAuditoria, nombreUsuarioSesion(), string, usuario
-//							.getZona().getDescripcion(), "Marca", "",
-//					planillaPromocion.getIdPlanillaPromocion());
-//			servicioPlanillaPromocion.guardar(planillaAdmin);
-//			planillaAdmin = servicioPlanillaPromocion.buscarUltima();
-//			guardarBitacora(planillaAdmin, false);
-//		}
 	}
 
 	private void guardarBitacora(PlanillaPromocion planillaPromocion,
@@ -504,7 +484,7 @@ public class CPromocion extends CGenerico {
 	}
 
 	private void cargarCombos() {
-		List<F0005> udc = servicioF0005.buscarParaUDCOrdenados("00", "03");
+		List<F0005> udc = servicioF0005.buscarParaUDCOrdenados("00", "15");
 		cmbActividad.setModel(new ListModelList<F0005>(udc));
 
 		udc = servicioF0005.buscarParaUDCOrdenados("00", "10");
@@ -598,7 +578,7 @@ public class CPromocion extends CGenerico {
 		cmbExtra.setValue(f05.getDrdl01());
 		f05 = servicioF0005.buscar("00", "07", planilla.getFrecuenciaPago());
 		cmbFrecuencia.setValue(f05.getDrdl01());
-		f05 = servicioF0005.buscar("00", "03", planilla.getTipoActividad());
+		f05 = servicioF0005.buscar("00", "15", planilla.getTipoActividad());
 		cmbActividad.setValue(f05.getDrdl01());
 		f05 = servicioF0005.buscar("00", "09", planilla.getModalidadPago());
 		cmbModalidad.setValue(f05.getDrdl01());
