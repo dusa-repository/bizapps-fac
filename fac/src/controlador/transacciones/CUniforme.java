@@ -504,10 +504,28 @@ public class CUniforme extends CGenerico {
 				if (!Validador.validarTelefono(txtTelefono.getValue())) {
 					msj.mensajeAlerta(Mensaje.telefonoInvalido);
 					return false;
-				} else
+				} else {
+					if (!validarLista()) {
+						msj.mensajeAlerta(Mensaje.faltaCampoLista);
+						return false;
+					}
 					return true;
+				}
 			}
 		}
+	}
+
+	private boolean validarLista() {
+		for (int i = 0; i < ltbUniformesAgregados.getItemCount(); i++) {
+			Listitem listItem = ltbUniformesAgregados.getItemAtIndex(i);
+			String genero = ((Combobox) ((listItem.getChildren().get(1)))
+					.getFirstChild()).getValue();
+			String talla = ((Combobox) ((listItem.getChildren().get(2)))
+					.getFirstChild()).getValue();
+			if (genero.equals("") || talla.equals(""))
+				return false;
+		}
+		return true;
 	}
 
 	private void llenarListas() {
