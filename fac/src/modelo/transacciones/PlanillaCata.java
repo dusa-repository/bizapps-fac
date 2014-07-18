@@ -119,6 +119,9 @@ public class PlanillaCata implements Serializable {
 	@Column(name="padre")
 	private Long padre;
 	
+	@Column(name="motivo_cancelacion",length = 100)
+	private String motivoCancelacion;
+	
 	public PlanillaCata() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -130,7 +133,7 @@ public class PlanillaCata implements Serializable {
 			String correoPdv, String direccionPdv, Integer personas,
 			String motivo, String nivel, String edadTarget, Double costo,
 			String descripcion, String mecanica, Timestamp fechaAuditoria, Timestamp fecha,
-			String horaAuditoria, String usuarioAuditoria, String estado, String zona, String tipo, String referencia, long padre) {
+			String horaAuditoria, String usuarioAuditoria, String estado, String zona, String tipo, String referencia, long padre, String motivoC) {
 		super();
 		this.idPlanillaCata = idPlanillaCata;
 		this.usuario = usuario;
@@ -159,6 +162,7 @@ public class PlanillaCata implements Serializable {
 		this.refencia = referencia;
 		this.padre = padre;
 		this.fechaEnvio = fecha;
+		this.motivoCancelacion = motivoC;
 	}
 
 	public long getIdPlanillaCata() {
@@ -400,6 +404,16 @@ public class PlanillaCata implements Serializable {
 	public void setFechaEnvio(Timestamp fechaEnvio) {
 		this.fechaEnvio = fechaEnvio;
 	}
+
+	public String getMotivoCancelacion() {
+		return motivoCancelacion;
+	}
+
+	public void setMotivoCancelacion(String motivoCancelacion) {
+		this.motivoCancelacion = motivoCancelacion;
+	}
+	
+	
 	
 	
 }

@@ -1,0 +1,59 @@
+<zk>
+	<window width="90em" closable="false" id="wdwMotivo"
+		apply="controlador.transacciones.CSolicitud">
+		<caption label="Solicitudes a Cancelar/Rechazar"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div>
+			<space />
+			<vbox>
+				<listbox id="listaMotivo" height="400px" width="100%" span="true"
+					emptyMessage="No hay Recursos Registrados">
+					<listhead>
+						<listheader label="Usuario" hflex="min" />
+						<listheader label="Marca" hflex="min" />
+						<listheader label="Nombre Actividad" hflex="min" />
+						<listheader label="Fecha de Envio" hflex="min" />
+						<listheader label="Tipo de Planilla" hflex="min" />
+						<listheader label="Motivo" hflex="min" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell label="${each.usuario}">
+							</listcell>
+							<listcell label="${each.marca}">
+							</listcell>
+							<listcell label="${each.nombreActividad}">
+							</listcell>
+							<listcell label="${each.traerFecha()}">
+							</listcell>
+							<listcell label="${each.tipoPlanilla}">
+							</listcell>
+							<listcell>
+								<combobox tooltiptext="Seleccione un Motivo"
+									placeholder="Seleccione un Motivo" model="${$composer.motivos}"
+									readonly="true" hflex="1">
+									<template name="model">
+										<comboitem label="${each.drdl01}" context="${each.id.drky}" />
+									</template>
+								</combobox>
+							</listcell>
+							<listcell>
+								<spinner inplace="true" width="98%" value="${each.id}"
+									visible="false" disabled="true" />
+							</listcell>
+						</listitem>
+					</template>
+				</listbox>
+				<space />
+				<hbox>
+					<button id="btnAceptarMotivo" label="Aceptar"
+						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/guardar.png" />
+					<button id="btnSalirMotivo" label="Salir"
+						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/salir.png" />
+				</hbox>
+			</vbox>
+		</div>
+		<image id="imagenNo" visible="false" />
+		<image id="imagenSi" visible="false" />
+	</window>
+</zk>

@@ -21,6 +21,8 @@ public class PlanillaGenerica {
 	private String tipoPlanilla;
 	
 	private String referencia;
+	
+	private String motivo;
 
 	public PlanillaGenerica() {
 		super();
@@ -109,6 +111,14 @@ public class PlanillaGenerica {
 	public String traerFecha() {
 		DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 		return String.valueOf(formatoFecha.format(fecha));
+	}
+
+	public String getMotivo() {
+		return motivo;
+	}
+
+	public void setMotivo(String motivo) {
+		this.motivo = motivo;
 	}
 	
 }
