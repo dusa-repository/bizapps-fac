@@ -24,16 +24,6 @@ public class SConfiguracion {
 		return configuracionDAO.findByTipo(string);
 	}
 
-	public Configuracion buscarAdministradorTradeMark(Usuario u, String string) {
-//		Grupo grupo = grupoDAO.findByNombre("");
-		List<Configuracion> configuracion = configuracionDAO
-				.findDistinctByUsuarioAndTipo(u, string);
-		if (!configuracion.isEmpty())
-			return configuracion.get(0);
-		else
-			return null;
-	}
-
 	public Configuracion buscarTradeMark(String string) {
 		List<Configuracion> configuracion = configuracionDAO.findByTipo(string);
 		if (!configuracion.isEmpty())
@@ -52,10 +42,5 @@ public class SConfiguracion {
 
 	public void guardar(List<Configuracion> lista) {
 		configuracionDAO.save(lista);
-	}
-
-	public List<Configuracion> buscarPorUsuario(Usuario usuario) {
-		// TODO Auto-generated method stub
-		return configuracionDAO.findByUsuario(usuario);
 	}
 }

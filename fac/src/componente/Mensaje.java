@@ -33,6 +33,7 @@ public class Mensaje {
 	public static String listaVacia = "Debe añadir una referencia de pago para cada Solicitud";
 	public static String noEliminar = "El Registro no se puede Eliminar, Esta siendo Usado";
 	public static String telefonoInvalido = "Formato de Telefono No Valido";
+	public static String faltaMarca = "Debe seleccionar una Marca para cada Recurso en la lista de Recursos";
 	
 	
 	public void mensajeInformacion(String msj) {

@@ -185,7 +185,8 @@ public class CGrupo extends CGenerico {
 	protected boolean validarEliminar() {
 		Grupo grupo = servicioGrupo.buscar(id);
 		if (grupo != null) {
-			if (grupo.getNombre().equals("Administrador")
+			if (grupo.getNombre().equals("MARCA")
+					|| grupo.getNombre().equals("TRADE MARKETING")
 					|| grupo.getNombre().equals("Gerente Regional")
 					|| grupo.getNombre().equals("Solicitante")) {
 				msj.mensajeAlerta(Mensaje.eliminacionFallida);
@@ -263,7 +264,8 @@ public class CGrupo extends CGenerico {
 
 	private void llenarCampos(Grupo grupo) {
 		txtNombreGrupo.setValue(grupo.getNombre());
-		if (grupo.getNombre().equals("Administrador")
+		if (grupo.getNombre().equals("MARCA")
+				|| grupo.getNombre().equals("TRADE MARKETING")
 				|| grupo.getNombre().equals("Gerente Regional")
 				|| grupo.getNombre().equals("Solicitante"))
 			txtNombreGrupo.setDisabled(true);

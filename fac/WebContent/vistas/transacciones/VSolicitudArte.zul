@@ -206,6 +206,8 @@
 								<fileupload image="/public/imagenes/botones/cargar.png"
 									id="fudImagen1" label="Cargar Imagen">
 								</fileupload>
+								<button id="btnRemover1" label="Remover"
+									tooltiptext="Presione para Remover la Imagen" />
 							</vbox>
 							<space />
 							<space />
@@ -220,6 +222,8 @@
 								<fileupload image="/public/imagenes/botones/cargar.png"
 									id="fudImagen2" label="Cargar Imagen">
 								</fileupload>
+								<button id="btnRemover2" label="Remover"
+									tooltiptext="Presione para Remover la Imagen" />
 							</vbox>
 							<space />
 							<space />
@@ -233,6 +237,8 @@
 								<fileupload image="/public/imagenes/botones/cargar.png"
 									id="fudImagen3" label="Cargar Imagen">
 								</fileupload>
+								<button id="btnRemover3" label="Remover"
+									tooltiptext="Presione para Remover la Imagen" />
 							</vbox>
 							<space />
 							<space />
@@ -246,6 +252,8 @@
 								<fileupload image="/public/imagenes/botones/cargar.png"
 									id="fudImagen4" label="Cargar Imagen">
 								</fileupload>
+								<button id="btnRemover4" label="Remover"
+									tooltiptext="Presione para Remover la Imagen" />
 							</vbox>
 							<separator />
 							<separator />

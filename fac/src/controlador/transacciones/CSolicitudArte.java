@@ -351,19 +351,19 @@ public class CSolicitudArte extends CGenerico {
 		double ancho = dspAncho.getValue();
 		double largo = dspLargo.getValue();
 		byte[] imagenUsuario1 = null;
-		if (media1 instanceof org.zkoss.image.Image) {
+		if (media1 instanceof org.zkoss.image.Image && imagen1.getContent() != null) {
 			imagenUsuario1 = imagen1.getContent().getByteData();
 		}
 		byte[] imagenUsuario2 = null;
-		if (media2 instanceof org.zkoss.image.Image) {
+		if (media2 instanceof org.zkoss.image.Image && imagen2.getContent() != null) {
 			imagenUsuario2 = imagen2.getContent().getByteData();
 		}
 		byte[] imagenUsuario3 = null;
-		if (media3 instanceof org.zkoss.image.Image) {
+		if (media3 instanceof org.zkoss.image.Image && imagen3.getContent() != null) {
 			imagenUsuario3 = imagen3.getContent().getByteData();
 		}
 		byte[] imagenUsuario4 = null;
-		if (media4 instanceof org.zkoss.image.Image) {
+		if (media4 instanceof org.zkoss.image.Image && imagen4.getContent() != null) {
 			imagenUsuario4 = imagen4.getContent().getByteData();
 		}
 		PlanillaArte planillaArte = new PlanillaArte(id, usuario, marca,
@@ -690,5 +690,29 @@ public class CSolicitudArte extends CGenerico {
 		String ruta = "/vistas/transacciones/VModeloArte.zul";
 		Window win = (Window) Executions.createComponents(ruta, null, null);
 		win.doModal();
+	}
+	
+	@Listen("onClick = #btnRemover1")
+	public void limpiar1() {
+		org.zkoss.image.Image imagenUsuario1 = null;
+		imagen1.setContent(imagenUsuario1);
+	}
+	
+	@Listen("onClick = #btnRemover2")
+	public void limpiar2() {
+		org.zkoss.image.Image imagenUsuario1 = null;
+		imagen2.setContent(imagenUsuario1);
+	}
+	
+	@Listen("onClick = #btnRemover3")
+	public void limpiar3() {
+		org.zkoss.image.Image imagenUsuario1 = null;
+		imagen3.setContent(imagenUsuario1);
+	}
+	
+	@Listen("onClick = #btnRemover4")
+	public void limpiar4() {
+		org.zkoss.image.Image imagenUsuario1 = null;
+		imagen4.setContent(imagenUsuario1);
 	}
 }

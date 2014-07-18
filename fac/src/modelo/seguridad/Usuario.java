@@ -94,9 +94,6 @@ public class Usuario implements Serializable {
 	
 	@OneToMany(mappedBy="usuario")
 	private Set<PlanillaUniforme> planillasUniforme;
-	
-	@OneToMany(mappedBy="usuario")
-	private Set<Configuracion> configuracion;
 
 	public Usuario() {
 		super();
@@ -283,14 +280,6 @@ public class Usuario implements Serializable {
 
 	public void setPlanillasUniforme(Set<PlanillaUniforme> planillasUniforme) {
 		this.planillasUniforme = planillasUniforme;
-	}
-
-	public Set<Configuracion> getConfiguracion() {
-		return configuracion;
-	}
-
-	public void setConfiguracion(Set<Configuracion> configuracion) {
-		this.configuracion = configuracion;
 	}
 	
 }
