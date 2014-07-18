@@ -74,7 +74,7 @@ public class CZona extends CGenerico {
 			@Override
 			public void eliminar() {
 				if (!id.equals("")) {
-					Messagebox.show("¿Esta Seguro de Eliminar la Marca?",
+					Messagebox.show("¿Esta Seguro de Eliminar la Zona?",
 							"Alerta", Messagebox.OK | Messagebox.CANCEL,
 							Messagebox.QUESTION,
 							new org.zkoss.zk.ui.event.EventListener<Event>() {

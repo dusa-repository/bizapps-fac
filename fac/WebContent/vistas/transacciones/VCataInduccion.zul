@@ -246,8 +246,8 @@
 								emptyMessage="No ha Seleccionado ningun Producto">
 								<listhead>
 									<listheader label="PT" width="35%" />
-									<listheader label="Solicitado" width="32%" />
-									<listheader label="Aprobado" width="33%" />
+									<listheader label="Solicitado   (Cajas)" width="32%" />
+									<listheader label="Aprobado   (Cajas)" width="33%" />
 									<listheader label="id" visible="false" />
 								</listhead>
 								<template name="model">

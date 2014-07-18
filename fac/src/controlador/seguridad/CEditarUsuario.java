@@ -111,12 +111,17 @@ public class CEditarUsuario extends CGenerico {
 
 			@Override
 			public void guardar() {
-
 				if (validar()) {
+					Usuario usuario = servicioUsuario
+							.buscarUsuarioPorNombre(id);
+					if(txtClaveUsuarioConfirmar.getValue().equals("") && txtClaveUsuarioNueva.getValue().equals(""))
+					{
+						txtClaveUsuarioNueva.setValue(usuario.getPassword());
+						txtClaveUsuarioConfirmar.setValue(usuario.getPassword());
+					}
 					if (txtClaveUsuarioNueva.getValue().equals(
 							txtClaveUsuarioConfirmar.getValue())) {
-						Usuario usuario = servicioUsuario
-								.buscarUsuarioPorNombre(id);
+					
 						byte[] imagenUsuario = null;
 						imagenUsuario = imgUsuario.getContent().getByteData();
 						String password = txtClaveUsuarioConfirmar.getValue();
@@ -163,9 +168,11 @@ public class CEditarUsuario extends CGenerico {
 	}
 
 	protected boolean validar() {
-		if (txtClaveUsuarioConfirmar.getValue().equals("")
-				|| txtClaveUsuarioNueva.getValue().equals("")) {
-			msj.mensajeError(Mensaje.camposVacios);
+		if (!txtClaveUsuarioConfirmar.getValue().equals("") &&
+				txtClaveUsuarioNueva.getValue().equals("")
+				|| txtClaveUsuarioConfirmar.getValue().equals("") &&
+				!txtClaveUsuarioNueva.getValue().equals("")) {
+			msj.mensajeError("Debe Agregar ambas Contraseñas o No agregar Ninguna");
 			return false;
 		} else
 			return true;

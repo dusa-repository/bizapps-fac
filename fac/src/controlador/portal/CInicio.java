@@ -202,12 +202,12 @@ public class CInicio extends CGenerico {
 		params.put("width", "500px");
 		params.put("height", "800px");
 		params.put("style", "top:100px;");
-		String[] arreglo = { "TradeMark", "Marca" };
+		String[] arreglo = { "TRADE MARKETING", "MARCA" };
 
 		Messagebox.Button[] boton = { Messagebox.Button.OK,
 				Messagebox.Button.CANCEL };
 
-		Messagebox.show("SELECCIONE UN TIPO", "", boton, arreglo, "", null,
+		Messagebox.show("¿SU SOLICITUD SERA CARGADA A?", "", boton, arreglo, "", null,
 				new org.zkoss.zk.ui.event.EventListener() {
 					public void onEvent(Event evt) throws InterruptedException {
 						if (evt.getName().equals("onOK")) {

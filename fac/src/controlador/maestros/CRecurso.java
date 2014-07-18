@@ -66,10 +66,7 @@ public class CRecurso extends CGenerico {
 					String descripcion = txtDescripcionRecurso.getValue();
 					Recurso recurso = new Recurso(id, descripcion, fechaHora, horaAuditoria, nombreUsuarioSesion());
 					servicioRecurso.guardar(recurso);
-					Messagebox.show("Registro Guardado Exitosamente",
-							"Informacion", Messagebox.OK,
-							Messagebox.INFORMATION);
-
+					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
 				}
 			}
@@ -136,8 +133,7 @@ public class CRecurso extends CGenerico {
 
 	protected boolean validar() {
 		if (txtDescripcionRecurso.getText().compareTo("") == 0) {
-			Messagebox.show("Debe Llenar Todos los Campos", "Informacion",
-					Messagebox.OK, Messagebox.INFORMATION);
+			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else
 			return true;

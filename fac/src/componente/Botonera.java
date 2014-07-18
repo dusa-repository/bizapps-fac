@@ -125,6 +125,8 @@ public abstract class Botonera extends Hbox {
 				enviar();
 			}
 		});
+		
+		btnBuscar.setAutodisable("self");
 	}
 
 	public abstract void enviar();
