@@ -320,9 +320,9 @@
 									width="190px" height="190px" />
 								<space />
 								<fileupload image="/public/imagenes/botones/cargar.png"
-									id="fudImagen1" label="Cargar Imagen">
+									id="fudImagen1" label="Cargar Imagen" width="150px">
 								</fileupload>
-								<button id="btnRemover1" label="Remover"
+								<button image="/public/imagenes/botones/quitar.png" id="btnRemover1" label="Remover Imagen"
 									tooltiptext="Presione para Remover la Imagen" />
 							</vbox>
 							<space />
@@ -336,10 +336,10 @@
 
 								<space />
 								<fileupload image="/public/imagenes/botones/cargar.png"
-									id="fudImagen2" label="Cargar Imagen">
+									id="fudImagen2" label="Cargar Imagen" width="150px">
 								</fileupload>
-								<button id="btnRemover2" label="Remover"
-									tooltiptext="Presione para Remover la Imagen" />
+								<button id="btnRemover2" label="Remover Imagen"
+									tooltiptext="Presione para Remover la Imagen" image="/public/imagenes/botones/quitar.png" />
 							</vbox>
 							<space />
 							<space />
@@ -351,10 +351,10 @@
 									width="190px" height="190px" />
 								<space />
 								<fileupload image="/public/imagenes/botones/cargar.png"
-									id="fudImagen3" label="Cargar Imagen">
+									id="fudImagen3" label="Cargar Imagen" width="150px">
 								</fileupload>
-								<button id="btnRemover3" label="Remover"
-									tooltiptext="Presione para Remover la Imagen" />
+								<button id="btnRemover3" label="Remover Imagen"
+									tooltiptext="Presione para Remover la Imagen" image="/public/imagenes/botones/quitar.png" />
 							</vbox>
 							<space />
 							<space />
@@ -366,10 +366,10 @@
 									width="190px" height="190px" />
 								<space />
 								<fileupload image="/public/imagenes/botones/cargar.png"
-									id="fudImagen4" label="Cargar Imagen">
+									id="fudImagen4" label="Cargar Imagen" width="150px">
 								</fileupload>
-								<button id="btnRemover4" label="Remover"
-									tooltiptext="Presione para Remover la Imagen" />
+								<button id="btnRemover4" label="Remover Imagen"
+									tooltiptext="Presione para Remover la Imagen" image="/public/imagenes/botones/quitar.png" />
 							</vbox>
 							<separator />
 							<separator />

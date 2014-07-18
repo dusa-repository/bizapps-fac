@@ -1,5 +1,5 @@
 <zk>
-	<window width="40em" closable="false" id="wdwF0005"
+	<window width="50em" closable="false" id="wdwF0005"
 		apply="controlador.maestros.CF0005">
 		<caption label="Codigos Definido por el Usuario"
 			style="color:white; font-size: 16px; font-weight:bold; " />
@@ -52,14 +52,14 @@
 							<label value="*" style="font-weight:bold;color:red">
 							</label>
 						</hbox>
-						<textbox id="txtDL01F0005" hflex="1" maxlength="30"
+						<textbox id="txtDL01F0005" hflex="1" maxlength="100"
 							tooltiptext="Ingrese la Descripcion Nro. 01 del Codigo"
 							multiline="true" class="multilinea" />
 						<hbox />
 					</row>
 					<row>
 						<label class="etiqueta" value="Descripcion 02:" />
-						<textbox id="txtDL02F0005" hflex="1" maxlength="30"
+						<textbox id="txtDL02F0005" hflex="1" maxlength="100"
 							tooltiptext="Ingrese la Descripcion Nro. 02 del Codigo"
 							multiline="true" class="multilinea" />
 						<hbox />

@@ -15,7 +15,11 @@
 						</columns>
 						<rows>
 							<row>
-								<label value="Correo Trade Marketing:" class="etiqueta" />
+								<hbox>
+									<label value="Correo de Trade Marketing:" class="etiqueta" />
+									<space />
+									<label value="*" style="font-weight:bold;color:red" />
+								</hbox>
 								<textbox id="txtCorreoTrade" hflex="1" maxlength="100"
 									tooltiptext="Ingrese el correo Asociado al grupo de Trade Marketing" />
 
@@ -46,7 +50,11 @@
 						</columns>
 						<rows>
 							<row>
-								<label value="Correo de Marca:" class="etiqueta" />
+								<hbox>
+									<label value="Correo de Marca:" class="etiqueta" />
+									<space />
+									<label value="*" style="font-weight:bold;color:red" />
+								</hbox>
 								<textbox id="txtCorreoMarca" hflex="1" maxlength="100"
 									tooltiptext="Ingrese el Correo asociado al grupo de Marca" />
 							</row>

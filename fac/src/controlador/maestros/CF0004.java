@@ -75,11 +75,13 @@ public class CF0004 extends CGenerico {
 				if (clave == null)
 					guardar = validar();
 				if (guardar) {
+					double a =0;
 					String rt = txtSYF0004.getValue();
 					String sy = txtRTF0004.getValue();
 					String dl = txtDL01F0004.getValue();
 					String ln = txtLNF0004.getValue();
-					double a = dblCDLF0004.getValue();
+					if(dblCDLF0004.getText().compareTo("")!= 0)
+					a = dblCDLF0004.getValue();
 					String num = txtNUMF0004.getValue();
 					F0004PK clave = new F0004PK();
 					clave.setDtsy(rt);
@@ -88,7 +90,7 @@ public class CF0004 extends CGenerico {
 					fooo4.setId(clave);
 					fooo4.setDtdl01(dl);
 					fooo4.setDtln2(ln);
-					fooo4.setDtcnum(num);
+					fooo4.setDtcnum(num);			
 					fooo4.setDtcdl(a);
 					fooo4.setDtjobn("5");
 					fooo4.setUsuarioAuditoria(nombreUsuarioSesion());
