@@ -23,6 +23,7 @@ import modelo.transacciones.PlanillaArte;
 import org.zkforge.ckez.CKeditor;
 import org.zkoss.image.AImage;
 import org.zkoss.util.media.Media;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.UploadEvent;
@@ -682,5 +683,12 @@ public class CSolicitudArte extends CGenerico {
 				msj.mensajeAlerta(Mensaje.noPermitido);
 			}
 		}
+	}
+	
+	@Listen("onClick =#btnModeloArte")
+	public void modelo() {
+		String ruta = "/vistas/transacciones/VModeloArte.zul";
+		Window win = (Window) Executions.createComponents(ruta, null, null);
+		win.doModal();
 	}
 }

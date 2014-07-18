@@ -3,14 +3,18 @@
 		width="40em">
 		<caption label="Editar Usuario"
 			style="color:white; font-size: 16px; font-weight:bold; " />
-		<grid  width="100%">
+		<grid width="100%">
 			<columns visible="false">
 				<column label="" width="34%" />
 				<column label="" width="64%" />
 			</columns>
 			<rows>
 				<row>
-					<label value="Nombre de Usuario:" class="etiqueta" />
+					<hbox>
+						<label value="Nombre de Usuario:" class="etiqueta" />
+						<space />
+						<label value="*" style="font-weight:bold;color:red" />
+					</hbox>
 					<textbox id="txtNombreUsuarioEditar" maxlength="50"
 						disabled="true" />
 				</row>
@@ -27,7 +31,11 @@
 						maxlength="256" width="250px" tabindex="8" tooltiptext="Confirme su Contraseña" />
 				</row>
 				<row>
-					<label class="etiqueta" value="Adjuntar Imagen:" />
+					<hbox>
+						<label class="etiqueta" value="Adjuntar Imagen:" />
+						<space />
+						<label value="*" style="font-weight:bold;color:red" />
+					</hbox>
 					<fileupload id="fudImagenUsuario" image="/public/imagenes/botones/cargar.png" />
 				</row>
 				<row>

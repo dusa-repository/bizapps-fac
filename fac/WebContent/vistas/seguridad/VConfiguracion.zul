@@ -1,12 +1,12 @@
 <zk>
 	<window width="70em" closable="false" id="wdwConfiguracion"
 		apply="controlador.seguridad.CConfiguracion">
-		<caption label="Configuracion de Portal TradeMark/Marca"
+		<caption label="Configuracion de Portal TradeMarketing/Marca"
 			style="color:white; font-size: 16px; font-weight:bold; " />
 		<div>
 			<hbox width="100%" widths="50%, 50%">
 				<groupbox style="background-color:white;">
-					<caption label="TradeMark"  style="color:#661313; font-size: 20px; font-weight:bold;" />
+					<caption label="TradeMarketing"  style="color:#661313; font-size: 20px; font-weight:bold;" />
 						<grid>
 							<columns visible="false">
 								<column label="" width="60%" />
@@ -15,17 +15,17 @@
 							<rows>
 								<row>
 									<textbox id="txtAdminTrade" hflex="1" maxlength="50"
-										tooltiptext="Ingrese el usuario de tipo Administrador que desea que sea el Administrador de TradeMark" />
+										tooltiptext="Ingrese el usuario de tipo Administrador que desea que sea el Administrador de TradeMarketing" />
 									<button id="btnBuscarTrade" label="Buscar"
-										tooltiptext="Catalogo Usuarios de Tipo Administrador para TradeMark"
+										tooltiptext="Catalogo Usuarios de Tipo Administrador para TradeMarketing"
 										image="/public/imagenes/botones/buscar.png" />
 								</row>
 							</rows>
 						</grid>
 						<listbox model="${$composer.configuracion}" width="100%" id="ltbTradeMark"
-							tooltiptext="Seleccione las Planillas que se podran visualizar en el entorno de TradeMark">
+							tooltiptext="Seleccione las Planillas que se podran visualizar en el entorno de TradeMarketing">
 							<listhead>
-								<listheader label="Nombre de Planilla para Entorno de TradeMark" width="100%" />
+								<listheader label="Nombre de Planilla para Entorno de TradeMarketing" width="100%" />
 							</listhead>
 							<template name="model">
 								<listitem>

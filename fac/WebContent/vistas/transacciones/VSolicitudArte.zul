@@ -189,8 +189,8 @@
 						<separator />
 						<separator />
 						<hbox>
-							<button id="btnModeloArte" label="Ver modelo de elaboracion de Arte"
-								tooltiptext="Presione para ver el modelo de elaboracion de Arte" />
+							<button id="btnModeloArte" label="Ver Modelo de Elaboracion de Arte"
+							image="/public/imagenes/botones/signo.png"	tooltiptext="Presione para Ver el Modelo de Elaboracion de Arte" />
 						</hbox>
 						<separator />
 						<separator />

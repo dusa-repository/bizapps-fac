@@ -7,7 +7,7 @@
 					<hbox hflex="1">
 						<vbox>
 							<separator />
-							<image src="../public/imagenes/generales/LogoDusaA.jpg"
+							<image src="../public/imagenes/generales/LogoDusaA.png"
 								height="4em" width="25em" />
 						</vbox>
 						<div align="center" width="35em">
@@ -48,7 +48,7 @@
 								<separator />
 								<separator />
 								<vbox>
-									<listbox style="border:none" width="150px" id="ltbRoles">
+									<listbox style="border:none" width="200px" id="ltbRoles">
 										<template name="model">
 											<listitem>
 												<listcell
@@ -78,15 +78,15 @@
 									<space />
 									<button id="btnEdicion" class="btn"
 										label="En Edicion (${$composer.edicion})" orient="vertical"
-										visible="false" />
+										visible="false" autodisable="self"  />
 									<space />
 									<button id="btnPendiente" class="btn"
 										label="Pendientes por Aprobacion (${$composer.pendiente})"
-										orient="vertical" visible="false" />
+										orient="vertical" visible="false" autodisable="self"  />
 									<space />
 									<button id="btnAprobada" class="btn"
 										label="Procesadas (${$composer.aprobada})" orient="vertical"
-										visible="false" />
+										visible="false" autodisable="self"  />
 								</hbox>
 								<separator />
 								<separator />
@@ -95,21 +95,21 @@
 									<space />
 									<button id="btnRechazada" class="btn"
 										label="Rechazadas (${$composer.rechazada})" orient="vertical"
-										visible="false" />
+										visible="false" autodisable="self" />
 									<space />
 									<button id="btnCancelada" class="btn"
 										label="Canceladas (${$composer.cancelada})" orient="vertical"
-										visible="false" />
+										visible="false" autodisable="self" />
 									<space />
 									<button id="btnPagada" class="btn" label="Pagadas (${$composer.pagadas})"
-										orient="vertical" visible="false" />
+										orient="vertical" visible="false" autodisable="self" />
 								</hbox>
 								<space />
 								<space />
 								<space />
 								<div align="right" style="float: right;">
 									<button id="btnCerrar" class="btn-salir" label="Volver"
-										visible="true" image="/public/imagenes/botones/salir.png" />
+										visible="true" image="/public/imagenes/botones/salir.png" autodisable="self" />
 								</div>
 							</vbox>
 						</groupbox>
@@ -127,7 +127,7 @@
 						<separator />
 						<label
 							style="color:#DAD3D3; font-size: 14px; font-weight:bold;padding-center:35%; "
-							value="© 2014 Elaborado por BIZAPPS,C.A. All Rights Reserved. Terms Privacy">
+							value="© 2014 Elaborado por BIZAPPS,C.A. All Rights Reserved. Terms Privacy  (Version 1.0)">
 						</label>
 					</div>
 				</div>

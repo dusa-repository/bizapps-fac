@@ -18,8 +18,8 @@
 					<hbox hflex="1">
 						<vbox>
 							<separator />
-							<image src="/public/imagenes/generales/LogoDusaA.jpg"
-								height="5em" width="25em" />
+							<image src="/public/imagenes/generales/LogoDusaA.png"
+								height="5em" width="28em" />
 						</vbox>
 						<div align="center" width="35em">
 							<separator />
@@ -36,7 +36,7 @@
 			</north>
 			<center border="none">
 				<div align="center" height="100%" width="100%" style="background:#500101">
-					<div align="right">
+<!-- 					<div align="right">
 						<hbox>
 							<image src="/public/imagenes/generales/1.jpg" height="7em"
 								width="9em" />
@@ -45,7 +45,7 @@
 							<image src="/public/imagenes/generales/3.jpg" height="7em"
 								width="9em" />
 						</hbox>
-					</div>
+					</div> -->
 					<hbox style="border: none" align="center" pack="center"
 						height="75%" width="100%">
 						<groupbox apply="controlador.portal.CIndex" width="25em" height="60%" mold="3d">
@@ -99,7 +99,7 @@
 						<separator />
 						<label
 							style="color:#DAD3D3; font-size: 14px; font-weight:bold;padding-center:35%; "
-							value="© 2014 Elaborado por BIZAPPS,C.A. All Rights Reserved. Terms Privacy">
+							value="© 2014 Elaborado por BIZAPPS,C.A. All Rights Reserved. Terms Privacy  (Version 1.0)">
 						</label>
 					</div>
 				</div>

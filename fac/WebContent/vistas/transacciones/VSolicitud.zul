@@ -12,23 +12,23 @@
 				<vbox>
 					<zk if="${sec:isAnyGranted('MARCA, TRADE MARKETING')}">
 						<button id="btnProcesar" label="Procesar"
-							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/procesar.png" />
+							 autodisable="self" style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/procesar.png" />
 						<button id="btnFinalizar" label="Finalizar"
-							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/finalizar.png" />
+							 autodisable="self" style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/finalizar.png" />
 						<button id="btnPagar" label="Pagar"
-							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/pagar.png" />
+							 autodisable="self" style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/pagar.png" />
 						<button id="btnCancelar" label="Cancelar"
-							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/cancelar.png" />
+							 autodisable="self" style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/cancelar.png" />
 						<button id="btnRechazar" label="Rechazar"
-							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/rechazar.png" />
+							 autodisable="self" style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/rechazar.png" />
 					</zk>
 					<button id="btnVer" label="Ver Solicitud"
-						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/ver.png" />
+						 autodisable="self" style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/ver.png" />
 					<button id="btnBitacora" label="Ver Bitacora"
-						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/bitacora.png"
+						 style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/bitacora.png"
 						autodisable="self" />
 					<button id="btnCerrar" label="Salir"
-						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/salir.png" />
+						 autodisable="self" style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/salir.png" />
 				</vbox>
 			</hbox>
 		</div>
