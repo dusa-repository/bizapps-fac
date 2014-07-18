@@ -369,7 +369,7 @@ public class CUniforme extends CGenerico {
 				cliente, nombre, rif, telefono, mail, direccion, logo, costo,
 				justificacion, contrato, fechaHora, fechaEnvio, horaAuditoria,
 				nombreUsuarioSesion(), string, usuario.getZona()
-						.getDescripcion(), tipoConfig, "", 0);
+						.getDescripcion(), tipoConfig, "", 0,"");
 		servicioPlanillaUniforme.guardar(planillaUniforme);
 		if (id != 0)
 			planillaUniforme = servicioPlanillaUniforme.buscar(id);

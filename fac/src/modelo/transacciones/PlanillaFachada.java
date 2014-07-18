@@ -153,6 +153,9 @@ public class PlanillaFachada implements Serializable {
 	@Column(name="padre")
 	private Long padre;
 	
+	@Column(name="motivo_cancelacion",length = 100)
+	private String motivoCancelacion;
+	
 	public PlanillaFachada() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -168,7 +171,7 @@ public class PlanillaFachada implements Serializable {
 			String formato, String arte, Double alto, Double largo,
 			Double ancho, byte[] imagenA, byte[] imagenB, byte[] imagenC,
 			byte[] imagenD, Timestamp fechaAuditoria, Timestamp fecha, String horaAuditoria,
-			String usuarioAuditoria, String estado, String zona, String tipo, String referencia, long padre) {
+			String usuarioAuditoria, String estado, String zona, String tipo, String referencia, long padre, String motivoC) {
 		super();
 		this.idPlanillaFachada = idPlanillaFachada;
 		this.usuario = usuario;
@@ -209,6 +212,7 @@ public class PlanillaFachada implements Serializable {
 		this.refencia = referencia;
 		this.padre = padre;
 		this.fechaEnvio = fecha;
+		this.motivoCancelacion = motivoC;
 	}
 
 	public long getIdPlanillaFachada() {
@@ -537,6 +541,14 @@ public class PlanillaFachada implements Serializable {
 
 	public void setFechaEnvio(Timestamp fechaEnvio) {
 		this.fechaEnvio = fechaEnvio;
+	}
+
+	public String getMotivoCancelacion() {
+		return motivoCancelacion;
+	}
+
+	public void setMotivoCancelacion(String motivoCancelacion) {
+		this.motivoCancelacion = motivoCancelacion;
 	}
 	
 	

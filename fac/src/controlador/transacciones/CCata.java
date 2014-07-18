@@ -389,7 +389,7 @@ public class CCata extends CGenerico {
 				telefono, mail, direccion, personas, motivo, nivel, edadTarget,
 				costo, descripcion, mecanica, fechaHora, fechaEnvio,
 				horaAuditoria, nombreUsuarioSesion(), string, usuario.getZona()
-						.getDescripcion(), tipoConfig, "", 0);
+						.getDescripcion(), tipoConfig, "", 0, "");
 		servicioPlanillaCata.guardar(planilla);
 		if (id != 0)
 			planilla = servicioPlanillaCata.buscar(id);

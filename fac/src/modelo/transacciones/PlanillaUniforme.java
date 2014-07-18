@@ -113,6 +113,9 @@ public class PlanillaUniforme implements Serializable {
 	@Column(name="padre")
 	private Long padre;
 	
+	@Column(name="motivo_cancelacion",length = 100)
+	private String motivoCancelacion;
+	
 	public PlanillaUniforme() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -124,7 +127,7 @@ public class PlanillaUniforme implements Serializable {
 			String nombrePdv, String rifPdv, String telefonoPdv,
 			String correoPdv, String direccionPdv, String logo, Double costo,
 			String justificacion, String contrato, Timestamp fechaAuditoria,Timestamp fecha,
-			String horaAuditoria, String usuarioAuditoria, String estado, String zona, String tipo, String referencia, long padre) {
+			String horaAuditoria, String usuarioAuditoria, String estado, String zona, String tipo, String referencia, long padre, String motivoC) {
 		super();
 		this.idPlanillaUniforme = idPlanillaUniforme;
 		this.usuario = usuario;
@@ -152,6 +155,7 @@ public class PlanillaUniforme implements Serializable {
 		this.refencia = referencia;
 		this.padre = padre;
 		this.fechaEnvio = fecha;
+		this.motivoCancelacion = motivoC;
 	}
 
 	public long getIdPlanillaUniforme() {
@@ -376,6 +380,14 @@ public class PlanillaUniforme implements Serializable {
 
 	public void setFechaEnvio(Timestamp fechaEnvio) {
 		this.fechaEnvio = fechaEnvio;
+	}
+
+	public String getMotivoCancelacion() {
+		return motivoCancelacion;
+	}
+
+	public void setMotivoCancelacion(String motivoCancelacion) {
+		this.motivoCancelacion = motivoCancelacion;
 	}
 	
 	

@@ -15,6 +15,8 @@ import modelo.estado.BitacoraFachada;
 import modelo.estado.BitacoraPromocion;
 import modelo.estado.BitacoraUniforme;
 import modelo.generico.PlanillaGenerica;
+import modelo.maestros.F0005;
+import modelo.maestros.Marca;
 import modelo.seguridad.Arbol;
 import modelo.seguridad.Configuracion;
 import modelo.seguridad.Grupo;
@@ -64,6 +66,10 @@ public class CSolicitud extends CGenerico {
 	private Listbox lista;
 	@Wire("#wdwPagar")
 	private Window wdwPagar;
+	@Wire("#wdwMotivo #listaMotivo")
+	private Listbox listaMotivo;
+	@Wire("#wdwMotivo")
+	private Window wdwMotivo;
 	@Wire
 	private Window wdwSolicitud;
 	@Wire
@@ -77,6 +83,8 @@ public class CSolicitud extends CGenerico {
 	private boolean tradeMark = false;
 	private List<PlanillaGenerica> listPlanilla = new ArrayList<PlanillaGenerica>();
 	private List<PlanillaGenerica> items = new ArrayList<PlanillaGenerica>();
+	private List<PlanillaGenerica> items2 = new ArrayList<PlanillaGenerica>();
+	ListModelList<F0005> motivos;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -239,10 +247,26 @@ public class CSolicitud extends CGenerico {
 							public void onEvent(Event evt)
 									throws InterruptedException {
 								if (evt.getName().equals("onOK")) {
-									cambiarEstado(procesadas, estatus,
-											estadoDefecto, estadoNuevo);
-									cargarLista();
-									catalogo.actualizarLista(listPlanilla);
+									HashMap<String, Object> mapaRechazo = new HashMap<String, Object>();
+									mapaRechazo.put("catalogo", catalogo);
+									mapaRechazo.put("estatusViejo", estatus);
+									mapaRechazo.put("estatusNuevo", estadoNuevo);
+									Sessions.getCurrent().setAttribute(
+											"rechazador", mapaRechazo);
+									Window window = (Window) Executions
+											.createComponents(
+													"/vistas/componentes/VMotivo.zul",
+													wdwSolicitud, mapaRechazo);
+									window.doModal();
+									listaMotivo = (Listbox) window.getChildren()
+											.get(1).getChildren().get(1)
+											.getChildren().get(0);
+									listaMotivo.setModel(new ListModelList<PlanillaGenerica>(
+											procesadas));
+//									cambiarEstado(procesadas, estatus,
+//											estadoDefecto, estadoNuevo);
+//									cargarLista();
+//									catalogo.actualizarLista(listPlanilla);
 								}
 							}
 						});
@@ -267,10 +291,26 @@ public class CSolicitud extends CGenerico {
 							public void onEvent(Event evt)
 									throws InterruptedException {
 								if (evt.getName().equals("onOK")) {
-									cambiarEstado(procesadas, estatus,
-											estadoDefecto, estadoNuevo);
-									cargarLista();
-									catalogo.actualizarLista(listPlanilla);
+									HashMap<String, Object> mapaRechazo = new HashMap<String, Object>();
+									mapaRechazo.put("catalogo", catalogo);
+									mapaRechazo.put("estatusViejo", estatus);
+									mapaRechazo.put("estatusNuevo", estadoNuevo);
+									Sessions.getCurrent().setAttribute(
+											"rechazador", mapaRechazo);
+									Window window = (Window) Executions
+											.createComponents(
+													"/vistas/componentes/VMotivo.zul",
+													wdwSolicitud, mapaRechazo);
+									window.doModal();
+									listaMotivo = (Listbox) window.getChildren()
+											.get(1).getChildren().get(1)
+											.getChildren().get(0);
+									listaMotivo.setModel(new ListModelList<PlanillaGenerica>(
+											procesadas));
+//									cambiarEstado(procesadas, estatus,
+//											estadoDefecto, estadoNuevo);
+//									cargarLista();
+//									catalogo.actualizarLista(listPlanilla);
 								}
 							}
 						});
@@ -321,7 +361,7 @@ public class CSolicitud extends CGenerico {
 							public void onEvent(Event evt)
 									throws InterruptedException {
 								if (evt.getName().equals("onOK")) {
-									final HashMap<String, Object> mapita = new HashMap<String, Object>();
+									HashMap<String, Object> mapita = new HashMap<String, Object>();
 									mapita.put("catalogo", catalogo);
 									Sessions.getCurrent().setAttribute(
 											"pagador", mapita);
@@ -520,6 +560,7 @@ public class CSolicitud extends CGenerico {
 						.buscar(procesadas.get(i).getId());
 				planillaEvento.setEstado(estado);
 				planillaEvento.setRefencia(procesadas.get(i).getReferencia());
+				planillaEvento.setMotivoCancelacion(procesadas.get(i).getMotivo());
 				planillaEvento.setHoraAuditoria(horaAuditoria);
 				planillaEvento.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaEvento.setFechaAuditoria(fechaHora);
@@ -569,7 +610,7 @@ public class CSolicitud extends CGenerico {
 							planillaEvento.getFechaEnvio(), horaAuditoria,
 							nombreUsuarioSesion(), estado,
 							planillaEvento.getZona(), "Marca", "",
-							planillaEvento.getIdPlanillaEvento());
+							planillaEvento.getIdPlanillaEvento(),"");
 					servicioPlanillaEvento.guardar(nueva);
 					nueva = servicioPlanillaEvento.buscarUltima();
 
@@ -605,6 +646,7 @@ public class CSolicitud extends CGenerico {
 						.buscar(procesadas.get(i).getId());
 				planillaUniforme.setEstado(estado);
 				planillaUniforme.setRefencia(procesadas.get(i).getReferencia());
+				planillaUniforme.setMotivoCancelacion(procesadas.get(i).getMotivo());
 				planillaUniforme.setHoraAuditoria(horaAuditoria);
 				planillaUniforme.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaUniforme.setFechaAuditoria(fechaHora);
@@ -652,7 +694,7 @@ public class CSolicitud extends CGenerico {
 							nombreUsuarioSesion(), estado, planillaUniforme
 									.getUsuario().getZona().getDescripcion(),
 							"Marca", "",
-							planillaUniforme.getIdPlanillaUniforme());
+							planillaUniforme.getIdPlanillaUniforme(),"");
 					servicioPlanillaUniforme.guardar(nueva);
 					nueva = servicioPlanillaUniforme.buscarUltima();
 					List<UniformePlanillaUniforme> uniformesAgregados = servicioUniformePlanillaUniforme
@@ -672,6 +714,7 @@ public class CSolicitud extends CGenerico {
 				planillaPromocion.setEstado(estado);
 				planillaPromocion
 						.setRefencia(procesadas.get(i).getReferencia());
+				planillaPromocion.setMotivoCancelacion(procesadas.get(i).getMotivo());
 				planillaPromocion.setHoraAuditoria(horaAuditoria);
 				planillaPromocion.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaPromocion.setFechaAuditoria(fechaHora);
@@ -726,7 +769,7 @@ public class CSolicitud extends CGenerico {
 							fechaHora, planillaPromocion.getFechaEnvio(),
 							horaAuditoria, nombreUsuarioSesion(), estado,
 							planillaPromocion.getZona(), "Marca", "",
-							planillaPromocion.getIdPlanillaPromocion());
+							planillaPromocion.getIdPlanillaPromocion(),"");
 					servicioPlanillaPromocion.guardar(nueva);
 
 					nueva = servicioPlanillaPromocion.buscarUltima();
@@ -739,6 +782,7 @@ public class CSolicitud extends CGenerico {
 						.buscar(procesadas.get(i).getId());
 				planillaArte.setEstado(estado);
 				planillaArte.setRefencia(procesadas.get(i).getReferencia());
+				planillaArte.setMotivoCancelacion(procesadas.get(i).getMotivo());
 				planillaArte.setHoraAuditoria(horaAuditoria);
 				planillaArte.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaArte.setFechaAuditoria(fechaHora);
@@ -781,7 +825,7 @@ public class CSolicitud extends CGenerico {
 							planillaArte.getFechaEnvio(), horaAuditoria,
 							nombreUsuarioSesion(), estado,
 							planillaArte.getZona(), "Marca", "",
-							planillaArte.getIdPlanillaArte());
+							planillaArte.getIdPlanillaArte(),"");
 					servicioPlanillaArte.guardar(nueva);
 
 					nueva = servicioPlanillaArte.buscarUltima();
@@ -794,6 +838,7 @@ public class CSolicitud extends CGenerico {
 						.buscar(procesadas.get(i).getId());
 				planillaCata.setEstado(estado);
 				planillaCata.setRefencia(procesadas.get(i).getReferencia());
+				planillaCata.setMotivoCancelacion(procesadas.get(i).getMotivo());
 				planillaCata.setHoraAuditoria(horaAuditoria);
 				planillaCata.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaCata.setFechaAuditoria(fechaHora);
@@ -838,7 +883,7 @@ public class CSolicitud extends CGenerico {
 							planillaCata.getFechaEnvio(), horaAuditoria,
 							nombreUsuarioSesion(), estado,
 							planillaCata.getZona(), "Marca", "",
-							planillaCata.getIdPlanillaCata());
+							planillaCata.getIdPlanillaCata(),"");
 					servicioPlanillaCata.guardar(nueva);
 					nueva = servicioPlanillaCata.buscarUltima();
 
@@ -866,6 +911,7 @@ public class CSolicitud extends CGenerico {
 						.buscar(procesadas.get(i).getId());
 				planillaFachada.setEstado(estado);
 				planillaFachada.setRefencia(procesadas.get(i).getReferencia());
+				planillaFachada.setMotivoCancelacion(procesadas.get(i).getMotivo());
 				planillaFachada.setHoraAuditoria(horaAuditoria);
 				planillaFachada.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaFachada.setFechaAuditoria(fechaHora);
@@ -924,7 +970,7 @@ public class CSolicitud extends CGenerico {
 							planillaFachada.getFechaEnvio(), horaAuditoria,
 							nombreUsuarioSesion(), estado,
 							planillaFachada.getZona(), "Marca", "",
-							planillaFachada.getIdPlanillaFachada());
+							planillaFachada.getIdPlanillaFachada(), "");
 					servicioPlanillaFachada.guardar(nueva);
 					nueva = servicioPlanillaFachada.buscarUltima();
 					List<RecursoPlanillaFachada> recursosAgregados = servicioRecursoPlanillaFachada
@@ -1206,5 +1252,63 @@ public class CSolicitud extends CGenerico {
 	@Listen("onClick = #btnSalir")
 	public void cerrar() {
 		cerrarVentana(wdwPagar);
+	}
+
+	// Ventana Motivo
+
+	public ListModelList<F0005> getMotivos() {
+		motivos = new ListModelList<F0005>(
+				servicioF0005.buscarParaUDCOrdenados("00", "14"));
+		return motivos;
+	}
+
+	@Listen("onClick = #btnSalirMotivo")
+	public void cerrarMotivo() {
+		cerrarVentana(wdwMotivo);
+	}
+
+	@Listen("onClick = #btnAceptarMotivo")
+	public void aceptarMotivo() {
+		String estatusNuevo="";
+		String estatusViejo="";
+		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
+				.getCurrent().getAttribute("rechazador");
+		if (map != null) {
+			if (map.get("catalogo") != null) {
+				catalogo = (Catalogo<PlanillaGenerica>) map.get("catalogo");
+				estatusViejo = (String) map.get("estatusViejo");
+				estatusNuevo = (String) map.get("estatusNuevo");
+				map.clear();
+				map = null;
+			}
+		}
+		items2.clear();
+		boolean error = false;
+		if (listaMotivo.getItemCount() != 0) {
+			for (int i = 0; i < listaMotivo.getItemCount(); i++) {
+				Listitem listItem = listaMotivo.getItemAtIndex(i);
+				PlanillaGenerica planilla = listItem.getValue();
+				String motivo = "";
+				if (((Combobox) ((listItem.getChildren().get(5)))
+						.getFirstChild()).getSelectedItem() != null)
+					motivo = ((Combobox) ((listItem.getChildren().get(5)))
+							.getFirstChild()).getSelectedItem().getContext();
+				if (motivo.equals(""))
+					error = true;
+				planilla.setMotivo(motivo);
+				items2.add(planilla);
+			}
+		}
+		if (error)
+			msj.mensajeAlerta(Mensaje.listaVaciaMotivo);
+		else {
+			String estatus = estatusViejo;
+			String estadoDefecto = "";
+			String estadoNuevo = estatusNuevo;
+			cambiarEstado(items2, estatus, estadoDefecto, estadoNuevo);
+			cargarLista();
+			catalogo.actualizarLista(listPlanilla);
+			cerrarVentana(wdwMotivo);
+		}
 	}
 }

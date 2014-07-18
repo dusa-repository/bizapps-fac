@@ -371,7 +371,7 @@ public class CSolicitudArte extends CGenerico {
 				formato, alto, largo, ancho, imagenUsuario1, imagenUsuario2,
 				imagenUsuario3, imagenUsuario4, lineamiento, fechaHora,
 				fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
-				usuario.getZona().getDescripcion(), tipoConfig, "", 0);
+				usuario.getZona().getDescripcion(), tipoConfig, "", 0,"");
 		servicioPlanillaArte.guardar(planillaArte);
 		if (id != 0)
 			planillaArte = servicioPlanillaArte.buscar(id);

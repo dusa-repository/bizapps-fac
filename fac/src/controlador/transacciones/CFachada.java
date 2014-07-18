@@ -474,7 +474,7 @@ public class CFachada extends CGenerico {
 				tipoDecoracion, formato, salidaArte, alto, largo, ancho,
 				imagenUsuario1, imagenUsuario2, imagenUsuario3, imagenUsuario4,
 				fechaHora, fechaEnvio, horaAuditoria, nombreUsuarioSesion(),
-				string, usuario.getZona().getDescripcion(), tipoConfig, "", 0);
+				string, usuario.getZona().getDescripcion(), tipoConfig, "", 0,"");
 		servicioPlanillaFachada.guardar(planillaFachada);
 
 		if (id != 0)
