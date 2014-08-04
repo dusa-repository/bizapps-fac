@@ -37,4 +37,8 @@ public interface IPlanillaFachadaDAO extends JpaRepository<PlanillaFachada, Long
 
 	List<PlanillaFachada> findByMarca(Marca marca);
 
+	Collection<? extends PlanillaFachada> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+			String variable, String string, String string2, String string3,
+			String variable2);
+
 }

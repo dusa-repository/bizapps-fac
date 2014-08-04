@@ -36,4 +36,8 @@ public interface IPlanillaArteDAO extends JpaRepository<PlanillaArte, Long> {
 
 	List<PlanillaArte> findByMarca(Marca marca);
 
+	Collection<? extends PlanillaArte> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+			String variable, String string, String string2, String string3,
+			String variable2);
+
 }

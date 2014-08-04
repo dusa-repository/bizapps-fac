@@ -36,4 +36,8 @@ public interface IPlanillaCataDAO extends JpaRepository<PlanillaCata, Long> {
 
 	List<PlanillaCata> findByMarca(Marca marca);
 
+	Collection<? extends PlanillaCata> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+			String variable, String string, String string2, String string3,
+			String variable2);
+
 }

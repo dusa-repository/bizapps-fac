@@ -37,4 +37,8 @@ public interface IPlanillaEventoDAO extends JpaRepository<PlanillaEvento, Long> 
 
 	List<PlanillaEvento> findByMarca(Marca marca);
 
+	Collection<? extends PlanillaEvento> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+			String variable, String string, String string2, String string3,
+			String variable2);
+
 }

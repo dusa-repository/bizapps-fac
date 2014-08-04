@@ -37,4 +37,8 @@ public interface IPlanillaPromocionDAO extends JpaRepository<PlanillaPromocion, 
 
 	List<PlanillaPromocion> findByMarcaA(Marca marca);
 
+	Collection<? extends PlanillaPromocion> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+			String variable, String string, String string2, String string3,
+			String variable2);
+
 }

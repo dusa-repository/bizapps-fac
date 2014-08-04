@@ -52,7 +52,8 @@ public class SPlanillaPromocion {
 						variable);
 		planillas
 				.addAll(planillaPromocionDAO
-						.findByEstadoNotAndTipoOrderByFechaEnvioAsc(variable,
+						.findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+								variable, "Pagada", "Rechazada", "Cancelada",
 								variable2));
 		return planillas;
 	}
