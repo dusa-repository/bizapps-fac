@@ -37,4 +37,8 @@ public interface IPlanillaUniformeDAO extends JpaRepository<PlanillaUniforme, Lo
 
 	List<PlanillaUniforme> findByMarca(Marca marca);
 
+	Collection<? extends PlanillaUniforme> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+			String variable, String string, String string2, String string3,
+			String variable2);
+
 }

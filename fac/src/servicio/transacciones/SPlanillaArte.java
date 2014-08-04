@@ -63,7 +63,8 @@ public class SPlanillaArte {
 						variable);
 		planillas
 				.addAll(planillaArteDAO
-						.findByEstadoNotAndTipoOrderByFechaEnvioAsc(variable,
+						.findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+								variable, "Pagada", "Rechazada", "Cancelada",
 								variable2));
 		return planillas;
 	}

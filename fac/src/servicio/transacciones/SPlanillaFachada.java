@@ -52,7 +52,8 @@ public class SPlanillaFachada {
 						variable);
 		planillas
 				.addAll(planillaFachadaDAO
-						.findByEstadoNotAndTipoOrderByFechaEnvioAsc(variable,
+						.findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+								variable, "Pagada", "Rechazada", "Cancelada",
 								variable2));
 		return planillas;
 	}

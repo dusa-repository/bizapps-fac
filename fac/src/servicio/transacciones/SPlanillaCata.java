@@ -64,7 +64,8 @@ public class SPlanillaCata {
 						variable);
 		planillas
 				.addAll(planillaCataDAO
-						.findByEstadoNotAndTipoOrderByFechaEnvioAsc(variable,
+						.findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+								variable, "Pagada", "Rechazada", "Cancelada",
 								variable2));
 		return planillas;
 	}
