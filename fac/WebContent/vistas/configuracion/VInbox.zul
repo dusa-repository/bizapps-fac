@@ -39,7 +39,8 @@
 									</a>
 									<a style="color:white">
 										<space />
-										<label id="lblEditarCuenta" value="Editar Cuenta" onDoubleClick="event.stopPropagation()"/>
+										<label id="lblEditarCuenta" value="Editar Cuenta"
+											onDoubleClick="event.stopPropagation()" />
 									</a>
 								</vbox>
 								<separator />
@@ -65,57 +66,65 @@
 				</div>
 			</north>
 			<center border="none">
-				<div height="100%" width="100%" style="background:#500101">
-					<hbox align="center" pack="center" height="100%" width="100%">
-						<groupbox closable="false" height="80%" width="100%"
+				<div vflex="true" hflex="true" style="background:#500101">
+					<hbox style="border: none" align="center" pack="center"
+						vflex="true" hflex="true">
+						<groupbox closable="false" height="80%" width="600px"
 							mold="3d">
 							<caption label="INBOX"
 								style="color:white; font-size: 17px; font-weight:bold; background: #3A0202" />
-							<vbox pack="center">
-								<separator />
-								<separator />
-								<hbox>
-									<space />
-									<button id="btnEdicion" class="btn"
-										label="En Edicion (${$composer.edicion})" orient="vertical"
-										visible="false" autodisable="self"  />
-									<space />
-									<button id="btnPendiente" class="btn"
-										label="Pendientes por Aprobacion (${$composer.pendiente})"
-										orient="vertical" visible="false" autodisable="self"  />
-									<space />
-									<button id="btnAprobada" class="btn"
-										label="Procesadas (${$composer.aprobada})" orient="vertical"
-										visible="false" autodisable="self"  />
-									<button id="btnFinalizada" class="btn"
-										label="Finalizadas (${$composer.finalizada})" orient="vertical"
-										visible="false" />
-								</hbox>
-								<separator />
-								<separator />
-								<separator />
-								<hbox>
-									<space />
-									<button id="btnRechazada" class="btn"
-										label="Rechazadas (${$composer.rechazada})" orient="vertical"
-										visible="false" autodisable="self" />
-									<space />
-									<button id="btnCancelada" class="btn"
-										label="Canceladas (${$composer.cancelada})" orient="vertical"
-										visible="false" autodisable="self" />
-									<space />
-									<button id="btnPagada" class="btn" label="Pagadas (${$composer.pagadas})"
-										orient="vertical" visible="false" autodisable="self" />
-								</hbox>
-								<space />
-								<space />
-								<space />
-								<div align="right" style="float: right;">
-									<button id="btnCerrar" class="btn-salir" label="Volver"
-										visible="true" image="/public/imagenes/botones/salir.png" autodisable="self" />
-								</div>
-							</vbox>
+
+							<borderlayout style="background:#661313">
+								<center border="none" autoscroll="true" style="background:#661313">
+									<vbox pack="center" vflex="true" hflex="true">
+										<separator />
+										<separator />
+										<hbox>
+											<space />
+											<button id="btnEdicion" class="btn"
+												label="En Edicion (${$composer.edicion})" orient="vertical"
+												visible="false" autodisable="self" />
+											<space />
+											<button id="btnPendiente" class="btn"
+												label="Pendientes por Aprobacion (${$composer.pendiente})"
+												orient="vertical" visible="false" autodisable="self" />
+											<space />
+											<button id="btnAprobada" class="btn"
+												label="Procesadas (${$composer.aprobada})" orient="vertical"
+												visible="false" autodisable="self" />
+											<button id="btnFinalizada" class="btn"
+												label="Finalizadas (${$composer.finalizada})" orient="vertical"
+												visible="false" />
+										</hbox>
+										<separator />
+										<separator />
+										<separator />
+										<hbox>
+											<space />
+											<button id="btnRechazada" class="btn"
+												label="Rechazadas (${$composer.rechazada})" orient="vertical"
+												visible="false" autodisable="self" />
+											<space />
+											<button id="btnCancelada" class="btn"
+												label="Canceladas (${$composer.cancelada})" orient="vertical"
+												visible="false" autodisable="self" />
+											<space />
+											<button id="btnPagada" class="btn"
+												label="Pagadas (${$composer.pagadas})" orient="vertical"
+												visible="false" autodisable="self" />
+										</hbox>
+										<space />
+										<space />
+										<space />
+									</vbox>
+								</center>
+							</borderlayout>
 						</groupbox>
+						<hbox height="75%" width="80%" align="end" pack="start">
+							<button id="btnCerrar" class="btn-salir" label="Volver"
+								visible="true" image="/public/imagenes/botones/salir.png"
+								autodisable="self" />
+						</hbox>
 					</hbox>
 				</div>
 			</center>

@@ -83,42 +83,49 @@
 							mold="3d">
 							<caption label="FORMATOS DISPONIBLES"
 								style="color:White; font-size: 17px; font-weight:bold; background: #3A0202" />
-							<vbox pack="center">
-								<separator />
-								<separator />
-								<hbox>
-									<button id="btnEvento" class="btn" label="Eventos Especiales"
-										orient="vertical" visible="false" autodisable="self" />
-									<space />
-									<button id="btnUniforme" class="btn" label="Uniformes"
-										orient="vertical" visible="false" autodisable="self" />
-									<space />
-									<button id="btnPromocion" class="btn" label="Promociones de Marca"
-										orient="vertical" visible="false" autodisable="self" />
-									<space />
-									<button id="btnSolicitudArte" class="btn"
-										label="Solicitud de Arte y Publicaciones" orient="vertical"
-										visible="false" autodisable="self" />
-								</hbox>
-								<separator />
-								<separator />
-								<separator />
-								<hbox>
-									<button id="btnCataInduccion" class="btn" label="Cata Induccion"
-										orient="vertical" visible="false" autodisable="self" />
-									<space />
-									<button id="btnFachada" class="btn" label="Fachadas y Decoraciones"
-										orient="vertical" visible="false" autodisable="self" />
-									<space />
-									<button id="btnMarca" class="btn" label="Marca" orient="vertical"
-										visible="false" autodisable="self" />
-								</hbox>
-							</vbox>
+							<borderlayout style="background:#661313">
+								<center border="none" autoscroll="true" style="background:#661313">
+									<vbox pack="center">
+										<separator />
+										<separator />
+										<hbox>
+											<button id="btnEvento" class="btn" label="Eventos Especiales"
+												orient="vertical" visible="false" autodisable="self" />
+											<space />
+											<button id="btnUniforme" class="btn" label="Uniformes"
+												orient="vertical" visible="false" autodisable="self" />
+											<space />
+											<button id="btnPromocion" class="btn" label="Promociones de Marca"
+												orient="vertical" visible="false" autodisable="self" />
+											<space />
+											<button id="btnSolicitudArte" class="btn"
+												label="Solicitud de Arte y Publicaciones" orient="vertical"
+												visible="false" autodisable="self" />
+										</hbox>
+										<separator />
+										<separator />
+										<separator />
+										<hbox>
+											<button id="btnCataInduccion" class="btn" label="Cata Induccion"
+												orient="vertical" visible="false" autodisable="self" />
+											<space />
+											<button id="btnFachada" class="btn"
+												label="Fachadas y Decoraciones" orient="vertical" visible="false"
+												autodisable="self" />
+											<space />
+											<button id="btnMarca" class="btn" label="Marca"
+												orient="vertical" visible="false" autodisable="self" />
+										</hbox>
+									</vbox>
+								</center>
+							</borderlayout>
 						</groupbox>
 						<groupbox closable="false" height="80%" width="190px"
 							mold="3d">
 							<caption label="ACCIONES"
 								style="color:White; font-size: 17px; font-weight:bold; background: #3A0202; padding: 0 0 0 35px" />
+							<borderlayout style="background:#661313">
+								<center border="none" autoscroll="true" style="background:#661313">
 							<vbox pack="center">
 								<separator />
 								<separator />
@@ -130,6 +137,8 @@
 								<button id="btnCruds" class="btn" label="Admin" orient="vertical"
 									visible="false" autodisable="self" />
 							</vbox>
+							</center>
+							</borderlayout>
 						</groupbox>
 					</hbox>
 				</div>

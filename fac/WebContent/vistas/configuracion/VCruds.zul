@@ -39,7 +39,8 @@
 									</a>
 									<a style="color:white">
 										<space />
-										<label id="lblEditarCuenta" value="Editar Cuenta" onDoubleClick="event.stopPropagation()"/>
+										<label id="lblEditarCuenta" value="Editar Cuenta"
+											onDoubleClick="event.stopPropagation()" />
 										<!-- onClick='contenido.src="../vistas/seguridad/VEditarUsuario.zul"' -->
 									</a>
 								</vbox>
@@ -66,57 +67,58 @@
 				</div>
 			</north>
 			<center border="none">
-				<div height="100%" width="100%" style="background:#500101">
-					<hbox align="center" pack="center" height="100%" width="100%">
-						<groupbox closable="false" height="100%" width="100%"
+				<div vflex="true" hflex="true" style="background:#500101">
+					<hbox align="center" pack="center" vflex="true" hflex="true">
+						<groupbox closable="false" height="80%" width="910px"
 							mold="3d">
 							<caption label="PANEL ADMINISTRATIVO"
 								style="color:white; font-size: 17px; font-weight:bold; background: #3A0202" />
-							<vbox pack="center">
-								<separator />
-								<separator />
-								<hbox>
-									<button id="btnTiposUDC" class="btn" label="Tipos UDC"
-										orient="vertical" visible="false" autodisable="self" />
-									<button id="btnUDC" class="btn" label="UDC" orient="vertical"
-										visible="false" autodisable="self" />
-									<button id="btnUsuario" class="btn" label="Usuario"
-										orient="vertical" visible="false" autodisable="self" />
-									<button id="btnRecurso" class="btn" label="Recurso"
-										orient="vertical" visible="false" autodisable="self" />
-									<button id="btnMarca" class="btn" label="Marca" orient="vertical"
-										visible="false" autodisable="self" />
-									<button id="btnZona" class="btn" label="Zona" orient="vertical"
-										visible="false" autodisable="self" />
-								</hbox>
-								<separator />
-								<separator />
-								<separator />
-								<hbox>
+							<borderlayout style="background:#661313">
+								<center border="none" autoscroll="true" style="background:#661313">
+									<vbox pack="center" >
+										<separator />
+										<separator />
+										<hbox>
+											<button id="btnTiposUDC" class="btn" label="Tipos UDC"
+												orient="vertical" visible="false" autodisable="self" />
+											<button id="btnUDC" class="btn" label="UDC" orient="vertical"
+												visible="false" autodisable="self" />
+											<button id="btnUsuario" class="btn" label="Usuario"
+												orient="vertical" visible="false" autodisable="self" />
+											<button id="btnRecurso" class="btn" label="Recurso"
+												orient="vertical" visible="false" autodisable="self" />
+											<button id="btnMarca" class="btn" label="Marca"
+												orient="vertical" visible="false" autodisable="self" />
+											<button id="btnZona" class="btn" label="Zona" orient="vertical"
+												visible="false" autodisable="self" />
+										</hbox>
+										<separator />
+										<separator />
+										<separator />
+										<hbox>
 
-									<button id="btnSku" class="btn" label="Sku" orient="vertical"
-										visible="false" autodisable="self" />
-									<button id="btnAliado" class="btn" label="Aliado"
-										orient="vertical" visible="false" autodisable="self" />
-									<button id="btnUnif" class="btn" label="Uniforme"
-										orient="vertical" visible="false" autodisable="self" />
-									<button id="btnGrupo" class="btn" label="Grupo" orient="vertical"
-										visible="false" autodisable="self" />
-									<button id="btnFuncionalidad" class="btn" label="Funcionalidad"
-										orient="vertical" visible="false" autodisable="self" />
-									<button id="btnConfiguracion" class="btn" label="Configuracion"
-										orient="vertical" visible="false" autodisable="self" />
-								</hbox>
-								<space />
-								<space />
-								<space />
-								<div align="right" style="float: right;">
-									<button id="btnCerrar" class="btn-salir" label="Volver"
-										visible="true" image="/public/imagenes/botones/salir.png"
-										autodisable="self" />
-								</div>
-							</vbox>
+											<button id="btnSku" class="btn" label="Sku" orient="vertical"
+												visible="false" autodisable="self" />
+											<button id="btnAliado" class="btn" label="Aliado"
+												orient="vertical" visible="false" autodisable="self" />
+											<button id="btnUnif" class="btn" label="Uniforme"
+												orient="vertical" visible="false" autodisable="self" />
+											<button id="btnGrupo" class="btn" label="Grupo"
+												orient="vertical" visible="false" autodisable="self" />
+											<button id="btnFuncionalidad" class="btn" label="Funcionalidad"
+												orient="vertical" visible="false" autodisable="self" />
+											<button id="btnConfiguracion" class="btn" label="Configuracion"
+												orient="vertical" visible="false" autodisable="self" />
+										</hbox>
+									</vbox>
+								</center>
+							</borderlayout>
 						</groupbox>
+						<hbox height="75%" width="80%" align="end" pack="start">
+							<button id="btnCerrar" class="btn-salir" label="Volver"
+								visible="true" image="/public/imagenes/botones/salir.png"
+								autodisable="self" />
+						</hbox>
 					</hbox>
 				</div>
 			</center>
