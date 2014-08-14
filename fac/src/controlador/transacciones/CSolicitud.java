@@ -130,8 +130,8 @@ public class CSolicitud extends CGenerico {
 		final List<PlanillaGenerica> listaCatalogo = listPlanilla;
 		catalogo = new Catalogo<PlanillaGenerica>(catalogoSolicitud,
 				"PlanillaCata", listaCatalogo, false, "Usuario", "Estado",
-				"Fecha de Envio de Planilla", "Marca", "Nombre Actividad",
-				"Tipo Planilla") {
+				"Codigo Planilla", "Fecha de Envio de Planilla", "Marca",
+				"Nombre Actividad", "Tipo Planilla") {
 
 			@Override
 			protected List<PlanillaGenerica> buscar(List<String> valores) {
@@ -145,17 +145,19 @@ public class CSolicitud extends CGenerico {
 							.startsWith(valores.get(0).toLowerCase())
 							&& planilla.getEstado().toLowerCase()
 									.startsWith(valores.get(1).toLowerCase())
+							&& String.valueOf(planilla.getId()).toLowerCase()
+									.startsWith(valores.get(2))
 							&& String
 									.valueOf(
 											formatoFecha.format(planilla
 													.getFecha())).toLowerCase()
-									.startsWith(valores.get(2))
+									.startsWith(valores.get(3))
 							&& planilla.getMarca().toLowerCase()
-									.startsWith(valores.get(3).toLowerCase())
-							&& planilla.getNombreActividad().toLowerCase()
 									.startsWith(valores.get(4).toLowerCase())
+							&& planilla.getNombreActividad().toLowerCase()
+									.startsWith(valores.get(5).toLowerCase())
 							&& planilla.getTipoPlanilla().toLowerCase()
-									.startsWith(valores.get(5).toLowerCase())) {
+									.startsWith(valores.get(6).toLowerCase())) {
 						lista.add(planilla);
 					}
 				}
@@ -164,14 +166,15 @@ public class CSolicitud extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(PlanillaGenerica planilla) {
-				String[] registros = new String[6];
+				String[] registros = new String[7];
 				registros[0] = planilla.getUsuario().toLowerCase();
 				registros[1] = planilla.getEstado().toLowerCase();
-				registros[2] = String.valueOf(formatoFecha.format(planilla
+				registros[2] = String.valueOf(planilla.getId());
+				registros[3] = String.valueOf(formatoFecha.format(planilla
 						.getFecha()));
-				registros[3] = planilla.getMarca().toLowerCase();
-				registros[4] = planilla.getNombreActividad().toLowerCase();
-				registros[5] = planilla.getTipoPlanilla().toLowerCase();
+				registros[4] = planilla.getMarca().toLowerCase();
+				registros[5] = planilla.getNombreActividad().toLowerCase();
+				registros[6] = planilla.getTipoPlanilla().toLowerCase();
 				return registros;
 			}
 		};
