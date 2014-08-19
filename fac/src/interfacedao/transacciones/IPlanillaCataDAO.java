@@ -40,4 +40,11 @@ public interface IPlanillaCataDAO extends JpaRepository<PlanillaCata, Long> {
 			String variable, String string, String string2, String string3,
 			String variable2);
 
+	Collection<? extends PlanillaCata> findByEstadoAndTipoOrderByFechaEnvioAsc(
+			String string, String variable2);
+
+	Collection<? extends PlanillaCata> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+			String variable, String string, String string2, String string3,
+			String string4, String variable2);
+
 }

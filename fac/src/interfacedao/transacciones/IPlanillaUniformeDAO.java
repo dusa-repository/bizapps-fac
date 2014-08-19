@@ -41,4 +41,11 @@ public interface IPlanillaUniformeDAO extends JpaRepository<PlanillaUniforme, Lo
 			String variable, String string, String string2, String string3,
 			String variable2);
 
+	Collection<? extends PlanillaUniforme> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+			String variable, String string, String string2, String string3,
+			String string4, String variable2);
+
+	Collection<? extends PlanillaUniforme> findByEstadoAndTipoOrderByFechaEnvioAsc(
+			String string, String variable2);
+
 }

@@ -40,4 +40,11 @@ public interface IPlanillaArteDAO extends JpaRepository<PlanillaArte, Long> {
 			String variable, String string, String string2, String string3,
 			String variable2);
 
+	Collection<? extends PlanillaArte> findByEstadoAndTipoOrderByFechaEnvioAsc(
+			String string, String variable2);
+
+	Collection<? extends PlanillaArte> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+			String variable, String string, String string2, String string3,
+			String string4, String variable2);
+
 }

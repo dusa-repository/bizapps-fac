@@ -47,13 +47,15 @@ public class SPlanillaArte {
 
 	public List<PlanillaArte> buscarUsuarioSessionYEstado(
 			Usuario usuarioSesion, String variable) {
-		return planillaArteDAO.findByUsuarioAndEstadoOrderByFechaEnvioAsc(usuarioSesion, variable);
+		return planillaArteDAO.findByUsuarioAndEstadoOrderByFechaEnvioAsc(
+				usuarioSesion, variable);
 	}
 
 	public List<PlanillaArte> buscarSupervisorYEstado(
 			String nombreUsuarioSesion, String variable) {
-		return planillaArteDAO.findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
-				nombreUsuarioSesion, variable);
+		return planillaArteDAO
+				.findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
+						nombreUsuarioSesion, variable);
 	}
 
 	public List<PlanillaArte> buscarAdminEstado(String variable,
@@ -63,9 +65,13 @@ public class SPlanillaArte {
 						variable);
 		planillas
 				.addAll(planillaArteDAO
-						.findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
-								variable, "Pagada", "Rechazada", "Cancelada",
+						.findByEstadoAndTipoOrderByFechaEnvioAsc("Pendiente",
 								variable2));
+		planillas
+				.addAll(planillaArteDAO
+						.findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+								variable, "Pagada", "Rechazada", "Cancelada",
+								"Pendiente", variable2));
 		return planillas;
 	}
 

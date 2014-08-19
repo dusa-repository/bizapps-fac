@@ -52,22 +52,27 @@ public class SPlanillaFachada {
 						variable);
 		planillas
 				.addAll(planillaFachadaDAO
-						.findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
-								variable, "Pagada", "Rechazada", "Cancelada",
+						.findByEstadoAndTipoOrderByFechaEnvioAsc("Pendiente",
 								variable2));
+		planillas
+				.addAll(planillaFachadaDAO
+						.findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+								variable, "Pagada", "Rechazada", "Cancelada",
+								"Pendiente", variable2));
 		return planillas;
 	}
 
 	public List<PlanillaFachada> buscarSupervisorYEstado(
 			String nombreUsuarioSesion, String variable) {
-		return planillaFachadaDAO.findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
-				nombreUsuarioSesion, variable);
+		return planillaFachadaDAO
+				.findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
+						nombreUsuarioSesion, variable);
 	}
 
 	public List<PlanillaFachada> buscarUsuarioSessionYEstado(
 			Usuario usuarioSesion, String variable) {
-		return planillaFachadaDAO.findByUsuarioAndEstadoOrderByFechaEnvioAsc(usuarioSesion,
-				variable);
+		return planillaFachadaDAO.findByUsuarioAndEstadoOrderByFechaEnvioAsc(
+				usuarioSesion, variable);
 	}
 
 	public List<PlanillaFachada> buscarPorUsuario(Usuario usuario) {
