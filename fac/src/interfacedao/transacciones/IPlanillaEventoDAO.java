@@ -41,4 +41,11 @@ public interface IPlanillaEventoDAO extends JpaRepository<PlanillaEvento, Long> 
 			String variable, String string, String string2, String string3,
 			String variable2);
 
+	Collection<? extends PlanillaEvento> findByEstadoAndTipoOrderByFechaEnvioAsc(
+			String string, String variable2);
+
+	Collection<? extends PlanillaEvento> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+			String variable, String string, String string2, String string3,
+			String string4, String variable2);
+
 }

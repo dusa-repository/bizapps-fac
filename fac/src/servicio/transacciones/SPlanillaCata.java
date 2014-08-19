@@ -48,13 +48,15 @@ public class SPlanillaCata {
 
 	public List<PlanillaCata> buscarUsuarioSessionYEstado(
 			Usuario usuarioSesion, String variable) {
-		return planillaCataDAO.findByUsuarioAndEstadoOrderByFechaEnvioAsc(usuarioSesion, variable);
+		return planillaCataDAO.findByUsuarioAndEstadoOrderByFechaEnvioAsc(
+				usuarioSesion, variable);
 	}
 
 	public List<PlanillaCata> buscarSupervisorYEstado(
 			String nombreUsuarioSesion, String variable) {
-		return planillaCataDAO.findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
-				nombreUsuarioSesion, variable);
+		return planillaCataDAO
+				.findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
+						nombreUsuarioSesion, variable);
 	}
 
 	public List<PlanillaCata> buscarAdminEstado(String variable,
@@ -64,9 +66,13 @@ public class SPlanillaCata {
 						variable);
 		planillas
 				.addAll(planillaCataDAO
-						.findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
-								variable, "Pagada", "Rechazada", "Cancelada",
+						.findByEstadoAndTipoOrderByFechaEnvioAsc("Pendiente",
 								variable2));
+		planillas
+				.addAll(planillaCataDAO
+						.findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+								variable, "Pagada", "Rechazada", "Cancelada",
+								"Pendiente", variable2));
 		return planillas;
 	}
 

@@ -65,9 +65,13 @@ public class SPlanillaEvento {
 						variable);
 		planillas
 				.addAll(planillaEventoDAO
-						.findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
-								variable, "Pagada", "Rechazada", "Cancelada",
+						.findByEstadoAndTipoOrderByFechaEnvioAsc("Pendiente",
 								variable2));
+		planillas
+				.addAll(planillaEventoDAO
+						.findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+								variable, "Pagada", "Rechazada", "Cancelada",
+								"Pendiente", variable2));
 		return planillas;
 	}
 
