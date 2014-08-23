@@ -436,8 +436,10 @@ public class CEvento extends CGenerico {
 
 		if (guardo)
 			guardarBitacora(planillaEvento, true);
-		if (envio)
+		if (envio){
 			guardarBitacora(planillaEvento, false);
+			enviarEmail(tipoConfig, nombreUsuarioSesion(), planillaEvento.getIdPlanillaEvento(),"Eventos Especiales");
+		}
 
 		guardarItemsDegustacion(planillaEvento);
 		guardarItemsEstimados(planillaEvento);

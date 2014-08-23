@@ -361,7 +361,7 @@ public class CPromocion extends CGenerico {
 				direccion, fechaInicio, fechaFin, modalidad, frecuencia,
 				material, extra, costo, descripcion1, descripcion2, fechaHora,
 				fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
-				usuario.getZona().getDescripcion(), tipoConfig, "", 0,"");
+				usuario.getZona().getDescripcion(), tipoConfig, "", 0, "");
 		servicioPlanillaPromocion.guardar(planillaPromocion);
 		if (id != 0)
 			planillaPromocion = servicioPlanillaPromocion.buscar(id);
@@ -382,8 +382,12 @@ public class CPromocion extends CGenerico {
 
 		if (guardo)
 			guardarBitacora(planillaPromocion, true);
-		if (envio)
+		if (envio) {
 			guardarBitacora(planillaPromocion, false);
+			enviarEmail(tipoConfig, nombreUsuarioSesion(),
+					planillaPromocion.getIdPlanillaPromocion(),
+					"Promociones de Marca");
+		}
 	}
 
 	private void guardarBitacora(PlanillaPromocion planillaPromocion,
