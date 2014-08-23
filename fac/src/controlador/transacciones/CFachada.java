@@ -501,8 +501,11 @@ public class CFachada extends CGenerico {
 
 		if (guardo)
 			guardarBitacora(planillaFachada, true);
-		if (envio)
+		if (envio) {
 			guardarBitacora(planillaFachada, false);
+			enviarEmail(tipoConfig, nombreUsuarioSesion(),
+					planillaFachada.getIdPlanillaFachada(), "Fachada y Decoraciones");
+		}
 
 		guardarRecursos(planillaFachada);
 	}

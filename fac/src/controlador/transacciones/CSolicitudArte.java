@@ -396,8 +396,11 @@ public class CSolicitudArte extends CGenerico {
 
 		if (guardo)
 			guardarBitacora(planillaArte, true);
-		if (envio)
+		if (envio) {
 			guardarBitacora(planillaArte, false);
+			enviarEmail(tipoConfig, nombreUsuarioSesion(),
+					planillaArte.getIdPlanillaArte(), "Solicitud de Arte y Publicaciones");
+		}
 	}
 
 	private void guardarBitacora(PlanillaArte planillaArte, boolean edicion) {

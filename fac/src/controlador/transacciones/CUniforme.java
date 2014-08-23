@@ -390,8 +390,11 @@ public class CUniforme extends CGenerico {
 
 		if (guardo)
 			guardarBitacora(planillaUniforme, true);
-		if (envio)
+		if (envio) {
 			guardarBitacora(planillaUniforme, false);
+			enviarEmail(tipoConfig, nombreUsuarioSesion(),
+					planillaUniforme.getIdPlanillaUniforme(), "Uniformes");
+		}
 
 		guardarUniformes(planillaUniforme);
 	}
