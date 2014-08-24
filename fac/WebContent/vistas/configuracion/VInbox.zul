@@ -1,5 +1,5 @@
 <zk>
-	<window id="wdwInbox" title="" border="0" height="100%" width="100%"
+	<window id="wdwInbox" style="zoom: 0.75;" title="" border="0" height="100%" width="100%"
 		contentStyle="overflow:auto" apply="controlador.portal.CInbox">
 		<borderlayout height="100%">
 			<north height="6em">
@@ -69,7 +69,7 @@
 				<div vflex="true" hflex="true" style="background:#500101">
 					<hbox style="border: none" align="center" pack="center"
 						vflex="true" hflex="true">
-						<groupbox closable="false" height="80%" width="600px"
+						<groupbox closable="false" height="80%" width="700px"
 							mold="3d">
 							<caption label="INBOX"
 								style="color:white; font-size: 17px; font-weight:bold; background: #3A0202" />

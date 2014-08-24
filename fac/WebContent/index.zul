@@ -10,8 +10,8 @@
 		else
 		a =
 		execution.getParameter("respuesta");
-	</zscript>
-	<window title="" border="0" height="100%" contentStyle="overflow:auto">
+	</zscript><!---moz-transform: scale(0.75,0.75);-moz-transform: scale(0.75);  -->
+	<window title="" class="ventana" border="0" style="zoom: 0.75;" height="100%" contentStyle="overflow:auto">
 		<borderlayout height="100%">
 			<north height="6em">
 				<div width="100%" height="100%" style="background:#500101">
@@ -46,7 +46,7 @@
 								width="9em" />
 						</hbox>
 					</div> -->
-					<hbox style="border: none" align="center" pack="center"
+					<hbox style="border: none;" align="center" pack="center"
 						height="75%" width="100%">
 						<groupbox apply="controlador.portal.CIndex" width="25em" height="60%" mold="3d">
 							<caption label="${a}" style="color:white; font-size: 18px" />

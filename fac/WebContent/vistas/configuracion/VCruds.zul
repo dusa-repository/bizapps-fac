@@ -1,5 +1,5 @@
 <zk>
-	<window id="wdwCruds" title="" border="0" height="100%" width="100%"
+	<window id="wdwCruds" style="zoom: 0.75;" title="" border="0" height="100%" width="100%"
 		contentStyle="overflow:auto" apply="controlador.portal.CCruds">
 		<borderlayout height="100%">
 			<north height="6em">
