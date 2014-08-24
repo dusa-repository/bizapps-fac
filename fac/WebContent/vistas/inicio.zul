@@ -6,7 +6,7 @@
 		.z-groupbox {background:
 		#661313}
 	</style>
-	<window id="wdwInicio" title="" border="0" height="100%"
+	<window id="wdwInicio" style="zoom: 0.75;" title="" border="0" height="100%"
 		contentStyle="overflow:auto" onBookmarkChange='$composer.back()'
 		apply="controlador.portal.CInicio">
 
