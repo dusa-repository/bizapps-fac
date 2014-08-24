@@ -1,6 +1,6 @@
 <zk>
 	<window width="70em" closable="false" id="wdwSolicitudUniforme"
-		apply="controlador.transacciones.CUniforme">
+		apply="controlador.transacciones.CUniforme" position="center,top">
 		<caption label="Formato de Solicitud de Uniformes"
 			style="color:white; font-size: 16px; font-weight:bold; " />
 		<div>
@@ -172,8 +172,8 @@
 						</grid>
 					</tabpanel>
 					<tabpanel>
-						<hbox>
-							<listbox id="ltbUniformes" height="450px" width="300px"
+						<hbox width="100%" widths="25%,5%,70%">
+							<listbox id="ltbUniformes" height="450px" width="100%"
 								emptyMessage="No hay Uniformes Registrados">
 								<listhead>
 									<listheader label="Uniforme" width="100%" />
@@ -219,14 +219,14 @@
 									</listitem>
 								</template>
 							</listbox>
-							<vbox>
+							<vbox width="100%">
 								<button id="pasar1Recurso" image="/public/imagenes/botones/adelante.png"
 									tooltiptext="Agregar Producto" width="33px" />
 								<separator />
 								<button id="pasar2Recurso" image="/public/imagenes/botones/atras.png"
 									tooltiptext="Quitar Recurso" width="33px" />
 							</vbox>
-							<listbox id="ltbUniformesAgregados" height="450px"
+							<listbox width="100%" id="ltbUniformesAgregados" height="450px"
 								emptyMessage="No ha Seleccionado ningun Recurso">
 								<listhead>
 									<listheader label="Uniforme" width="32%" />
@@ -296,7 +296,7 @@
 								</radiogroup>
 							</hbox>
 							<separator />
-							<ckeditor id="cdtJustificacion" width="100%" height="350px">
+							<ckeditor toolbar="basic" id="cdtJustificacion" width="100%" height="300px">
 								<attribute name="value" />
 							</ckeditor>
 						</vbox>

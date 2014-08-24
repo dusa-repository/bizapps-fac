@@ -78,9 +78,19 @@ public class CInicio extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-//		System.out.println(page);
-//		System.out.println("book"+Executions.getCurrent().getDesktop().getPages());
-		Executions.getCurrent().getDesktop().setBookmark("/vistas/inicio.zul");;
+		if(Executions.getCurrent().getBrowser().equals("gecko")){
+			wdwInicio.setWidth("106em");
+			wdwInicio.setHeight("50em");
+		}
+		// System.out.println(page);
+		// System.out.println("book"+Executions.getCurrent().getDesktop().getPages());
+		// Clients.evalJavaScript("document.body.style.zoom='200%'");
+		// document.body.style.transform= 'scale(2)';
+//		Clients.evalJavaScript("document.body.style.MozTransform = 'scale(0.75)';");
+//		Clients.evalJavaScript("document.body.style.webkitTransform ='200%'");
+//		Clients.evalJavaScript("document.body.style.msTransform = '200%'");
+		// Executions.getCurrent().getDesktop().setBookmark("/vistas/inicio.zul");
+		// ;
 		Authentication authe = SecurityContextHolder.getContext()
 				.getAuthentication();
 
@@ -201,8 +211,8 @@ public class CInicio extends CGenerico {
 		Messagebox.Button[] boton = { Messagebox.Button.OK,
 				Messagebox.Button.CANCEL };
 
-		Messagebox.show("¿SU SOLICITUD SERA CARGADA A?", "", boton, arreglo, "", null,
-				new org.zkoss.zk.ui.event.EventListener() {
+		Messagebox.show("¿SU SOLICITUD SERA CARGADA A?", "", boton, arreglo,
+				"", null, new org.zkoss.zk.ui.event.EventListener() {
 					public void onEvent(Event evt) throws InterruptedException {
 						if (evt.getName().equals("onOK")) {
 							trade();

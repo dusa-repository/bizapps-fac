@@ -1,6 +1,6 @@
 <zk>
 	<window width="70em" closable="false" id="wdwFachada"
-		apply="controlador.transacciones.CFachada">
+		apply="controlador.transacciones.CFachada" position="center,top">
 		<caption label="Formato de Solicitud de Fachada y Decoraciones"
 			style="color:white; font-size: 16px; font-weight:bold; " />
 		<div>
@@ -377,8 +377,8 @@
 						</hbox>
 					</tabpanel>
 					<tabpanel>
-						<hbox>
-							<listbox id="ltbRecursos" height="450px" width="300px"
+						<hbox width="100%" widths="25%,5%,70%">
+							<listbox id="ltbRecursos" height="450px" width="100%"
 								emptyMessage="No hay Recursos Registrados">
 								<listhead>
 									<listheader label="Recurso" width="100%" />
@@ -404,14 +404,14 @@
 									</listitem>
 								</template>
 							</listbox>
-							<vbox>
+							<vbox width="100%">
 								<button id="pasar1Recurso" image="/public/imagenes/botones/adelante.png"
 									tooltiptext="Agregar Producto" width="33px" />
 								<separator />
 								<button id="pasar2Recurso" image="/public/imagenes/botones/atras.png"
 									tooltiptext="Quitar Recurso" width="33px" />
 							</vbox>
-							<listbox id="ltbRecursosAgregados" height="450px"
+							<listbox width="100%" id="ltbRecursosAgregados" height="450px"
 								emptyMessage="No ha Seleccionado ningun Recurso">
 								<listhead>
 									<listheader label="Recurso" width="50%" />

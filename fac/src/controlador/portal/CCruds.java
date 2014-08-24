@@ -74,6 +74,10 @@ public class CCruds extends CGenerico {
 	@Override
 	public void inicializar() throws IOException {
 		// TODO Auto-generated method stub
+		if(Executions.getCurrent().getBrowser().equals("gecko")){
+			wdwCruds.setWidth("106em");
+			wdwCruds.setHeight("50em");
+		}
 		Authentication authe = SecurityContextHolder.getContext()
 				.getAuthentication();
 

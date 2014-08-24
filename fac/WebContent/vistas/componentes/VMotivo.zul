@@ -1,11 +1,11 @@
 <zk>
-	<window width="90em" closable="false" id="wdwMotivo"
+	<window width="70em" closable="false" id="wdwMotivo"
 		apply="controlador.transacciones.CSolicitud">
 		<caption label="Solicitudes a Cancelar/Rechazar"
 			style="color:white; font-size: 16px; font-weight:bold; " />
-		<div>
+		<div width="100%">
 			<space />
-			<vbox>
+			<vbox width="100%">
 				<listbox id="listaMotivo" height="400px" width="100%" span="true"
 					emptyMessage="No hay Recursos Registrados">
 					<listhead>
