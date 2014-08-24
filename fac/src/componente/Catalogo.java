@@ -130,7 +130,7 @@ public abstract class Catalogo<Clase> extends Window {
 
 		if (emergente) {
 			this.setClosable(true);
-			this.setWidth("80em");
+			this.setWidth("70em");
 			this.setTitle(titulo);
 			this.appendChild(separador2);
 			this.appendChild(lsbCatalogo);

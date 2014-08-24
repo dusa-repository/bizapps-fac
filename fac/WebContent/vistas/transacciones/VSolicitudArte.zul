@@ -1,6 +1,6 @@
 <zk>
 	<window width="70em" closable="false" id="wdwArte"
-		apply="controlador.transacciones.CSolicitudArte">
+		apply="controlador.transacciones.CSolicitudArte" position="center,top">
 		<caption label="Formato de Solicitud de Arte y Publicaciones"
 			style="color:white; font-size: 16px; font-weight:bold; " />
 		<div>
@@ -183,7 +183,7 @@
 						</hbox>
 					</tabpanel>
 					<tabpanel>
-						<ckeditor id="cdtLineamiento" width="100%" height="350px">
+						<ckeditor id="cdtLineamiento" width="100%" height="300px">
 							<attribute name="value" />
 						</ckeditor>
 						<separator />

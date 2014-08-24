@@ -1,6 +1,6 @@
 <zk>
 	<window width="70em" closable="false" id="wdwPromocion"
-		apply="controlador.transacciones.CPromocion">
+		apply="controlador.transacciones.CPromocion" position="center,top">
 		<caption label="Formato de Promociones de Marca"
 			style="color:white; font-size: 16px; font-weight:bold; " />
 		<div>
@@ -230,7 +230,7 @@
 								</combobox>
 							</hbox>
 								<separator/>
-							<ckeditor id="cdtMarca1" width="99%" height="140px">
+							<ckeditor toolbar="basic" id="cdtMarca1" width="99%" height="90px">
 								<attribute name="value" />
 							</ckeditor>
 							<separator/>
@@ -245,7 +245,7 @@
 								</combobox>
 							</hbox>
 							<separator/>
-							<ckeditor id="cdtMarca2" width="99%" height="140px">
+							<ckeditor toolbar="basic" id="cdtMarca2" width="99%" height="90px">
 								<attribute name="value" />
 							</ckeditor>
 						</vbox>

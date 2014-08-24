@@ -6,10 +6,10 @@
 			style="color:white; font-size: 16px; font-weight:bold; " />
 		<div>
 			<space />
-			<hbox widths="95%,5%" hflex="1">
-				<div id="catalogoSolicitud" />
+			<hbox widths="95%,5%" width="100%">
+				<div width="100%" id="catalogoSolicitud" />
 				<space />
-				<vbox>
+				<vbox width="100%">
 					<zk if="${sec:isAnyGranted('MARCA, TRADE MARKETING')}">
 						<button id="btnProcesar" label="Procesar"
 							 autodisable="self" style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/procesar.png" />

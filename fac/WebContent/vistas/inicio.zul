@@ -6,9 +6,10 @@
 		.z-groupbox {background:
 		#661313}
 	</style>
-	<window id="wdwInicio" style="zoom: 0.75;" title="" border="0" height="100%"
-		contentStyle="overflow:auto" onBookmarkChange='$composer.back()'
-		apply="controlador.portal.CInicio">
+	<window height="100%" width="100%" id="wdwInicio"
+		style="zoom: 0.75;-moz-transform-origin: 0 0;-moz-transform: scale(0.75,0.75);"
+		title="" border="0" contentStyle="overflow:auto"
+		onBookmarkChange='$composer.back()' apply="controlador.portal.CInicio">
 
 		<borderlayout height="100%">
 			<north height="6em">
@@ -126,18 +127,18 @@
 								style="color:White; font-size: 17px; font-weight:bold; background: #3A0202; padding: 0 0 0 35px" />
 							<borderlayout style="background:#661313">
 								<center border="none" autoscroll="true" style="background:#661313">
-							<vbox pack="center">
-								<separator />
-								<separator />
-								<button id="btnInBox" class="btn" label="Inbox" orient="vertical"
-									visible="false" autodisable="self" />
-								<separator />
-								<separator />
-								<separator />
-								<button id="btnCruds" class="btn" label="Admin" orient="vertical"
-									visible="false" autodisable="self" />
-							</vbox>
-							</center>
+									<vbox pack="center">
+										<separator />
+										<separator />
+										<button id="btnInBox" class="btn" label="Inbox" orient="vertical"
+											visible="false" autodisable="self" />
+										<separator />
+										<separator />
+										<separator />
+										<button id="btnCruds" class="btn" label="Admin" orient="vertical"
+											visible="false" autodisable="self" />
+									</vbox>
+								</center>
 							</borderlayout>
 						</groupbox>
 					</hbox>

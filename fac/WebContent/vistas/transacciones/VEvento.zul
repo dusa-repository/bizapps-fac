@@ -1,6 +1,6 @@
 <zk>
 	<window width="70em" closable="false" id="wdwEvento"
-		apply="controlador.transacciones.CEvento">
+		apply="controlador.transacciones.CEvento" position="center,top">
 		<caption label="Formato de Solicitud de Eventos Especiales"
 			style="color:white; font-size: 16px; font-weight:bold; " />
 		<div>
@@ -219,9 +219,9 @@
 						</ckeditor>
 					</tabpanel>
 					<tabpanel>
-						<hbox>
+						<hbox width="100%" widths="25%,5%,70%">
 							<listbox id="ltbProductosDegustacion" height="450px"
-								width="300px" emptyMessage="No hay Productos Registrados">
+								width="100%" emptyMessage="No hay Productos Registrados">
 								<listhead>
 									<listheader label="PT" width="100%" />
 								</listhead>
@@ -246,14 +246,14 @@
 									</listitem>
 								</template>
 							</listbox>
-							<vbox>
+							<vbox width="100%">
 								<button id="pasar1Degustacion" image="/public/imagenes/botones/adelante.png"
 									tooltiptext="Agregar Producto" width="33px" />
 								<separator />
 								<button id="pasar2Degustacion" image="/public/imagenes/botones/atras.png"
 									tooltiptext="Quitar Producto" width="33px" />
 							</vbox>
-							<listbox id="ltbProductosDegustacionAgregados" height="450px"
+							<listbox width="100%" id="ltbProductosDegustacionAgregados" height="450px"
 								emptyMessage="No ha Seleccionado ningun Producto">
 								<listhead>
 									<listheader label="PT" width="35%" />
@@ -285,8 +285,8 @@
 						</hbox>
 					</tabpanel>
 					<tabpanel>
-						<hbox>
-							<listbox id="ltbProductosVenta" height="450px" width="300px"
+						<hbox width="100%" widths="35%,5%,60%">
+							<listbox id="ltbProductosVenta" height="450px" width="100%"
 								emptyMessage="No hay Productos Registrados">
 								<listhead>
 									<listheader label="PT" width="100%" />
@@ -307,14 +307,14 @@
 									</listitem>
 								</template>
 							</listbox>
-							<vbox>
+							<vbox width="100%">
 								<button id="pasar1Venta" image="/public/imagenes/botones/adelante.png"
 									tooltiptext="Agregar Producto" width="33px" />
 								<separator />
 								<button id="pasar2Venta" image="/public/imagenes/botones/atras.png"
 									tooltiptext="Quitar Producto" width="33px" />
 							</vbox>
-							<listbox id="ltbProductosVentaAgregados" height="450px"
+							<listbox width="100%" id="ltbProductosVentaAgregados" height="450px"
 								emptyMessage="No ha Seleccionado ningun Producto">
 								<listhead>
 									<listheader label="PT" width="70%" />
@@ -340,8 +340,8 @@
 						</hbox>
 					</tabpanel>
 					<tabpanel>
-						<hbox>
-							<listbox id="ltbRecursos" height="450px" width="300px"
+						<hbox width="100%" widths="25%,5%,70%">
+							<listbox id="ltbRecursos" height="450px" width="100%"
 								emptyMessage="No hay Recursos Registrados">
 								<listhead>
 									<listheader label="Recurso" width="100%" />
@@ -375,14 +375,14 @@
 									</listitem>
 								</template>
 							</listbox>
-							<vbox>
+							<vbox width="100%">
 								<button id="pasar1Recurso" image="/public/imagenes/botones/adelante.png"
 									tooltiptext="Agregar Producto" width="33px" />
 								<separator />
 								<button id="pasar2Recurso" image="/public/imagenes/botones/atras.png"
 									tooltiptext="Quitar Recurso" width="33px" />
 							</vbox>
-							<listbox id="ltbRecursosAgregados" height="450px"
+							<listbox width="100%" id="ltbRecursosAgregados" height="450px"
 								emptyMessage="No ha Seleccionado ningun Recurso">
 								<listhead>
 									<listheader label="Recurso" width="35%" />
