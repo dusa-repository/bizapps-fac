@@ -27,7 +27,7 @@ public interface IPlanillaEventoDAO extends JpaRepository<PlanillaEvento, Long> 
 	List<PlanillaEvento> findByUsuarioAndEstadoOrderByFechaEnvioAsc(
 			Usuario usuarioSesion, String variable);
 
-	Collection<? extends PlanillaEvento> findByEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaEvento> findByEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String variable2);
 
 	List<PlanillaEvento> findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
@@ -37,14 +37,14 @@ public interface IPlanillaEventoDAO extends JpaRepository<PlanillaEvento, Long> 
 
 	List<PlanillaEvento> findByMarca(Marca marca);
 
-	Collection<? extends PlanillaEvento> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaEvento> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String string, String string2, String string3,
 			String variable2);
 
-	Collection<? extends PlanillaEvento> findByEstadoAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaEvento> findByEstadoAndTipoOrderByFechaEnvioAsc(
 			String string, String variable2);
 
-	Collection<? extends PlanillaEvento> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaEvento> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String string, String string2, String string3,
 			String string4, String variable2);
 

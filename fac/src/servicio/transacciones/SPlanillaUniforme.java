@@ -82,4 +82,9 @@ public class SPlanillaUniforme {
 	public List<PlanillaUniforme> buscarPorMarca(Marca marca) {
 		return planillaUniformeDAO.findByMarca(marca);
 	}
+
+	public List<PlanillaUniforme> buscarAdminPendientes(String tipoConfig,
+			String string) {
+		return planillaUniformeDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string, tipoConfig);
+	}
 }

@@ -82,4 +82,10 @@ public class SPlanillaEvento {
 	public List<PlanillaEvento> buscarPorMarca(Marca marca) {
 		return planillaEventoDAO.findByMarca(marca);
 	}
+
+	public List<PlanillaEvento> buscarAdminPendientes(String tipoConfig,
+			String string) {
+		// TODO Auto-generated method stub
+		return planillaEventoDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string, tipoConfig);
+	}
 }

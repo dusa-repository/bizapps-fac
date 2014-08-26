@@ -412,7 +412,7 @@ public class CCata extends CGenerico {
 		if (envio){
 			guardarBitacora(planilla, false);
 			enviarEmail(tipoConfig, nombreUsuarioSesion(),
-					planilla.getIdPlanillaCata(), "Cata Induccion");
+					planilla.getIdPlanillaCata(), "Cata Induccion", usuario.getMail());
 		}
 
 		guardarItems(planilla);

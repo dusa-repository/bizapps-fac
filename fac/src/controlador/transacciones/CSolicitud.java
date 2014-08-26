@@ -87,6 +87,8 @@ public class CSolicitud extends CGenerico {
 	ListModelList<F0005> motivos;
 	byte[] imagen;
 	byte[] imagenX;
+	boolean pendiente = true;
+	boolean buscado = false;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -136,6 +138,9 @@ public class CSolicitud extends CGenerico {
 			@Override
 			protected List<PlanillaGenerica> buscar(List<String> valores) {
 				if (listPlanilla.size() == 0) {
+					cargarLista();
+				}
+				if (!pendiente && !buscado) {
 					cargarLista();
 				}
 				List<PlanillaGenerica> lista = new ArrayList<PlanillaGenerica>();
@@ -1021,18 +1026,38 @@ public class CSolicitud extends CGenerico {
 			tipoConfig = "Marca";
 		switch (grupoDominante) {
 		case "Administrador":
-			listCata = servicioPlanillaCata.buscarAdminEstado(variable,
-					tipoConfig, usuarioSesion(nombreUsuarioSesion()));
-			listEvento = servicioPlanillaEvento.buscarAdminEstado(variable,
-					tipoConfig, usuarioSesion(nombreUsuarioSesion()));
-			listPromocion = servicioPlanillaPromocion.buscarAdminEstado(
-					variable, tipoConfig, usuarioSesion(nombreUsuarioSesion()));
-			listArte = servicioPlanillaArte.buscarAdminEstado(variable,
-					tipoConfig, usuarioSesion(nombreUsuarioSesion()));
-			listUniforme = servicioPlanillaUniforme.buscarAdminEstado(variable,
-					tipoConfig, usuarioSesion(nombreUsuarioSesion()));
-			listFachada = servicioPlanillaFachada.buscarAdminEstado(variable,
-					tipoConfig, usuarioSesion(nombreUsuarioSesion()));
+			if (pendiente) {
+				pendiente = false;
+				listCata = servicioPlanillaCata.buscarAdminPendientes(
+						tipoConfig, "Pendiente");
+				listEvento = servicioPlanillaEvento.buscarAdminPendientes(
+						tipoConfig, "Pendiente");
+				listPromocion = servicioPlanillaPromocion
+						.buscarAdminPendientes(tipoConfig, "Pendiente");
+				listArte = servicioPlanillaArte.buscarAdminPendientes(
+						tipoConfig, "Pendiente");
+				listUniforme = servicioPlanillaUniforme.buscarAdminPendientes(
+						tipoConfig, "Pendiente");
+				listFachada = servicioPlanillaFachada.buscarAdminPendientes(
+						tipoConfig, "Pendiente");
+			} else {
+				buscado = true;
+				listCata = servicioPlanillaCata.buscarAdminEstado(variable,
+						tipoConfig, usuarioSesion(nombreUsuarioSesion()));
+				listEvento = servicioPlanillaEvento.buscarAdminEstado(variable,
+						tipoConfig, usuarioSesion(nombreUsuarioSesion()));
+				listPromocion = servicioPlanillaPromocion.buscarAdminEstado(
+						variable, tipoConfig,
+						usuarioSesion(nombreUsuarioSesion()));
+				listArte = servicioPlanillaArte.buscarAdminEstado(variable,
+						tipoConfig, usuarioSesion(nombreUsuarioSesion()));
+				listUniforme = servicioPlanillaUniforme.buscarAdminEstado(
+						variable, tipoConfig,
+						usuarioSesion(nombreUsuarioSesion()));
+				listFachada = servicioPlanillaFachada.buscarAdminEstado(
+						variable, tipoConfig,
+						usuarioSesion(nombreUsuarioSesion()));
+			}
 			break;
 
 		case "Gerente Regional":

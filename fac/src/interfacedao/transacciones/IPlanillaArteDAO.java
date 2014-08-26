@@ -26,7 +26,7 @@ public interface IPlanillaArteDAO extends JpaRepository<PlanillaArte, Long> {
 	List<PlanillaArte> findByUsuarioAndEstadoOrderByFechaEnvioAsc(
 			Usuario usuarioSesion, String variable);
 
-	Collection<? extends PlanillaArte> findByEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaArte> findByEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String variable2);
 
 	List<PlanillaArte> findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
@@ -36,14 +36,14 @@ public interface IPlanillaArteDAO extends JpaRepository<PlanillaArte, Long> {
 
 	List<PlanillaArte> findByMarca(Marca marca);
 
-	Collection<? extends PlanillaArte> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaArte> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String string, String string2, String string3,
 			String variable2);
 
-	Collection<? extends PlanillaArte> findByEstadoAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaArte> findByEstadoAndTipoOrderByFechaEnvioAsc(
 			String string, String variable2);
 
-	Collection<? extends PlanillaArte> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaArte> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String string, String string2, String string3,
 			String string4, String variable2);
 

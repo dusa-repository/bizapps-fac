@@ -84,4 +84,9 @@ public class SPlanillaCata {
 		return planillaCataDAO.findByMarca(marca);
 	}
 
+	public List<PlanillaCata> buscarAdminPendientes(String tipoConfig,
+			String string) {
+		return planillaCataDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string, tipoConfig);
+	}
+
 }

@@ -82,4 +82,9 @@ public class SPlanillaArte {
 	public List<PlanillaArte> buscarPorMarca(Marca marca) {
 		return planillaArteDAO.findByMarca(marca);
 	}
+
+	public List<PlanillaArte> buscarAdminPendientes(String tipoConfig,
+			String string) {
+		return planillaArteDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string, tipoConfig);
+	}
 }

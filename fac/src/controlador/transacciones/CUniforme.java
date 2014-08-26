@@ -393,7 +393,7 @@ public class CUniforme extends CGenerico {
 		if (envio) {
 			guardarBitacora(planillaUniforme, false);
 			enviarEmail(tipoConfig, nombreUsuarioSesion(),
-					planillaUniforme.getIdPlanillaUniforme(), "Uniformes");
+					planillaUniforme.getIdPlanillaUniforme(), "Uniformes", usuario.getMail());
 		}
 
 		guardarUniformes(planillaUniforme);

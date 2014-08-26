@@ -27,7 +27,7 @@ public interface IPlanillaUniformeDAO extends JpaRepository<PlanillaUniforme, Lo
 	List<PlanillaUniforme> findByUsuarioAndEstadoOrderByFechaEnvioAsc(
 			Usuario usuarioSesion, String variable);
 
-	Collection<? extends PlanillaUniforme> findByEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaUniforme> findByEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String variable2);
 
 	List<PlanillaUniforme> findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
@@ -37,15 +37,15 @@ public interface IPlanillaUniformeDAO extends JpaRepository<PlanillaUniforme, Lo
 
 	List<PlanillaUniforme> findByMarca(Marca marca);
 
-	Collection<? extends PlanillaUniforme> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaUniforme> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String string, String string2, String string3,
 			String variable2);
 
-	Collection<? extends PlanillaUniforme> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaUniforme> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String string, String string2, String string3,
 			String string4, String variable2);
 
-	Collection<? extends PlanillaUniforme> findByEstadoAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaUniforme> findByEstadoAndTipoOrderByFechaEnvioAsc(
 			String string, String variable2);
 
 }

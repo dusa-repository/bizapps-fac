@@ -27,7 +27,7 @@ public interface IPlanillaFachadaDAO extends JpaRepository<PlanillaFachada, Long
 	List<PlanillaFachada> findByUsuarioAndEstadoOrderByFechaEnvioAsc(
 			Usuario usuarioSesion, String variable);
 
-	Collection<? extends PlanillaFachada> findByEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaFachada> findByEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String variable2);
 
 	List<PlanillaFachada> findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
@@ -37,14 +37,14 @@ public interface IPlanillaFachadaDAO extends JpaRepository<PlanillaFachada, Long
 
 	List<PlanillaFachada> findByMarca(Marca marca);
 
-	Collection<? extends PlanillaFachada> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaFachada> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String string, String string2, String string3,
 			String variable2);
 
-	Collection<? extends PlanillaFachada> findByEstadoAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaFachada> findByEstadoAndTipoOrderByFechaEnvioAsc(
 			String string, String variable2);
 
-	Collection<? extends PlanillaFachada> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaFachada> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String string, String string2, String string3,
 			String string4, String variable2);
 

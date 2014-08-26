@@ -82,4 +82,9 @@ public class SPlanillaFachada {
 	public List<PlanillaFachada> buscarPorMarca(Marca marca) {
 		return planillaFachadaDAO.findByMarca(marca);
 	}
+
+	public List<PlanillaFachada> buscarAdminPendientes(String tipoConfig,
+			String string) {
+		return planillaFachadaDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string, tipoConfig);
+	}
 }

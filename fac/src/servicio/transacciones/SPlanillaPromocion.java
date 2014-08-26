@@ -82,4 +82,9 @@ public class SPlanillaPromocion {
 	public List<PlanillaPromocion> buscarPorMarca(Marca marca) {
 		return planillaPromocionDAO.findByMarcaA(marca);
 	}
+
+	public List<PlanillaPromocion> buscarAdminPendientes(String tipoConfig,
+			String string) {
+		return planillaPromocionDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string, tipoConfig);
+	}
 }

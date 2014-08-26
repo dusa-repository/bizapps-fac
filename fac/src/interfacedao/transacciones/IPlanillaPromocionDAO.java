@@ -27,7 +27,7 @@ public interface IPlanillaPromocionDAO extends JpaRepository<PlanillaPromocion, 
 	List<PlanillaPromocion> findByUsuarioAndEstadoOrderByFechaEnvioAsc(
 			Usuario usuarioSesion, String variable);
 
-	Collection<? extends PlanillaPromocion> findByEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaPromocion> findByEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String variable2);
 
 	List<PlanillaPromocion> findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
@@ -37,15 +37,15 @@ public interface IPlanillaPromocionDAO extends JpaRepository<PlanillaPromocion, 
 
 	List<PlanillaPromocion> findByMarcaA(Marca marca);
 
-	Collection<? extends PlanillaPromocion> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaPromocion> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String string, String string2, String string3,
 			String variable2);
 
-	Collection<? extends PlanillaPromocion> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaPromocion> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String string, String string2, String string3,
 			String string4, String variable2);
 
-	Collection<? extends PlanillaPromocion> findByEstadoAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaPromocion> findByEstadoAndTipoOrderByFechaEnvioAsc(
 			String string, String variable2);
 
 }
