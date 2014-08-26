@@ -386,7 +386,7 @@ public class CPromocion extends CGenerico {
 			guardarBitacora(planillaPromocion, false);
 			enviarEmail(tipoConfig, nombreUsuarioSesion(),
 					planillaPromocion.getIdPlanillaPromocion(),
-					"Promociones de Marca");
+					"Promociones de Marca", usuario.getMail());
 		}
 	}
 

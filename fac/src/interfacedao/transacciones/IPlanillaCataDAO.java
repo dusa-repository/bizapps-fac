@@ -26,7 +26,7 @@ public interface IPlanillaCataDAO extends JpaRepository<PlanillaCata, Long> {
 	List<PlanillaCata> findByUsuarioAndEstadoOrderByFechaEnvioAsc(
 			Usuario usuarioSesion, String variable);
 
-	Collection<? extends PlanillaCata> findByEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaCata> findByEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String variable2);
 
 	List<PlanillaCata> findByUsuarioSupervisorAndEstadoOrderByFechaEnvioAsc(
@@ -36,14 +36,14 @@ public interface IPlanillaCataDAO extends JpaRepository<PlanillaCata, Long> {
 
 	List<PlanillaCata> findByMarca(Marca marca);
 
-	Collection<? extends PlanillaCata> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaCata> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String string, String string2, String string3,
 			String variable2);
 
-	Collection<? extends PlanillaCata> findByEstadoAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaCata> findByEstadoAndTipoOrderByFechaEnvioAsc(
 			String string, String variable2);
 
-	Collection<? extends PlanillaCata> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
+	List<PlanillaCata> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String string, String string2, String string3,
 			String string4, String variable2);
 

@@ -226,7 +226,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	}
 
 	public boolean enviarEmail(String grupo, String usuario, long id,
-			String tipo) {
+			String tipo, String emailUsuario) {
 		try {
 			List<Configuracion> grupos = servicioConfiguracion
 					.buscarTipo(grupo);
@@ -235,8 +235,9 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			String mensaje = "El USUARIO: " + usuario
 					+ " HA ENVIADO UNA SOLICITUD DE " + tipo + " CON EL ID: "
 					+ id;
-			if (!grupos.isEmpty())
-				destinatario = grupos.get(0).getCorreo();
+			if (!grupos.isEmpty()){
+				destinatario = grupos.get(0).getCorreo()+","+emailUsuario;
+			}
 			Properties props = new Properties();
 			props.setProperty("mail.smtp.host", "172.23.20.66");
 			props.setProperty("mail.smtp.starttls.enable", "true");
@@ -249,7 +250,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 //			String contrasena = "Equipo.2";
 
 			String destinos[] = destinatario.split(",");
-
+			System.out.println(destinos);
 			Message message = new MimeMessage(session);
 
 			message.setFrom(new InternetAddress(remitente));
