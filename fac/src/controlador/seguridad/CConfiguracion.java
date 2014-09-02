@@ -178,7 +178,7 @@ public class CConfiguracion extends CGenerico {
 		List<Configuracion> configuracionesMarca = servicioConfiguracion
 				.buscarTipo("Marca");
 		if (!configuracionesMarca.isEmpty()) {
-			txtCorreoMarca.setValue(configuracionesTrade.get(0).getCorreo());
+			txtCorreoMarca.setValue(configuracionesMarca.get(0).getCorreo());
 		}
 		listasMultiples();
 		ltbMarca.renderAll();
