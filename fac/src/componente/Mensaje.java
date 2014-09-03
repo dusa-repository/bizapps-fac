@@ -29,7 +29,7 @@ public class Mensaje {
 	public static String estadoIncorrectoEdicion = "No puede cambiar de estado las solicitudes en edicion, para modificarlas presione el boton Ver Solicitud";
 	public static String eliminacionFallida = "No puede eliminar este grupo";
 	public static String noPermitido = "El tipo de archivo que ha seleccionado no esta permitido, solo archivos con extension .jpeg y .png son permitidos";
-	public static String tamanioMuyGrande = "El archivo que ha seleccionado excede el tamaño maximo establecido (100 KB)";
+	public static String tamanioMuyGrande = "El archivo que ha seleccionado no cumple con los parametros establecidos de tamaño; minimo 500Kb y maximo 2Mb";
 	public static String listaVacia = "Debe añadir una referencia de pago para cada Solicitud";
 	public static String noEliminar = "El Registro no se puede Eliminar, Esta siendo Usado";
 	public static String telefonoInvalido = "Formato de Telefono No Valido";
