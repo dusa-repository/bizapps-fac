@@ -65,16 +65,16 @@ public class SRecurso {
 	}
 
 	public List<Recurso> buscarDisponibles(PlanillaEvento planilla) {
-		List<RecursoPlanillaEvento> recursoPlanilla = recursoPlanillaEventoDAO.findByPlanillaEvento(planilla);
-		List<Long> ids = new ArrayList<Long>();
-		if(recursoPlanilla.isEmpty())
+//		List<RecursoPlanillaEvento> recursoPlanilla = recursoPlanillaEventoDAO.findByPlanillaEvento(planilla);
+//		List<Long> ids = new ArrayList<Long>();
+//		if(recursoPlanilla.isEmpty())
 			return recursoDAO.findAllOrderByDescripcion();
-		else{
-			for(int i=0; i<recursoPlanilla.size();i++){
-				ids.add(recursoPlanilla.get(i).getRecurso().getIdRecurso());
-			}
-			return recursoDAO.findByIdRecursoNotIn(ids);
-		}
+//		else{
+//			for(int i=0; i<recursoPlanilla.size();i++){
+//				ids.add(recursoPlanilla.get(i).getRecurso().getIdRecurso());
+//			}
+//			return recursoDAO.findByIdRecursoNotIn(ids);
+//		}
 	}
 
 	public List<Recurso> buscarDisponiblesFachada(PlanillaFachada planilla) {

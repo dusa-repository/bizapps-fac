@@ -28,7 +28,8 @@ public class RecursoPlanillaEvento {
 	@JoinColumn(name = "id_planilla_evento", referencedColumnName = "id_planilla_evento")
 	private PlanillaEvento planillaEvento;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@Id
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name="id_marca")
 	private Marca marca;
 	
