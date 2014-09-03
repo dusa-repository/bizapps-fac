@@ -907,11 +907,9 @@ public class CEvento extends CGenerico {
 						String idMarca = "";
 						if (((Combobox) ((listItemj.getChildren().get(1)))
 								.getFirstChild()).getSelectedItem() != null) {
-							System.out.println("entro");
 							idMarca = ((Combobox) ((listItemj.getChildren()
 									.get(1))).getFirstChild())
 									.getSelectedItem().getContext();
-							System.out.println("id" + idMarca);
 						}
 						Marca marca = servicioMarca.buscar(idMarca);
 						Integer solicitado = ((Spinner) ((listItemj
@@ -935,9 +933,9 @@ public class CEvento extends CGenerico {
 				}
 			}
 		}
-		for (int i = 0; i < listitemEliminar.size(); i++) {
-			ltbRecursos.removeItemAt(listitemEliminar.get(i).getIndex());
-		}
+//		for (int i = 0; i < listitemEliminar.size(); i++) {
+//			ltbRecursos.removeItemAt(listitemEliminar.get(i).getIndex());
+//		}
 		listasMultiples();
 	}
 

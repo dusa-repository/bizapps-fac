@@ -21,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.image.AImage;
+import org.zkoss.spring.security.SecurityUtil;
 import org.zkoss.web.servlet.dsp.action.Page;
 import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
@@ -78,7 +79,7 @@ public class CInicio extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-		if(Executions.getCurrent().getBrowser().equals("gecko")){
+		if (Executions.getCurrent().getBrowser().equals("gecko")) {
 			wdwInicio.setWidth("106em");
 			wdwInicio.setHeight("50em");
 		}
@@ -86,9 +87,9 @@ public class CInicio extends CGenerico {
 		// System.out.println("book"+Executions.getCurrent().getDesktop().getPages());
 		// Clients.evalJavaScript("document.body.style.zoom='200%'");
 		// document.body.style.transform= 'scale(2)';
-//		Clients.evalJavaScript("document.body.style.MozTransform = 'scale(0.75)';");
-//		Clients.evalJavaScript("document.body.style.webkitTransform ='200%'");
-//		Clients.evalJavaScript("document.body.style.msTransform = '200%'");
+		// Clients.evalJavaScript("document.body.style.MozTransform = 'scale(0.75)';");
+		// Clients.evalJavaScript("document.body.style.webkitTransform ='200%'");
+		// Clients.evalJavaScript("document.body.style.msTransform = '200%'");
 		// Executions.getCurrent().getDesktop().setBookmark("/vistas/inicio.zul");
 		// ;
 		Authentication authe = SecurityContextHolder.getContext()
@@ -202,27 +203,36 @@ public class CInicio extends CGenerico {
 				}
 			}
 		}
-		Map params = new HashMap();
-		params.put("width", "500px");
-		params.put("height", "800px");
-		params.put("style", "top:100px;");
-		String[] arreglo = { "TRADE MARKETING", "MARCA" };
+		if (SecurityUtil.isAnyGranted("Solicitante")) {
+			Map params = new HashMap();
+			params.put("width", "500px");
+			params.put("height", "800px");
+			params.put("style", "top:100px;");
+			String[] arreglo = { "TRADE MARKETING", "MARCA" };
 
-		Messagebox.Button[] boton = { Messagebox.Button.OK,
-				Messagebox.Button.CANCEL };
+			Messagebox.Button[] boton = { Messagebox.Button.OK,
+					Messagebox.Button.CANCEL };
 
-		Messagebox.show("¿SU SOLICITUD SERA CARGADA A?", "", boton, arreglo,
-				"", null, new org.zkoss.zk.ui.event.EventListener() {
-					public void onEvent(Event evt) throws InterruptedException {
-						if (evt.getName().equals("onOK")) {
-							trade();
-						} else {
-							if (evt.getName().equals("onCancel")) {
-								marca();
+			Messagebox.show("¿SU SOLICITUD SERA CARGADA A?", "", boton,
+					arreglo, "", null,
+					new org.zkoss.zk.ui.event.EventListener() {
+						public void onEvent(Event evt)
+								throws InterruptedException {
+							if (evt.getName().equals("onOK")) {
+								trade();
+							} else {
+								if (evt.getName().equals("onCancel")) {
+									marca();
+								}
 							}
 						}
-					}
-				}, params);
+					}, params);
+		} else {
+			if (SecurityUtil.isAnyGranted("TRADE MARKETING"))
+				trade();
+			else if (SecurityUtil.isAnyGranted("MARCA"))
+				marca();
+		}
 	}
 
 	public void Over(final Button boton, final String imagen) {
