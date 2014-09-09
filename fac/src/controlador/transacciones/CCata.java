@@ -145,7 +145,8 @@ public class CCata extends CGenerico {
 		List<Grupo> grupos = servicioGrupo
 				.buscarGruposUsuario(usuarioSesion(nombreUsuarioSesion()));
 		for (int i = 0; i < grupos.size(); i++) {
-			if (grupos.get(i).getNombre().equals("Administrador")) {
+			if (grupos.get(i).getNombre().equals("TRADE MARKETING")
+					|| grupos.get(i).getNombre().equals("MARCA")) {
 				i = grupos.size();
 				editar = true;
 			}
@@ -409,10 +410,11 @@ public class CCata extends CGenerico {
 
 		if (guardo)
 			guardarBitacora(planilla, true);
-		if (envio){
+		if (envio) {
 			guardarBitacora(planilla, false);
 			enviarEmail(tipoConfig, nombreUsuarioSesion(),
-					planilla.getIdPlanillaCata(), "Cata Induccion", usuario.getMail());
+					planilla.getIdPlanillaCata(), "Cata Induccion",
+					usuario.getMail());
 		}
 
 		guardarItems(planilla);

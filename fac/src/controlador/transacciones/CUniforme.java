@@ -138,7 +138,8 @@ public class CUniforme extends CGenerico {
 		List<Grupo> grupos = servicioGrupo
 				.buscarGruposUsuario(usuarioSesion(nombreUsuarioSesion()));
 		for (int i = 0; i < grupos.size(); i++) {
-			if (grupos.get(i).getNombre().equals("Administrador")) {
+			if (grupos.get(i).getNombre().equals("TRADE MARKETING")
+					|| grupos.get(i).getNombre().equals("MARCA")) {
 				i = grupos.size();
 				editar = true;
 			}
