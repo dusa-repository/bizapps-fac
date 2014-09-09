@@ -141,7 +141,8 @@ public class CSolicitudArte extends CGenerico {
 		List<Grupo> grupos = servicioGrupo
 				.buscarGruposUsuario(usuarioSesion(nombreUsuarioSesion()));
 		for (int i = 0; i < grupos.size(); i++) {
-			if (grupos.get(i).getNombre().equals("Administrador")) {
+			if (grupos.get(i).getNombre().equals("TRADE MARKETING")
+					|| grupos.get(i).getNombre().equals("MARCA")) {
 				i = grupos.size();
 				editar = true;
 			}
@@ -399,7 +400,8 @@ public class CSolicitudArte extends CGenerico {
 		if (envio) {
 			guardarBitacora(planillaArte, false);
 			enviarEmail(tipoConfig, nombreUsuarioSesion(),
-					planillaArte.getIdPlanillaArte(), "Solicitud de Arte y Publicaciones", usuario.getMail());
+					planillaArte.getIdPlanillaArte(),
+					"Solicitud de Arte y Publicaciones", usuario.getMail());
 		}
 	}
 
@@ -611,7 +613,8 @@ public class CSolicitudArte extends CGenerico {
 		if (media1 != null) {
 			if (media1.getContentType().equals("image/jpeg")
 					|| media1.getContentType().equals("image/png")) {
-				if (media1.getByteData().length >= 512000 && media1.getByteData().length <= 2048000) {
+				if (media1.getByteData().length >= 512000
+						&& media1.getByteData().length <= 2048000) {
 					imagen1.setContent((org.zkoss.image.Image) media1);
 				} else {
 					msj.mensajeAlerta(Mensaje.tamanioMuyGrande);
@@ -628,7 +631,8 @@ public class CSolicitudArte extends CGenerico {
 		if (media2 != null) {
 			if (media2.getContentType().equals("image/jpeg")
 					|| media2.getContentType().equals("image/png")) {
-				if (media2.getByteData().length >= 512000 && media2.getByteData().length <= 2048000) {
+				if (media2.getByteData().length >= 512000
+						&& media2.getByteData().length <= 2048000) {
 					imagen2.setContent((org.zkoss.image.Image) media2);
 				} else {
 					msj.mensajeAlerta(Mensaje.tamanioMuyGrande);
@@ -645,7 +649,8 @@ public class CSolicitudArte extends CGenerico {
 		if (media3 != null) {
 			if (media3.getContentType().equals("image/jpeg")
 					|| media3.getContentType().equals("image/png")) {
-				if (media3.getByteData().length >= 512000 && media3.getByteData().length <= 2048000) {
+				if (media3.getByteData().length >= 512000
+						&& media3.getByteData().length <= 2048000) {
 					imagen3.setContent((org.zkoss.image.Image) media3);
 				} else {
 					msj.mensajeAlerta(Mensaje.tamanioMuyGrande);
@@ -662,7 +667,8 @@ public class CSolicitudArte extends CGenerico {
 		if (media4 != null) {
 			if (media4.getContentType().equals("image/jpeg")
 					|| media4.getContentType().equals("image/png")) {
-				if (media4.getByteData().length >= 512000 && media4.getByteData().length <= 2048000) {
+				if (media4.getByteData().length >= 512000
+						&& media4.getByteData().length <= 2048000) {
 					imagen4.setContent((org.zkoss.image.Image) media4);
 				} else {
 					msj.mensajeAlerta(Mensaje.tamanioMuyGrande);
