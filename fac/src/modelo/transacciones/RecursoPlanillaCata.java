@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import modelo.maestros.Marca;
 import modelo.maestros.Recurso;
 import modelo.pk.RecursoPlanillaCataId;
 
@@ -27,6 +28,11 @@ public class RecursoPlanillaCata {
 	@JoinColumn(name = "id_planilla_cata", referencedColumnName = "id_planilla_cata")
 	private PlanillaCata planillaCata;
 	
+	@Id
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name="id_marca")
+	private Marca marca;
+	
 	@Column(name = "solicitado")
 	private Integer solicitado;
 	
@@ -38,9 +44,10 @@ public class RecursoPlanillaCata {
 		// TODO Auto-generated constructor stub
 	}
 
-	public RecursoPlanillaCata(Recurso recurso, PlanillaCata planillaCata,
+	public RecursoPlanillaCata(Recurso recurso, PlanillaCata planillaCata, Marca marca,
 			Integer solicitado, Integer aprobado) {
 		super();
+		this.marca = marca;
 		this.recurso = recurso;
 		this.planillaCata = planillaCata;
 		this.solicitado = solicitado;
@@ -77,6 +84,14 @@ public class RecursoPlanillaCata {
 
 	public void setAprobado(Integer aprobado) {
 		this.aprobado = aprobado;
+	}
+
+	public Marca getMarca() {
+		return marca;
+	}
+
+	public void setMarca(Marca marca) {
+		this.marca = marca;
 	}
 	
 }

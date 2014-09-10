@@ -322,8 +322,8 @@
 								<fileupload image="/public/imagenes/botones/cargar.png"
 									id="fudImagen1" label="Cargar Imagen" width="150px">
 								</fileupload>
-								<button image="/public/imagenes/botones/quitar.png" id="btnRemover1" label="Remover Imagen"
-									tooltiptext="Presione para Remover la Imagen" />
+								<button image="/public/imagenes/botones/quitar.png" id="btnRemover1"
+									label="Remover Imagen" tooltiptext="Presione para Remover la Imagen" />
 							</vbox>
 							<space />
 							<space />
@@ -388,6 +388,14 @@
 										<listcell label="${each.descripcion}">
 										</listcell>
 										<listcell>
+											<combobox model="${$composer.marcas}" width="100%"
+												readonly="true">
+												<template name="model">
+													<comboitem label="${each.descripcion}" context="${each.idMarca}" />
+												</template>
+											</combobox>
+										</listcell>
+										<listcell>
 											<spinner constraint="min 0 max 10000"
 												tooltiptext="Ingrese la Cantidad Solicitada de Recursos"
 												step="1" width="98%" />
@@ -414,14 +422,23 @@
 							<listbox width="100%" id="ltbRecursosAgregados" height="450px"
 								emptyMessage="No ha Seleccionado ningun Recurso">
 								<listhead>
-									<listheader label="Recurso" width="50%" />
-									<listheader label="Solicitado" width="25%" />
-									<listheader label="Aprobado" width="25%" />
+									<listheader label="Recurso" width="35%" />
+									<listheader label="Marca" width="35%" />
+									<listheader label="Solicitado" width="15%" />
+									<listheader label="Aprobado" width="15%" />
 									<listheader label="id" visible="false" />
 								</listhead>
 								<template name="model">
 									<listitem>
 										<listcell label="${each.recurso.descripcion}">
+										</listcell>
+										<listcell>
+											<combobox value="${each.marca.descripcion}" model="${$composer.marcas}"
+												width="100%" readonly="true">
+												<template name="model">
+													<comboitem label="${each.descripcion}" context="${each.idMarca}" />
+												</template>
+											</combobox>
 										</listcell>
 										<listcell>
 											<spinner value="${each.solicitado}" constraint="min 0 max 10000"

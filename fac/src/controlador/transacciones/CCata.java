@@ -482,15 +482,18 @@ public class CCata extends CGenerico {
 		List<RecursoPlanillaCata> recursosPlanilla = new ArrayList<RecursoPlanillaCata>();
 		for (int i = 0; i < ltbRecursosAgregados.getItemCount(); i++) {
 			Listitem listItem = ltbRecursosAgregados.getItemAtIndex(i);
-			Integer solicitado = ((Spinner) ((listItem.getChildren().get(1)))
+			String idMarca = ((Combobox) ((listItem.getChildren().get(1)))
+					.getFirstChild()).getSelectedItem().getContext();
+			Marca marca = servicioMarca.buscar(idMarca);
+			Integer solicitado = ((Spinner) ((listItem.getChildren().get(2)))
 					.getFirstChild()).getValue();
-			Integer aprobado = ((Spinner) ((listItem.getChildren().get(2)))
+			Integer aprobado = ((Spinner) ((listItem.getChildren().get(3)))
 					.getFirstChild()).getValue();
-			long recursoId = ((Spinner) ((listItem.getChildren().get(3)))
+			long recursoId = ((Spinner) ((listItem.getChildren().get(4)))
 					.getFirstChild()).getValue();
 			Recurso recurso = servicioRecurso.buscar(recursoId);
 			RecursoPlanillaCata recursoPlanilla = new RecursoPlanillaCata(
-					recurso, planilla, solicitado, aprobado);
+					recurso, planilla, marca, solicitado, aprobado);
 			recursosPlanilla.add(recursoPlanilla);
 		}
 		servicioRecursoPlanillaCata.guardar(recursosPlanilla);
@@ -572,7 +575,9 @@ public class CCata extends CGenerico {
 		ltbProductosAgregados.setModel(new ListModelList<ItemPlanillaCata>(
 				itemsAgregados));
 
-		recursos = servicioRecurso.buscarDisponibles(planilla);
+
+		recursos = servicioRecurso.buscarTodosOrdenados();
+//		recursos = servicioRecurso.buscarDisponibles(planilla);
 		ltbRecursos.setModel(new ListModelList<Recurso>(recursos));
 		recursosAgregados = servicioRecursoPlanillaCata
 				.buscarPorPlanilla(planilla);
@@ -759,16 +764,24 @@ public class CCata extends CGenerico {
 					for (int j = 0; j < ltbRecursosAgregados.getItemCount(); j++) {
 						Listitem listItemj = ltbRecursosAgregados
 								.getItemAtIndex(j);
+						String idMarca = "";
+						if (((Combobox) ((listItemj.getChildren().get(1)))
+								.getFirstChild()).getSelectedItem() != null) {
+							idMarca = ((Combobox) ((listItemj.getChildren()
+									.get(1))).getFirstChild())
+									.getSelectedItem().getContext();
+						}
+						Marca marca = servicioMarca.buscar(idMarca);
 						Integer solicitado = ((Spinner) ((listItemj
-								.getChildren().get(1))).getFirstChild())
+								.getChildren().get(2))).getFirstChild())
 								.getValue();
 						Integer aprobado = ((Spinner) ((listItemj.getChildren()
-								.get(2))).getFirstChild()).getValue();
-						long recursoId = ((Spinner) ((listItemj.getChildren()
 								.get(3))).getFirstChild()).getValue();
+						long recursoId = ((Spinner) ((listItemj.getChildren()
+								.get(4))).getFirstChild()).getValue();
 						Recurso recursoa = servicioRecurso.buscar(recursoId);
 						RecursoPlanillaCata recursoPlanillas = new RecursoPlanillaCata(
-								recursoa, null, solicitado, aprobado);
+								recursoa, null, marca, solicitado, aprobado);
 						recursosAgregados.add(recursoPlanillas);
 					}
 					recursosAgregados.add(recursoPlanilla);
@@ -780,9 +793,9 @@ public class CCata extends CGenerico {
 				}
 			}
 		}
-		for (int i = 0; i < listitemEliminar.size(); i++) {
-			ltbRecursos.removeItemAt(listitemEliminar.get(i).getIndex());
-		}
+//		for (int i = 0; i < listitemEliminar.size(); i++) {
+//			ltbRecursos.removeItemAt(listitemEliminar.get(i).getIndex());
+//		}
 		listasMultiples();
 	}
 
