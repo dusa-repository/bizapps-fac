@@ -516,15 +516,18 @@ public class CFachada extends CGenerico {
 		List<RecursoPlanillaFachada> recursosPlanilla = new ArrayList<RecursoPlanillaFachada>();
 		for (int i = 0; i < ltbRecursosAgregados.getItemCount(); i++) {
 			Listitem listItem = ltbRecursosAgregados.getItemAtIndex(i);
-			Integer solicitado = ((Spinner) ((listItem.getChildren().get(1)))
+			String idMarca = ((Combobox) ((listItem.getChildren().get(1)))
+					.getFirstChild()).getSelectedItem().getContext();
+			Marca marca = servicioMarca.buscar(idMarca);
+			Integer solicitado = ((Spinner) ((listItem.getChildren().get(2)))
 					.getFirstChild()).getValue();
-			Integer aprobado = ((Spinner) ((listItem.getChildren().get(2)))
+			Integer aprobado = ((Spinner) ((listItem.getChildren().get(3)))
 					.getFirstChild()).getValue();
-			long recursoId = ((Spinner) ((listItem.getChildren().get(3)))
+			long recursoId = ((Spinner) ((listItem.getChildren().get(4)))
 					.getFirstChild()).getValue();
 			Recurso recurso = servicioRecurso.buscar(recursoId);
 			RecursoPlanillaFachada recursoPlanilla = new RecursoPlanillaFachada(
-					recurso, planillaFachada, solicitado, aprobado);
+					recurso, planillaFachada, marca, solicitado, aprobado);
 			recursosPlanilla.add(recursoPlanilla);
 		}
 		servicioRecursoPlanillaFachada.guardar(recursosPlanilla);
@@ -632,7 +635,8 @@ public class CFachada extends CGenerico {
 	private void llenarListas() {
 		PlanillaFachada planilla = servicioPlanillaFachada.buscar(id);
 
-		recursos = servicioRecurso.buscarDisponiblesFachada(planilla);
+//		recursos = servicioRecurso.buscarDisponiblesFachada(planilla);
+		recursos = servicioRecurso.buscarTodosOrdenados();
 		ltbRecursos.setModel(new ListModelList<Recurso>(recursos));
 		recursosAgregados = servicioRecursoPlanillaFachada
 				.buscarPorPlanilla(planilla);
@@ -688,16 +692,24 @@ public class CFachada extends CGenerico {
 					for (int j = 0; j < ltbRecursosAgregados.getItemCount(); j++) {
 						Listitem listItemj = ltbRecursosAgregados
 								.getItemAtIndex(j);
+						String idMarca = "";
+						if (((Combobox) ((listItemj.getChildren().get(1)))
+								.getFirstChild()).getSelectedItem() != null) {
+							idMarca = ((Combobox) ((listItemj.getChildren()
+									.get(1))).getFirstChild())
+									.getSelectedItem().getContext();
+						}
+						Marca marca = servicioMarca.buscar(idMarca);
 						Integer solicitado = ((Spinner) ((listItemj
-								.getChildren().get(1))).getFirstChild())
+								.getChildren().get(2))).getFirstChild())
 								.getValue();
 						Integer aprobado = ((Spinner) ((listItemj.getChildren()
-								.get(2))).getFirstChild()).getValue();
-						long recursoId = ((Spinner) ((listItemj.getChildren()
 								.get(3))).getFirstChild()).getValue();
+						long recursoId = ((Spinner) ((listItemj.getChildren()
+								.get(4))).getFirstChild()).getValue();
 						Recurso recursoj = servicioRecurso.buscar(recursoId);
 						RecursoPlanillaFachada recursoPlanillaj = new RecursoPlanillaFachada(
-								recursoj, null, solicitado, aprobado);
+								recursoj, null, marca, solicitado, aprobado);
 						recursosAgregados.add(recursoPlanillaj);
 					}
 					recursosAgregados.add(recursoPlanilla);
@@ -709,9 +721,9 @@ public class CFachada extends CGenerico {
 				}
 			}
 		}
-		for (int i = 0; i < listitemEliminar.size(); i++) {
-			ltbRecursos.removeItemAt(listitemEliminar.get(i).getIndex());
-		}
+//		for (int i = 0; i < listitemEliminar.size(); i++) {
+//			ltbRecursos.removeItemAt(listitemEliminar.get(i).getIndex());
+//		}
 		listasMultiples();
 	}
 

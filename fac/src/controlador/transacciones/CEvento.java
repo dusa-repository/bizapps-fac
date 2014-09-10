@@ -627,7 +627,8 @@ public class CEvento extends CGenerico {
 				.setModel(new ListModelList<ItemEstimadoPlanillaEvento>(
 						itemsEstimacionAgregados));
 
-		recursos = servicioRecurso.buscarDisponibles(planilla);
+//		recursos = servicioRecurso.buscarDisponibles(planilla);
+		recursos = servicioRecurso.buscarTodosOrdenados();
 		ltbRecursos.setModel(new ListModelList<Recurso>(recursos));
 		recursosAgregados = servicioRecursoPlanillaEvento
 				.buscarPorPlanilla(planilla);

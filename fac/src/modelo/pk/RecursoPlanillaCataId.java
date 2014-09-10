@@ -2,6 +2,7 @@ package modelo.pk;
 
 import java.io.Serializable;
 
+import modelo.maestros.Marca;
 import modelo.maestros.Recurso;
 import modelo.transacciones.PlanillaCata;
 
@@ -11,7 +12,14 @@ public class RecursoPlanillaCataId implements Serializable {
 	
 	private Recurso recurso;
 	private PlanillaCata planillaCata;
+	private Marca marca;
 	
+	public Marca getMarca() {
+		return marca;
+	}
+	public void setMarca(Marca marca) {
+		this.marca = marca;
+	}
 	public Recurso getRecurso() {
 		return recurso;
 	}
