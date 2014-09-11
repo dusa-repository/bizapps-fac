@@ -179,22 +179,20 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	public boolean enviarEmailNotificacion(String correo, String mensajes) {
 		try {
 
+			String cc = "CAMBIO DE CONTRASEÑA FAC";
 			Properties props = new Properties();
-			props.setProperty("mail.smtp.host", "smtp.gmail.com");
+			props.setProperty("mail.smtp.host", "172.23.20.66");
 			props.setProperty("mail.smtp.starttls.enable", "true");
-			props.setProperty("mail.smtp.port", "587");
+			props.setProperty("mail.smtp.port", "2525");
 			props.setProperty("mail.smtp.auth", "true");
 
-			Session session = Session.getDefaultInstance(props);
-			String asunto = "Notificacion de SITEG";
-			String remitente = "siteg.ucla@gmail.com";
-			String contrasena = "Equipo.2";
+			Authenticator auth = new SMTPAuthenticator();
+			Session session = Session.getInstance(props, auth);
+			String remitente = "cdusa@dusa.com.ve";
 			String destino = correo;
 			String mensaje = mensajes;
-
 			String destinos[] = destino.split(",");
-
-			MimeMessage message = new MimeMessage(session);
+			Message message = new MimeMessage(session);
 
 			message.setFrom(new InternetAddress(remitente));
 
@@ -206,15 +204,10 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			}
 
 			message.addRecipients(Message.RecipientType.TO, receptores);
-			message.setSubject(asunto);
+			message.setSubject(cc);
 			message.setText(mensaje);
 
-			Transport t = session.getTransport("smtp");
-			t.connect(remitente, contrasena);
-			t.sendMessage(message,
-					message.getRecipients(Message.RecipientType.TO));
-
-			t.close();
+			Transport.send(message);
 
 			return true;
 		}
