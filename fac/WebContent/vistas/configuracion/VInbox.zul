@@ -1,18 +1,16 @@
 <zk>
-	<window id="wdwInbox"
-		style="zoom: 0.75;-moz-transform-origin: 0 0;-moz-transform: scale(0.75,0.75);"
-		title="" border="0" height="100%" width="100%" contentStyle="overflow:auto"
-		apply="controlador.portal.CInbox">
+	<window id="wdwInbox" title="" border="0" height="100%" width="100%"
+		contentStyle="overflow:auto" apply="controlador.portal.CInbox">
 		<borderlayout height="100%">
-			<north height="6em">
+			<north height="15%">
 				<div width="100%" height="100%" style="background:#500101">
-					<hbox hflex="1">
+					<hbox height="100%" width="100%">
 						<vbox>
 							<separator />
 							<image src="../public/imagenes/generales/LogoDusaA.png"
 								height="4em" width="25em" />
 						</vbox>
-						<div align="center" width="35em">
+						<div align="center" width="100%">
 							<separator />
 							<separator />
 							<separator />
@@ -26,23 +24,24 @@
 							<separator />
 						</vbox>
 						<div align="center" width="100%">
-							<hbox>
-								<vbox>
+							<hbox width="100%" height="100%">
+								<vbox width="100%" height="100%">
 									<separator />
 									<image id="imagenes" width="60px" height="55px" />
 								</vbox>
-								<vbox>
+								<vbox width="100%" height="100%">
 									<separator />
-									<label style="color:white; font-weight: bold; font-size: 14px"
+									<label style="color:white; font-weight: bold; font-size: 12px"
 										value="Usuario: ${desktop.execution.userPrincipal.name}" />
 									<a href="../j_spring_security_logout" style="color:white">
 										<space />
-										<label value="Cerrar Sesion" />
+										<label value="Cerrar Sesion" style="font-size: 10px" />
 									</a>
 									<a style="color:white">
 										<space />
-										<label id="lblEditarCuenta" value="Editar Cuenta"
+										<label id="lblEditarCuenta"  style="font-size: 10px" value="Editar Cuenta"
 											onDoubleClick="event.stopPropagation()" />
+
 									</a>
 								</vbox>
 								<separator />
@@ -50,7 +49,7 @@
 								<separator />
 								<separator />
 								<separator />
-								<vbox>
+								<vbox width="100%" height="100%">
 									<listbox style="border:none" width="200px" id="ltbRoles">
 										<template name="model">
 											<listitem>
@@ -69,13 +68,13 @@
 			</north>
 			<center border="none">
 				<div vflex="true" hflex="true" style="background:#500101">
-					<hbox style="border: none" align="center" pack="center" vflex="true"
+					<hbox widths="20%,60%,10%,10%" style="border: none" align="center" pack="center" vflex="true"
 						hflex="true">
-						<groupbox closable="false" height="80%" width="700px"
+						<separator spacing="100%" />						
+						<groupbox closable="false" height="100%" width="100%"
 							mold="3d">
 							<caption label="INBOX"
 								style="color:white; font-size: 17px; font-weight:bold; background: #3A0202" />
-
 							<borderlayout style="background:#661313">
 								<center border="none" autoscroll="true" style="background:#661313">
 									<vbox pack="center" vflex="true" hflex="true">
@@ -122,15 +121,16 @@
 								</center>
 							</borderlayout>
 						</groupbox>
-						<hbox height="75%" width="80%" align="end" pack="start">
+						<hbox height="100%" width="100%" align="end" pack="start">
 							<button id="btnCerrar" class="btn-salir" label="Volver"
 								visible="true" image="/public/imagenes/botones/salir.png"
 								autodisable="self" />
 						</hbox>
+						<separator spacing="100%" />								
 					</hbox>
 				</div>
 			</center>
-			<south vflex="2" border="0" height="4em" collapsible="false">
+			<south border="0" height="7%" collapsible="false">
 				<div width="100%" height="100%" style="background:#500101">
 					<div align="center" sclass="footer">
 						<a href="../j_spring_security_logout">
