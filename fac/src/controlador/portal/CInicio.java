@@ -79,10 +79,10 @@ public class CInicio extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-		if (Executions.getCurrent().getBrowser().equals("gecko")) {
-			wdwInicio.setWidth("106em");
-			wdwInicio.setHeight("50em");
-		}
+//		if (Executions.getCurrent().getBrowser().equals("gecko")) {
+//			wdwInicio.setWidth("106em");
+//			wdwInicio.setHeight("50em");
+//		}
 		// System.out.println(page);
 		// System.out.println("book"+Executions.getCurrent().getDesktop().getPages());
 		// Clients.evalJavaScript("document.body.style.zoom='200%'");

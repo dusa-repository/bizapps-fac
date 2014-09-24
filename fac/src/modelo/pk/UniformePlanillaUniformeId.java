@@ -11,7 +11,14 @@ public class UniformePlanillaUniformeId implements Serializable {
 	
 	private Uniforme uniforme;
 	private PlanillaUniforme planillaUniforme;
+	private String talla;
 	
+	public String getTalla() {
+		return talla;
+	}
+	public void setTalla(String talla) {
+		this.talla = talla;
+	}
 	public Uniforme getUniforme() {
 		return uniforme;
 	}

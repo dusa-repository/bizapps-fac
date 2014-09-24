@@ -161,10 +161,10 @@ public class CInbox extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-		if(Executions.getCurrent().getBrowser().equals("gecko")){
-			wdwInbox.setWidth("106em");
-			wdwInbox.setHeight("50em");
-		}
+//		if(Executions.getCurrent().getBrowser().equals("gecko")){
+//			wdwInbox.setWidth("106em");
+//			wdwInbox.setHeight("50em");
+//		}
 		btnPendiente.setSrc("/public/imagenes/botones/pendiente.png");
 		btnAprobada.setSrc("/public/imagenes/botones/procesada.png");
 		btnCancelada.setSrc("/public/imagenes/botones/cancelada.png");

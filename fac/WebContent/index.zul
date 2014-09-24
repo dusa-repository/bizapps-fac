@@ -11,12 +11,12 @@
 		else
 		a =
 		execution.getParameter("respuesta");
-	</zscript><!---moz-transform: scale(0.75); -moz-transform-origin: 0 0 width="100%" height="100%"-->
-	<window width="100%" height="100%" id="wdwIndex" title=""
-		border="0" style="zoom: 0.75; -moz-transform-origin: 0 0;-moz-transform: scale(0.75,0.75);"
-		contentStyle="overflow:auto" apply="controlador.portal.CIndex">
+	</zscript><!---moz-transform: scale(0.75); -moz-transform-origin: 0 0 width="100%" 
+		height="100%" style="-moz-transform: scale(0.75); -moz-transform-origin: 0 0"-->
+	<window width="100%"  height="100%" id="wdwIndex" title=""
+		border="0" contentStyle="overflow:auto" apply="controlador.portal.CIndex">
 		<borderlayout height="100%">
-			<north height="6em" >
+			<north height="15%">
 				<div width="100%" height="100%" style="background:#500101">
 					<hbox height="100%" width="100%">
 						<vbox>
@@ -39,14 +39,10 @@
 			</north>
 			<center border="none">
 				<div align="center" height="100%" width="100%" style="background:#500101">
-					<!-- <div align="right"> <hbox> <image src="/public/imagenes/generales/1.jpg" 
-						height="7em" width="9em" /> <image src="/public/imagenes/generales/2.jpg" 
-						height="7em" width="9em" /> <image src="/public/imagenes/generales/3.jpg" 
-						height="7em" width="9em" /> </hbox> </div> -->
 					<hbox style="border: none;" align="center" pack="center"
-						height="75%" width="100%">
-						<groupbox width="25em" height="60%" mold="3d">
-							<caption label="${a}" style="color:white; font-size: 18px" />
+						height="100%" width="100%">
+						<groupbox width="100%" height="55%" mold="3d">
+							<caption label="${a}" style="color:white; font-size: 15px" />
 							<separator></separator>
 							<separator></separator>
 							<hlayout width="100%">
@@ -90,7 +86,7 @@
 					</hbox>
 				</div>
 			</center>
-			<south border="0" height="4em" >
+			<south border="0" height="5%">
 				<div width="100%" height="100%" style="background:#500101">
 					<div align="center" sclass="footer">
 						<separator />

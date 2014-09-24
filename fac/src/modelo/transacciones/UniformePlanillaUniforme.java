@@ -26,12 +26,13 @@ public class UniformePlanillaUniforme {
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_planilla_uniforme", referencedColumnName = "id_planilla_uniforme")
 	private PlanillaUniforme planillaUniforme;
+
+	@Id
+	@Column(name="talla",length = 500)
+	private String talla;
 	
 	@Column(name="genero",length = 500)
 	private String genero;
-	
-	@Column(name="talla",length = 500)
-	private String talla;
 	
 	@Column(name = "cantidad")
 	private Integer cantidad;

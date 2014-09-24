@@ -534,8 +534,8 @@ public class CUniforme extends CGenerico {
 
 	private void llenarListas() {
 		PlanillaUniforme planilla = servicioPlanillaUniforme.buscar(id);
-
-		uniformes = servicioUniforme.buscarDisponibles(planilla);
+		uniformes = servicioUniforme.buscarTodosOrdenados();
+//		uniformes = servicioUniforme.buscarDisponibles(planilla);
 		ltbUniformes.setModel(new ListModelList<Uniforme>(uniformes));
 		uniformesAgregados = servicioUniformePlanillaUniforme
 				.buscarPorPlanilla(planilla);
@@ -606,9 +606,9 @@ public class CUniforme extends CGenerico {
 				}
 			}
 		}
-		for (int i = 0; i < listitemEliminar.size(); i++) {
-			ltbUniformes.removeItemAt(listitemEliminar.get(i).getIndex());
-		}
+//		for (int i = 0; i < listitemEliminar.size(); i++) {
+//			ltbUniformes.removeItemAt(listitemEliminar.get(i).getIndex());
+//		}
 		listasMultiples();
 	}
 

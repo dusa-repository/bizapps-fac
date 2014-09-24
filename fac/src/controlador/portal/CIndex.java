@@ -20,10 +20,10 @@ public class CIndex extends CGenerico {
 	public void inicializar() throws IOException {
 //		Clients.evalJavaScript("document.body.style.MozTransform = 'scale(0.75)';");
 //		wdwIndex.setStyle("-moz-transform: scale(0.75);");
-		if(Executions.getCurrent().getBrowser().equals("gecko")){
-			wdwIndex.setWidth("106em");
-			wdwIndex.setHeight("50em");
-		}
+//		if(Executions.getCurrent().getBrowser().equals("gecko")){
+//			wdwIndex.setWidth("106em");
+//			wdwIndex.setHeight("50em");
+//		}
 	}
 	
 	@Listen("onClick = #lblOlvidoClave")
