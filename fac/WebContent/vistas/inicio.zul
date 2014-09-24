@@ -18,8 +18,13 @@
 						<vbox>
 							<separator />
 							<image src="../public/imagenes/generales/LogoDusaA.png"
-								height="4em" width="25em" />
+								height="4em" width="18em" />
 						</vbox>
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
 						<div align="center" width="100%">
 							<separator />
 							<separator />
@@ -30,6 +35,15 @@
 									value="Formato de Actividades" />
 							</hbox>
 						</div>
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
 						<vbox>
 							<separator />
 						</vbox>
@@ -49,8 +63,8 @@
 									</a>
 									<a style="color:white">
 										<space />
-										<label id="lblEditarCuenta"  style="font-size: 10px" value="Editar Cuenta"
-											onDoubleClick="event.stopPropagation()" />
+										<label id="lblEditarCuenta" style="font-size: 10px"
+											value="Editar Cuenta" onDoubleClick="event.stopPropagation()" />
 
 									</a>
 								</vbox>
@@ -85,7 +99,8 @@
 							mold="3d">
 							<caption label="FORMATOS DISPONIBLES"
 								style="color:White; font-size: 17px; font-weight:bold; background: #3A0202" />
-							<borderlayout style="background:#661313" height="100%" width="100%">
+							<borderlayout style="background:#661313" height="100%"
+								width="100%">
 								<center border="none" autoscroll="true" style="background:#661313">
 									<vbox height="100%" width="100%" pack="center">
 										<separator />

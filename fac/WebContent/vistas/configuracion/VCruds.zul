@@ -9,8 +9,13 @@
 						<vbox>
 							<separator />
 							<image src="../public/imagenes/generales/LogoDusaA.png"
-								height="4em" width="25em" />
+								height="4em" width="18em" />
 						</vbox>
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
 						<div align="center" width="100%">
 							<separator />
 							<separator />
@@ -21,6 +26,15 @@
 									value="Formato de Actividades" />
 							</hbox>
 						</div>
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
 						<vbox>
 							<separator />
 						</vbox>
@@ -69,8 +83,8 @@
 			</north>
 			<center border="none">
 				<div vflex="true" hflex="true" style="background:#500101">
-					<hbox widths="10%,80%,10%" height="95%" width="100%" align="center" pack="center"
-						vflex="true" hflex="true">
+					<hbox widths="10%,80%,10%" height="95%" width="100%" align="center"
+						pack="center" vflex="true" hflex="true">
 						<separator spacing="100%" />
 						<groupbox closable="false" height="100%" width="100%"
 							mold="3d">
