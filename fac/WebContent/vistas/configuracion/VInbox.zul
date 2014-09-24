@@ -8,8 +8,13 @@
 						<vbox>
 							<separator />
 							<image src="../public/imagenes/generales/LogoDusaA.png"
-								height="4em" width="25em" />
+								height="4em" width="18em" />
 						</vbox>
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
 						<div align="center" width="100%">
 							<separator />
 							<separator />
@@ -20,6 +25,15 @@
 									value="Formato de Actividades" />
 							</hbox>
 						</div>
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
+						<separator />
 						<vbox>
 							<separator />
 						</vbox>
@@ -39,8 +53,8 @@
 									</a>
 									<a style="color:white">
 										<space />
-										<label id="lblEditarCuenta"  style="font-size: 10px" value="Editar Cuenta"
-											onDoubleClick="event.stopPropagation()" />
+										<label id="lblEditarCuenta" style="font-size: 10px"
+											value="Editar Cuenta" onDoubleClick="event.stopPropagation()" />
 
 									</a>
 								</vbox>
@@ -68,9 +82,9 @@
 			</north>
 			<center border="none">
 				<div vflex="true" hflex="true" style="background:#500101">
-					<hbox widths="20%,60%,10%,10%" style="border: none" align="center" pack="center" vflex="true"
-						hflex="true">
-						<separator spacing="100%" />						
+					<hbox widths="20%,60%,10%,10%" style="border: none" align="center"
+						pack="center" vflex="true" hflex="true">
+						<separator spacing="100%" />
 						<groupbox closable="false" height="100%" width="100%"
 							mold="3d">
 							<caption label="INBOX"
@@ -126,7 +140,7 @@
 								visible="true" image="/public/imagenes/botones/salir.png"
 								autodisable="self" />
 						</hbox>
-						<separator spacing="100%" />								
+						<separator spacing="100%" />
 					</hbox>
 				</div>
 			</center>

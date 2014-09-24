@@ -22,7 +22,7 @@
 						<vbox>
 							<separator />
 							<image src="/public/imagenes/generales/LogoDusaA.png"
-								height="5em" width="28em" />
+								height="4em" width="18em" />
 						</vbox>
 						<div align="center" width="35em">
 							<separator />
