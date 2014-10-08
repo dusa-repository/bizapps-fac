@@ -157,6 +157,11 @@
 								</center>
 							</borderlayout>
 						</groupbox>
+						<zk if="${sec:isAnyGranted('Solicitante')}">
+							<button id="btnActualizar" class="btn" label="Cambiar Entorno"
+								orient="vertical" autodisable="self"
+								image="/public/imagenes/botones/refresh.png" />
+						</zk>
 						<separator spacing="100%" />
 					</hbox>
 				</div>

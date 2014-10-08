@@ -67,6 +67,8 @@ public class CInicio extends CGenerico {
 	@Wire
 	private Button btnCruds;
 	@Wire
+	private Button btnActualizar;
+	@Wire
 	private Image imagenes;
 	private String tipo = "";
 	List<Button> botonesAgregados = new ArrayList<Button>();
@@ -291,5 +293,10 @@ public class CInicio extends CGenerico {
 			if (!entro)
 				botonesAgregados.get(i).setVisible(false);
 		}
+	}
+	
+	@Listen("onClick=#btnActualizar")
+	public void actualizar(){
+		Executions.sendRedirect("/vistas/inicio.zul");
 	}
 }
