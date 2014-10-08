@@ -123,6 +123,8 @@ public class CPromocion extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
+		dtbFin.setValue(fecha);
+		dtbInicio.setValue(fecha);
 		cargarCombos();
 		txtNombreActividad.setFocus(true);
 		txtRespActividad.setValue(nombreUsuarioSesion());

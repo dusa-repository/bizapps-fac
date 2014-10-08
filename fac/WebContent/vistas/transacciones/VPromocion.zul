@@ -128,15 +128,13 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<datebox readonly="true" width="100%" id="dtbInicio"
-										onCreate="self.value = new Date()" />
+									<datebox readonly="true" width="100%" id="dtbInicio"/>
 									<hbox>
 										<label class="etiqueta" value="Fecha Fin Contrato: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<datebox readonly="true" width="100%" id="dtbFin"
-										onCreate="self.value = new Date()" />
+									<datebox readonly="true" width="100%" id="dtbFin" />
 								</row>
 								<row>
 									<hbox>

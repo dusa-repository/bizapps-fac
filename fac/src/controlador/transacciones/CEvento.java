@@ -153,7 +153,8 @@ public class CEvento extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-
+		dtbFin.setValue(fecha);
+		dtbInicio.setValue(fecha);
 		txtNombreActividad.setFocus(true);
 		txtRespActividad.setValue(nombreUsuarioSesion());
 		txtRespZona.setValue(usuarioSesion(nombreUsuarioSesion())
