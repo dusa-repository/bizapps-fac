@@ -68,8 +68,7 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<datebox readonly="true" width="100%" id="dtbActividad"
-										onCreate="self.value = new Date()" />
+									<datebox readonly="true" width="100%" id="dtbActividad"/>
 								</row>
 								<row>
 									<hbox>

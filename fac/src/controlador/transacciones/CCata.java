@@ -136,7 +136,7 @@ public class CCata extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-
+		dtbActividad.setValue(fecha);
 		txtNombreActividad.setFocus(true);
 		txtRespActividad.setValue(nombreUsuarioSesion());
 		txtRespZona.setValue(usuarioSesion(nombreUsuarioSesion())

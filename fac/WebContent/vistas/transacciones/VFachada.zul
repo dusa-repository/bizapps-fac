@@ -70,8 +70,7 @@
 										<label class="etiqueta" value="Fecha Actividad: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
-										<datebox readonly="true" width="100%" id="dtbActividad"
-											onCreate="self.value = new Date()" />
+										<datebox readonly="true" width="100%" id="dtbActividad"/>
 									</hbox>
 								</row>
 								<row>
