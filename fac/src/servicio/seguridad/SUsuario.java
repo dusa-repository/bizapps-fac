@@ -26,6 +26,11 @@ public class SUsuario {
 	public Usuario buscarUsuarioPorNombre(String nombre) {
 		return usuarioDAO.findByIdUsuario(nombre);
 	}
+	
+	@Transactional
+	public Usuario buscarUsuarioPorNombre2(String nombre) {
+		return usuarioDAO.findByIdUsuarioAllIgnoreCase(nombre);
+	}
 
 	public void guardar(Usuario usuario) {
 		usuarioDAO.saveAndFlush(usuario);

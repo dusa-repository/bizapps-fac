@@ -110,6 +110,7 @@ public class CUsuario extends CGenerico {
 
 			@Override
 			public void limpiar() {
+				txtCodigoUsuario.setDisabled(false);
 				ltbGruposAgregados.getItems().clear();
 				ltbGruposDisponibles.getItems().clear();
 				txtCodigoUsuario.setValue("");
@@ -345,16 +346,15 @@ public class CUsuario extends CGenerico {
 
 	@Listen("onChange = #txtCodigoUsuario, #txtSupervisorUsuario")
 	public void buscarNombre(Event evento) {
-		Usuario usuario1 = servicioUsuario.buscar(txtCodigoUsuario.getValue());
-		Usuario usuario2 = servicioUsuario.buscar(txtSupervisorUsuario
-				.getValue());
 		Textbox txt = (Textbox) evento.getTarget();
 		switch (txt.getId()) {
 		case "txtCodigoUsuario":
-			if (usuario1 != null)
+			Usuario usuario1 = servicioUsuario
+					.buscarUsuarioPorNombre2(txtCodigoUsuario.getValue());
+			if (usuario1 != null) {
 				setearUsuario(usuario1);
-			else {
-				txtCodigoUsuario.setFocus(true);
+				txtCodigoUsuario.setDisabled(true);
+			} else {
 				txtEmailUsuario.setValue("");
 				txtNombreUsuario.setValue("");
 				txtPasswordUsuario.setValue("");
@@ -366,6 +366,8 @@ public class CUsuario extends CGenerico {
 			}
 			break;
 		case "txtSupervisorUsuario":
+			Usuario usuario2 = servicioUsuario.buscar(txtSupervisorUsuario
+					.getValue());
 			if (usuario2 == null)
 				txtSupervisorUsuario.setValue("");
 			txtSupervisorUsuario.setFocus(true);
@@ -384,6 +386,7 @@ public class CUsuario extends CGenerico {
 			break;
 		case "btnBuscarUsuarios":
 			setearUsuario(usuario);
+			txtCodigoUsuario.setDisabled(true);
 			break;
 		default:
 			break;
