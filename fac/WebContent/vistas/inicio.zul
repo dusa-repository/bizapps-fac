@@ -153,15 +153,16 @@
 										<separator />
 										<button id="btnCruds" class="btn" label="Admin" orient="vertical"
 											visible="false" autodisable="self" />
+										<zk if="${sec:isAnyGranted('Solicitante')}">
+											<button id="btnActualizar" class="btn" label="Cambiar Entorno de Solicitudes"
+												orient="vertical" autodisable="self"
+												image="/public/imagenes/botones/refresh.png" />
+										</zk>
 									</vbox>
 								</center>
 							</borderlayout>
 						</groupbox>
-						<zk if="${sec:isAnyGranted('Solicitante')}">
-							<button id="btnActualizar" class="btn" label="Cambiar Entorno"
-								orient="vertical" autodisable="self"
-								image="/public/imagenes/botones/refresh.png" />
-						</zk>
+						
 						<separator spacing="100%" />
 					</hbox>
 				</div>
