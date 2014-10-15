@@ -1,6 +1,7 @@
 package interfacedao.transacciones;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import modelo.maestros.Marca;
@@ -47,5 +48,15 @@ public interface IPlanillaUniformeDAO extends JpaRepository<PlanillaUniforme, Lo
 
 	List<PlanillaUniforme> findByEstadoAndTipoOrderByFechaEnvioAsc(
 			String string, String variable2);
+
+	List<PlanillaUniforme> findByUsuarioAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+			Usuario user, String estadoBuscar, Date fecha1, Date fecha2);
+
+	List<PlanillaUniforme> findByEstadoAndTipoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+			String estadoBuscar, String tipoP, Date fecha1, Date fecha2);
+
+	List<PlanillaUniforme> findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+			String nombreUsuarioSesion, String variable, Date fecha1,
+			Date fecha2);
 
 }

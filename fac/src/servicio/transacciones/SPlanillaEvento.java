@@ -2,6 +2,7 @@ package servicio.transacciones;
 
 import interfacedao.transacciones.IPlanillaEventoDAO;
 
+import java.util.Date;
 import java.util.List;
 
 import modelo.maestros.Marca;
@@ -86,6 +87,29 @@ public class SPlanillaEvento {
 	public List<PlanillaEvento> buscarAdminPendientes(String tipoConfig,
 			String string) {
 		// TODO Auto-generated method stub
-		return planillaEventoDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string, tipoConfig);
+		return planillaEventoDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(
+				string, tipoConfig);
+	}
+
+	public List<PlanillaEvento> buscarUsuarioEntreFechas(Usuario user,
+			String estadoBuscar, Date fecha1, Date fecha2) {
+		return planillaEventoDAO
+				.findByUsuarioAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+						user, estadoBuscar, fecha1, fecha2);
+	}
+
+	public List<PlanillaEvento> buscarAdminPendientesEntreFechas(String tipoP,
+			String estadoBuscar, Date fecha1, Date fecha2) {
+		return planillaEventoDAO
+				.findByEstadoAndTipoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+						estadoBuscar, tipoP, fecha1, fecha2);
+	}
+
+	public List<PlanillaEvento> buscarSupervisorYEstadoEntreFechas(
+			String nombreUsuarioSesion, String variable, Date fecha1,
+			Date fecha2) {
+		return planillaEventoDAO
+				.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+						nombreUsuarioSesion, variable, fecha1, fecha2);
 	}
 }

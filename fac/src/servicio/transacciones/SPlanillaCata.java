@@ -2,6 +2,7 @@ package servicio.transacciones;
 
 import interfacedao.transacciones.IPlanillaCataDAO;
 
+import java.util.Date;
 import java.util.List;
 
 import modelo.maestros.Marca;
@@ -86,7 +87,30 @@ public class SPlanillaCata {
 
 	public List<PlanillaCata> buscarAdminPendientes(String tipoConfig,
 			String string) {
-		return planillaCataDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string, tipoConfig);
+		return planillaCataDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string,
+				tipoConfig);
+	}
+
+	public List<PlanillaCata> buscarUsuarioEntreFechas(Usuario user,
+			String estadoBuscar, Date fecha1, Date fecha2) {
+		return planillaCataDAO
+				.findByUsuarioAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+						user, estadoBuscar, fecha1, fecha2);
+	}
+
+	public List<PlanillaCata> buscarAdminPendientesEntreFechas(String tipoP,
+			String estadoBuscar, Date fecha1, Date fecha2) {
+		return planillaCataDAO
+				.findByEstadoAndTipoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+						estadoBuscar, tipoP, fecha1, fecha2);
+	}
+
+	public List<PlanillaCata> buscarSupervisorYEstadoEntreFechas(
+			String nombreUsuarioSesion, String variable, Date fecha1,
+			Date fecha2) {
+		return planillaCataDAO
+				.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+						nombreUsuarioSesion, variable, fecha1, fecha2);
 	}
 
 }

@@ -1,6 +1,7 @@
 package interfacedao.transacciones;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import modelo.maestros.Marca;
@@ -47,5 +48,15 @@ public interface IPlanillaFachadaDAO extends JpaRepository<PlanillaFachada, Long
 	List<PlanillaFachada> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String string, String string2, String string3,
 			String string4, String variable2);
+
+	List<PlanillaFachada> findByUsuarioAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+			Usuario user, String estadoBuscar, Date fecha1, Date fecha2);
+
+	List<PlanillaFachada> findByEstadoAndTipoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+			String estadoBuscar, String tipoP, Date fecha1, Date fecha2);
+
+	List<PlanillaFachada> findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+			String nombreUsuarioSesion, String variable, Date fecha1,
+			Date fecha2);
 
 }

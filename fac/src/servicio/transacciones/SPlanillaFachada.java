@@ -2,6 +2,7 @@ package servicio.transacciones;
 
 import interfacedao.transacciones.IPlanillaFachadaDAO;
 
+import java.util.Date;
 import java.util.List;
 
 import modelo.maestros.Marca;
@@ -86,5 +87,26 @@ public class SPlanillaFachada {
 	public List<PlanillaFachada> buscarAdminPendientes(String tipoConfig,
 			String string) {
 		return planillaFachadaDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string, tipoConfig);
+	}
+
+	public List<PlanillaFachada> buscarUsuarioEntreFechas(Usuario user,
+			String estadoBuscar, Date fecha1, Date fecha2) {
+		return planillaFachadaDAO.findByUsuarioAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+				user, estadoBuscar, fecha1, fecha2);
+	}
+
+	public List<PlanillaFachada> buscarAdminPendientesEntreFechas(String tipoP,
+			String estadoBuscar, Date fecha1, Date fecha2) {
+		return planillaFachadaDAO
+				.findByEstadoAndTipoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+						estadoBuscar, tipoP, fecha1, fecha2);
+	}
+
+	public List<PlanillaFachada> buscarSupervisorYEstadoEntreFechas(
+			String nombreUsuarioSesion, String variable, Date fecha1,
+			Date fecha2) {
+		return planillaFachadaDAO
+				.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+						nombreUsuarioSesion, variable, fecha1, fecha2);
 	}
 }
