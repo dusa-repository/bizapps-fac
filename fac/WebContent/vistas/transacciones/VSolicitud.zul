@@ -1,36 +1,80 @@
 <?taglib uri="http://www.zkoss.org/zkspring/security" prefix="sec"?>
 <zk>
-	<window width="95%" closable="false" id="wdwSolicitud"
+	<window height="100%" width="95%" closable="false" id="wdwSolicitud"
 		apply="controlador.transacciones.CSolicitud">
 		<caption label="Solicitudes ${$composer.titulo}"
 			style="color:white; font-size: 16px; font-weight:bold; " />
-		<div>
-			<space />
-			<hbox widths="95%,5%" width="100%">
-				<div width="100%" id="catalogoSolicitud" />
+		<!-- <div height="100%" > -->
+		<space />
+		<vbox height="100%" heights="15%,2%,83%">
+			<hbox height="100%" widths="40%,60%" width="100%">
+				<grid width="100%">
+					<columns visible="false">
+						<column label="" width="35%" />
+						<column label="" width="30%" />
+						<column label="" width="35%" />
+					</columns>
+					<rows>
+						<row>
+							<label class="etiqueta" value="Fecha Desde: " />
+							<cell colspan="2">
+								<datebox onCreate="self.value = new Date()" readonly="true" width="100%" id="dtbDesde" />
+							</cell>
+						</row>
+						<row>
+							<label class="etiqueta" value="Fecha Hasta: " />
+							<cell colspan="2">
+								<datebox onCreate="self.value = new Date()" readonly="true" width="100%" id="dtbHasta" />
+							</cell>
+						</row>
+
+						<row>
+							<zk if="${sec:isAnyGranted('MARCA, TRADE MARKETING')}">
+								<label class="etiqueta" value="Estado: " />
+								<combobox tooltiptext="Seleccione un Estado"
+									placeholder="Seleccione un Estado" id="cmbEstado" readonly="true"
+									width="100%">
+									<comboitem label="En Edicion" />
+									<comboitem label="Pendiente" />
+									<comboitem label="Aprobada" />
+									<comboitem label="Finalizada" />
+								</combobox>
+							</zk>
+							<button id="btnRefrescar" label="Refrescar" autodisable="self"
+								style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/refresh2.png" />
+						</row>
+					</rows>
+				</grid>
+				<separator width="100%" />
+			</hbox>
+			<space height="100%" />
+			<hbox height="100%" widths="95%,5%" width="100%">
+				<div height="100%" width="100%" id="catalogoSolicitud" />
 				<vbox width="100%">
 					<zk if="${sec:isAnyGranted('MARCA, TRADE MARKETING')}">
-						<button id="btnProcesar" label="Procesar"
-							 autodisable="self" style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/procesar.png" />
-						<button id="btnFinalizar" label="Finalizar"
-							 autodisable="self" style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/finalizar.png" />
-						<button id="btnPagar" label="Pagar"
-							 autodisable="self" style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/pagar.png" />
-						<button id="btnCancelar" label="Cancelar"
-							 autodisable="self" style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/cancelar.png" />
-						<button id="btnRechazar" label="Rechazar"
-							 autodisable="self" style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/rechazar.png" />
+						<button id="btnProcesar" label="Procesar" autodisable="self"
+							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/procesar.png" />
+						<button id="btnFinalizar" label="Finalizar" autodisable="self"
+							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/finalizar.png" />
+						<button id="btnPagar" label="Pagar" autodisable="self"
+							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/pagar.png" />
+						<button id="btnCancelar" label="Cancelar" autodisable="self"
+							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/cancelar.png" />
+						<button id="btnRechazar" label="Rechazar" autodisable="self"
+							style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/rechazar.png" />
 					</zk>
-					<button id="btnVer" label="Ver Solicitud"
-						 autodisable="self" style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/ver.png" />
+					<button id="btnVer" label="Ver Solicitud" autodisable="self"
+						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/ver.png" />
 					<button id="btnBitacora" label="Ver Bitacora"
-						 style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/bitacora.png"
+						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/bitacora.png"
 						autodisable="self" />
-					<button id="btnCerrar" label="Salir"
-						 autodisable="self" style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/salir.png" />
+					<button id="btnCerrar" label="Salir" autodisable="self"
+						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/salir.png" />
 				</vbox>
 			</hbox>
-		</div>
+		</vbox>
+		<space />
+		<!-- </div> -->
 		<image id="imagenNo" visible="false" />
 		<image id="imagenSi" visible="false" />
 	</window>

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Semaphore;
@@ -45,6 +46,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.ListModelList;
@@ -56,7 +58,6 @@ import org.zkoss.zul.Window;
 
 import componente.Catalogo;
 import componente.Mensaje;
-
 import controlador.maestros.CGenerico;
 
 public class CSolicitud extends CGenerico {
@@ -74,6 +75,12 @@ public class CSolicitud extends CGenerico {
 	private Window wdwSolicitud;
 	@Wire
 	private Div catalogoSolicitud;
+	@Wire
+	private Datebox dtbDesde;
+	@Wire
+	private Datebox dtbHasta;
+	@Wire
+	private Combobox cmbEstado;
 	@Wire
 	private Image imagenNo;
 	@Wire
@@ -1482,6 +1489,184 @@ public class CSolicitud extends CGenerico {
 		listaBitacoras.add(bitacora4);
 
 		servicioBitacoraFachada.guardarBitacoras(listaBitacoras);
+
+	}
+
+	@Listen("onClick = #btnRefrescar")
+	public void refresh() {
+		if (grupoDominante.equals("Administrador")
+				&& cmbEstado.getText().compareTo("") == 0)
+			msj.mensajeAlerta("Debe seleccionar un estado");
+		else {
+			Usuario user = servicioUsuario.buscar(nombreUsuarioSesion());
+			Date fecha1 = dtbDesde.getValue();
+			Date fecha2 = dtbHasta.getValue();
+			listPlanilla.clear();
+			List<PlanillaCata> listCata = new ArrayList<PlanillaCata>();
+			List<PlanillaEvento> listEvento = new ArrayList<PlanillaEvento>();
+			List<PlanillaPromocion> listPromocion = new ArrayList<PlanillaPromocion>();
+			List<PlanillaArte> listArte = new ArrayList<PlanillaArte>();
+			List<PlanillaUniforme> listUniforme = new ArrayList<PlanillaUniforme>();
+			List<PlanillaFachada> listFachada = new ArrayList<PlanillaFachada>();
+			String tipoP = "Marca";
+			if (tradeMark)
+				tipoP = "TradeMark";
+			switch (grupoDominante) {
+			case "Administrador":
+				String estadoBuscar = cmbEstado.getValue();
+				if (estadoBuscar.equals("En Edicion")) {
+					listCata = servicioPlanillaCata.buscarUsuarioEntreFechas(
+							user, estadoBuscar, fecha1, fecha2);
+					listEvento = servicioPlanillaEvento
+							.buscarUsuarioEntreFechas(user, estadoBuscar,
+									fecha1, fecha2);
+					listPromocion = servicioPlanillaPromocion
+							.buscarUsuarioEntreFechas(user, estadoBuscar,
+									fecha1, fecha2);
+					listArte = servicioPlanillaArte.buscarUsuarioEntreFechas(
+							user, estadoBuscar, fecha1, fecha2);
+					listUniforme = servicioPlanillaUniforme
+							.buscarUsuarioEntreFechas(user, estadoBuscar,
+									fecha1, fecha2);
+					listFachada = servicioPlanillaFachada
+							.buscarUsuarioEntreFechas(user, estadoBuscar,
+									fecha1, fecha2);
+				} else {
+					listCata = servicioPlanillaCata
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2);
+					listEvento = servicioPlanillaEvento
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2);
+					listPromocion = servicioPlanillaPromocion
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2);
+					listArte = servicioPlanillaArte
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2);
+					listUniforme = servicioPlanillaUniforme
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2);
+					listFachada = servicioPlanillaFachada
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2);
+				}
+				break;
+			case "Solicitante":
+				listCata = servicioPlanillaCata.buscarUsuarioEntreFechas(user,
+						variable, fecha1, fecha2);
+				listEvento = servicioPlanillaEvento.buscarUsuarioEntreFechas(
+						user, variable, fecha1, fecha2);
+				listPromocion = servicioPlanillaPromocion
+						.buscarUsuarioEntreFechas(user, variable, fecha1,
+								fecha2);
+				listArte = servicioPlanillaArte.buscarUsuarioEntreFechas(user,
+						variable, fecha1, fecha2);
+				listUniforme = servicioPlanillaUniforme
+						.buscarUsuarioEntreFechas(user, variable, fecha1,
+								fecha2);
+				listFachada = servicioPlanillaFachada.buscarUsuarioEntreFechas(
+						user, variable, fecha1, fecha2);
+				break;
+			case "Gerente Regional":
+				listCata = servicioPlanillaCata
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1, fecha2);
+				listEvento = servicioPlanillaEvento
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1, fecha2);
+				listPromocion = servicioPlanillaPromocion
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1, fecha2);
+				listArte = servicioPlanillaArte
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1, fecha2);
+				listUniforme = servicioPlanillaUniforme
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1, fecha2);
+				listFachada = servicioPlanillaFachada
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1, fecha2);
+			}
+
+			for (int i = 0; i < listCata.size(); i++) {
+				long id = listCata.get(i).getIdPlanillaCata();
+				String usuario = listCata.get(i).getUsuario().getNombre();
+				String marca = listCata.get(i).getMarca().getDescripcion();
+				String nombreActividad = listCata.get(i).getNombreActividad();
+				String estado = listCata.get(i).getEstado();
+				String tipoPlanilla = "Cata Induccion";
+				Timestamp fecha = listCata.get(i).getFechaEnvio();
+				PlanillaGenerica plani = new PlanillaGenerica(id, usuario,
+						marca, nombreActividad, fecha, estado, tipoPlanilla);
+				listPlanilla.add(plani);
+			}
+			for (int i = 0; i < listEvento.size(); i++) {
+				long id = listEvento.get(i).getIdPlanillaEvento();
+				String usuario = listEvento.get(i).getUsuario().getNombre();
+				String marca = listEvento.get(i).getMarca().getDescripcion();
+				String nombreActividad = listEvento.get(i).getNombreActividad();
+				String estado = listEvento.get(i).getEstado();
+				String tipoPlanilla = "Eventos Especiales";
+				Timestamp fecha = listEvento.get(i).getFechaEnvio();
+				PlanillaGenerica plani = new PlanillaGenerica(id, usuario,
+						marca, nombreActividad, fecha, estado, tipoPlanilla);
+				listPlanilla.add(plani);
+			}
+			for (int i = 0; i < listFachada.size(); i++) {
+				long id = listFachada.get(i).getIdPlanillaFachada();
+				String usuario = listFachada.get(i).getUsuario().getNombre();
+				String marca = listFachada.get(i).getMarca().getDescripcion();
+				String nombreActividad = listFachada.get(i)
+						.getNombreActividad();
+				String estado = listFachada.get(i).getEstado();
+				String tipoPlanilla = "Fachada y Decoraciones";
+				Timestamp fecha = listFachada.get(i).getFechaEnvio();
+				PlanillaGenerica plani = new PlanillaGenerica(id, usuario,
+						marca, nombreActividad, fecha, estado, tipoPlanilla);
+				listPlanilla.add(plani);
+			}
+			for (int i = 0; i < listPromocion.size(); i++) {
+				long id = listPromocion.get(i).getIdPlanillaPromocion();
+				String usuario = listPromocion.get(i).getUsuario().getNombre();
+				String marca = listPromocion.get(i).getMarcaA()
+						.getDescripcion();
+				String nombreActividad = listPromocion.get(i)
+						.getNombreActividad();
+				String estado = listPromocion.get(i).getEstado();
+				String tipoPlanilla = "Promociones de Marca";
+				Timestamp fecha = listPromocion.get(i).getFechaEnvio();
+				PlanillaGenerica plani = new PlanillaGenerica(id, usuario,
+						marca, nombreActividad, fecha, estado, tipoPlanilla);
+				listPlanilla.add(plani);
+			}
+			for (int i = 0; i < listArte.size(); i++) {
+				long id = listArte.get(i).getIdPlanillaArte();
+				String usuario = listArte.get(i).getUsuario().getNombre();
+				String marca = listArte.get(i).getMarca().getDescripcion();
+				String nombreActividad = listArte.get(i).getNombreActividad();
+				String estado = listArte.get(i).getEstado();
+				String tipoPlanilla = "Solicitud de Arte y Publicaciones";
+				Timestamp fecha = listArte.get(i).getFechaEnvio();
+				PlanillaGenerica plani = new PlanillaGenerica(id, usuario,
+						marca, nombreActividad, fecha, estado, tipoPlanilla);
+				listPlanilla.add(plani);
+			}
+			for (int i = 0; i < listUniforme.size(); i++) {
+				long id = listUniforme.get(i).getIdPlanillaUniforme();
+				String usuario = listUniforme.get(i).getUsuario().getNombre();
+				String marca = listUniforme.get(i).getMarca().getDescripcion();
+				String nombreActividad = listUniforme.get(i)
+						.getNombreActividad();
+				String estado = listUniforme.get(i).getEstado();
+				String tipoPlanilla = "Uniformes";
+				Timestamp fecha = listUniforme.get(i).getFechaEnvio();
+				PlanillaGenerica plani = new PlanillaGenerica(id, usuario,
+						marca, nombreActividad, fecha, estado, tipoPlanilla);
+				listPlanilla.add(plani);
+			}
+			catalogo.actualizarLista(listPlanilla);
+		}
 
 	}
 

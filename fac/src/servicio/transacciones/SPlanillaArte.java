@@ -2,6 +2,7 @@ package servicio.transacciones;
 
 import interfacedao.transacciones.IPlanillaArteDAO;
 
+import java.util.Date;
 import java.util.List;
 
 import modelo.maestros.Marca;
@@ -86,5 +87,26 @@ public class SPlanillaArte {
 	public List<PlanillaArte> buscarAdminPendientes(String tipoConfig,
 			String string) {
 		return planillaArteDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string, tipoConfig);
+	}
+
+	public List<PlanillaArte> buscarUsuarioEntreFechas(Usuario user,
+			String estadoBuscar, Date fecha1, Date fecha2) {
+		return planillaArteDAO.findByUsuarioAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+				user, estadoBuscar, fecha1, fecha2);
+	}
+
+	public List<PlanillaArte> buscarAdminPendientesEntreFechas(String tipoP,
+			String estadoBuscar, Date fecha1, Date fecha2) {
+		return planillaArteDAO
+				.findByEstadoAndTipoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+						estadoBuscar, tipoP, fecha1, fecha2);
+	}
+
+	public List<PlanillaArte> buscarSupervisorYEstadoEntreFechas(
+			String nombreUsuarioSesion, String variable, Date fecha1,
+			Date fecha2) {
+		return planillaArteDAO
+				.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+						nombreUsuarioSesion, variable, fecha1, fecha2);
 	}
 }

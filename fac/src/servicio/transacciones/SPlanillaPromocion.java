@@ -2,6 +2,7 @@ package servicio.transacciones;
 
 import interfacedao.transacciones.IPlanillaPromocionDAO;
 
+import java.util.Date;
 import java.util.List;
 
 import modelo.maestros.Marca;
@@ -86,5 +87,26 @@ public class SPlanillaPromocion {
 	public List<PlanillaPromocion> buscarAdminPendientes(String tipoConfig,
 			String string) {
 		return planillaPromocionDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string, tipoConfig);
+	}
+
+	public List<PlanillaPromocion> buscarUsuarioEntreFechas(Usuario user,
+			String estadoBuscar, Date fecha1, Date fecha2) {
+		return planillaPromocionDAO.findByUsuarioAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+				user, estadoBuscar, fecha1, fecha2);
+	}
+
+	public List<PlanillaPromocion> buscarAdminPendientesEntreFechas(
+			String tipoP, String estadoBuscar, Date fecha1, Date fecha2) {
+		return planillaPromocionDAO
+				.findByEstadoAndTipoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+						estadoBuscar, tipoP, fecha1, fecha2);
+	}
+
+	public List<PlanillaPromocion> buscarSupervisorYEstadoEntreFechas(
+			String nombreUsuarioSesion, String variable, Date fecha1,
+			Date fecha2) {
+		return planillaPromocionDAO
+				.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+						nombreUsuarioSesion, variable, fecha1, fecha2);
 	}
 }

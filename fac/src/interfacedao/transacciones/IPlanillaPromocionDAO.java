@@ -1,6 +1,7 @@
 package interfacedao.transacciones;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import modelo.maestros.Marca;
@@ -47,5 +48,15 @@ public interface IPlanillaPromocionDAO extends JpaRepository<PlanillaPromocion, 
 
 	List<PlanillaPromocion> findByEstadoAndTipoOrderByFechaEnvioAsc(
 			String string, String variable2);
+
+	List<PlanillaPromocion> findByUsuarioAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+			Usuario user, String estadoBuscar, Date fecha1, Date fecha2);
+
+	List<PlanillaPromocion> findByEstadoAndTipoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+			String estadoBuscar, String tipoP, Date fecha1, Date fecha2);
+
+	List<PlanillaPromocion> findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
+			String nombreUsuarioSesion, String variable, Date fecha1,
+			Date fecha2);
 
 }
