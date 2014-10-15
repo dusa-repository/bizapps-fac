@@ -34,10 +34,12 @@
 								<combobox tooltiptext="Seleccione un Estado"
 									placeholder="Seleccione un Estado" id="cmbEstado" readonly="true"
 									width="100%">
-									<comboitem label="En Edicion" />
 									<comboitem label="Pendiente" />
 									<comboitem label="Aprobada" />
 									<comboitem label="Finalizada" />
+									<comboitem label="Pagada" />
+									<comboitem label="Rechazada" />
+									<comboitem label="Cancelada" />
 								</combobox>
 							</zk>
 							<button id="btnRefrescar" label="Refrescar" autodisable="self"
