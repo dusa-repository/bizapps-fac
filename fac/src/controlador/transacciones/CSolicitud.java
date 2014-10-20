@@ -601,7 +601,7 @@ public class CSolicitud extends CGenerico {
 							planillaEvento.getDescripcion(),
 							planillaEvento.getMecanica(), fechaHora,
 							planillaEvento.getFechaEnvio(), horaAuditoria,
-							nombreUsuarioSesion(), estado,
+							nombreUsuarioSesion(), "Pendiente",
 							planillaEvento.getZona(), "Marca", "",
 							planillaEvento.getIdPlanillaEvento(), "");
 					servicioPlanillaEvento.guardar(nueva);
@@ -686,7 +686,7 @@ public class CSolicitud extends CGenerico {
 							planillaUniforme.getJustificacion(),
 							planillaUniforme.getContrato(), fechaHora,
 							planillaUniforme.getFechaEnvio(), horaAuditoria,
-							nombreUsuarioSesion(), estado, planillaUniforme
+							nombreUsuarioSesion(), "Pendiente", planillaUniforme
 									.getUsuario().getZona().getDescripcion(),
 							"Marca", "",
 							planillaUniforme.getIdPlanillaUniforme(), "");
@@ -764,7 +764,7 @@ public class CSolicitud extends CGenerico {
 							planillaPromocion.getDescripcionMarcaA(),
 							planillaPromocion.getDescripcionMarcaB(),
 							fechaHora, planillaPromocion.getFechaEnvio(),
-							horaAuditoria, nombreUsuarioSesion(), estado,
+							horaAuditoria, nombreUsuarioSesion(), "Pendiente",
 							planillaPromocion.getZona(), "Marca", "",
 							planillaPromocion.getIdPlanillaPromocion(), "");
 					servicioPlanillaPromocion.guardar(nueva);
@@ -822,7 +822,7 @@ public class CSolicitud extends CGenerico {
 							planillaArte.getImagenD(),
 							planillaArte.getLineamiento(), fechaHora,
 							planillaArte.getFechaEnvio(), horaAuditoria,
-							nombreUsuarioSesion(), estado,
+							nombreUsuarioSesion(), "Pendiente",
 							planillaArte.getZona(), "Marca", "",
 							planillaArte.getIdPlanillaArte(), "");
 					servicioPlanillaArte.guardar(nueva);
@@ -882,7 +882,7 @@ public class CSolicitud extends CGenerico {
 							planillaCata.getDescripcion(),
 							planillaCata.getMecanica(), fechaHora,
 							planillaCata.getFechaEnvio(), horaAuditoria,
-							nombreUsuarioSesion(), estado,
+							nombreUsuarioSesion(), "Pendiente",
 							planillaCata.getZona(), "Marca", "",
 							planillaCata.getIdPlanillaCata(), "");
 					servicioPlanillaCata.guardar(nueva);
@@ -970,7 +970,7 @@ public class CSolicitud extends CGenerico {
 							planillaFachada.getImagenC(),
 							planillaFachada.getImagenD(), fechaHora,
 							planillaFachada.getFechaEnvio(), horaAuditoria,
-							nombreUsuarioSesion(), estado,
+							nombreUsuarioSesion(), "Pendiente",
 							planillaFachada.getZona(), "Marca", "",
 							planillaFachada.getIdPlanillaFachada(), "");
 					servicioPlanillaFachada.guardar(nueva);
