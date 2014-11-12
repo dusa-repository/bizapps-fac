@@ -228,8 +228,14 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			String mensaje = "El USUARIO: " + usuario
 					+ " HA ENVIADO UNA SOLICITUD DE " + tipo + " CON EL ID: "
 					+ id;
-			if (!grupos.isEmpty()){
-				destinatario = grupos.get(0).getCorreo()+","+emailUsuario;
+			Usuario user = servicioUsuario.buscar(usuario);
+			user = servicioUsuario.buscar(user.getSupervisor());
+			String correoSupervisor = "";
+			if (user != null)
+				correoSupervisor = user.getMail();
+			if (!grupos.isEmpty()) {
+				destinatario = grupos.get(0).getCorreo() + "," + emailUsuario
+						+ "," + correoSupervisor;
 			}
 			Properties props = new Properties();
 			props.setProperty("mail.smtp.host", "172.23.20.66");
@@ -240,10 +246,9 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			Authenticator auth = new SMTPAuthenticator();
 			Session session = Session.getInstance(props, auth);
 			String remitente = "cdusa@dusa.com.ve";
-//			String contrasena = "Equipo.2";
+			// String contrasena = "Equipo.2";
 
 			String destinos[] = destinatario.split(",");
-			System.out.println(destinos);
 			Message message = new MimeMessage(session);
 
 			message.setFrom(new InternetAddress(remitente));
@@ -260,12 +265,12 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			message.setText(mensaje);
 
 			Transport.send(message);
-//			Transport t = session.getTransport("smtp");
-//			t.connect(remitente, contrasena);
-//			t.sendMessage(message,
-//					message.getRecipients(Message.RecipientType.TO));
-//
-//			t.close();
+			// Transport t = session.getTransport("smtp");
+			// t.connect(remitente, contrasena);
+			// t.sendMessage(message,
+			// message.getRecipients(Message.RecipientType.TO));
+			//
+			// t.close();
 
 			return true;
 		} catch (Exception e) {
@@ -273,7 +278,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			return false;
 		}
 	}
-	
+
 	class SMTPAuthenticator extends javax.mail.Authenticator {
 		public PasswordAuthentication getPasswordAuthentication() {
 			return new PasswordAuthentication("cdusa", "cartucho");
