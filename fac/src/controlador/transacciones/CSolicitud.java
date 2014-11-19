@@ -567,6 +567,10 @@ public class CSolicitud extends CGenerico {
 					BitacoraEvento bitacoraEvento = servicioBitacoraEvento
 							.buscarPorEstadoYPlanilla(estadoDefecto,
 									planillaEvento);
+					if (bitacoraEvento == null)
+						bitacoraEvento = servicioBitacoraEvento
+								.buscarPorEstadoYPlanilla("Planilla Aprobada",
+										planillaEvento);
 					bitacoraEvento.setEstado(estadoNuevo);
 					bitacoraEvento.setFechaCambio(fechaHora);
 					bitacoraEvento.setHoraAuditoria(horaAuditoria);
@@ -656,6 +660,10 @@ public class CSolicitud extends CGenerico {
 					BitacoraUniforme bitacoraUniforme = servicioBitacoraUniforme
 							.buscarPorEstadoYPlanilla(estadoDefecto,
 									planillaUniforme);
+					if (bitacoraUniforme == null)
+						bitacoraUniforme = servicioBitacoraUniforme
+								.buscarPorEstadoYPlanilla("Planilla Aprobada",
+										planillaUniforme);
 					bitacoraUniforme.setEstado(estadoNuevo);
 					bitacoraUniforme.setFechaCambio(fechaHora);
 					bitacoraUniforme.setHoraAuditoria(horaAuditoria);
@@ -686,9 +694,9 @@ public class CSolicitud extends CGenerico {
 							planillaUniforme.getJustificacion(),
 							planillaUniforme.getContrato(), fechaHora,
 							planillaUniforme.getFechaEnvio(), horaAuditoria,
-							nombreUsuarioSesion(), "Pendiente", planillaUniforme
-									.getUsuario().getZona().getDescripcion(),
-							"Marca", "",
+							nombreUsuarioSesion(), "Pendiente",
+							planillaUniforme.getUsuario().getZona()
+									.getDescripcion(), "Marca", "",
 							planillaUniforme.getIdPlanillaUniforme(), "");
 					servicioPlanillaUniforme.guardar(nueva);
 					nueva = servicioPlanillaUniforme.buscarUltima();
@@ -726,6 +734,10 @@ public class CSolicitud extends CGenerico {
 					BitacoraPromocion bitacoraPromocion = servicioBitacoraPromocion
 							.buscarPorEstadoYPlanilla(estadoDefecto,
 									planillaPromocion);
+					if (bitacoraPromocion == null)
+						bitacoraPromocion = servicioBitacoraPromocion
+								.buscarPorEstadoYPlanilla("Planilla Aprobada",
+										planillaPromocion);
 					bitacoraPromocion.setEstado(estadoNuevo);
 					bitacoraPromocion.setFechaCambio(fechaHora);
 					bitacoraPromocion.setHoraAuditoria(horaAuditoria);
@@ -795,6 +807,10 @@ public class CSolicitud extends CGenerico {
 					BitacoraArte bitacoraArte = servicioBitacoraArte
 							.buscarPorEstadoYPlanilla(estadoDefecto,
 									planillaArte);
+					if (bitacoraArte == null)
+						bitacoraArte = servicioBitacoraArte
+								.buscarPorEstadoYPlanilla("Planilla Aprobada",
+										planillaArte);
 					bitacoraArte.setEstado(estadoNuevo);
 					bitacoraArte.setFechaCambio(fechaHora);
 					bitacoraArte.setHoraAuditoria(horaAuditoria);
@@ -853,6 +869,10 @@ public class CSolicitud extends CGenerico {
 					BitacoraCata bitacoraCata = servicioBitacoraCata
 							.buscarPorEstadoYPlanilla(estadoDefecto,
 									planillaCata);
+					if (bitacoraCata == null)
+						bitacoraCata = servicioBitacoraCata
+								.buscarPorEstadoYPlanilla("Planilla Aprobada",
+										planillaCata);
 					bitacoraCata.setEstado(estadoNuevo);
 					bitacoraCata.setFechaCambio(fechaHora);
 					bitacoraCata.setHoraAuditoria(horaAuditoria);
@@ -927,6 +947,10 @@ public class CSolicitud extends CGenerico {
 					BitacoraFachada bitacoraFachada = servicioBitacoraFachada
 							.buscarPorEstadoYPlanilla(estadoDefecto,
 									planillaFachada);
+					if (bitacoraFachada == null)
+						bitacoraFachada = servicioBitacoraFachada
+								.buscarPorEstadoYPlanilla("Planilla Aprobada",
+										planillaFachada);
 					bitacoraFachada.setEstado(estadoNuevo);
 					bitacoraFachada.setFechaCambio(fechaHora);
 					bitacoraFachada.setHoraAuditoria(horaAuditoria);
@@ -1343,8 +1367,8 @@ public class CSolicitud extends CGenerico {
 		listaBitacoras.add(bitacora);
 
 		BitacoraEvento bitacora2 = new BitacoraEvento(0, planillaEvento,
-				"Planilla Aprobada", fechaHora, fechaHora, horaAuditoria,
-				nombreUsuarioSesion(), imagen);
+				"Esperando Aprobacion de Planilla", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagen);
 		listaBitacoras.add(bitacora2);
 
 		BitacoraEvento bitacora3 = new BitacoraEvento(0, planillaEvento,
@@ -1369,8 +1393,8 @@ public class CSolicitud extends CGenerico {
 		listaBitacoras.add(bitacora);
 
 		BitacoraUniforme bitacora2 = new BitacoraUniforme(0, planillaUniforme,
-				"Planilla Aprobada", fechaHora, fechaHora, horaAuditoria,
-				nombreUsuarioSesion(), imagen);
+				"Esperando Aprobacion de Planilla", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagen);
 		listaBitacoras.add(bitacora2);
 
 		BitacoraUniforme bitacora3 = new BitacoraUniforme(0, planillaUniforme,
@@ -1396,8 +1420,9 @@ public class CSolicitud extends CGenerico {
 		listaBitacoras.add(bitacora);
 
 		BitacoraPromocion bitacora2 = new BitacoraPromocion(0,
-				planillaPromocion, "Planilla Aprobacion", fechaHora, fechaHora,
-				horaAuditoria, nombreUsuarioSesion(), imagen);
+				planillaPromocion, "Esperando Aprobacion de Planilla",
+				fechaHora, fechaHora, horaAuditoria, nombreUsuarioSesion(),
+				imagen);
 		listaBitacoras.add(bitacora2);
 
 		BitacoraPromocion bitacora3 = new BitacoraPromocion(0,
@@ -1423,8 +1448,8 @@ public class CSolicitud extends CGenerico {
 		listaBitacoras.add(bitacora);
 
 		BitacoraArte bitacora2 = new BitacoraArte(0, planillaArte,
-				"Planilla Aprobada", fechaHora, fechaHora, horaAuditoria,
-				nombreUsuarioSesion(), imagen);
+				"Esperando Aprobacion de Planilla", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagen);
 		listaBitacoras.add(bitacora2);
 
 		BitacoraArte bitacora3 = new BitacoraArte(0, planillaArte,
@@ -1449,8 +1474,8 @@ public class CSolicitud extends CGenerico {
 		listaBitacoras.add(bitacora);
 
 		BitacoraCata bitacora2 = new BitacoraCata(0, planillaCata,
-				"Planilla Aprobada", fechaHora, fechaHora, horaAuditoria,
-				nombreUsuarioSesion(), imagen);
+				"Esperando Aprobacion de Planilla", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagen);
 		listaBitacoras.add(bitacora2);
 
 		BitacoraCata bitacora3 = new BitacoraCata(0, planillaCata,
@@ -1474,8 +1499,8 @@ public class CSolicitud extends CGenerico {
 		listaBitacoras.add(bitacora);
 
 		BitacoraFachada bitacora2 = new BitacoraFachada(0, planillaFachada,
-				"Planilla Aprobada", fechaHora, fechaHora, horaAuditoria,
-				nombreUsuarioSesion(), imagen);
+				"Esperando Aprobacion de Planilla", fechaHora, fechaHora,
+				horaAuditoria, nombreUsuarioSesion(), imagen);
 		listaBitacoras.add(bitacora2);
 
 		BitacoraFachada bitacora3 = new BitacoraFachada(0, planillaFachada,

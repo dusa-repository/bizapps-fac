@@ -477,15 +477,23 @@ public class CPromocion extends CGenerico {
 			msj.mensajeInformacion(Mensaje.camposVacios);
 			return false;
 		} else {
-			if (!Validador.validarCorreo(txtEMail.getValue())) {
-				msj.mensajeAlerta(Mensaje.correoInvalido);
+			if (!validarMax())
 				return false;
-			} else {
-				if (!Validador.validarTelefono(txtTelefono.getValue())) {
-					msj.mensajeAlerta(Mensaje.telefonoInvalido);
+			else {
+				if (!validarMax2())
 					return false;
-				} else
-					return true;
+				else {
+					if (!Validador.validarCorreo(txtEMail.getValue())) {
+						msj.mensajeAlerta(Mensaje.correoInvalido);
+						return false;
+					} else {
+						if (!Validador.validarTelefono(txtTelefono.getValue())) {
+							msj.mensajeAlerta(Mensaje.telefonoInvalido);
+							return false;
+						} else
+							return true;
+					}
+				}
 			}
 		}
 	}
@@ -615,6 +623,26 @@ public class CPromocion extends CGenerico {
 		if (Validador.validarCorreo(txtEMail.getValue()) == false) {
 			msj.mensajeAlerta(Mensaje.correoInvalido);
 		}
+	}
+
+	@Listen("onChange = #cdtMarca1")
+	public boolean validarMax2() {
+		if (cdtMarca1.getValue().length() > 499) {
+			msj.mensajeAlerta("Longitud maxima excedida (500 caracteres) en campo descripcion de marca 1");
+			tabInformacion.setSelected(true);
+			return false;
+		}
+		return true;
+	}
+
+	@Listen("onChange = #cdtMarca2")
+	public boolean validarMax() {
+		if (cdtMarca2.getValue().length() > 499) {
+			msj.mensajeAlerta("Longitud maxima excedida (500 caracteres) en campo descripcion de marca 2");
+			tabInformacion.setSelected(true);
+			return false;
+		}
+		return true;
 	}
 
 }

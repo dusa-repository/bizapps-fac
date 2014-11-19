@@ -438,9 +438,11 @@ public class CEvento extends CGenerico {
 
 		if (guardo)
 			guardarBitacora(planillaEvento, true);
-		if (envio){
+		if (envio) {
 			guardarBitacora(planillaEvento, false);
-			enviarEmail(tipoConfig, nombreUsuarioSesion(), planillaEvento.getIdPlanillaEvento(),"Eventos Especiales", usuario.getMail());
+			enviarEmail(tipoConfig, nombreUsuarioSesion(),
+					planillaEvento.getIdPlanillaEvento(), "Eventos Especiales",
+					usuario.getMail());
 		}
 
 		guardarItemsDegustacion(planillaEvento);
@@ -583,15 +585,23 @@ public class CEvento extends CGenerico {
 			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else {
-			if (!Validador.validarTelefono(txtTelefono.getValue())) {
-				msj.mensajeAlerta(Mensaje.telefonoInvalido);
+			if (!validarMax())
 				return false;
-			} else {
-				if (!validarLista()) {
-					msj.mensajeAlerta(Mensaje.faltaMarca);
+			else {
+				if (!validarMax2())
 					return false;
-				} else
-					return true;
+				else {
+					if (!Validador.validarTelefono(txtTelefono.getValue())) {
+						msj.mensajeAlerta(Mensaje.telefonoInvalido);
+						return false;
+					} else {
+						if (!validarLista()) {
+							msj.mensajeAlerta(Mensaje.faltaMarca);
+							return false;
+						} else
+							return true;
+					}
+				}
 			}
 		}
 
@@ -628,7 +638,7 @@ public class CEvento extends CGenerico {
 				.setModel(new ListModelList<ItemEstimadoPlanillaEvento>(
 						itemsEstimacionAgregados));
 
-//		recursos = servicioRecurso.buscarDisponibles(planilla);
+		// recursos = servicioRecurso.buscarDisponibles(planilla);
 		recursos = servicioRecurso.buscarTodosOrdenados();
 		ltbRecursos.setModel(new ListModelList<Recurso>(recursos));
 		recursosAgregados = servicioRecursoPlanillaEvento
@@ -936,9 +946,9 @@ public class CEvento extends CGenerico {
 				}
 			}
 		}
-//		for (int i = 0; i < listitemEliminar.size(); i++) {
-//			ltbRecursos.removeItemAt(listitemEliminar.get(i).getIndex());
-//		}
+		// for (int i = 0; i < listitemEliminar.size(); i++) {
+		// ltbRecursos.removeItemAt(listitemEliminar.get(i).getIndex());
+		// }
 		listasMultiples();
 	}
 
@@ -976,6 +986,27 @@ public class CEvento extends CGenerico {
 		if (Validador.validarTelefono(txtTelefono.getValue()) == false) {
 			msj.mensajeAlerta(Mensaje.telefonoInvalido);
 		}
+	}
+
+	@Listen("onChange = #cdtDescripcion")
+	public boolean validarMax() {
+		if (cdtDescripcion.getValue().length() > 4999) {
+			msj.mensajeAlerta("Longitud maxima excedida (5000 caracteres) "
+					+ "en campo Descripcion de Actividad");
+			tabDescripcion.setSelected(true);
+			return false;
+		}
+		return true;
+	}
+
+	@Listen("onChange = #cdtMecanica")
+	public boolean validarMax2() {
+		if (cdtMecanica.getValue().length() > 4999) {
+			msj.mensajeAlerta("Longitud maxima excedida (5000 caracteres) en campo Mecanica de Actividad");
+			tabMecanica.setSelected(true);
+			return false;
+		}
+		return true;
 	}
 
 }
