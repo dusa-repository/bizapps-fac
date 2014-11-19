@@ -29,7 +29,7 @@
 							<listcell label="${each.tipoPlanilla}">
 							</listcell>
 							<listcell>
-								<textbox tooltiptext="Ingrese la referencia de Pago"
+								<textbox maxlength="500" tooltiptext="Ingrese la referencia de Pago"
 									width="98%" />
 							</listcell>
 							<listcell>

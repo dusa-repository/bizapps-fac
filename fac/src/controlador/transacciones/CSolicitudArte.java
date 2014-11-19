@@ -475,8 +475,12 @@ public class CSolicitudArte extends CGenerico {
 				|| dspLargo.getText().compareTo("") == 0) {
 			msj.mensajeError(Mensaje.camposVacios);
 			return false;
-		} else
-			return true;
+		} else {
+			if (!validarMax())
+				return false;
+			else
+				return true;
+		}
 	}
 
 	private void cargarCombos() {
@@ -708,5 +712,15 @@ public class CSolicitudArte extends CGenerico {
 	public void limpiar4() {
 		org.zkoss.image.Image imagenUsuario1 = null;
 		imagen4.setContent(imagenUsuario1);
+	}
+
+	@Listen("onChange = #cdtLineamiento")
+	public boolean validarMax() {
+		if (cdtLineamiento.getValue().length() > 4999) {
+			msj.mensajeAlerta("Longitud maxima excedida (5000 caracteres) en campo Lineamientos");
+			tabLineamientos.setSelected(true);
+			return false;
+		}
+		return true;
 	}
 }

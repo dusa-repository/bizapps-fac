@@ -538,15 +538,23 @@ public class CCata extends CGenerico {
 			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else {
-			if (!Validador.validarCorreo(txtEMail.getValue())) {
-				msj.mensajeAlerta(Mensaje.correoInvalido);
+			if (!validarMax())
 				return false;
-			} else {
-				if (!Validador.validarTelefono(txtTelefono.getValue())) {
-					msj.mensajeAlerta(Mensaje.telefonoInvalido);
+			else {
+				if (!validarMax2())
 					return false;
-				} else
-					return true;
+				else {
+					if (!Validador.validarCorreo(txtEMail.getValue())) {
+						msj.mensajeAlerta(Mensaje.correoInvalido);
+						return false;
+					} else {
+						if (!Validador.validarTelefono(txtTelefono.getValue())) {
+							msj.mensajeAlerta(Mensaje.telefonoInvalido);
+							return false;
+						} else
+							return true;
+					}
+				}
 			}
 		}
 	}
@@ -575,9 +583,8 @@ public class CCata extends CGenerico {
 		ltbProductosAgregados.setModel(new ListModelList<ItemPlanillaCata>(
 				itemsAgregados));
 
-
 		recursos = servicioRecurso.buscarTodosOrdenados();
-//		recursos = servicioRecurso.buscarDisponibles(planilla);
+		// recursos = servicioRecurso.buscarDisponibles(planilla);
 		ltbRecursos.setModel(new ListModelList<Recurso>(recursos));
 		recursosAgregados = servicioRecursoPlanillaCata
 				.buscarPorPlanilla(planilla);
@@ -793,9 +800,9 @@ public class CCata extends CGenerico {
 				}
 			}
 		}
-//		for (int i = 0; i < listitemEliminar.size(); i++) {
-//			ltbRecursos.removeItemAt(listitemEliminar.get(i).getIndex());
-//		}
+		// for (int i = 0; i < listitemEliminar.size(); i++) {
+		// ltbRecursos.removeItemAt(listitemEliminar.get(i).getIndex());
+		// }
 		listasMultiples();
 	}
 
@@ -836,6 +843,26 @@ public class CCata extends CGenerico {
 		if (Validador.validarCorreo(txtEMail.getValue()) == false) {
 			msj.mensajeAlerta(Mensaje.correoInvalido);
 		}
+	}
+
+	@Listen("onChange = #cdtMecanica")
+	public boolean validarMax2() {
+		if (cdtMecanica.getValue().length() > 4999) {
+			msj.mensajeAlerta("Longitud maxima excedida (5000 caracteres) en campo Mecanica de Actividad");
+			tabMecanica.setSelected(true);
+			return false;
+		}
+		return true;
+	}
+
+	@Listen("onChange = #cdtDescripcion")
+	public boolean validarMax() {
+		if (cdtDescripcion.getValue().length() > 4999) {
+			msj.mensajeAlerta("Longitud maxima excedida (5000 caracteres) en campo Descripcion de Actividad");
+			tabDescripcion.setSelected(true);
+			return false;
+		}
+		return true;
 	}
 
 }

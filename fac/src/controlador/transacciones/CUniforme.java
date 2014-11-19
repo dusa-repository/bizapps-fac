@@ -394,7 +394,8 @@ public class CUniforme extends CGenerico {
 		if (envio) {
 			guardarBitacora(planillaUniforme, false);
 			enviarEmail(tipoConfig, nombreUsuarioSesion(),
-					planillaUniforme.getIdPlanillaUniforme(), "Uniformes", usuario.getMail());
+					planillaUniforme.getIdPlanillaUniforme(), "Uniformes",
+					usuario.getMail());
 		}
 
 		guardarUniformes(planillaUniforme);
@@ -501,20 +502,25 @@ public class CUniforme extends CGenerico {
 			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else {
-			if (!Validador.validarCorreo(txtEMail.getValue())) {
-				msj.mensajeAlerta(Mensaje.correoInvalido);
+			if (!validarMax2())
 				return false;
-			} else {
-				if (!Validador.validarTelefono(txtTelefono.getValue())) {
-					msj.mensajeAlerta(Mensaje.telefonoInvalido);
+			else {
+				if (!Validador.validarCorreo(txtEMail.getValue())) {
+					msj.mensajeAlerta(Mensaje.correoInvalido);
 					return false;
 				} else {
-					if (!validarLista()) {
-						msj.mensajeAlerta(Mensaje.faltaCampoLista);
+					if (!Validador.validarTelefono(txtTelefono.getValue())) {
+						msj.mensajeAlerta(Mensaje.telefonoInvalido);
 						return false;
+					} else {
+						if (!validarLista()) {
+							msj.mensajeAlerta(Mensaje.faltaCampoLista);
+							return false;
+						}
+						return true;
 					}
-					return true;
 				}
+
 			}
 		}
 	}
@@ -535,7 +541,7 @@ public class CUniforme extends CGenerico {
 	private void llenarListas() {
 		PlanillaUniforme planilla = servicioPlanillaUniforme.buscar(id);
 		uniformes = servicioUniforme.buscarTodosOrdenados();
-//		uniformes = servicioUniforme.buscarDisponibles(planilla);
+		// uniformes = servicioUniforme.buscarDisponibles(planilla);
 		ltbUniformes.setModel(new ListModelList<Uniforme>(uniformes));
 		uniformesAgregados = servicioUniformePlanillaUniforme
 				.buscarPorPlanilla(planilla);
@@ -606,9 +612,9 @@ public class CUniforme extends CGenerico {
 				}
 			}
 		}
-//		for (int i = 0; i < listitemEliminar.size(); i++) {
-//			ltbUniformes.removeItemAt(listitemEliminar.get(i).getIndex());
-//		}
+		// for (int i = 0; i < listitemEliminar.size(); i++) {
+		// ltbUniformes.removeItemAt(listitemEliminar.get(i).getIndex());
+		// }
 		listasMultiples();
 	}
 
@@ -761,5 +767,15 @@ public class CUniforme extends CGenerico {
 		if (Validador.validarCorreo(txtEMail.getValue()) == false) {
 			msj.mensajeAlerta(Mensaje.correoInvalido);
 		}
+	}
+
+	@Listen("onChange = #cdtJustificacion")
+	public boolean validarMax2() {
+		if (cdtJustificacion.getValue().length() > 4999) {
+			msj.mensajeAlerta("Longitud maxima excedida (5000 caracteres) en campo Justificacion del Contrato");
+			tabJustificacion.setSelected(true);
+			return false;
+		}
+		return true;
 	}
 }

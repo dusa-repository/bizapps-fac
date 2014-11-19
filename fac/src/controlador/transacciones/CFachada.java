@@ -619,15 +619,23 @@ public class CFachada extends CGenerico {
 			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else {
-			if (!Validador.validarCorreo(txtEmail.getValue())) {
-				msj.mensajeAlerta(Mensaje.correoInvalido);
+			if (!validarMax())
 				return false;
-			} else {
-				if (!Validador.validarTelefono(txtTelefono.getValue())) {
-					msj.mensajeAlerta(Mensaje.correoInvalido);
+			else {
+				if (!validarMax2())
 					return false;
-				} else
-					return true;
+				else {
+					if (!Validador.validarCorreo(txtEmail.getValue())) {
+						msj.mensajeAlerta(Mensaje.correoInvalido);
+						return false;
+					} else {
+						if (!Validador.validarTelefono(txtTelefono.getValue())) {
+							msj.mensajeAlerta(Mensaje.correoInvalido);
+							return false;
+						} else
+							return true;
+					}
+				}
 			}
 		}
 	}
@@ -635,7 +643,7 @@ public class CFachada extends CGenerico {
 	private void llenarListas() {
 		PlanillaFachada planilla = servicioPlanillaFachada.buscar(id);
 
-//		recursos = servicioRecurso.buscarDisponiblesFachada(planilla);
+		// recursos = servicioRecurso.buscarDisponiblesFachada(planilla);
 		recursos = servicioRecurso.buscarTodosOrdenados();
 		ltbRecursos.setModel(new ListModelList<Recurso>(recursos));
 		recursosAgregados = servicioRecursoPlanillaFachada
@@ -721,9 +729,9 @@ public class CFachada extends CGenerico {
 				}
 			}
 		}
-//		for (int i = 0; i < listitemEliminar.size(); i++) {
-//			ltbRecursos.removeItemAt(listitemEliminar.get(i).getIndex());
-//		}
+		// for (int i = 0; i < listitemEliminar.size(); i++) {
+		// ltbRecursos.removeItemAt(listitemEliminar.get(i).getIndex());
+		// }
 		listasMultiples();
 	}
 
@@ -997,6 +1005,26 @@ public class CFachada extends CGenerico {
 	public void limpiar4() {
 		org.zkoss.image.Image imagenUsuario1 = null;
 		imagen4.setContent(imagenUsuario1);
+	}
+
+	@Listen("onChange = #cdtJustificacion")
+	public boolean validarMax2() {
+		if (cdtJustificacion.getValue().length() > 4999) {
+			msj.mensajeAlerta("Longitud maxima excedida (5000 caracteres) en campo Justificacion de la Inversion");
+			tabJustificacion.setSelected(true);
+			return false;
+		}
+		return true;
+	}
+
+	@Listen("onChange = #cdtDescripcion")
+	public boolean validarMax() {
+		if (cdtDescripcion.getValue().length() > 4999) {
+			msj.mensajeAlerta("Longitud maxima excedida (5000 caracteres) en campo Descripcion de Actividad");
+			tabDescripcion.setSelected(true);
+			return false;
+		}
+		return true;
 	}
 
 }
