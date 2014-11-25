@@ -25,12 +25,12 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Image;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Window;
 
 import componente.Validador;
-
 import controlador.maestros.CGenerico;
 
 public class CCruds extends CGenerico {
@@ -65,19 +65,15 @@ public class CCruds extends CGenerico {
 	private Image imagenes;
 	@Wire
 	private Listbox ltbRoles;
-	
+	@Wire
+	private Label lblCrud;
+
 	URL url = getClass().getResource("/controlador/maestros/usuario.png");
-	
-	
+
 	private static final long serialVersionUID = 4411078183725965182L;
 
 	@Override
 	public void inicializar() throws IOException {
-		// TODO Auto-generated method stub
-//		if(Executions.getCurrent().getBrowser().equals("gecko")){
-//			wdwCruds.setWidth("106em");
-//			wdwCruds.setHeight("50em");
-//		}
 		Authentication authe = SecurityContextHolder.getContext()
 				.getAuthentication();
 
@@ -85,7 +81,7 @@ public class CCruds extends CGenerico {
 
 		List<Grupo> grupos = servicioGrupo.buscarGruposUsuario(u);
 		ltbRoles.setModel(new ListModelList<Grupo>(grupos));
-		
+
 		if (u.getImagen() == null) {
 			imagenes.setContent(new AImage(url));
 		} else {
@@ -162,18 +158,26 @@ public class CCruds extends CGenerico {
 				}
 			}
 		}
+		if (valor.equals(""))
+			lblCrud.setValue("Entorno: No especificado");
+		else {
+			if (valor.equals("Marca"))
+				lblCrud.setValue("Entorno: MARCA");
+			else
+				lblCrud.setValue("Entorno: TRADE MARKETING");
+		}
 	}
-	
+
 	@Listen("onClick = #btnCerrar")
-	public void cerrar(){
+	public void cerrar() {
 		cerrarVentana(wdwCruds);
 	}
-	
+
 	@Listen("onClick = #lblEditarCuenta")
-	public void abrirVentana(){
+	public void abrirVentana() {
 		Window window = (Window) Executions.createComponents(
 				"/vistas/seguridad/VEditarUsuario.zul", null, null);
-				window.doModal();
+		window.doModal();
 	}
 
 }

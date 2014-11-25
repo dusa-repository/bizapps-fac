@@ -45,7 +45,6 @@ import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
 import componente.Validador;
-
 import controlador.maestros.CGenerico;
 
 public class CUniforme extends CGenerico {
@@ -187,6 +186,10 @@ public class CUniforme extends CGenerico {
 				catalogoGenerico = null;
 				fechaInbox = null;
 				llenarListas();
+				limpiarColores(txtCiudad, txtNombre, txtCosto, txtDireccion,
+						txtEMail, txtNombreActividad, txtTelefono, txtRif,
+						cmbMarcaSugerida, txtCliente, cmbActividad,
+						cmbMarcaSugerida, cmbLogo);
 
 			}
 
@@ -303,6 +306,8 @@ public class CUniforme extends CGenerico {
 				map.clear();
 				map = null;
 			}
+		} else {
+			dtbActividad.setConstraint("no past");
 		}
 		cargarCombos();
 		llenarListas();
@@ -378,11 +383,14 @@ public class CUniforme extends CGenerico {
 			planillaUniforme = servicioPlanillaUniforme.buscarUltima();
 
 		if (inbox) {
+			String origen = "TRADE MARKETING";
+			if (tipoConfig.equals("Marca"))
+				origen = "MARCA";
 			PlanillaGenerica planillita = new PlanillaGenerica(
 					planillaUniforme.getIdPlanillaUniforme(),
 					usuario.getNombre(), marca.getDescripcion(),
 					nombreActividad, planillaUniforme.getFechaEnvio(), string,
-					"Uniformes");
+					"Uniformes", origen);
 			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
 			listaGenerica.add(indice, planillita);
@@ -499,6 +507,17 @@ public class CUniforme extends CGenerico {
 				|| cdtJustificacion.getValue().compareTo("") == 0
 				|| dtbActividad.getText().compareTo("") == 0
 				|| (!rdoNo.isChecked() && !rdoSi.isChecked())) {
+			tabDatos.setSelected(true);
+			aplicarColores(txtCiudad, txtNombre, txtCosto, txtDireccion,
+					txtEMail, txtNombreActividad, txtTelefono, txtRif,
+					cmbMarcaSugerida, txtCliente, cmbActividad,
+					cmbMarcaSugerida, cmbLogo);
+			if (cdtJustificacion.getValue().compareTo("") == 0)
+				tabJustificacion.setSelected(true);
+			if (!rdoNo.isChecked() && !rdoSi.isChecked()) {
+				rdoSi.setFocus(true);
+				tabJustificacion.setSelected(true);
+			}
 			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else {

@@ -25,12 +25,12 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Image;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Window;
 
 import componente.Validador;
-
 import controlador.maestros.CGenerico;
 
 public class CInbox extends CGenerico {
@@ -52,7 +52,9 @@ public class CInbox extends CGenerico {
 	private Button btnPagada;
 	@Wire
 	private Button btnFinalizada;
-	
+	@Wire
+	private Label lblInbox;
+
 	@Wire
 	private Image imagenes;
 	@Wire
@@ -66,7 +68,6 @@ public class CInbox extends CGenerico {
 	int rechazada = 0;
 	int edicion = 0;
 	int pagadas = 0;
-	
 
 	boolean coordinador = false;
 
@@ -82,12 +83,11 @@ public class CInbox extends CGenerico {
 					.buscarCantidadPorCoordinadorYEstado(nombreUsuarioSesion(),
 							"Pagada");
 		else
-			pagadas = servicioPlanillaGenerica
-					.buscarCantidadPorUsuarioYEstado(
-							usuarioSesion(nombreUsuarioSesion()), "Pagada");
+			pagadas = servicioPlanillaGenerica.buscarCantidadPorUsuarioYEstado(
+					usuarioSesion(nombreUsuarioSesion()), "Pagada");
 		return pagadas;
 	}
-	
+
 	public int getRechazada() {
 		if (buscarCoordinador())
 			rechazada = servicioPlanillaGenerica
@@ -161,10 +161,6 @@ public class CInbox extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-//		if(Executions.getCurrent().getBrowser().equals("gecko")){
-//			wdwInbox.setWidth("106em");
-//			wdwInbox.setHeight("50em");
-//		}
 		btnPendiente.setSrc("/public/imagenes/botones/pendiente.png");
 		btnAprobada.setSrc("/public/imagenes/botones/procesada.png");
 		btnCancelada.setSrc("/public/imagenes/botones/cancelada.png");
@@ -255,6 +251,14 @@ public class CInbox extends CGenerico {
 					}
 				}
 			}
+		}
+		if (valor.equals(""))
+			lblInbox.setValue("Entorno: No especificado");
+		else {
+			if (valor.equals("Marca"))
+				lblInbox.setValue("Entorno: MARCA");
+			else
+				lblInbox.setValue("Entorno: TRADE MARKETING");
 		}
 	}
 

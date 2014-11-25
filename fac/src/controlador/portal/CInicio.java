@@ -36,13 +36,13 @@ import org.zkoss.zul.Borderlayout;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Image;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 import componente.Validador;
-
 import controlador.maestros.CGenerico;
 
 public class CInicio extends CGenerico {
@@ -70,6 +70,8 @@ public class CInicio extends CGenerico {
 	private Button btnActualizar;
 	@Wire
 	private Image imagenes;
+	@Wire
+	private Label lblEntorno;
 	private String tipo = "";
 	List<Button> botonesAgregados = new ArrayList<Button>();
 	@Wire
@@ -81,19 +83,7 @@ public class CInicio extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-//		if (Executions.getCurrent().getBrowser().equals("gecko")) {
-//			wdwInicio.setWidth("106em");
-//			wdwInicio.setHeight("50em");
-//		}
-		// System.out.println(page);
-		// System.out.println("book"+Executions.getCurrent().getDesktop().getPages());
-		// Clients.evalJavaScript("document.body.style.zoom='200%'");
-		// document.body.style.transform= 'scale(2)';
-		// Clients.evalJavaScript("document.body.style.MozTransform = 'scale(0.75)';");
-		// Clients.evalJavaScript("document.body.style.webkitTransform ='200%'");
-		// Clients.evalJavaScript("document.body.style.msTransform = '200%'");
-		// Executions.getCurrent().getDesktop().setBookmark("/vistas/inicio.zul");
-		// ;
+		Clients.confirmClose("Mensaje de la Aplicacion:");
 		Authentication authe = SecurityContextHolder.getContext()
 				.getAuthentication();
 
@@ -132,11 +122,6 @@ public class CInicio extends CGenerico {
 		Out(btnSolicitudArte, "planillaP");
 		Over(btnUniforme, "planillaG");
 		Out(btnUniforme, "planillaP");
-
-		// String ruta = "/vistas/componentes/VPrincipal.zul";
-		// include.setSrc(null);
-
-		// include.setSrc("/vistas/componentes/VPrincipal.zul");
 
 		if (u.getImagen() == null) {
 			imagenes.setContent(new AImage(url));
@@ -232,8 +217,12 @@ public class CInicio extends CGenerico {
 		} else {
 			if (SecurityUtil.isAnyGranted("TRADE MARKETING"))
 				trade();
-			else if (SecurityUtil.isAnyGranted("MARCA"))
-				marca();
+			else {
+				if (SecurityUtil.isAnyGranted("MARCA"))
+					marca();
+				else
+					lblEntorno.setValue("Entorno: No especificado");
+			}
 		}
 	}
 
@@ -270,14 +259,23 @@ public class CInicio extends CGenerico {
 		List<Configuracion> configuracion = servicioConfiguracion
 				.buscar("Marca");
 		tipo = "Marca";
+		asignarLabel(tipo);
 		recorrer(configuracion);
 
+	}
+
+	public void asignarLabel(String tipo2) {
+		if (tipo2.equals("Marca"))
+			lblEntorno.setValue("Entorno: MARCA");
+		else
+			lblEntorno.setValue("Entorno: TRADE MARKETING");
 	}
 
 	public void trade() {
 		List<Configuracion> configuracion = servicioConfiguracion
 				.buscar("TradeMark");
 		recorrer(configuracion);
+		asignarLabel(tipo);
 		tipo = "TradeMark";
 	}
 
@@ -294,9 +292,9 @@ public class CInicio extends CGenerico {
 				botonesAgregados.get(i).setVisible(false);
 		}
 	}
-	
+
 	@Listen("onClick=#btnActualizar")
-	public void actualizar(){
+	public void actualizar() {
 		Executions.sendRedirect("/vistas/inicio.zul");
 	}
 }

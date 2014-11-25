@@ -1,28 +1,33 @@
 package modelo.generico;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class PlanillaGenerica {
-	
+public class PlanillaGenerica implements Serializable {
+
+	private static final long serialVersionUID = 1249802409335426664L;
+
 	private long id;
-	
+
 	private String usuario;
 
 	private String marca;
-	
+
 	private String nombreActividad;
-	
+
 	private Timestamp fecha;
-	
+
 	private String estado;
-	
+
 	private String tipoPlanilla;
-	
+
 	private String referencia;
-	
+
 	private String motivo;
+
+	private String origen;
 
 	public PlanillaGenerica() {
 		super();
@@ -31,7 +36,7 @@ public class PlanillaGenerica {
 
 	public PlanillaGenerica(long id, String usuario, String marca,
 			String nombreActividad, Timestamp fecha, String estado,
-			String tipoPlanilla) {
+			String tipoPlanilla, String origen) {
 		super();
 		this.id = id;
 		this.usuario = usuario;
@@ -40,6 +45,7 @@ public class PlanillaGenerica {
 		this.fecha = fecha;
 		this.estado = estado;
 		this.tipoPlanilla = tipoPlanilla;
+		this.origen = origen;
 	}
 
 	public long getId() {
@@ -97,8 +103,6 @@ public class PlanillaGenerica {
 	public void setTipoPlanilla(String tipoPlanilla) {
 		this.tipoPlanilla = tipoPlanilla;
 	}
-	
-
 
 	public String getReferencia() {
 		return referencia;
@@ -120,5 +124,13 @@ public class PlanillaGenerica {
 	public void setMotivo(String motivo) {
 		this.motivo = motivo;
 	}
-	
+
+	public String getOrigen() {
+		return origen;
+	}
+
+	public void setOrigen(String origen) {
+		this.origen = origen;
+	}
+
 }

@@ -144,7 +144,7 @@
 											<space />
 											<label value="*" style="font-weight:bold;color:red" />
 										</hbox>
-										<textbox id="txtTelefono" hflex="1" width="90%"
+										<textbox id="txtTelefono" hflex="1" placeholder="0426-9999999"  width="90%"
 											maxlength="500" tooltiptext="Ingrese el Telefono  (0426-9999999)" />
 									</hbox>
 									<hbox>
@@ -153,7 +153,7 @@
 											<space />
 											<label value="*" style="font-weight:bold;color:red" />
 										</hbox>
-										<textbox id="txtEMail" hflex="1" maxlength="500"
+										<textbox id="txtEMail" hflex="1" maxlength="500" placeholder="ejemplo@gmail.com"
 											tooltiptext="Ingrese el E-Mail (ejemplo@gmail.com)" />
 									</hbox>
 								</row>

@@ -200,11 +200,12 @@
 							<space />
 							<space />
 							<vbox>
-								<image style="border: 1px outset #A0A0A0;" id="imagen1"
-									width="190px" height="190px" />
+								<image tooltiptext="Tamaños permitidos: Minimo 512KB y Maximo 2MB  &#x0d;Formatos permitidos: .png y .jpeg"
+									style="border: 1px outset #A0A0A0;" id="imagen1" width="190px"
+									height="190px" />
 								<space />
 								<fileupload image="/public/imagenes/botones/cargar.png"
-									id="fudImagen1" label="Cargar Imagen" width="150px" >
+									id="fudImagen1" label="Cargar Imagen" width="150px">
 								</fileupload>
 								<button id="btnRemover1" label="Remover Imagen"
 									tooltiptext="Presione para Remover la Imagen" image="/public/imagenes/botones/quitar.png" />
@@ -215,8 +216,9 @@
 							<space />
 							<space />
 							<vbox>
-								<image style="border: 1px outset #A0A0A0;" id="imagen2"
-									width="190px" height="190px" />
+								<image tooltiptext="Tamaños permitidos: Minimo 512KB y Maximo 2MB &#x0d;Formatos permitidos: .png y .jpeg"
+									style="border: 1px outset #A0A0A0;" id="imagen2" width="190px"
+									height="190px" />
 
 								<space />
 								<fileupload image="/public/imagenes/botones/cargar.png"
@@ -231,8 +233,9 @@
 							<space />
 							<space />
 							<vbox>
-								<image style="border: 1px outset #A0A0A0;" id="imagen3"
-									width="190px" height="190px" />
+								<image tooltiptext="Tamaños permitidos: Minimo 512KB y Maximo 2MB &#x0d;Formatos permitidos: .png y .jpeg"
+									style="border: 1px outset #A0A0A0;" id="imagen3" width="190px"
+									height="190px" />
 								<space />
 								<fileupload image="/public/imagenes/botones/cargar.png"
 									id="fudImagen3" label="Cargar Imagen" width="150px">
@@ -246,8 +249,9 @@
 							<space />
 							<space />
 							<vbox>
-								<image style="border: 1px outset #A0A0A0;" id="imagen4"
-									width="190px" height="190px" />
+								<image tooltiptext="Tamaños permitidos: Minimo 512KB y Maximo 2MB  &#x0d;Formatos permitidos: .png y .jpeg"
+									style="border: 1px outset #A0A0A0;" id="imagen4" width="190px"
+									height="190px" />
 								<space />
 								<fileupload image="/public/imagenes/botones/cargar.png"
 									id="fudImagen4" label="Cargar Imagen" width="150px">

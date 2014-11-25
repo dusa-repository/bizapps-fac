@@ -49,7 +49,6 @@ import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
 import componente.Validador;
-
 import controlador.maestros.CGenerico;
 
 public class CEvento extends CGenerico {
@@ -204,6 +203,10 @@ public class CEvento extends CGenerico {
 				tabDatos.setSelected(true);
 				tmbHora.setValue(fecha);
 				id = 0;
+				limpiarColores(txtCiudad, txtContacto, txtCosto, txtDireccion,
+						cmbRegion, txtNombreActividad, txtTelefono, cmbMedio,
+						cmbMarcaSugerida, cmbVenta, cmbTarget,
+						cmbNivelEconomico, cmbTarget, spnPersonas);
 				llenarListas();
 				usuarioEditador = null;
 				estadoInbox = "";
@@ -345,6 +348,9 @@ public class CEvento extends CGenerico {
 				map = null;
 				editar = false;
 			}
+		} else {
+			dtbFin.setConstraint("no past");
+			dtbInicio.setConstraint("no past");
 		}
 		cargarCombos();
 		llenarListas();
@@ -425,11 +431,14 @@ public class CEvento extends CGenerico {
 			planillaEvento = servicioPlanillaEvento.buscarUltima();
 
 		if (inbox) {
+			String origen = "TRADE MARKETING";
+			if (tipoConfig.equals("Marca"))
+				origen = "MARCA";
 			PlanillaGenerica planillita = new PlanillaGenerica(
 					planillaEvento.getIdPlanillaEvento(), usuario.getNombre(),
 					marca.getDescripcion(), nombreActividad,
 					planillaEvento.getFechaEnvio(), string,
-					"Eventos Especiales");
+					"Eventos Especiales", origen);
 			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
 			listaGenerica.add(indice, planillita);
@@ -580,8 +589,16 @@ public class CEvento extends CGenerico {
 				|| cdtMecanica.getValue().compareTo("") == 0
 				|| dtbFin.getText().compareTo("") == 0
 				|| dtbInicio.getText().compareTo("") == 0
-				|| tmbHora.getText().compareTo("") == 0
-				|| spnPersonas.getText().compareTo("") == 0) {
+				|| tmbHora.getText().compareTo("") == 0) {
+			tabDatos.setSelected(true);
+			aplicarColores(txtCiudad, txtContacto, txtCosto, txtDireccion,
+					cmbRegion, txtNombreActividad, txtTelefono, cmbMedio,
+					cmbMarcaSugerida, cmbVenta, cmbTarget, cmbNivelEconomico,
+					cmbTarget);
+			if (cdtDescripcion.getValue().compareTo("") == 0)
+				tabDescripcion.setSelected(true);
+			if (cdtMecanica.getValue().compareTo("") == 0)
+				tabMecanica.setSelected(true);
 			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else {

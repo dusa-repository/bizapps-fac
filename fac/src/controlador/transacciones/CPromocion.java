@@ -38,7 +38,6 @@ import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
 import componente.Validador;
-
 import controlador.maestros.CGenerico;
 
 public class CPromocion extends CGenerico {
@@ -181,6 +180,11 @@ public class CPromocion extends CGenerico {
 				tipoInbox = "";
 				inbox = false;
 				id = 0;
+				limpiarColores(txtNombreLocal, txtNombreActividad, txtCiudad,
+						txtRif, txtCosto, txtDireccion, txtEMail, txtEstado,
+						txtLocal, txtResponsablePDV, txtTelefono, cmbActividad,
+						cmbExtra, cmbFrecuencia, cmbMarca1, cmbMarca2,
+						cmbModalidad, cmbPop);
 				listaGenerica = null;
 				planillaGenerica = null;
 				catalogoGenerico = null;
@@ -294,6 +298,9 @@ public class CPromocion extends CGenerico {
 				map.clear();
 				map = null;
 			}
+		} else {
+			dtbFin.setConstraint("no past");
+			dtbInicio.setConstraint("no past");
 		}
 		cargarCombos();
 	}
@@ -372,11 +379,14 @@ public class CPromocion extends CGenerico {
 			planillaPromocion = servicioPlanillaPromocion.buscarUltima();
 
 		if (inbox) {
+			String origen = "TRADE MARKETING";
+			if (tipoConfig.equals("Marca"))
+				origen = "MARCA";
 			PlanillaGenerica planillita = new PlanillaGenerica(
 					planillaPromocion.getIdPlanillaPromocion(),
 					usuario.getNombre(), marca1.getDescripcion(),
 					nombreActividad, planillaPromocion.getFechaEnvio(), string,
-					"Promociones de Marca");
+					"Promociones de Marca", origen);
 			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
 			listaGenerica.add(indice, planillita);
@@ -474,6 +484,15 @@ public class CPromocion extends CGenerico {
 				|| cmbMarca1.getText().compareTo("") == 0
 				|| cdtMarca1.getValue().compareTo("") == 0
 				|| cdtMarca2.getValue().compareTo("") == 0) {
+			tabDatos.setSelected(true);
+			aplicarColores(txtNombreLocal, txtNombreActividad, txtCiudad,
+					txtRif, txtCosto, txtDireccion, txtEMail, txtEstado,
+					txtLocal, txtResponsablePDV, txtTelefono, cmbActividad,
+					cmbExtra, cmbFrecuencia, cmbMarca1, cmbMarca2,
+					cmbModalidad, cmbPop);
+			if (cdtMarca1.getValue().compareTo("") == 0
+					|| cdtMarca2.getValue().compareTo("") == 0)
+				tabInformacion.setSelected(true);
 			msj.mensajeInformacion(Mensaje.camposVacios);
 			return false;
 		} else {

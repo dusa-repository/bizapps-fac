@@ -24,10 +24,14 @@ import modelo.seguridad.Usuario;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.HtmlBasedComponent;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
+import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
+import org.zkoss.zul.impl.InputElement;
 
 import servicio.estado.SBitacoraArte;
 import servicio.estado.SBitacoraCata;
@@ -61,7 +65,6 @@ import servicio.transacciones.SRecursoPlanillaCata;
 import servicio.transacciones.SRecursoPlanillaEvento;
 import servicio.transacciones.SRecursoPlanillaFachada;
 import servicio.transacciones.SUniformePlanillaUniforme;
-
 import componente.Mensaje;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
@@ -282,6 +285,25 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	class SMTPAuthenticator extends javax.mail.Authenticator {
 		public PasswordAuthentication getPasswordAuthentication() {
 			return new PasswordAuthentication("cdusa", "cartucho");
+		}
+	}
+
+	public void limpiarColores(InputElement... cajas) {
+		for (int i = 0; i < cajas.length; i++) {
+			cajas[i].setStyle("border-color:default");
+			if (cajas[i] instanceof Combobox)
+				cajas[i].setStyle("border: 1px solid default");
+		}
+	}
+
+	public void aplicarColores(InputElement... cajas) {
+		limpiarColores(cajas);
+		for (int i = 0; i < cajas.length; i++) {
+			if (cajas[i].getText().compareTo("") == 0)
+				cajas[i].setStyle("border-color:red");
+			if (cajas[i] instanceof Combobox)
+				if (((Combobox) cajas[i]).getSelectedItem() == null)
+					cajas[i].setStyle("border: 1px solid red");
 		}
 	}
 }
