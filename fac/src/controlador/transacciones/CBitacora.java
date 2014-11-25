@@ -1,7 +1,13 @@
 package controlador.transacciones;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import modelo.estado.BitacoraArte;
@@ -26,7 +32,6 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Window;
 
 import componente.Botonera;
-
 import controlador.maestros.CGenerico;
 
 public class CBitacora extends CGenerico {
@@ -118,6 +123,16 @@ public class CBitacora extends CGenerico {
 		if (map != null) {
 			if (map.get("id") != null) {
 				tipo = (String) map.get("tipoPlanilla");
+				// SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				// Date fechaExtremo = new Date();
+				// try {
+				// fechaExtremo = sdf.parse("31/12/2099");
+				// } catch (ParseException e) {
+				// // TODO Auto-generated catch block
+				// e.printStackTrace();
+				// }
+				// Timestamp fechaBitacoron = new
+				// Timestamp(fechaExtremo.getTime());
 				switch (tipo) {
 				case "Eventos Especiales": {
 					PlanillaEvento planilla = servicioPlanillaEvento
@@ -128,6 +143,17 @@ public class CBitacora extends CGenerico {
 							planilla.getEstado());
 					List<BitacoraEvento> listaBitacoras = servicioBitacoraEvento
 							.buscarPorPlanilla(planilla);
+					for (Iterator<BitacoraEvento> iterator = listaBitacoras
+							.iterator(); iterator.hasNext();) {
+						BitacoraEvento bitacoraEvento = (BitacoraEvento) iterator
+								.next();
+						if (bitacoraEvento.getImagen() != null)
+							if (bitacoraEvento.getImagen().length == 2831) {
+								bitacoraEvento.setUsuarioAuditoria("");
+								bitacoraEvento.setFechaCambio(null);
+							}
+
+					}
 					ltbBitacora.setModel(new ListModelList<BitacoraEvento>(
 							listaBitacoras));
 				}
@@ -141,6 +167,17 @@ public class CBitacora extends CGenerico {
 							planilla.getEstado());
 					List<BitacoraUniforme> listaBitacoras = servicioBitacoraUniforme
 							.buscarPorPlanilla(planilla);
+					for (Iterator<BitacoraUniforme> iterator = listaBitacoras
+							.iterator(); iterator.hasNext();) {
+						BitacoraUniforme bitacoraUniforme = (BitacoraUniforme) iterator
+								.next();
+						if (bitacoraUniforme.getImagen() != null)
+							if (bitacoraUniforme.getImagen().length == 2831) {
+								bitacoraUniforme.setUsuarioAuditoria("");
+								bitacoraUniforme.setFechaCambio(null);
+							}
+
+					}
 					ltbBitacora.setModel(new ListModelList<BitacoraUniforme>(
 							listaBitacoras));
 				}
@@ -151,9 +188,20 @@ public class CBitacora extends CGenerico {
 					settear(planilla.getNombreActividad(),
 							planilla.getUsuarioAuditoria(), planilla
 									.getMarcaA().getDescripcion(),
-									"Promociones de Marca", planilla.getEstado());
+							"Promociones de Marca", planilla.getEstado());
 					List<BitacoraPromocion> listaBitacoras = servicioBitacoraPromocion
 							.buscarPorPlanilla(planilla);
+					for (Iterator<BitacoraPromocion> iterator = listaBitacoras
+							.iterator(); iterator.hasNext();) {
+						BitacoraPromocion bitacoraPromocion = (BitacoraPromocion) iterator
+								.next();
+						if (bitacoraPromocion.getImagen() != null)
+							if (bitacoraPromocion.getImagen().length == 2831) {
+								bitacoraPromocion.setUsuarioAuditoria("");
+								bitacoraPromocion.setFechaCambio(null);
+							}
+
+					}
 					ltbBitacora.setModel(new ListModelList<BitacoraPromocion>(
 							listaBitacoras));
 				}
@@ -163,10 +211,21 @@ public class CBitacora extends CGenerico {
 							.buscar((Long) map.get("id"));
 					settear(planilla.getNombreActividad(),
 							planilla.getUsuarioAuditoria(), planilla.getMarca()
-									.getDescripcion(),"Solicitud de Arte y Publicaciones",
+									.getDescripcion(),
+							"Solicitud de Arte y Publicaciones",
 							planilla.getEstado());
 					List<BitacoraArte> listaBitacoras = servicioBitacoraArte
 							.buscarPorPlanilla(planilla);
+					for (Iterator<BitacoraArte> iterator = listaBitacoras
+							.iterator(); iterator.hasNext();) {
+						BitacoraArte bitacoraArte = (BitacoraArte) iterator
+								.next();
+						if (bitacoraArte.getImagen() != null)
+							if (bitacoraArte.getImagen().length == 2831) {
+								bitacoraArte.setUsuarioAuditoria("");
+								bitacoraArte.setFechaCambio(null);
+							}
+					}
 					ltbBitacora.setModel(new ListModelList<BitacoraArte>(
 							listaBitacoras));
 				}
@@ -176,10 +235,20 @@ public class CBitacora extends CGenerico {
 							.buscar((Long) map.get("id"));
 					settear(planilla.getNombreActividad(),
 							planilla.getUsuarioAuditoria(), planilla.getMarca()
-									.getDescripcion(),"Cata Induccion",
+									.getDescripcion(), "Cata Induccion",
 							planilla.getEstado());
 					List<BitacoraCata> listaBitacoras = servicioBitacoraCata
 							.buscarPorPlanilla(planilla);
+					for (Iterator<BitacoraCata> iterator = listaBitacoras
+							.iterator(); iterator.hasNext();) {
+						BitacoraCata bitacoraCata = (BitacoraCata) iterator
+								.next();
+						if (bitacoraCata.getImagen() != null)
+							if (bitacoraCata.getImagen().length == 2831) {
+								bitacoraCata.setUsuarioAuditoria("");
+								bitacoraCata.setFechaCambio(null);
+							}
+					}
 					ltbBitacora.setModel(new ListModelList<BitacoraCata>(
 							listaBitacoras));
 				}
@@ -189,11 +258,20 @@ public class CBitacora extends CGenerico {
 							.buscar((Long) map.get("id"));
 					settear(planilla.getNombreActividad(),
 							planilla.getUsuarioAuditoria(), planilla.getMarca()
-									.getDescripcion(), "Fachada y Decoraciones",
-							planilla.getEstado());
+									.getDescripcion(),
+							"Fachada y Decoraciones", planilla.getEstado());
 					List<BitacoraFachada> listaBitacoras = servicioBitacoraFachada
 							.buscarPorPlanilla(planilla);
-					
+					for (Iterator<BitacoraFachada> iterator = listaBitacoras
+							.iterator(); iterator.hasNext();) {
+						BitacoraFachada bitacoraFachada = (BitacoraFachada) iterator
+								.next();
+						if (bitacoraFachada.getImagen() != null)
+							if (bitacoraFachada.getImagen().length == 2831) {
+								bitacoraFachada.setUsuarioAuditoria("");
+								bitacoraFachada.setFechaCambio(null);
+							}
+					}
 					ltbBitacora.setModel(new ListModelList<BitacoraFachada>(
 							listaBitacoras));
 				}

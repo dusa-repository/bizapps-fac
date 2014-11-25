@@ -144,6 +144,8 @@ public class BitacoraCata implements Serializable {
 		return imagenes;
 	}
 	public String traerFecha() {
+		if (fechaCambio == null)
+			return "";
 		DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 		return String.valueOf(formatoFecha.format(fechaCambio));
 	}

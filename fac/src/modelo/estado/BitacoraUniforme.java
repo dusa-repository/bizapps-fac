@@ -29,20 +29,20 @@ public class BitacoraUniforme implements Serializable {
 	private static final long serialVersionUID = 6099541383465636907L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_bitacora_planilla_uniforme", unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_bitacora_planilla_uniforme", unique = true, nullable = false)
 	private long idBitacora;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_planilla_uniforme")
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_planilla_uniforme")
 	private PlanillaUniforme planillaUniforme;
-	
-	@Column(name="estado_planilla",length = 500)
+
+	@Column(name = "estado_planilla", length = 500)
 	private String estado;
-	
+
 	@Column(name = "fecha_cambio")
 	private Timestamp fechaCambio;
-	
+
 	@Column(name = "fecha_auditoria")
 	private Timestamp fechaAuditoria;
 
@@ -51,7 +51,7 @@ public class BitacoraUniforme implements Serializable {
 
 	@Column(name = "usuario_auditoria", length = 50)
 	private String usuarioAuditoria;
-	
+
 	@Lob
 	private byte[] imagen;
 
@@ -62,7 +62,7 @@ public class BitacoraUniforme implements Serializable {
 
 	public BitacoraUniforme(long idBitacora, PlanillaUniforme planillaUniforme,
 			String estado, Timestamp fechaCambio, Timestamp fechaAuditoria,
-			String horaAuditoria, String usuarioAuditoria,byte[] imagen ) {
+			String horaAuditoria, String usuarioAuditoria, byte[] imagen) {
 		super();
 		this.idBitacora = idBitacora;
 		this.planillaUniforme = planillaUniforme;
@@ -137,16 +137,19 @@ public class BitacoraUniforme implements Serializable {
 	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
 	}
-	
+
 	public BufferedImage traerImagen(String Imagen) throws IOException {
-		BufferedImage imagenes;
-		imagenes = ImageIO.read(new ByteArrayInputStream(imagen));
+		BufferedImage imagenes = null;
+		if (imagen != null)
+			imagenes = ImageIO.read(new ByteArrayInputStream(imagen));
 		return imagenes;
 	}
-	
+
 	public String traerFecha() {
+		if (fechaCambio == null)
+			return "";
 		DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 		return String.valueOf(formatoFecha.format(fechaCambio));
 	}
-	
+
 }

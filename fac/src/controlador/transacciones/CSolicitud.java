@@ -639,6 +639,10 @@ public class CSolicitud extends CGenerico {
 					servicioItemDegustacionPlanillaEvento
 							.guardar(itemsDegustacionAgregados);
 					servicioRecursoPlanillaEvento.guardar(recursosAgregados);
+
+					enviarEmail("Marca", nombreUsuarioSesion(),
+							nueva.getIdPlanillaEvento(), "Eventos Especiales",
+							nueva.getUsuario().getMail());
 				}
 
 				break;
@@ -712,6 +716,9 @@ public class CSolicitud extends CGenerico {
 					}
 					servicioUniformePlanillaUniforme
 							.guardar(uniformesAgregados);
+					enviarEmail("Marca", nombreUsuarioSesion(),
+							nueva.getIdPlanillaUniforme(), "Uniformes",
+							nueva.getUsuario().getMail());
 				}
 
 				break;
@@ -787,6 +794,9 @@ public class CSolicitud extends CGenerico {
 
 					nueva = servicioPlanillaPromocion.buscarUltima();
 					bitacoraPromociones(nueva);
+					enviarEmail("Marca", nombreUsuarioSesion(),
+							nueva.getIdPlanillaPromocion(), "Promociones de Marca",
+							nueva.getUsuario().getMail());
 				}
 
 				break;
@@ -849,6 +859,9 @@ public class CSolicitud extends CGenerico {
 
 					nueva = servicioPlanillaArte.buscarUltima();
 					bitacoraArte(nueva);
+					enviarEmail("Marca", nombreUsuarioSesion(),
+							nueva.getIdPlanillaArte(), "Solicitud de Arte y Publicaciones",
+							nueva.getUsuario().getMail());
 				}
 
 				break;
@@ -927,6 +940,9 @@ public class CSolicitud extends CGenerico {
 
 					servicioItemPlanillaCata.guardar(itemsAgregados);
 					servicioRecursoPlanillaCata.guardar(recursosAgregados);
+					enviarEmail("Marca", nombreUsuarioSesion(),
+							nueva.getIdPlanillaCata(), "Cata Induccion",
+							nueva.getUsuario().getMail());
 				}
 
 				break;
@@ -1010,6 +1026,9 @@ public class CSolicitud extends CGenerico {
 						recursosAgregados.get(j).setPlanillaFachada(nueva);
 					}
 					servicioRecursoPlanillaFachada.guardar(recursosAgregados);
+					enviarEmail("Marca", nombreUsuarioSesion(),
+							nueva.getIdPlanillaFachada(), "Fachada y Decoraciones",
+							nueva.getUsuario().getMail());
 				}
 
 				break;
@@ -1750,7 +1769,7 @@ public class CSolicitud extends CGenerico {
 		}
 
 	}
-	
+
 	private void ordenarPorFecha(List<PlanillaGenerica> listPlanilla2) {
 		List<PlanillaGenerica> listAux = new ArrayList<PlanillaGenerica>();
 
