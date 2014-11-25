@@ -51,7 +51,6 @@ import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
 import componente.Validador;
-
 import controlador.maestros.CGenerico;
 
 public class CFachada extends CGenerico {
@@ -244,6 +243,11 @@ public class CFachada extends CGenerico {
 				tipoInbox = "";
 				inbox = false;
 				id = 0;
+				limpiarColores(txtCiudad, txtContacto, txtCosto, txtDireccion,
+						txtDuracion, txtNombreActividad, txtTelefono,
+						txtNombre, txtEmail, txtPatente, txtRif, cmbActividad,
+						cmbMarcaSugerida, cmbArte, cmbNivelEconomico,
+						cmbFormato, cmbDecoracion);
 				tabDatos.setSelected(true);
 				listaGenerica = null;
 				planillaGenerica = null;
@@ -378,6 +382,8 @@ public class CFachada extends CGenerico {
 				map.clear();
 				map = null;
 			}
+		} else {
+			dtbActividad.setConstraint("no past");
 		}
 		cargarCombos();
 		llenarListas();
@@ -489,11 +495,14 @@ public class CFachada extends CGenerico {
 			planillaFachada = servicioPlanillaFachada.buscarUltima();
 
 		if (inbox) {
+			String origen = "TRADE MARKETING";
+			if (tipoConfig.equals("Marca"))
+				origen = "MARCA";
 			PlanillaGenerica planillita = new PlanillaGenerica(
 					planillaFachada.getIdPlanillaFachada(),
 					usuario.getNombre(), marca.getDescripcion(),
 					nombreActividad, planillaFachada.getFechaEnvio(), string,
-					"Fachada y Decoraciones");
+					"Fachada y Decoraciones", origen);
 			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
 			listaGenerica.add(indice, planillita);
@@ -611,11 +620,17 @@ public class CFachada extends CGenerico {
 				|| cmbDecoracion.getText().compareTo("") == 0
 				|| cdtDescripcion.getValue().compareTo("") == 0
 				|| cdtJustificacion.getValue().compareTo("") == 0
-				|| dtbActividad.getText().compareTo("") == 0
-				|| spnPersonas.getText().compareTo("") == 0
-				|| dspAlto.getText().compareTo("") == 0
-				|| dspAncho.getText().compareTo("") == 0
-				|| dspLargo.getText().compareTo("") == 0) {
+				|| dtbActividad.getText().compareTo("") == 0) {
+			tabDatos.setSelected(true);
+			aplicarColores(txtCiudad, txtContacto, txtCosto, txtDireccion,
+					txtDuracion, txtNombreActividad, txtTelefono, txtNombre,
+					txtEmail, txtPatente, txtRif, cmbActividad,
+					cmbMarcaSugerida, cmbArte, cmbNivelEconomico, cmbFormato,
+					cmbDecoracion);
+			if (cdtDescripcion.getValue().compareTo("") == 0)
+				tabDescripcion.setSelected(true);
+			if (cdtJustificacion.getValue().compareTo("") == 0)
+				tabJustificacion.setSelected(true);
 			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else {

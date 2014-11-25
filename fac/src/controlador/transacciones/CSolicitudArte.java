@@ -43,7 +43,6 @@ import org.zkoss.zul.Window;
 import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
-
 import controlador.maestros.CGenerico;
 
 public class CSolicitudArte extends CGenerico {
@@ -184,6 +183,8 @@ public class CSolicitudArte extends CGenerico {
 				tipoInbox = "";
 				inbox = false;
 				id = 0;
+				limpiarColores(txtNombreLocal, txtNombreActividad, txtPatente,
+						txtRif, cmbMarcaSugerida, cmbArte, cmbFormato);
 				listaGenerica = null;
 				planillaGenerica = null;
 				catalogoGenerico = null;
@@ -384,11 +385,14 @@ public class CSolicitudArte extends CGenerico {
 			planillaArte = servicioPlanillaArte.buscarUltima();
 
 		if (inbox) {
+			String origen = "TRADE MARKETING";
+			if (tipoConfig.equals("Marca"))
+				origen = "MARCA";
 			PlanillaGenerica planillita = new PlanillaGenerica(
 					planillaArte.getIdPlanillaArte(), usuario.getNombre(),
 					marca.getDescripcion(), nombreActividad,
 					planillaArte.getFechaEnvio(), string,
-					"Solicitud de Arte y Publicaciones");
+					"Solicitud de Arte y Publicaciones", origen);
 			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
 			listaGenerica.add(indice, planillita);
@@ -469,10 +473,12 @@ public class CSolicitudArte extends CGenerico {
 				|| cmbMarcaSugerida.getText().compareTo("") == 0
 				|| cmbArte.getText().compareTo("") == 0
 				|| cmbFormato.getText().compareTo("") == 0
-				|| cdtLineamiento.getValue().compareTo("") == 0
-				|| dspAlto.getText().compareTo("") == 0
-				|| dspAncho.getText().compareTo("") == 0
-				|| dspLargo.getText().compareTo("") == 0) {
+				|| cdtLineamiento.getValue().compareTo("") == 0) {
+			tabDatos.setSelected(true);
+			aplicarColores(txtNombreLocal, txtNombreActividad, txtPatente,
+					txtRif, cmbMarcaSugerida, cmbArte, cmbFormato);
+			if (cdtLineamiento.getValue().compareTo("") == 0)
+				tabLineamientos.setSelected(true);
 			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else {

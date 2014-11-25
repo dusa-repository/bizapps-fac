@@ -5,8 +5,7 @@
 		<caption label="Solicitudes ${$composer.titulo}"
 			style="color:white; font-size: 16px; font-weight:bold; " />
 		<!-- <div height="100%" > -->
-		<space />
-		<vbox height="100%" heights="15%,2%,83%">
+		<vbox height="100%" heights="15%,1%,84%">
 			<hbox height="100%" widths="40%,60%" width="100%">
 				<grid width="100%">
 					<columns visible="false">

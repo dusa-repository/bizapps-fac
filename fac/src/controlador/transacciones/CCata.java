@@ -23,6 +23,7 @@ import modelo.transacciones.RecursoPlanillaCata;
 
 import org.zkforge.ckez.CKeditor;
 import org.zkoss.image.AImage;
+import org.zkoss.zk.ui.HtmlBasedComponent;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -45,7 +46,6 @@ import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
 import componente.Validador;
-
 import controlador.maestros.CGenerico;
 
 public class CCata extends CGenerico {
@@ -192,6 +192,10 @@ public class CCata extends CGenerico {
 				planillaGenerica = null;
 				catalogoGenerico = null;
 				fechaInbox = null;
+				limpiarColores(txtCiudad, txtContacto, txtCosto, txtDireccion,
+						txtEMail, txtNombreActividad, txtTelefono, cmbCata,
+						cmbMarcaSugerida, cmbMotivo, cmbMotivo,
+						cmbNivelEconomico, cmbTarget);
 				llenarListas();
 			}
 
@@ -325,7 +329,8 @@ public class CCata extends CGenerico {
 				map = null;
 				editar = false;
 			}
-		}
+		} else
+			dtbActividad.setConstraint("no past");
 		cargarCombos();
 		llenarListas();
 	}
@@ -398,10 +403,13 @@ public class CCata extends CGenerico {
 			planilla = servicioPlanillaCata.buscarUltima();
 
 		if (inbox) {
+			String origen = "TRADE MARKETING";
+			if (tipoConfig.equals("Marca"))
+				origen = "MARCA";
 			PlanillaGenerica planillita = new PlanillaGenerica(
 					planilla.getIdPlanillaCata(), usuario.getNombre(),
 					marca.getDescripcion(), nombreActividad,
-					planilla.getFechaEnvio(), string, "Cata Induccion");
+					planilla.getFechaEnvio(), string, "Cata Induccion", origen);
 			int indice = listaGenerica.indexOf(planillaGenerica);
 			listaGenerica.remove(planillaGenerica);
 			listaGenerica.add(indice, planillita);
@@ -533,8 +541,16 @@ public class CCata extends CGenerico {
 				|| cmbTarget.getText().compareTo("") == 0
 				|| cdtDescripcion.getValue().compareTo("") == 0
 				|| cdtMecanica.getValue().compareTo("") == 0
-				|| dtbActividad.getText().compareTo("") == 0
-				|| spnPersonas.getText().compareTo("") == 0) {
+				|| dtbActividad.getText().compareTo("") == 0) {
+			tabDatos.setSelected(true);
+			aplicarColores(txtCiudad, txtContacto, txtCosto, txtDireccion,
+					txtEMail, txtNombreActividad, txtTelefono, cmbCata,
+					cmbMarcaSugerida, cmbMotivo, cmbMotivo, cmbNivelEconomico,
+					cmbTarget);
+			if (cdtDescripcion.getValue().compareTo("") == 0)
+				tabDescripcion.setSelected(true);
+			if (cdtMecanica.getValue().compareTo("") == 0)
+				tabMecanica.setSelected(true);
 			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else {

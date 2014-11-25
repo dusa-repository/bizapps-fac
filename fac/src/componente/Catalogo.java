@@ -57,7 +57,8 @@ public abstract class Catalogo<Clase> extends Window {
 		lsbCatalogo = new Listbox();
 		lsbCatalogo.setMold("paging");
 		lsbCatalogo.setPagingPosition("top");
-		lsbCatalogo.setPageSize(10);
+		lsbCatalogo.setRows(10);
+		lsbCatalogo.setPageSize(20);
 		final Auxhead cabecera = new Auxhead();
 		Listhead lhdEncabezado = new Listhead();
 		lhdEncabezado.setSizable(true);
@@ -140,6 +141,7 @@ public abstract class Catalogo<Clase> extends Window {
 			lsbCatalogo.setCheckmark(false);
 		} else {
 			this.setHflex("1");
+			lsbCatalogo.setHeight("450px");
 			this.setClosable(false);
 			this.appendChild(lsbCatalogo);
 			lsbCatalogo.setMultiple(false);

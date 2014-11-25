@@ -130,7 +130,7 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtEMail" hflex="1" maxlength="500"
+									<textbox id="txtEMail" placeholder="ejemplo@gmail.com" hflex="1" maxlength="500"
 										tooltiptext="Ingrese el E-Mail del PDV (ejemplo@gmail.com)" />
 								</row>
 								<row>
@@ -146,7 +146,7 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtTelefono" hflex="1" maxlength="500"
+									<textbox id="txtTelefono" placeholder="0426-9999999" hflex="1" maxlength="500"
 										tooltiptext="Ingrese el Numero Telefonico del PDV (0426-9999999)" />
 								</row>
 								<row>

@@ -118,7 +118,7 @@
 										<label class="etiqueta" value="Telefono: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
-										<textbox id="txtTelefono" hflex="1" maxlength="500"
+										<textbox id="txtTelefono" placeholder="0426-9999999" hflex="1" maxlength="500"
 											tooltiptext="Ingrese el Telefono (0426-9999999)" />
 									</hbox>
 								</row>
@@ -149,7 +149,7 @@
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox id="txtEMail" hflex="1" maxlength="500"
+									<textbox id="txtEMail" placeholder="ejemplo@gmail.com" hflex="1" maxlength="500"
 										tooltiptext="Ingrese el E-Mail del Responsable del PDV (ejemplo@gmail.com)" />
 								</row>
 								<row>

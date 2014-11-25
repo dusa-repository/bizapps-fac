@@ -45,6 +45,7 @@
 								</vbox>
 								<vbox width="100%" height="100%">
 									<separator />
+									<label id="lblInbox" style="color:white; font-weight: bold; font-size: 12px"/>
 									<label style="color:white; font-weight: bold; font-size: 12px"
 										value="Usuario: ${desktop.execution.userPrincipal.name}" />
 									<a href="../j_spring_security_logout" style="color:white">
