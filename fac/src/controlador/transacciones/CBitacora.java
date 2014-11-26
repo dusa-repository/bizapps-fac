@@ -187,7 +187,7 @@ public class CBitacora extends CGenerico {
 							.buscar((Long) map.get("id"));
 					settear(planilla.getNombreActividad(),
 							planilla.getUsuarioAuditoria(), planilla
-									.getMarcaA().getDescripcion(),
+									.getMarca().getDescripcion(),
 							"Promociones de Marca", planilla.getEstado());
 					List<BitacoraPromocion> listaBitacoras = servicioBitacoraPromocion
 							.buscarPorPlanilla(planilla);

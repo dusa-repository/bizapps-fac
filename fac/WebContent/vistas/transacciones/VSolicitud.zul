@@ -6,33 +6,67 @@
 			style="color:white; font-size: 16px; font-weight:bold; " />
 		<!-- <div height="100%" > -->
 		<vbox height="100%" heights="15%,1%,84%">
-			<hbox height="100%" widths="40%,60%" width="100%">
+			<hbox height="100%" width="100%">
 				<grid width="100%">
 					<columns visible="false">
-						<column label="" width="35%" />
-						<column label="" width="30%" />
-						<column label="" width="35%" />
+						<column label="" width="15%" />
+						<column label="" width="18%" />
+						<column label="" width="15%" />
+						<column label="" width="18%" />
+						<column label="" width="15%" />
+						<column label="" width="19%" />
 					</columns>
 					<rows>
 						<row>
 							<label class="etiqueta" value="Fecha Desde: " />
-							<cell colspan="2">
-								<datebox onCreate="self.value = new Date()" readonly="true" width="100%" id="dtbDesde" />
-							</cell>
+							<datebox onCreate="self.value = new Date()" readonly="true"
+								width="100%" id="dtbDesde" />
+							<label class="etiqueta" value="Fecha Hasta: " />
+							<datebox onCreate="self.value = new Date()" readonly="true"
+								width="100%" id="dtbHasta" />
+							<hbox />
+							<hbox />
 						</row>
 						<row>
-							<label class="etiqueta" value="Fecha Hasta: " />
-							<cell colspan="2">
-								<datebox onCreate="self.value = new Date()" readonly="true" width="100%" id="dtbHasta" />
-							</cell>
+							<label class="etiqueta" value="Tipo de Planilla: " />
+							<combobox value="TODOS" tooltiptext="Seleccione un Tipo de Planilla"
+								placeholder="Seleccione un Tipo" id="cmbTipo" readonly="true"
+								width="100%">
+								<comboitem label="TODOS" />
+								<comboitem label="Cata Induccion" />
+								<comboitem label="Eventos Especiales" />
+								<comboitem label="Fachada y Decoraciones" />
+								<comboitem label="Promociones de Marca" />
+								<comboitem label="Solicitud de Arte y Publicaciones" />
+								<comboitem label="Uniformes" />
+							</combobox>
+							<label class="etiqueta" value="Marca: " />
+							<combobox value="TODAS" tooltiptext="Seleccione una Marca:" model="${$composer.marcas}"
+								placeholder="Seleccione una Marca:" id="cmbMarca" readonly="true"
+								width="100%">
+								<template name="model">
+									<comboitem label="${each.descripcion}" context="${each.idMarca}" />
+								</template>
+							</combobox>
+							<zk
+								if="${sec:isAnyGranted('MARCA,TRADE MARKETING,Gerente Regional')}">
+								<label class="etiqueta" value="Usuario: " />
+								<combobox value="TODOS" tooltiptext="Seleccione un Usuario"
+									placeholder="Seleccione un Usuario" id="cmbUsuario" readonly="true"
+									width="100%">
+									<template name="model">
+										<comboitem label="${each.nombre}" context="${each.idUsuario}" />
+									</template>
+								</combobox>
+							</zk>
 						</row>
-
 						<row>
 							<zk if="${sec:isAnyGranted('MARCA, TRADE MARKETING')}">
 								<label class="etiqueta" value="Estado: " />
 								<combobox tooltiptext="Seleccione un Estado"
 									placeholder="Seleccione un Estado" id="cmbEstado" readonly="true"
 									width="100%">
+									<comboitem label="En Edicion" />
 									<comboitem label="Pendiente" />
 									<comboitem label="Aprobada" />
 									<comboitem label="Finalizada" />
@@ -41,12 +75,14 @@
 									<comboitem label="Cancelada" />
 								</combobox>
 							</zk>
+							<label class="etiqueta" value="Codigo Planilla: " />
+							<longbox width="100%" id="txtCodigo" />
 							<button id="btnRefrescar" label="Refrescar" autodisable="self"
 								style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/refresh2.png" />
+							<hbox />
 						</row>
 					</rows>
 				</grid>
-				<separator width="100%" />
 			</hbox>
 			<space height="100%" />
 			<hbox height="100%" widths="95%,5%" width="100%">

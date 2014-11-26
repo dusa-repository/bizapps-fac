@@ -154,6 +154,8 @@ public class CPromocion extends CGenerico {
 
 			@Override
 			public void limpiar() {
+				dtbFin.setConstraint("no past");
+				dtbInicio.setConstraint("no past");
 				txtNombreLocal.setValue("");
 				txtNombreActividad.setValue("");
 				txtCiudad.setValue("");
@@ -554,7 +556,7 @@ public class CPromocion extends CGenerico {
 				for (PlanillaPromocion planilla : listPlanilla) {
 					if (planilla.getNombreActividad().toLowerCase()
 							.startsWith(valores.get(0).toLowerCase())
-							&& planilla.getMarcaA().getDescripcion()
+							&& planilla.getMarca().getDescripcion()
 									.toLowerCase()
 									.startsWith(valores.get(1).toLowerCase())
 							&& planilla.getCiudad().toLowerCase()
@@ -574,7 +576,7 @@ public class CPromocion extends CGenerico {
 			protected String[] crearRegistros(PlanillaPromocion planillaCata) {
 				String[] registros = new String[4];
 				registros[0] = planillaCata.getNombreActividad().toLowerCase();
-				registros[1] = planillaCata.getMarcaA().getDescripcion()
+				registros[1] = planillaCata.getMarca().getDescripcion()
 						.toLowerCase();
 				registros[2] = planillaCata.getCiudad().toLowerCase();
 				registros[3] = String.valueOf(formatoFecha.format(planillaCata
@@ -588,6 +590,8 @@ public class CPromocion extends CGenerico {
 
 	@Listen("onSeleccion = #catalogoPromocion")
 	public void seleccionPropia() {
+		dtbFin.setConstraint("");
+		dtbInicio.setConstraint("");
 		PlanillaPromocion planilla = catalogo.objetoSeleccionadoDelCatalogo();
 		settearCampos(planilla);
 		catalogo.setParent(null);
@@ -620,7 +624,7 @@ public class CPromocion extends CGenerico {
 		cmbPop.setValue(f05.getDrdl01());
 		dtbFin.setValue(planilla.getFechaHasta());
 		dtbInicio.setValue(planilla.getFechaDesde());
-		cmbMarca1.setValue(planilla.getMarcaA().getDescripcion());
+		cmbMarca1.setValue(planilla.getMarca().getDescripcion());
 		cmbMarca2.setValue(planilla.getMarcaB().getDescripcion());
 		cdtMarca1.setValue(planilla.getDescripcionMarcaA());
 		cdtMarca2.setValue(planilla.getDescripcionMarcaB());

@@ -54,7 +54,7 @@ public class Marca implements Serializable {
 	@OneToMany(mappedBy="marca")
 	private Set<PlanillaFachada> planillasFachada;
 	
-	@OneToMany(mappedBy="marcaA")
+	@OneToMany(mappedBy="marca")
 	private Set<PlanillaPromocion> planillasPromocionA;
 	
 	@OneToMany(mappedBy="marcaB")

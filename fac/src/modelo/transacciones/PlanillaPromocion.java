@@ -36,7 +36,7 @@ public class PlanillaPromocion implements Serializable {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_marca_a")
-	private Marca marcaA;
+	private Marca marca;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_marca_b")
@@ -153,7 +153,7 @@ public class PlanillaPromocion implements Serializable {
 		super();
 		this.idPlanillaPromocion = idPlanillaPromocion;
 		this.usuario = usuario;
-		this.marcaA = marcaA;
+		this.marca = marcaA;
 		this.marcaB = marcaB;
 		this.nombreActividad = nombreActividad;
 		this.tipoActividad = tipoActividad;
@@ -203,12 +203,12 @@ public class PlanillaPromocion implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public Marca getMarcaA() {
-		return marcaA;
+	public Marca getMarca() {
+		return marca;
 	}
 
-	public void setMarcaA(Marca marcaA) {
-		this.marcaA = marcaA;
+	public void setMarca(Marca marca) {
+		this.marca = marca;
 	}
 
 	public Marca getMarcaB() {

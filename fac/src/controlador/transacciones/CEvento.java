@@ -183,6 +183,8 @@ public class CEvento extends CGenerico {
 
 			@Override
 			public void limpiar() {
+				dtbFin.setConstraint("no past");
+				dtbInicio.setConstraint("no past");
 				txtCiudad.setValue("");
 				txtContacto.setValue("");
 				txtCosto.setValue(null);
@@ -744,7 +746,8 @@ public class CEvento extends CGenerico {
 
 	@Listen("onSeleccion = #catalogoEvento")
 	public void seleccionPropia() {
-		llenarListas();
+		dtbFin.setConstraint("");
+		dtbInicio.setConstraint("");
 		PlanillaEvento planilla = catalogo.objetoSeleccionadoDelCatalogo();
 		settearCampos(planilla);
 		llenarListas();

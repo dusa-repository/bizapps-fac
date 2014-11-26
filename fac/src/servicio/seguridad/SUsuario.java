@@ -4,6 +4,7 @@ import interfacedao.seguridad.IGrupoDAO;
 import interfacedao.seguridad.IUsuarioDAO;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import modelo.maestros.Zona;
@@ -67,5 +68,10 @@ public class SUsuario {
 
 	public List<Usuario> buscarPorGrupo(Grupo grupo) {
 		return usuarioDAO.findByGrupos(grupo);
+	}
+
+	public List<Usuario> buscarSupervisados(
+			String nombreUsuarioSesion) {
+		return usuarioDAO.findBySupervisor(nombreUsuarioSesion);
 	}
 }

@@ -157,6 +157,7 @@ public class CUniforme extends CGenerico {
 
 			@Override
 			public void limpiar() {
+				dtbActividad.setConstraint("no past");
 				txtCiudad.setValue("");
 				txtCosto.setValue(null);
 				txtDireccion.setValue("");
@@ -721,6 +722,7 @@ public class CUniforme extends CGenerico {
 
 	@Listen("onSeleccion = #catalogoUniformes")
 	public void seleccionPropia() {
+		dtbActividad.setConstraint("");
 		PlanillaUniforme planilla = catalogo.objetoSeleccionadoDelCatalogo();
 		settearCampos(planilla);
 		llenarListas();
