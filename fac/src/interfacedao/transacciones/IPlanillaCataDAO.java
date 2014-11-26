@@ -58,4 +58,28 @@ public interface IPlanillaCataDAO extends JpaRepository<PlanillaCata, Long> {
 			String nombreUsuarioSesion, String variable, Date fecha1,
 			Date fecha2);
 
+	List<PlanillaCata> findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeOrderByFechaEnvioAsc(
+			Usuario user, String estadoBuscar, Date fecha1, Date fecha2,
+			String codigoMarca);
+
+	List<PlanillaCata> findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndIdPlanillaCataOrderByFechaEnvioAsc(
+			Usuario user, String estadoBuscar, Date fecha1, Date fecha2,
+			String codigoMarca, long codigo);
+
+	List<PlanillaCata> findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaCataOrderByFechaEnvioAsc(
+			String estadoBuscar, String tipoP, Date fecha1, Date fecha2,
+			String codigoMarca, String codigoUsuario, long codigo);
+
+	List<PlanillaCata> findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+			String estadoBuscar, String tipoP, Date fecha1, Date fecha2,
+			String codigoMarca, String codigoUsuario);
+
+	List<PlanillaCata> findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+			String nombreUsuarioSesion, String variable, Date fecha1,
+			Date fecha2, String codigoMarca, String codigoUsuario);
+
+	List<PlanillaCata> findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaCataOrderByFechaEnvioAsc(
+			String nombreUsuarioSesion, String variable, Date fecha1,
+			Date fecha2, String codigoMarca, String codigoUsuario, long codigo);
+
 }

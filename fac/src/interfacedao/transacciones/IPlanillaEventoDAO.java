@@ -42,8 +42,8 @@ public interface IPlanillaEventoDAO extends JpaRepository<PlanillaEvento, Long> 
 			String variable, String string, String string2, String string3,
 			String variable2);
 
-	List<PlanillaEvento> findByEstadoAndTipoOrderByFechaEnvioAsc(
-			String string, String variable2);
+	List<PlanillaEvento> findByEstadoAndTipoOrderByFechaEnvioAsc(String string,
+			String variable2);
 
 	List<PlanillaEvento> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String string, String string2, String string3,
@@ -58,5 +58,29 @@ public interface IPlanillaEventoDAO extends JpaRepository<PlanillaEvento, Long> 
 	List<PlanillaEvento> findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
 			String nombreUsuarioSesion, String variable, Date fecha1,
 			Date fecha2);
+
+	List<PlanillaEvento> findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeOrderByFechaEnvioAsc(
+			Usuario user, String estadoBuscar, Date fecha1, Date fecha2,
+			String codigoMarca);
+
+	List<PlanillaEvento> findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndIdPlanillaEventoOrderByFechaEnvioAsc(
+			Usuario user, String estadoBuscar, Date fecha1, Date fecha2,
+			String codigoMarca, long codigo);
+
+	List<PlanillaEvento> findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+			String estadoBuscar, String tipoP, Date fecha1, Date fecha2,
+			String codigoMarca, String codigoUsuario);
+
+	List<PlanillaEvento> findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaEventoOrderByFechaEnvioAsc(
+			String estadoBuscar, String tipoP, Date fecha1, Date fecha2,
+			String codigoMarca, String codigoUsuario, long codigo);
+
+	List<PlanillaEvento> findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaEventoOrderByFechaEnvioAsc(
+			String nombreUsuarioSesion, String variable, Date fecha1,
+			Date fecha2, String codigoMarca, String codigoUsuario, long codigo);
+
+	List<PlanillaEvento> findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+			String nombreUsuarioSesion, String variable, Date fecha1,
+			Date fecha2, String codigoMarca, String codigoUsuario);
 
 }

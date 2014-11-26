@@ -208,6 +208,7 @@ public class CFachada extends CGenerico {
 
 			@Override
 			public void limpiar() {
+				dtbActividad.setConstraint("no past");
 				txtCiudad.setValue("");
 				txtContacto.setValue("");
 				txtCosto.setValue(null);
@@ -827,6 +828,7 @@ public class CFachada extends CGenerico {
 
 	@Listen("onSeleccion = #catalogoFachada")
 	public void seleccionPropia() {
+		dtbActividad.setConstraint("");
 		PlanillaFachada planilla = catalogo.objetoSeleccionadoDelCatalogo();
 		setearCampos(planilla);
 		llenarListas();

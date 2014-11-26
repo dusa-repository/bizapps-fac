@@ -1,5 +1,6 @@
 package interfacedao.seguridad;
 
+import java.util.Collection;
 import java.util.List;
 
 import modelo.maestros.Zona;
@@ -23,4 +24,6 @@ public interface IUsuarioDAO extends JpaRepository<Usuario, String> {
 	Usuario findByIdUsuarioAndGrupos(String value, Grupo grupo);
 
 	Usuario findByIdUsuarioAllIgnoreCase(String nombre);
+
+	List<Usuario> findBySupervisor(String nombreUsuarioSesion);
 }

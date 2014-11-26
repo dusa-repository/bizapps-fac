@@ -36,7 +36,7 @@ public interface IPlanillaPromocionDAO extends JpaRepository<PlanillaPromocion, 
 
 	List<PlanillaPromocion> findByUsuario(Usuario usuario);
 
-	List<PlanillaPromocion> findByMarcaA(Marca marca);
+	List<PlanillaPromocion> findByMarca(Marca marca);
 
 	List<PlanillaPromocion> findByEstadoNotAndEstadoNotAndEstadoNotAndEstadoNotAndTipoOrderByFechaEnvioAsc(
 			String variable, String string, String string2, String string3,
@@ -58,5 +58,27 @@ public interface IPlanillaPromocionDAO extends JpaRepository<PlanillaPromocion, 
 	List<PlanillaPromocion> findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
 			String nombreUsuarioSesion, String variable, Date fecha1,
 			Date fecha2);
+
+	List<PlanillaPromocion> findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeOrderByFechaEnvioAsc(
+			Usuario user, String estadoBuscar, Date fecha1, Date fecha2, String codigoMarca);
+
+	List<PlanillaPromocion> findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndIdPlanillaPromocionOrderByFechaEnvioAsc(
+			Usuario user, String estadoBuscar, Date fecha1, Date fecha2, String codigoMarca, long codigo);
+
+	List<PlanillaPromocion> findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+			String estadoBuscar, String tipoP, Date fecha1, Date fecha2,
+			String codigoMarca, String codigoUsuario);
+
+	List<PlanillaPromocion> findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaPromocionOrderByFechaEnvioAsc(
+			String estadoBuscar, String tipoP, Date fecha1, Date fecha2,
+			String codigoMarca, String codigoUsuario, long codigo);
+
+	List<PlanillaPromocion> findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaPromocionOrderByFechaEnvioAsc(
+			String nombreUsuarioSesion, String variable, Date fecha1,
+			Date fecha2, String codigoMarca, String codigoUsuario, long codigo);
+
+	List<PlanillaPromocion> findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+			String nombreUsuarioSesion, String variable, Date fecha1,
+			Date fecha2, String codigoMarca, String codigoUsuario);
 
 }

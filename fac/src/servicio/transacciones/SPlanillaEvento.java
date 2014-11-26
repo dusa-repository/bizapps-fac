@@ -92,24 +92,45 @@ public class SPlanillaEvento {
 	}
 
 	public List<PlanillaEvento> buscarUsuarioEntreFechas(Usuario user,
-			String estadoBuscar, Date fecha1, Date fecha2) {
-		return planillaEventoDAO
-				.findByUsuarioAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
-						user, estadoBuscar, fecha1, fecha2);
+			String estadoBuscar, Date fecha1, Date fecha2, String codigoMarca,
+			String codigoUsuario, long codigo) {
+		if (codigo == 0)
+			return planillaEventoDAO
+					.findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeOrderByFechaEnvioAsc(
+							user, estadoBuscar, fecha1, fecha2, codigoMarca);
+		else
+			return planillaEventoDAO
+					.findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndIdPlanillaEventoOrderByFechaEnvioAsc(
+							user, estadoBuscar, fecha1, fecha2, codigoMarca,
+							codigo);
 	}
 
 	public List<PlanillaEvento> buscarAdminPendientesEntreFechas(String tipoP,
-			String estadoBuscar, Date fecha1, Date fecha2) {
-		return planillaEventoDAO
-				.findByEstadoAndTipoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
-						estadoBuscar, tipoP, fecha1, fecha2);
+			String estadoBuscar, Date fecha1, Date fecha2, String codigoMarca,
+			String codigoUsuario, long codigo) {
+		if (codigo == 0)
+			return planillaEventoDAO
+					.findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+							estadoBuscar, tipoP, fecha1, fecha2, codigoMarca,
+							codigoUsuario);
+		else
+			return planillaEventoDAO
+					.findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaEventoOrderByFechaEnvioAsc(
+							estadoBuscar, tipoP, fecha1, fecha2, codigoMarca,
+							codigoUsuario, codigo);
 	}
 
 	public List<PlanillaEvento> buscarSupervisorYEstadoEntreFechas(
 			String nombreUsuarioSesion, String variable, Date fecha1,
-			Date fecha2) {
+			Date fecha2, String codigoMarca, String codigoUsuario, long codigo) {
+		if (codigo == 0)
+			return planillaEventoDAO
+					.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+							nombreUsuarioSesion, variable, fecha1, fecha2,
+							codigoMarca, codigoUsuario);
 		return planillaEventoDAO
-				.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
-						nombreUsuarioSesion, variable, fecha1, fecha2);
+				.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaEventoOrderByFechaEnvioAsc(
+						nombreUsuarioSesion, variable, fecha1, fecha2,
+						codigoMarca, codigoUsuario, codigo);
 	}
 }

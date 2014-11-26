@@ -166,6 +166,7 @@ public class CCata extends CGenerico {
 
 			@Override
 			public void limpiar() {
+				dtbActividad.setConstraint("no past");
 				txtCiudad.setValue("");
 				txtContacto.setValue("");
 				txtCosto.setValue(null);
@@ -675,6 +676,7 @@ public class CCata extends CGenerico {
 
 	@Listen("onSeleccion = #catalogoCataInduccion")
 	public void seleccionPropia() {
+		dtbActividad.setConstraint("");
 		PlanillaCata planilla = catalogo.objetoSeleccionadoDelCatalogo();
 		settearCampos(planilla);
 		llenarListas();

@@ -86,27 +86,51 @@ public class SPlanillaArte {
 
 	public List<PlanillaArte> buscarAdminPendientes(String tipoConfig,
 			String string) {
-		return planillaArteDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string, tipoConfig);
+		return planillaArteDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string,
+				tipoConfig);
 	}
 
 	public List<PlanillaArte> buscarUsuarioEntreFechas(Usuario user,
-			String estadoBuscar, Date fecha1, Date fecha2) {
-		return planillaArteDAO.findByUsuarioAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
-				user, estadoBuscar, fecha1, fecha2);
+			String estadoBuscar, Date fecha1, Date fecha2, String codigoMarca,
+			String codigoUsuario, long codigo) {
+		if (codigo == 0)
+			return planillaArteDAO
+					.findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeOrderByFechaEnvioAsc(
+							user, estadoBuscar, fecha1, fecha2, codigoMarca);
+		else
+			return planillaArteDAO
+					.findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndIdPlanillaArteOrderByFechaEnvioAsc(
+							user, estadoBuscar, fecha1, fecha2, codigoMarca,
+							codigo);
 	}
 
 	public List<PlanillaArte> buscarAdminPendientesEntreFechas(String tipoP,
-			String estadoBuscar, Date fecha1, Date fecha2) {
-		return planillaArteDAO
-				.findByEstadoAndTipoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
-						estadoBuscar, tipoP, fecha1, fecha2);
+			String estadoBuscar, Date fecha1, Date fecha2, String codigoMarca,
+			String codigoUsuario, long codigo) {
+		if (codigo == 0)
+			return planillaArteDAO
+					.findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+							estadoBuscar, tipoP, fecha1, fecha2, codigoMarca,
+							codigoUsuario);
+		else
+			return planillaArteDAO
+					.findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaArteOrderByFechaEnvioAsc(
+							estadoBuscar, tipoP, fecha1, fecha2, codigoMarca,
+							codigoUsuario, codigo);
 	}
 
 	public List<PlanillaArte> buscarSupervisorYEstadoEntreFechas(
 			String nombreUsuarioSesion, String variable, Date fecha1,
-			Date fecha2) {
-		return planillaArteDAO
-				.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
-						nombreUsuarioSesion, variable, fecha1, fecha2);
+			Date fecha2, String codigoMarca, String codigoUsuario, long codigo) {
+		if (codigo == 0)
+			return planillaArteDAO
+					.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+							nombreUsuarioSesion, variable, fecha1, fecha2,
+							codigoMarca, codigoUsuario);
+		else
+			return planillaArteDAO
+					.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaArteOrderByFechaEnvioAsc(
+							nombreUsuarioSesion, variable, fecha1, fecha2,
+							codigoMarca, codigoUsuario, codigo);
 	}
 }

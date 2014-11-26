@@ -86,27 +86,51 @@ public class SPlanillaUniforme {
 
 	public List<PlanillaUniforme> buscarAdminPendientes(String tipoConfig,
 			String string) {
-		return planillaUniformeDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string, tipoConfig);
+		return planillaUniformeDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(
+				string, tipoConfig);
 	}
 
 	public List<PlanillaUniforme> buscarUsuarioEntreFechas(Usuario user,
-			String estadoBuscar, Date fecha1, Date fecha2) {
-		return planillaUniformeDAO.findByUsuarioAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
-				user, estadoBuscar, fecha1, fecha2);
+			String estadoBuscar, Date fecha1, Date fecha2, String codigoMarca,
+			String codigoUsuario, long codigo) {
+		if (codigo == 0)
+			return planillaUniformeDAO
+					.findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeOrderByFechaEnvioAsc(
+							user, estadoBuscar, fecha1, fecha2, codigoMarca);
+		else
+			return planillaUniformeDAO
+					.findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndIdPlanillaUniformeOrderByFechaEnvioAsc(
+							user, estadoBuscar, fecha1, fecha2, codigoMarca,
+							codigo);
 	}
 
 	public List<PlanillaUniforme> buscarAdminPendientesEntreFechas(
-			String tipoP, String estadoBuscar, Date fecha1, Date fecha2) {
-		return planillaUniformeDAO
-				.findByEstadoAndTipoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
-						estadoBuscar, tipoP, fecha1, fecha2);
+			String tipoP, String estadoBuscar, Date fecha1, Date fecha2,
+			String codigoMarca, String codigoUsuario, long codigo) {
+		if (codigo == 0)
+			return planillaUniformeDAO
+					.findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+							estadoBuscar, tipoP, fecha1, fecha2, codigoMarca,
+							codigoUsuario);
+		else
+			return planillaUniformeDAO
+					.findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaUniformeOrderByFechaEnvioAsc(
+							estadoBuscar, tipoP, fecha1, fecha2, codigoMarca,
+							codigoUsuario, codigo);
 	}
 
 	public List<PlanillaUniforme> buscarSupervisorYEstadoEntreFechas(
 			String nombreUsuarioSesion, String variable, Date fecha1,
-			Date fecha2) {
-		return planillaUniformeDAO
-				.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
-						nombreUsuarioSesion, variable, fecha1, fecha2);
+			Date fecha2, String codigoMarca, String codigoUsuario, long codigo) {
+		if (codigo == 0)
+			return planillaUniformeDAO
+					.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+							nombreUsuarioSesion, variable, fecha1, fecha2,
+							codigoMarca, codigoUsuario);
+		else
+			return planillaUniformeDAO
+					.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaUniformeOrderByFechaEnvioAsc(
+							nombreUsuarioSesion, variable, fecha1, fecha2,
+							codigoMarca, codigoUsuario, codigo);
 	}
 }

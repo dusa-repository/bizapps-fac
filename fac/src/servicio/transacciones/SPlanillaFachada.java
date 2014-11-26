@@ -86,27 +86,51 @@ public class SPlanillaFachada {
 
 	public List<PlanillaFachada> buscarAdminPendientes(String tipoConfig,
 			String string) {
-		return planillaFachadaDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(string, tipoConfig);
+		return planillaFachadaDAO.findByEstadoAndTipoOrderByFechaEnvioAsc(
+				string, tipoConfig);
 	}
 
 	public List<PlanillaFachada> buscarUsuarioEntreFechas(Usuario user,
-			String estadoBuscar, Date fecha1, Date fecha2) {
-		return planillaFachadaDAO.findByUsuarioAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
-				user, estadoBuscar, fecha1, fecha2);
+			String estadoBuscar, Date fecha1, Date fecha2, String codigoMarca,
+			String codigoUsuario, long codigo) {
+		if (codigo == 0)
+			return planillaFachadaDAO
+					.findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeOrderByFechaEnvioAsc(
+							user, estadoBuscar, fecha1, fecha2, codigoMarca);
+		else
+			return planillaFachadaDAO
+					.findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndIdPlanillaFachadaOrderByFechaEnvioAsc(
+							user, estadoBuscar, fecha1, fecha2, codigoMarca,
+							codigo);
 	}
 
 	public List<PlanillaFachada> buscarAdminPendientesEntreFechas(String tipoP,
-			String estadoBuscar, Date fecha1, Date fecha2) {
-		return planillaFachadaDAO
-				.findByEstadoAndTipoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
-						estadoBuscar, tipoP, fecha1, fecha2);
+			String estadoBuscar, Date fecha1, Date fecha2, String codigoMarca,
+			String codigoUsuario, long codigo) {
+		if (codigo == 0)
+			return planillaFachadaDAO
+					.findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+							estadoBuscar, tipoP, fecha1, fecha2, codigoMarca,
+							codigoUsuario);
+		else
+			return planillaFachadaDAO
+					.findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaFachadaOrderByFechaEnvioAsc(
+							estadoBuscar, tipoP, fecha1, fecha2, codigoMarca,
+							codigoUsuario, codigo);
 	}
 
 	public List<PlanillaFachada> buscarSupervisorYEstadoEntreFechas(
 			String nombreUsuarioSesion, String variable, Date fecha1,
-			Date fecha2) {
-		return planillaFachadaDAO
-				.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenOrderByFechaEnvioAsc(
-						nombreUsuarioSesion, variable, fecha1, fecha2);
+			Date fecha2, String codigoMarca, String codigoUsuario, long codigo) {
+		if (codigo == 0)
+			return planillaFachadaDAO
+					.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+							nombreUsuarioSesion, variable, fecha1, fecha2,
+							codigoMarca, codigoUsuario);
+		else
+			return planillaFachadaDAO
+					.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaFachadaOrderByFechaEnvioAsc(
+							nombreUsuarioSesion, variable, fecha1, fecha2,
+							codigoMarca, codigoUsuario, codigo);
 	}
 }
