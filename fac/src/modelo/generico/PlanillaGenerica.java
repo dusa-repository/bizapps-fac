@@ -29,6 +29,8 @@ public class PlanillaGenerica implements Serializable {
 
 	private String origen;
 
+	private String descripcion;
+
 	public PlanillaGenerica() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -131,6 +133,14 @@ public class PlanillaGenerica implements Serializable {
 
 	public void setOrigen(String origen) {
 		this.origen = origen;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 }

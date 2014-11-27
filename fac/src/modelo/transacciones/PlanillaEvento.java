@@ -131,6 +131,9 @@ public class PlanillaEvento implements Serializable {
 	@Column(name="motivo_cancelacion",length = 100)
 	private String motivoCancelacion;
 	
+	@Column(name="descripcion_motivo",length = 250)
+	private String descripcionMotivo;
+	
 	public PlanillaEvento() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -448,6 +451,14 @@ public class PlanillaEvento implements Serializable {
 
 	public void setMotivoCancelacion(String motivoCancelacion) {
 		this.motivoCancelacion = motivoCancelacion;
+	}
+
+	public String getDescripcionMotivo() {
+		return descripcionMotivo;
+	}
+
+	public void setDescripcionMotivo(String descripcionMotivo) {
+		this.descripcionMotivo = descripcionMotivo;
 	}
 	
 	
