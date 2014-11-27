@@ -589,6 +589,8 @@ public class CSolicitud extends CGenerico {
 				planillaEvento.setRefencia(procesadas.get(i).getReferencia());
 				planillaEvento.setMotivoCancelacion(procesadas.get(i)
 						.getMotivo());
+				planillaEvento.setDescripcionMotivo(procesadas.get(i)
+						.getDescripcion());
 				planillaEvento.setHoraAuditoria(horaAuditoria);
 				planillaEvento.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaEvento.setFechaAuditoria(fechaHora);
@@ -685,6 +687,8 @@ public class CSolicitud extends CGenerico {
 				planillaUniforme.setRefencia(procesadas.get(i).getReferencia());
 				planillaUniforme.setMotivoCancelacion(procesadas.get(i)
 						.getMotivo());
+				planillaUniforme.setDescripcionMotivo(procesadas.get(i)
+						.getDescripcion());
 				planillaUniforme.setHoraAuditoria(horaAuditoria);
 				planillaUniforme.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaUniforme.setFechaAuditoria(fechaHora);
@@ -762,6 +766,8 @@ public class CSolicitud extends CGenerico {
 						.setRefencia(procesadas.get(i).getReferencia());
 				planillaPromocion.setMotivoCancelacion(procesadas.get(i)
 						.getMotivo());
+				planillaPromocion.setDescripcionMotivo(procesadas.get(i)
+						.getDescripcion());
 				planillaPromocion.setHoraAuditoria(horaAuditoria);
 				planillaPromocion.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaPromocion.setFechaAuditoria(fechaHora);
@@ -840,6 +846,8 @@ public class CSolicitud extends CGenerico {
 				planillaArte.setRefencia(procesadas.get(i).getReferencia());
 				planillaArte
 						.setMotivoCancelacion(procesadas.get(i).getMotivo());
+				planillaArte.setDescripcionMotivo(procesadas.get(i)
+						.getDescripcion());
 				planillaArte.setHoraAuditoria(horaAuditoria);
 				planillaArte.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaArte.setFechaAuditoria(fechaHora);
@@ -906,6 +914,8 @@ public class CSolicitud extends CGenerico {
 				planillaCata.setRefencia(procesadas.get(i).getReferencia());
 				planillaCata
 						.setMotivoCancelacion(procesadas.get(i).getMotivo());
+				planillaCata.setDescripcionMotivo(procesadas.get(i)
+						.getDescripcion());
 				planillaCata.setHoraAuditoria(horaAuditoria);
 				planillaCata.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaCata.setFechaAuditoria(fechaHora);
@@ -987,6 +997,8 @@ public class CSolicitud extends CGenerico {
 				planillaFachada.setRefencia(procesadas.get(i).getReferencia());
 				planillaFachada.setMotivoCancelacion(procesadas.get(i)
 						.getMotivo());
+				planillaFachada.setDescripcionMotivo(procesadas.get(i)
+						.getDescripcion());
 				planillaFachada.setHoraAuditoria(horaAuditoria);
 				planillaFachada.setUsuarioAuditoria(nombreUsuarioSesion());
 				planillaFachada.setFechaAuditoria(fechaHora);
@@ -1422,7 +1434,10 @@ public class CSolicitud extends CGenerico {
 							.getFirstChild()).getSelectedItem().getContext();
 				if (motivo.equals(""))
 					error = true;
+				String descripcion = ((Textbox) ((listItem.getChildren().get(6)))
+						.getFirstChild()).getValue();
 				planilla.setMotivo(motivo);
+				planilla.setDescripcion(descripcion);
 				items2.add(planilla);
 			}
 		}

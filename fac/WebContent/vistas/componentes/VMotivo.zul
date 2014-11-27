@@ -15,6 +15,7 @@
 						<listheader label="Fecha de Envio" hflex="min" />
 						<listheader label="Tipo de Planilla" hflex="min" />
 						<listheader label="Motivo" hflex="min" />
+						<listheader label="Explicacion" hflex="min" />
 					</listhead>
 					<template name="model">
 						<listitem>
@@ -36,6 +37,11 @@
 										<comboitem label="${each.drdl01}" context="${each.id.drky}" />
 									</template>
 								</combobox>
+							</listcell>
+							<listcell>
+								<textbox maxlength="250"
+									tooltiptext="Ingrese la explicacion del Rechazo/Cancelacion"
+									width="98%" />
 							</listcell>
 							<listcell>
 								<spinner inplace="true" width="98%" value="${each.id}"
