@@ -282,6 +282,64 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 		}
 	}
 
+	public boolean enviarEmailError(String grupo, String usuario, long id,
+			String tipo, String emailUsuario, String rechazo, String motivo,
+			String descripcion) {
+		try {
+			List<Configuracion> grupos = servicioConfiguracion
+					.buscarTipo(grupo);
+			String destinatario = "";
+			String cc = "PLANILLA DE FORMATO DE ACTIVIDAD "
+					+ rechazo.toUpperCase();
+			String mensaje = "La planilla de: " + tipo + ", con el ID " + id
+					+ "; ha sido " + rechazo.toUpperCase() + ". Motivado a: "
+					+ motivo + ". " + descripcion;
+			Usuario user = servicioUsuario.buscar(usuario);
+			user = servicioUsuario.buscar(user.getSupervisor());
+			String correoSupervisor = "";
+			if (user != null)
+				correoSupervisor = user.getMail();
+			if (!grupos.isEmpty()) {
+				destinatario = grupos.get(0).getCorreo() + "," + emailUsuario
+						+ "," + correoSupervisor;
+			}
+			Properties props = new Properties();
+			props.setProperty("mail.smtp.host", "172.23.20.66");
+			props.setProperty("mail.smtp.starttls.enable", "true");
+			props.setProperty("mail.smtp.port", "2525");
+			props.setProperty("mail.smtp.auth", "true");
+
+			Authenticator auth = new SMTPAuthenticator();
+			Session session = Session.getInstance(props, auth);
+			String remitente = "cdusa@dusa.com.ve";
+			// String contrasena = "Equipo.2";
+
+			String destinos[] = destinatario.split(",");
+			Message message = new MimeMessage(session);
+
+			message.setFrom(new InternetAddress(remitente));
+
+			Address[] receptores = new Address[destinos.length];
+			int j = 0;
+			while (j < destinos.length) {
+				receptores[j] = new InternetAddress(destinos[j]);
+				j++;
+			}
+
+			message.addRecipients(Message.RecipientType.TO, receptores);
+			message.setSubject(cc);
+			message.setText(mensaje);
+
+			Transport.send(message);
+
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error Sending Mail");
+			return false;
+		}
+	}
+
 	class SMTPAuthenticator extends javax.mail.Authenticator {
 		public PasswordAuthentication getPasswordAuthentication() {
 			return new PasswordAuthentication("cdusa", "cartucho");

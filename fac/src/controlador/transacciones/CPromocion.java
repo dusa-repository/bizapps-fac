@@ -374,6 +374,12 @@ public class CPromocion extends CGenerico {
 				material, extra, costo, descripcion1, descripcion2, fechaHora,
 				fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
 				usuario.getZona().getDescripcion(), tipoConfig, "", 0, "");
+		String origenPlanilla = valor;
+		if(!tipoConfig.equals(""))
+			origenPlanilla = tipoConfig;
+		if(origenPlanilla.equals("TradeMark"))
+			origenPlanilla = "Trade Marketing";
+		planillaPromocion.setOrigen(origenPlanilla);
 		servicioPlanillaPromocion.guardar(planillaPromocion);
 		if (id != 0)
 			planillaPromocion = servicioPlanillaPromocion.buscar(id);

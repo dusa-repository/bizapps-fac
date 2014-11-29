@@ -95,11 +95,11 @@ public class SPlanillaUniforme {
 			String codigoUsuario, long codigo) {
 		if (codigo == 0)
 			return planillaUniformeDAO
-					.findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeOrderByFechaEnvioAsc(
+					.findByUsuarioAndEstadoLikeAndFechaEnvioBetweenAndMarcaIdMarcaLikeOrderByFechaEnvioAsc(
 							user, estadoBuscar, fecha1, fecha2, codigoMarca);
 		else
 			return planillaUniformeDAO
-					.findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndIdPlanillaUniformeOrderByFechaEnvioAsc(
+					.findByUsuarioAndEstadoLikeAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndIdPlanillaUniformeOrderByFechaEnvioAsc(
 							user, estadoBuscar, fecha1, fecha2, codigoMarca,
 							codigo);
 	}
@@ -109,12 +109,12 @@ public class SPlanillaUniforme {
 			String codigoMarca, String codigoUsuario, long codigo) {
 		if (codigo == 0)
 			return planillaUniformeDAO
-					.findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+					.findByEstadoLikeAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
 							estadoBuscar, tipoP, fecha1, fecha2, codigoMarca,
 							codigoUsuario);
 		else
 			return planillaUniformeDAO
-					.findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaUniformeOrderByFechaEnvioAsc(
+					.findByEstadoLikeAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaUniformeOrderByFechaEnvioAsc(
 							estadoBuscar, tipoP, fecha1, fecha2, codigoMarca,
 							codigoUsuario, codigo);
 	}
@@ -124,12 +124,12 @@ public class SPlanillaUniforme {
 			Date fecha2, String codigoMarca, String codigoUsuario, long codigo) {
 		if (codigo == 0)
 			return planillaUniformeDAO
-					.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+					.findByUsuarioSupervisorAndEstadoLikeAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
 							nombreUsuarioSesion, variable, fecha1, fecha2,
 							codigoMarca, codigoUsuario);
 		else
 			return planillaUniformeDAO
-					.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaUniformeOrderByFechaEnvioAsc(
+					.findByUsuarioSupervisorAndEstadoLikeAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaUniformeOrderByFechaEnvioAsc(
 							nombreUsuarioSesion, variable, fecha1, fecha2,
 							codigoMarca, codigoUsuario, codigo);
 	}

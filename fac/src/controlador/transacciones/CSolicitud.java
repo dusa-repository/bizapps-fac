@@ -551,6 +551,12 @@ public class CSolicitud extends CGenerico {
 
 	public void cambiarEstado(List<PlanillaGenerica> procesadas, String estado,
 			String estadoDefecto, String estadoNuevo) {
+
+		String tipoConfig = "";
+		if (tradeMark)
+			tipoConfig = "TradeMark";
+		else
+			tipoConfig = "Marca";
 		List<PlanillaCata> listCata = new ArrayList<PlanillaCata>();
 		List<PlanillaFachada> listFachada = new ArrayList<PlanillaFachada>();
 		List<PlanillaPromocion> listPromocion = new ArrayList<PlanillaPromocion>();
@@ -599,6 +605,13 @@ public class CSolicitud extends CGenerico {
 							planillaEvento, estadoNuevo, fechaHora, fechaHora,
 							horaAuditoria, nombreUsuarioSesion(), imagenX);
 					listBitacoraEvento.add(bitacoraE);
+					enviarEmailError(tipoConfig, planillaEvento.getUsuario()
+							.getIdUsuario(),
+							planillaEvento.getIdPlanillaEvento(),
+							planillaEvento.getTipo(), planillaEvento
+									.getUsuario().getMail(), estado, procesadas
+									.get(i).getMotivo(), procesadas.get(i)
+									.getDescripcion());
 
 				} else {
 					BitacoraEvento bitacoraEvento = servicioBitacoraEvento
@@ -645,6 +658,7 @@ public class CSolicitud extends CGenerico {
 							nombreUsuarioSesion(), "Pendiente",
 							planillaEvento.getZona(), "Marca", "",
 							planillaEvento.getIdPlanillaEvento(), "");
+					nueva.setOrigen("Trade Marketing");
 					servicioPlanillaEvento.guardar(nueva);
 					nueva = servicioPlanillaEvento.buscarUltima();
 					bitacoraEventos(nueva);
@@ -698,6 +712,13 @@ public class CSolicitud extends CGenerico {
 							fechaHora, horaAuditoria, nombreUsuarioSesion(),
 							imagenX);
 					listBitacoraUniforme.add(bitacoraU);
+					enviarEmailError(tipoConfig, planillaUniforme.getUsuario()
+							.getIdUsuario(),
+							planillaUniforme.getIdPlanillaUniforme(),
+							planillaUniforme.getTipo(), planillaUniforme
+									.getUsuario().getMail(), estado, procesadas
+									.get(i).getMotivo(), procesadas.get(i)
+									.getDescripcion());
 
 				} else {
 					BitacoraUniforme bitacoraUniforme = servicioBitacoraUniforme
@@ -741,6 +762,7 @@ public class CSolicitud extends CGenerico {
 							planillaUniforme.getUsuario().getZona()
 									.getDescripcion(), "Marca", "",
 							planillaUniforme.getIdPlanillaUniforme(), "");
+					nueva.setOrigen("Trade Marketing");
 					servicioPlanillaUniforme.guardar(nueva);
 					nueva = servicioPlanillaUniforme.buscarUltima();
 					bitacoraUniformes(nueva);
@@ -777,6 +799,13 @@ public class CSolicitud extends CGenerico {
 							fechaHora, horaAuditoria, nombreUsuarioSesion(),
 							imagenX);
 					listBitacoraPromocion.add(bitacoraP);
+					enviarEmailError(tipoConfig, planillaPromocion.getUsuario()
+							.getIdUsuario(),
+							planillaPromocion.getIdPlanillaPromocion(),
+							planillaPromocion.getTipo(), planillaPromocion
+									.getUsuario().getMail(), estado, procesadas
+									.get(i).getMotivo(), procesadas.get(i)
+									.getDescripcion());
 
 				} else {
 					BitacoraPromocion bitacoraPromocion = servicioBitacoraPromocion
@@ -827,6 +856,7 @@ public class CSolicitud extends CGenerico {
 							horaAuditoria, nombreUsuarioSesion(), "Pendiente",
 							planillaPromocion.getZona(), "Marca", "",
 							planillaPromocion.getIdPlanillaPromocion(), "");
+					nueva.setOrigen("Trade Marketing");
 					servicioPlanillaPromocion.guardar(nueva);
 
 					nueva = servicioPlanillaPromocion.buscarUltima();
@@ -856,6 +886,12 @@ public class CSolicitud extends CGenerico {
 							estadoNuevo, fechaHora, fechaHora, horaAuditoria,
 							nombreUsuarioSesion(), imagenX);
 					listBitacoraArte.add(bitacoraA);
+					enviarEmailError(tipoConfig, planillaArte.getUsuario()
+							.getIdUsuario(), planillaArte.getIdPlanillaArte(),
+							planillaArte.getTipo(), planillaArte.getUsuario()
+									.getMail(), estado, procesadas.get(i)
+									.getMotivo(), procesadas.get(i)
+									.getDescripcion());
 
 				} else {
 					BitacoraArte bitacoraArte = servicioBitacoraArte
@@ -895,6 +931,7 @@ public class CSolicitud extends CGenerico {
 							nombreUsuarioSesion(), "Pendiente",
 							planillaArte.getZona(), "Marca", "",
 							planillaArte.getIdPlanillaArte(), "");
+					nueva.setOrigen("Trade Marketing");
 					servicioPlanillaArte.guardar(nueva);
 
 					nueva = servicioPlanillaArte.buscarUltima();
@@ -924,6 +961,12 @@ public class CSolicitud extends CGenerico {
 							estadoNuevo, fechaHora, fechaHora, horaAuditoria,
 							nombreUsuarioSesion(), imagenX);
 					listBitacoraCata.add(bitacoraC);
+					enviarEmailError(tipoConfig, planillaCata.getUsuario()
+							.getIdUsuario(), planillaCata.getIdPlanillaCata(),
+							planillaCata.getTipo(), planillaCata.getUsuario()
+									.getMail(), estado, procesadas.get(i)
+									.getMotivo(), procesadas.get(i)
+									.getDescripcion());
 
 				} else {
 					BitacoraCata bitacoraCata = servicioBitacoraCata
@@ -965,6 +1008,7 @@ public class CSolicitud extends CGenerico {
 							nombreUsuarioSesion(), "Pendiente",
 							planillaCata.getZona(), "Marca", "",
 							planillaCata.getIdPlanillaCata(), "");
+					nueva.setOrigen("Trade Marketing");
 					servicioPlanillaCata.guardar(nueva);
 					nueva = servicioPlanillaCata.buscarUltima();
 					bitacoraCata(nueva);
@@ -1007,7 +1051,13 @@ public class CSolicitud extends CGenerico {
 							planillaFachada, estadoNuevo, fechaHora, fechaHora,
 							horaAuditoria, nombreUsuarioSesion(), imagenX);
 					listBitacoraFachada.add(bitacoraF);
-
+					enviarEmailError(tipoConfig, planillaFachada.getUsuario()
+							.getIdUsuario(),
+							planillaFachada.getIdPlanillaFachada(),
+							planillaFachada.getTipo(), planillaFachada
+									.getUsuario().getMail(), estado, procesadas
+									.get(i).getMotivo(), procesadas.get(i)
+									.getDescripcion());
 				} else {
 					BitacoraFachada bitacoraFachada = servicioBitacoraFachada
 							.buscarPorEstadoYPlanilla(estadoDefecto,
@@ -1062,6 +1112,7 @@ public class CSolicitud extends CGenerico {
 							nombreUsuarioSesion(), "Pendiente",
 							planillaFachada.getZona(), "Marca", "",
 							planillaFachada.getIdPlanillaFachada(), "");
+					nueva.setOrigen("Trade Marketing");
 					servicioPlanillaFachada.guardar(nueva);
 					nueva = servicioPlanillaFachada.buscarUltima();
 					bitacoraFachada(nueva);
@@ -1205,8 +1256,12 @@ public class CSolicitud extends CGenerico {
 			String estado = listCata.get(i).getEstado();
 			String tipoPlanilla = "Cata Induccion";
 			Timestamp fecha = listCata.get(i).getFechaEnvio();
-			if (listCata.get(i).getTipo().equals("Marca"))
-				origen = "MARCA";
+			if (listCata.get(i).getOrigen() != null)
+				origen = listCata.get(i).getOrigen();
+			else {
+				if (listCata.get(i).getTipo().equals("Marca"))
+					origen = "MARCA";
+			}
 			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
 					nombreActividad, fecha, estado, tipoPlanilla, origen);
 			listPlanilla.add(plani);
@@ -1220,8 +1275,12 @@ public class CSolicitud extends CGenerico {
 			String estado = listEvento.get(i).getEstado();
 			String tipoPlanilla = "Eventos Especiales";
 			Timestamp fecha = listEvento.get(i).getFechaEnvio();
-			if (listEvento.get(i).getTipo().equals("Marca"))
-				origen = "MARCA";
+			if (listEvento.get(i).getOrigen() != null)
+				origen = listEvento.get(i).getOrigen();
+			else {
+				if (listEvento.get(i).getTipo().equals("Marca"))
+					origen = "MARCA";
+			}
 			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
 					nombreActividad, fecha, estado, tipoPlanilla, origen);
 			listPlanilla.add(plani);
@@ -1235,8 +1294,12 @@ public class CSolicitud extends CGenerico {
 			String estado = listFachada.get(i).getEstado();
 			String tipoPlanilla = "Fachada y Decoraciones";
 			Timestamp fecha = listFachada.get(i).getFechaEnvio();
-			if (listFachada.get(i).getTipo().equals("Marca"))
-				origen = "MARCA";
+			if (listFachada.get(i).getOrigen() != null)
+				origen = listFachada.get(i).getOrigen();
+			else {
+				if (listFachada.get(i).getTipo().equals("Marca"))
+					origen = "MARCA";
+			}
 			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
 					nombreActividad, fecha, estado, tipoPlanilla, origen);
 			listPlanilla.add(plani);
@@ -1250,8 +1313,12 @@ public class CSolicitud extends CGenerico {
 			String estado = listPromocion.get(i).getEstado();
 			String tipoPlanilla = "Promociones de Marca";
 			Timestamp fecha = listPromocion.get(i).getFechaEnvio();
-			if (listPromocion.get(i).getTipo().equals("Marca"))
-				origen = "MARCA";
+			if (listPromocion.get(i).getOrigen() != null)
+				origen = listPromocion.get(i).getOrigen();
+			else {
+				if (listPromocion.get(i).getTipo().equals("Marca"))
+					origen = "MARCA";
+			}
 			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
 					nombreActividad, fecha, estado, tipoPlanilla, origen);
 			listPlanilla.add(plani);
@@ -1265,9 +1332,13 @@ public class CSolicitud extends CGenerico {
 			String estado = listArte.get(i).getEstado();
 			String tipoPlanilla = "Solicitud de Arte y Publicaciones";
 			Timestamp fecha = listArte.get(i).getFechaEnvio();
-			if (listArte.get(i).getTipo() != null)
-				if (listArte.get(i).getTipo().equals("Marca"))
-					origen = "MARCA";
+			if (listArte.get(i).getOrigen() != null)
+				origen = listArte.get(i).getOrigen();
+			else {
+				if (listArte.get(i).getTipo() != null)
+					if (listArte.get(i).getTipo().equals("Marca"))
+						origen = "MARCA";
+			}
 			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
 					nombreActividad, fecha, estado, tipoPlanilla, origen);
 			listPlanilla.add(plani);
@@ -1281,8 +1352,12 @@ public class CSolicitud extends CGenerico {
 			String estado = listUniforme.get(i).getEstado();
 			String tipoPlanilla = "Uniformes";
 			Timestamp fecha = listUniforme.get(i).getFechaEnvio();
-			if (listUniforme.get(i).getTipo().equals("Marca"))
-				origen = "MARCA";
+			if (listUniforme.get(i).getOrigen() != null)
+				origen = listUniforme.get(i).getOrigen();
+			else {
+				if (listUniforme.get(i).getTipo().equals("Marca"))
+					origen = "MARCA";
+			}
 			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
 					nombreActividad, fecha, estado, tipoPlanilla, origen);
 			listPlanilla.add(plani);
@@ -1614,398 +1689,405 @@ public class CSolicitud extends CGenerico {
 
 	@Listen("onClick = #btnRefrescar")
 	public void refresh() {
-		if (grupoDominante.equals("Administrador")
-				&& cmbEstado.getText().compareTo("") == 0)
-			msj.mensajeAlerta("Debe seleccionar un estado");
-		else {
-			Usuario user = servicioUsuario.buscar(nombreUsuarioSesion());
-			Date fecha1 = dtbDesde.getValue();
-			Date fecha2 = dtbHasta.getValue();
-			String codigoMarca = "%";
-			if (cmbMarca.getSelectedItem() != null)
-				codigoMarca = cmbMarca.getSelectedItem().getContext();
-			String codigoUsuario = "%";
-			if (cmbUsuario != null)
-				if (cmbUsuario.getSelectedItem() != null)
-					codigoUsuario = cmbUsuario.getSelectedItem().getContext();
-			String codigoTipo = "%";
-			if (!cmbTipo.getValue().equals("TODOS"))
-				codigoTipo = cmbTipo.getValue();
-			long codigo = 0;
-			if (txtCodigo.getText().compareTo("") != 0)
-				codigo = txtCodigo.getValue();
-			listPlanilla.clear();
-			List<PlanillaCata> listCata = new ArrayList<PlanillaCata>();
-			List<PlanillaEvento> listEvento = new ArrayList<PlanillaEvento>();
-			List<PlanillaPromocion> listPromocion = new ArrayList<PlanillaPromocion>();
-			List<PlanillaArte> listArte = new ArrayList<PlanillaArte>();
-			List<PlanillaUniforme> listUniforme = new ArrayList<PlanillaUniforme>();
-			List<PlanillaFachada> listFachada = new ArrayList<PlanillaFachada>();
-			String tipoP = "Marca";
-			if (tradeMark)
-				tipoP = "TradeMark";
-			switch (grupoDominante) {
-			case "Administrador":
-				String estadoBuscar = cmbEstado.getValue();
-				if (estadoBuscar.equals("En Edicion")) {
-					switch (codigoTipo) {
-					case "Cata Induccion":
-						listCata = servicioPlanillaCata
-								.buscarUsuarioEntreFechas(user, estadoBuscar,
-										fecha1, fecha2, codigoMarca,
-										codigoUsuario, codigo);
-						break;
-					case "Eventos Especiales":
-						listEvento = servicioPlanillaEvento
-								.buscarUsuarioEntreFechas(user, estadoBuscar,
-										fecha1, fecha2, codigoMarca,
-										codigoUsuario, codigo);
-						break;
-					case "Fachada y Decoraciones":
-						listFachada = servicioPlanillaFachada
-								.buscarUsuarioEntreFechas(user, estadoBuscar,
-										fecha1, fecha2, codigoMarca,
-										codigoUsuario, codigo);
-						break;
-					case "Promociones de Marca":
-						listPromocion = servicioPlanillaPromocion
-								.buscarUsuarioEntreFechas(user, estadoBuscar,
-										fecha1, fecha2, codigoMarca,
-										codigoUsuario, codigo);
-						break;
-					case "Solicitud de Arte y Publicaciones":
-						listArte = servicioPlanillaArte
-								.buscarUsuarioEntreFechas(user, estadoBuscar,
-										fecha1, fecha2, codigoMarca,
-										codigoUsuario, codigo);
-						break;
-					case "Uniformes":
-						listUniforme = servicioPlanillaUniforme
-								.buscarUsuarioEntreFechas(user, estadoBuscar,
-										fecha1, fecha2, codigoMarca,
-										codigoUsuario, codigo);
-						break;
-					default:
-						listCata = servicioPlanillaCata
-								.buscarUsuarioEntreFechas(user, estadoBuscar,
-										fecha1, fecha2, codigoMarca,
-										codigoUsuario, codigo);
-						listEvento = servicioPlanillaEvento
-								.buscarUsuarioEntreFechas(user, estadoBuscar,
-										fecha1, fecha2, codigoMarca,
-										codigoUsuario, codigo);
-						listPromocion = servicioPlanillaPromocion
-								.buscarUsuarioEntreFechas(user, estadoBuscar,
-										fecha1, fecha2, codigoMarca,
-										codigoUsuario, codigo);
-						listArte = servicioPlanillaArte
-								.buscarUsuarioEntreFechas(user, estadoBuscar,
-										fecha1, fecha2, codigoMarca,
-										codigoUsuario, codigo);
-						listUniforme = servicioPlanillaUniforme
-								.buscarUsuarioEntreFechas(user, estadoBuscar,
-										fecha1, fecha2, codigoMarca,
-										codigoUsuario, codigo);
-						listFachada = servicioPlanillaFachada
-								.buscarUsuarioEntreFechas(user, estadoBuscar,
-										fecha1, fecha2, codigoMarca,
-										codigoUsuario, codigo);
-						break;
-					}
-				} else {
-					switch (codigoTipo) {
-					case "Cata Induccion":
-						listCata = servicioPlanillaCata
-								.buscarAdminPendientesEntreFechas(tipoP,
-										estadoBuscar, fecha1, fecha2,
-										codigoMarca, codigoUsuario, codigo);
-						break;
-					case "Eventos Especiales":
-						listEvento = servicioPlanillaEvento
-								.buscarAdminPendientesEntreFechas(tipoP,
-										estadoBuscar, fecha1, fecha2,
-										codigoMarca, codigoUsuario, codigo);
-						break;
-					case "Fachada y Decoraciones":
-						listFachada = servicioPlanillaFachada
-								.buscarAdminPendientesEntreFechas(tipoP,
-										estadoBuscar, fecha1, fecha2,
-										codigoMarca, codigoUsuario, codigo);
-						break;
-					case "Promociones de Marca":
-						listPromocion = servicioPlanillaPromocion
-								.buscarAdminPendientesEntreFechas(tipoP,
-										estadoBuscar, fecha1, fecha2,
-										codigoMarca, codigoUsuario, codigo);
-						break;
-					case "Solicitud de Arte y Publicaciones":
-						listArte = servicioPlanillaArte
-								.buscarAdminPendientesEntreFechas(tipoP,
-										estadoBuscar, fecha1, fecha2,
-										codigoMarca, codigoUsuario, codigo);
-						break;
-					case "Uniformes":
-						listUniforme = servicioPlanillaUniforme
-								.buscarAdminPendientesEntreFechas(tipoP,
-										estadoBuscar, fecha1, fecha2,
-										codigoMarca, codigoUsuario, codigo);
-						break;
-					default:
-						listCata = servicioPlanillaCata
-								.buscarAdminPendientesEntreFechas(tipoP,
-										estadoBuscar, fecha1, fecha2,
-										codigoMarca, codigoUsuario, codigo);
-						listEvento = servicioPlanillaEvento
-								.buscarAdminPendientesEntreFechas(tipoP,
-										estadoBuscar, fecha1, fecha2,
-										codigoMarca, codigoUsuario, codigo);
-						listPromocion = servicioPlanillaPromocion
-								.buscarAdminPendientesEntreFechas(tipoP,
-										estadoBuscar, fecha1, fecha2,
-										codigoMarca, codigoUsuario, codigo);
-						listArte = servicioPlanillaArte
-								.buscarAdminPendientesEntreFechas(tipoP,
-										estadoBuscar, fecha1, fecha2,
-										codigoMarca, codigoUsuario, codigo);
-						listUniforme = servicioPlanillaUniforme
-								.buscarAdminPendientesEntreFechas(tipoP,
-										estadoBuscar, fecha1, fecha2,
-										codigoMarca, codigoUsuario, codigo);
-						listFachada = servicioPlanillaFachada
-								.buscarAdminPendientesEntreFechas(tipoP,
-										estadoBuscar, fecha1, fecha2,
-										codigoMarca, codigoUsuario, codigo);
-						break;
-					}
-				}
-				break;
-			case "Solicitante":
+		Usuario user = servicioUsuario.buscar(nombreUsuarioSesion());
+		Date fecha1 = dtbDesde.getValue();
+		Date fecha2 = dtbHasta.getValue();
+		String codigoMarca = "%";
+		if (cmbMarca.getSelectedItem() != null)
+			codigoMarca = cmbMarca.getSelectedItem().getContext();
+		String codigoUsuario = "%";
+		if (cmbUsuario != null)
+			if (cmbUsuario.getSelectedItem() != null)
+				codigoUsuario = cmbUsuario.getSelectedItem().getContext();
+		String codigoTipo = "%";
+		if (!cmbTipo.getValue().equals("TODOS"))
+			codigoTipo = cmbTipo.getValue();
+		long codigo = 0;
+		if (txtCodigo.getText().compareTo("") != 0)
+			codigo = txtCodigo.getValue();
+		listPlanilla.clear();
+		List<PlanillaCata> listCata = new ArrayList<PlanillaCata>();
+		List<PlanillaEvento> listEvento = new ArrayList<PlanillaEvento>();
+		List<PlanillaPromocion> listPromocion = new ArrayList<PlanillaPromocion>();
+		List<PlanillaArte> listArte = new ArrayList<PlanillaArte>();
+		List<PlanillaUniforme> listUniforme = new ArrayList<PlanillaUniforme>();
+		List<PlanillaFachada> listFachada = new ArrayList<PlanillaFachada>();
+		String tipoP = "Marca";
+		if (tradeMark)
+			tipoP = "TradeMark";
+		switch (grupoDominante) {
+		case "Administrador":
+			String estadoBuscar = cmbEstado.getValue();
+			if (estadoBuscar.equals("TODOS"))
+				estadoBuscar = "%";
+			if (estadoBuscar.equals("En Edicion")) {
 				switch (codigoTipo) {
 				case "Cata Induccion":
 					listCata = servicioPlanillaCata.buscarUsuarioEntreFechas(
-							user, variable, fecha1, fecha2, codigoMarca,
+							user, estadoBuscar, fecha1, fecha2, codigoMarca,
 							codigoUsuario, codigo);
 					break;
 				case "Eventos Especiales":
 					listEvento = servicioPlanillaEvento
-							.buscarUsuarioEntreFechas(user, variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarUsuarioEntreFechas(user, estadoBuscar,
+									fecha1, fecha2, codigoMarca, codigoUsuario,
+									codigo);
 					break;
 				case "Fachada y Decoraciones":
 					listFachada = servicioPlanillaFachada
-							.buscarUsuarioEntreFechas(user, variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarUsuarioEntreFechas(user, estadoBuscar,
+									fecha1, fecha2, codigoMarca, codigoUsuario,
+									codigo);
 					break;
 				case "Promociones de Marca":
 					listPromocion = servicioPlanillaPromocion
-							.buscarUsuarioEntreFechas(user, variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarUsuarioEntreFechas(user, estadoBuscar,
+									fecha1, fecha2, codigoMarca, codigoUsuario,
+									codigo);
 					break;
 				case "Solicitud de Arte y Publicaciones":
 					listArte = servicioPlanillaArte.buscarUsuarioEntreFechas(
-							user, variable, fecha1, fecha2, codigoMarca,
+							user, estadoBuscar, fecha1, fecha2, codigoMarca,
 							codigoUsuario, codigo);
 					break;
 				case "Uniformes":
 					listUniforme = servicioPlanillaUniforme
-							.buscarUsuarioEntreFechas(user, variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarUsuarioEntreFechas(user, estadoBuscar,
+									fecha1, fecha2, codigoMarca, codigoUsuario,
+									codigo);
 					break;
 				default:
 					listCata = servicioPlanillaCata.buscarUsuarioEntreFechas(
-							user, variable, fecha1, fecha2, codigoMarca,
+							user, estadoBuscar, fecha1, fecha2, codigoMarca,
 							codigoUsuario, codigo);
 					listEvento = servicioPlanillaEvento
-							.buscarUsuarioEntreFechas(user, variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarUsuarioEntreFechas(user, estadoBuscar,
+									fecha1, fecha2, codigoMarca, codigoUsuario,
+									codigo);
 					listPromocion = servicioPlanillaPromocion
-							.buscarUsuarioEntreFechas(user, variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarUsuarioEntreFechas(user, estadoBuscar,
+									fecha1, fecha2, codigoMarca, codigoUsuario,
+									codigo);
 					listArte = servicioPlanillaArte.buscarUsuarioEntreFechas(
-							user, variable, fecha1, fecha2, codigoMarca,
+							user, estadoBuscar, fecha1, fecha2, codigoMarca,
 							codigoUsuario, codigo);
 					listUniforme = servicioPlanillaUniforme
-							.buscarUsuarioEntreFechas(user, variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarUsuarioEntreFechas(user, estadoBuscar,
+									fecha1, fecha2, codigoMarca, codigoUsuario,
+									codigo);
 					listFachada = servicioPlanillaFachada
-							.buscarUsuarioEntreFechas(user, variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarUsuarioEntreFechas(user, estadoBuscar,
+									fecha1, fecha2, codigoMarca, codigoUsuario,
+									codigo);
 					break;
 				}
-				break;
-			case "Gerente Regional":
+			} else {
 				switch (codigoTipo) {
 				case "Cata Induccion":
 					listCata = servicioPlanillaCata
-							.buscarSupervisorYEstadoEntreFechas(
-									nombreUsuarioSesion(), variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2, codigoMarca,
+									codigoUsuario, codigo);
 					break;
 				case "Eventos Especiales":
 					listEvento = servicioPlanillaEvento
-							.buscarSupervisorYEstadoEntreFechas(
-									nombreUsuarioSesion(), variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2, codigoMarca,
+									codigoUsuario, codigo);
 					break;
 				case "Fachada y Decoraciones":
 					listFachada = servicioPlanillaFachada
-							.buscarSupervisorYEstadoEntreFechas(
-									nombreUsuarioSesion(), variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2, codigoMarca,
+									codigoUsuario, codigo);
 					break;
 				case "Promociones de Marca":
 					listPromocion = servicioPlanillaPromocion
-							.buscarSupervisorYEstadoEntreFechas(
-									nombreUsuarioSesion(), variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2, codigoMarca,
+									codigoUsuario, codigo);
 					break;
 				case "Solicitud de Arte y Publicaciones":
 					listArte = servicioPlanillaArte
-							.buscarSupervisorYEstadoEntreFechas(
-									nombreUsuarioSesion(), variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2, codigoMarca,
+									codigoUsuario, codigo);
 					break;
 				case "Uniformes":
 					listUniforme = servicioPlanillaUniforme
-							.buscarSupervisorYEstadoEntreFechas(
-									nombreUsuarioSesion(), variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2, codigoMarca,
+									codigoUsuario, codigo);
 					break;
 				default:
 					listCata = servicioPlanillaCata
-							.buscarSupervisorYEstadoEntreFechas(
-									nombreUsuarioSesion(), variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2, codigoMarca,
+									codigoUsuario, codigo);
 					listEvento = servicioPlanillaEvento
-							.buscarSupervisorYEstadoEntreFechas(
-									nombreUsuarioSesion(), variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2, codigoMarca,
+									codigoUsuario, codigo);
 					listPromocion = servicioPlanillaPromocion
-							.buscarSupervisorYEstadoEntreFechas(
-									nombreUsuarioSesion(), variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2, codigoMarca,
+									codigoUsuario, codigo);
 					listArte = servicioPlanillaArte
-							.buscarSupervisorYEstadoEntreFechas(
-									nombreUsuarioSesion(), variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2, codigoMarca,
+									codigoUsuario, codigo);
 					listUniforme = servicioPlanillaUniforme
-							.buscarSupervisorYEstadoEntreFechas(
-									nombreUsuarioSesion(), variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2, codigoMarca,
+									codigoUsuario, codigo);
 					listFachada = servicioPlanillaFachada
-							.buscarSupervisorYEstadoEntreFechas(
-									nombreUsuarioSesion(), variable, fecha1,
-									fecha2, codigoMarca, codigoUsuario, codigo);
+							.buscarAdminPendientesEntreFechas(tipoP,
+									estadoBuscar, fecha1, fecha2, codigoMarca,
+									codigoUsuario, codigo);
 					break;
 				}
+			}
+			break;
+		case "Solicitante":
+			switch (codigoTipo) {
+			case "Cata Induccion":
+				listCata = servicioPlanillaCata.buscarUsuarioEntreFechas(user,
+						variable, fecha1, fecha2, codigoMarca, codigoUsuario,
+						codigo);
+				break;
+			case "Eventos Especiales":
+				listEvento = servicioPlanillaEvento.buscarUsuarioEntreFechas(
+						user, variable, fecha1, fecha2, codigoMarca,
+						codigoUsuario, codigo);
+				break;
+			case "Fachada y Decoraciones":
+				listFachada = servicioPlanillaFachada.buscarUsuarioEntreFechas(
+						user, variable, fecha1, fecha2, codigoMarca,
+						codigoUsuario, codigo);
+				break;
+			case "Promociones de Marca":
+				listPromocion = servicioPlanillaPromocion
+						.buscarUsuarioEntreFechas(user, variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				break;
+			case "Solicitud de Arte y Publicaciones":
+				listArte = servicioPlanillaArte.buscarUsuarioEntreFechas(user,
+						variable, fecha1, fecha2, codigoMarca, codigoUsuario,
+						codigo);
+				break;
+			case "Uniformes":
+				listUniforme = servicioPlanillaUniforme
+						.buscarUsuarioEntreFechas(user, variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				break;
+			default:
+				listCata = servicioPlanillaCata.buscarUsuarioEntreFechas(user,
+						variable, fecha1, fecha2, codigoMarca, codigoUsuario,
+						codigo);
+				listEvento = servicioPlanillaEvento.buscarUsuarioEntreFechas(
+						user, variable, fecha1, fecha2, codigoMarca,
+						codigoUsuario, codigo);
+				listPromocion = servicioPlanillaPromocion
+						.buscarUsuarioEntreFechas(user, variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				listArte = servicioPlanillaArte.buscarUsuarioEntreFechas(user,
+						variable, fecha1, fecha2, codigoMarca, codigoUsuario,
+						codigo);
+				listUniforme = servicioPlanillaUniforme
+						.buscarUsuarioEntreFechas(user, variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				listFachada = servicioPlanillaFachada.buscarUsuarioEntreFechas(
+						user, variable, fecha1, fecha2, codigoMarca,
+						codigoUsuario, codigo);
 				break;
 			}
-			String origen = "TRADE MARKETING";
-			for (int i = 0; i < listCata.size(); i++) {
-				origen = "TRADE MARKETING";
-				long id = listCata.get(i).getIdPlanillaCata();
-				String usuario = listCata.get(i).getUsuario().getNombre();
-				String marca = listCata.get(i).getMarca().getDescripcion();
-				String nombreActividad = listCata.get(i).getNombreActividad();
-				String estado = listCata.get(i).getEstado();
-				String tipoPlanilla = "Cata Induccion";
-				Timestamp fecha = listCata.get(i).getFechaEnvio();
+			break;
+		case "Gerente Regional":
+			switch (codigoTipo) {
+			case "Cata Induccion":
+				listCata = servicioPlanillaCata
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				break;
+			case "Eventos Especiales":
+				listEvento = servicioPlanillaEvento
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				break;
+			case "Fachada y Decoraciones":
+				listFachada = servicioPlanillaFachada
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				break;
+			case "Promociones de Marca":
+				listPromocion = servicioPlanillaPromocion
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				break;
+			case "Solicitud de Arte y Publicaciones":
+				listArte = servicioPlanillaArte
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				break;
+			case "Uniformes":
+				listUniforme = servicioPlanillaUniforme
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				break;
+			default:
+				listCata = servicioPlanillaCata
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				listEvento = servicioPlanillaEvento
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				listPromocion = servicioPlanillaPromocion
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				listArte = servicioPlanillaArte
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				listUniforme = servicioPlanillaUniforme
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				listFachada = servicioPlanillaFachada
+						.buscarSupervisorYEstadoEntreFechas(
+								nombreUsuarioSesion(), variable, fecha1,
+								fecha2, codigoMarca, codigoUsuario, codigo);
+				break;
+			}
+			break;
+		}
+		String origen = "TRADE MARKETING";
+		for (int i = 0; i < listCata.size(); i++) {
+			origen = "TRADE MARKETING";
+			long id = listCata.get(i).getIdPlanillaCata();
+			String usuario = listCata.get(i).getUsuario().getNombre();
+			String marca = listCata.get(i).getMarca().getDescripcion();
+			String nombreActividad = listCata.get(i).getNombreActividad();
+			String estado = listCata.get(i).getEstado();
+			String tipoPlanilla = "Cata Induccion";
+			Timestamp fecha = listCata.get(i).getFechaEnvio();
+			if (listCata.get(i).getOrigen() != null)
+				origen = listCata.get(i).getOrigen();
+			else {
 				if (listCata.get(i).getTipo().equals("Marca"))
 					origen = "MARCA";
-				PlanillaGenerica plani = new PlanillaGenerica(id, usuario,
-						marca, nombreActividad, fecha, estado, tipoPlanilla,
-						origen);
-				listPlanilla.add(plani);
 			}
-			for (int i = 0; i < listEvento.size(); i++) {
-				origen = "TRADE MARKETING";
-				long id = listEvento.get(i).getIdPlanillaEvento();
-				String usuario = listEvento.get(i).getUsuario().getNombre();
-				String marca = listEvento.get(i).getMarca().getDescripcion();
-				String nombreActividad = listEvento.get(i).getNombreActividad();
-				String estado = listEvento.get(i).getEstado();
-				String tipoPlanilla = "Eventos Especiales";
-				Timestamp fecha = listEvento.get(i).getFechaEnvio();
+			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
+					nombreActividad, fecha, estado, tipoPlanilla, origen);
+			listPlanilla.add(plani);
+		}
+		for (int i = 0; i < listEvento.size(); i++) {
+			origen = "TRADE MARKETING";
+			long id = listEvento.get(i).getIdPlanillaEvento();
+			String usuario = listEvento.get(i).getUsuario().getNombre();
+			String marca = listEvento.get(i).getMarca().getDescripcion();
+			String nombreActividad = listEvento.get(i).getNombreActividad();
+			String estado = listEvento.get(i).getEstado();
+			String tipoPlanilla = "Eventos Especiales";
+			Timestamp fecha = listEvento.get(i).getFechaEnvio();
+			if (listEvento.get(i).getOrigen() != null)
+				origen = listEvento.get(i).getOrigen();
+			else {
 				if (listEvento.get(i).getTipo().equals("Marca"))
 					origen = "MARCA";
-				PlanillaGenerica plani = new PlanillaGenerica(id, usuario,
-						marca, nombreActividad, fecha, estado, tipoPlanilla,
-						origen);
-				listPlanilla.add(plani);
 			}
-			for (int i = 0; i < listFachada.size(); i++) {
-				origen = "TRADE MARKETING";
-				long id = listFachada.get(i).getIdPlanillaFachada();
-				String usuario = listFachada.get(i).getUsuario().getNombre();
-				String marca = listFachada.get(i).getMarca().getDescripcion();
-				String nombreActividad = listFachada.get(i)
-						.getNombreActividad();
-				String estado = listFachada.get(i).getEstado();
-				String tipoPlanilla = "Fachada y Decoraciones";
-				Timestamp fecha = listFachada.get(i).getFechaEnvio();
+			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
+					nombreActividad, fecha, estado, tipoPlanilla, origen);
+			listPlanilla.add(plani);
+		}
+		for (int i = 0; i < listFachada.size(); i++) {
+			origen = "TRADE MARKETING";
+			long id = listFachada.get(i).getIdPlanillaFachada();
+			String usuario = listFachada.get(i).getUsuario().getNombre();
+			String marca = listFachada.get(i).getMarca().getDescripcion();
+			String nombreActividad = listFachada.get(i).getNombreActividad();
+			String estado = listFachada.get(i).getEstado();
+			String tipoPlanilla = "Fachada y Decoraciones";
+			Timestamp fecha = listFachada.get(i).getFechaEnvio();
+			if (listFachada.get(i).getOrigen() != null)
+				origen = listFachada.get(i).getOrigen();
+			else {
 				if (listFachada.get(i).getTipo().equals("Marca"))
 					origen = "MARCA";
-				PlanillaGenerica plani = new PlanillaGenerica(id, usuario,
-						marca, nombreActividad, fecha, estado, tipoPlanilla,
-						origen);
-				listPlanilla.add(plani);
 			}
-			for (int i = 0; i < listPromocion.size(); i++) {
-				origen = "TRADE MARKETING";
-				long id = listPromocion.get(i).getIdPlanillaPromocion();
-				String usuario = listPromocion.get(i).getUsuario().getNombre();
-				String marca = listPromocion.get(i).getMarca().getDescripcion();
-				String nombreActividad = listPromocion.get(i)
-						.getNombreActividad();
-				String estado = listPromocion.get(i).getEstado();
-				String tipoPlanilla = "Promociones de Marca";
-				Timestamp fecha = listPromocion.get(i).getFechaEnvio();
+			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
+					nombreActividad, fecha, estado, tipoPlanilla, origen);
+			listPlanilla.add(plani);
+		}
+		for (int i = 0; i < listPromocion.size(); i++) {
+			origen = "TRADE MARKETING";
+			long id = listPromocion.get(i).getIdPlanillaPromocion();
+			String usuario = listPromocion.get(i).getUsuario().getNombre();
+			String marca = listPromocion.get(i).getMarca().getDescripcion();
+			String nombreActividad = listPromocion.get(i).getNombreActividad();
+			String estado = listPromocion.get(i).getEstado();
+			String tipoPlanilla = "Promociones de Marca";
+			Timestamp fecha = listPromocion.get(i).getFechaEnvio();
+			if (listPromocion.get(i).getOrigen() != null)
+				origen = listPromocion.get(i).getOrigen();
+			else {
 				if (listPromocion.get(i).getTipo().equals("Marca"))
 					origen = "MARCA";
-				PlanillaGenerica plani = new PlanillaGenerica(id, usuario,
-						marca, nombreActividad, fecha, estado, tipoPlanilla,
-						origen);
-				listPlanilla.add(plani);
 			}
-			for (int i = 0; i < listArte.size(); i++) {
-				origen = "TRADE MARKETING";
-				long id = listArte.get(i).getIdPlanillaArte();
-				String usuario = listArte.get(i).getUsuario().getNombre();
-				String marca = listArte.get(i).getMarca().getDescripcion();
-				String nombreActividad = listArte.get(i).getNombreActividad();
-				String estado = listArte.get(i).getEstado();
-				String tipoPlanilla = "Solicitud de Arte y Publicaciones";
-				Timestamp fecha = listArte.get(i).getFechaEnvio();
-				if (listArte.get(i).getTipo() != null)
-					if (listArte.get(i).getTipo().equals("Marca"))
-						origen = "MARCA";
-				PlanillaGenerica plani = new PlanillaGenerica(id, usuario,
-						marca, nombreActividad, fecha, estado, tipoPlanilla,
-						origen);
-				listPlanilla.add(plani);
+			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
+					nombreActividad, fecha, estado, tipoPlanilla, origen);
+			listPlanilla.add(plani);
+		}
+		for (int i = 0; i < listArte.size(); i++) {
+			origen = "TRADE MARKETING";
+			long id = listArte.get(i).getIdPlanillaArte();
+			String usuario = listArte.get(i).getUsuario().getNombre();
+			String marca = listArte.get(i).getMarca().getDescripcion();
+			String nombreActividad = listArte.get(i).getNombreActividad();
+			String estado = listArte.get(i).getEstado();
+			String tipoPlanilla = "Solicitud de Arte y Publicaciones";
+			Timestamp fecha = listArte.get(i).getFechaEnvio();
+			if (listArte.get(i).getOrigen() != null)
+				origen = listArte.get(i).getOrigen();
+			else {
+				if (listArte.get(i).getTipo().equals("Marca"))
+					origen = "MARCA";
 			}
-			for (int i = 0; i < listUniforme.size(); i++) {
-				origen = "TRADE MARKETING";
-				long id = listUniforme.get(i).getIdPlanillaUniforme();
-				String usuario = listUniforme.get(i).getUsuario().getNombre();
-				String marca = listUniforme.get(i).getMarca().getDescripcion();
-				String nombreActividad = listUniforme.get(i)
-						.getNombreActividad();
-				String estado = listUniforme.get(i).getEstado();
-				String tipoPlanilla = "Uniformes";
-				Timestamp fecha = listUniforme.get(i).getFechaEnvio();
+			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
+					nombreActividad, fecha, estado, tipoPlanilla, origen);
+			listPlanilla.add(plani);
+		}
+		for (int i = 0; i < listUniforme.size(); i++) {
+			origen = "TRADE MARKETING";
+			long id = listUniforme.get(i).getIdPlanillaUniforme();
+			String usuario = listUniforme.get(i).getUsuario().getNombre();
+			String marca = listUniforme.get(i).getMarca().getDescripcion();
+			String nombreActividad = listUniforme.get(i).getNombreActividad();
+			String estado = listUniforme.get(i).getEstado();
+			String tipoPlanilla = "Uniformes";
+			Timestamp fecha = listUniforme.get(i).getFechaEnvio();
+			if (listUniforme.get(i).getOrigen() != null)
+				origen = listUniforme.get(i).getOrigen();
+			else {
 				if (listUniforme.get(i).getTipo().equals("Marca"))
 					origen = "MARCA";
-				PlanillaGenerica plani = new PlanillaGenerica(id, usuario,
-						marca, nombreActividad, fecha, estado, tipoPlanilla,
-						origen);
-				listPlanilla.add(plani);
 			}
-			if (!listPlanilla.isEmpty()) {
-				ordenarPorFecha(listPlanilla);
-			}
-			catalogo.actualizarLista(listPlanilla);
+			PlanillaGenerica plani = new PlanillaGenerica(id, usuario, marca,
+					nombreActividad, fecha, estado, tipoPlanilla, origen);
+			listPlanilla.add(plani);
 		}
+		if (!listPlanilla.isEmpty()) {
+			ordenarPorFecha(listPlanilla);
+		}
+		catalogo.actualizarLista(listPlanilla);
 
 	}
 

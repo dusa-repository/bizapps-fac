@@ -426,6 +426,12 @@ public class CEvento extends CGenerico {
 				fechaHora, fechaEnvio, horaAuditoria, nombreUsuarioSesion(),
 				string, usuario.getZona().getDescripcion(), tipoConfig, "", 0,
 				"");
+		String origenPlanilla = valor;
+		if(!tipoConfig.equals(""))
+			origenPlanilla = tipoConfig;
+		if(origenPlanilla.equals("TradeMark"))
+			origenPlanilla = "Trade Marketing";
+		planillaEvento.setOrigen(origenPlanilla);
 		servicioPlanillaEvento.guardar(planillaEvento);
 		if (id != 0)
 			planillaEvento = servicioPlanillaEvento.buscar(id);

@@ -378,6 +378,12 @@ public class CSolicitudArte extends CGenerico {
 				imagenUsuario3, imagenUsuario4, lineamiento, fechaHora,
 				fechaEnvio, horaAuditoria, nombreUsuarioSesion(), string,
 				usuario.getZona().getDescripcion(), tipoConfig, "", 0, "");
+		String origenPlanilla = valor;
+		if(!tipoConfig.equals(""))
+			origenPlanilla = tipoConfig;
+		if(origenPlanilla.equals("TradeMark"))
+			origenPlanilla = "Trade Marketing";
+		planillaArte.setOrigen(origenPlanilla);
 		servicioPlanillaArte.guardar(planillaArte);
 		if (id != 0)
 			planillaArte = servicioPlanillaArte.buscar(id);
