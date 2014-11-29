@@ -59,27 +59,27 @@ public interface IPlanillaUniformeDAO extends JpaRepository<PlanillaUniforme, Lo
 			String nombreUsuarioSesion, String variable, Date fecha1,
 			Date fecha2);
 
-	List<PlanillaUniforme> findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeOrderByFechaEnvioAsc(
+	List<PlanillaUniforme> findByUsuarioAndEstadoLikeAndFechaEnvioBetweenAndMarcaIdMarcaLikeOrderByFechaEnvioAsc(
 			Usuario user, String estadoBuscar, Date fecha1, Date fecha2,
 			String codigoMarca);
 
-	List<PlanillaUniforme> findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndIdPlanillaUniformeOrderByFechaEnvioAsc(
+	List<PlanillaUniforme> findByUsuarioAndEstadoLikeAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndIdPlanillaUniformeOrderByFechaEnvioAsc(
 			Usuario user, String estadoBuscar, Date fecha1, Date fecha2,
 			String codigoMarca, long codigo);
 
-	List<PlanillaUniforme> findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaUniformeOrderByFechaEnvioAsc(
+	List<PlanillaUniforme> findByEstadoLikeAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaUniformeOrderByFechaEnvioAsc(
 			String estadoBuscar, String tipoP, Date fecha1, Date fecha2,
 			String codigoMarca, String codigoUsuario, long codigo);
 
-	List<PlanillaUniforme> findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+	List<PlanillaUniforme> findByEstadoLikeAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
 			String estadoBuscar, String tipoP, Date fecha1, Date fecha2,
 			String codigoMarca, String codigoUsuario);
 
-	List<PlanillaUniforme> findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaUniformeOrderByFechaEnvioAsc(
+	List<PlanillaUniforme> findByUsuarioSupervisorAndEstadoLikeAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaUniformeOrderByFechaEnvioAsc(
 			String nombreUsuarioSesion, String variable, Date fecha1,
 			Date fecha2, String codigoMarca, String codigoUsuario, long codigo);
 
-	List<PlanillaUniforme> findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+	List<PlanillaUniforme> findByUsuarioSupervisorAndEstadoLikeAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
 			String nombreUsuarioSesion, String variable, Date fecha1,
 			Date fecha2, String codigoMarca, String codigoUsuario);
 

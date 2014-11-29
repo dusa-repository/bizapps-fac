@@ -377,6 +377,12 @@ public class CUniforme extends CGenerico {
 				justificacion, contrato, fechaHora, fechaEnvio, horaAuditoria,
 				nombreUsuarioSesion(), string, usuario.getZona()
 						.getDescripcion(), tipoConfig, "", 0, "");
+		String origenPlanilla = valor;
+		if(!tipoConfig.equals(""))
+			origenPlanilla = tipoConfig;
+		if(origenPlanilla.equals("TradeMark"))
+			origenPlanilla = "Trade Marketing";
+		planillaUniforme.setOrigen(origenPlanilla);
 		servicioPlanillaUniforme.guardar(planillaUniforme);
 		if (id != 0)
 			planillaUniforme = servicioPlanillaUniforme.buscar(id);

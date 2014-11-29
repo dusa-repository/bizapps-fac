@@ -138,6 +138,9 @@ public class PlanillaPromocion implements Serializable {
 	@Column(name="descripcion_motivo",length = 250)
 	private String descripcionMotivo;
 	
+	@Column(name="origen",length = 20)
+	private String origen;
+	
 	public PlanillaPromocion() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -476,6 +479,14 @@ public class PlanillaPromocion implements Serializable {
 
 	public void setDescripcionMotivo(String descripcionMotivo) {
 		this.descripcionMotivo = descripcionMotivo;
+	}
+
+	public String getOrigen() {
+		return origen;
+	}
+
+	public void setOrigen(String origen) {
+		this.origen = origen;
 	}
 	
 	

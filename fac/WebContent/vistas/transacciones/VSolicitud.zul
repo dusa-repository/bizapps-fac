@@ -63,9 +63,10 @@
 						<row>
 							<zk if="${sec:isAnyGranted('MARCA, TRADE MARKETING')}">
 								<label class="etiqueta" value="Estado: " />
-								<combobox tooltiptext="Seleccione un Estado"
+								<combobox value="TODOS" tooltiptext="Seleccione un Estado"
 									placeholder="Seleccione un Estado" id="cmbEstado" readonly="true"
 									width="100%">
+									<comboitem label="TODOS"/>
 									<comboitem label="En Edicion" />
 									<comboitem label="Pendiente" />
 									<comboitem label="Aprobada" />

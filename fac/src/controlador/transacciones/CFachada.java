@@ -488,6 +488,12 @@ public class CFachada extends CGenerico {
 				fechaHora, fechaEnvio, horaAuditoria, nombreUsuarioSesion(),
 				string, usuario.getZona().getDescripcion(), tipoConfig, "", 0,
 				"");
+		String origenPlanilla = valor;
+		if(!tipoConfig.equals(""))
+			origenPlanilla = tipoConfig;
+		if(origenPlanilla.equals("TradeMark"))
+			origenPlanilla = "Trade Marketing";
+		planillaFachada.setOrigen(origenPlanilla);
 		servicioPlanillaFachada.guardar(planillaFachada);
 
 		if (id != 0)

@@ -397,6 +397,12 @@ public class CCata extends CGenerico {
 				costo, descripcion, mecanica, fechaHora, fechaEnvio,
 				horaAuditoria, nombreUsuarioSesion(), string, usuario.getZona()
 						.getDescripcion(), tipoConfig, "", 0, "");
+		String origenPlanilla = valor;
+		if(!tipoConfig.equals(""))
+			origenPlanilla = tipoConfig;
+		if(origenPlanilla.equals("TradeMark"))
+			origenPlanilla = "Trade Marketing";
+		planilla.setOrigen(origenPlanilla);
 		servicioPlanillaCata.guardar(planilla);
 		if (id != 0)
 			planilla = servicioPlanillaCata.buscar(id);

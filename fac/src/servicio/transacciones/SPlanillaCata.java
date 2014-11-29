@@ -96,11 +96,11 @@ public class SPlanillaCata {
 			String codigoUsuario, long codigo) {
 		if (codigo == 0)
 			return planillaCataDAO
-					.findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeOrderByFechaEnvioAsc(
+					.findByUsuarioAndEstadoLikeAndFechaEnvioBetweenAndMarcaIdMarcaLikeOrderByFechaEnvioAsc(
 							user, estadoBuscar, fecha1, fecha2, codigoMarca);
 		else
 			return planillaCataDAO
-					.findByUsuarioAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndIdPlanillaCataOrderByFechaEnvioAsc(
+					.findByUsuarioAndEstadoLikeAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndIdPlanillaCataOrderByFechaEnvioAsc(
 							user, estadoBuscar, fecha1, fecha2, codigoMarca,
 							codigo);
 	}
@@ -110,12 +110,12 @@ public class SPlanillaCata {
 			String codigoUsuario, long codigo) {
 		if (codigo == 0)
 			return planillaCataDAO
-					.findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+					.findByEstadoLikeAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
 							estadoBuscar, tipoP, fecha1, fecha2, codigoMarca,
 							codigoUsuario);
 		else
 			return planillaCataDAO
-					.findByEstadoAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaCataOrderByFechaEnvioAsc(
+					.findByEstadoLikeAndTipoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaCataOrderByFechaEnvioAsc(
 							estadoBuscar, tipoP, fecha1, fecha2, codigoMarca,
 							codigoUsuario, codigo);
 	}
@@ -125,12 +125,12 @@ public class SPlanillaCata {
 			Date fecha2, String codigoMarca, String codigoUsuario, long codigo) {
 		if (codigo == 0)
 			return planillaCataDAO
-					.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
+					.findByUsuarioSupervisorAndEstadoLikeAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeOrderByFechaEnvioAsc(
 							nombreUsuarioSesion, variable, fecha1, fecha2,
 							codigoMarca, codigoUsuario);
 		else
 			return planillaCataDAO
-					.findByUsuarioSupervisorAndEstadoAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaCataOrderByFechaEnvioAsc(
+					.findByUsuarioSupervisorAndEstadoLikeAndFechaEnvioBetweenAndMarcaIdMarcaLikeAndUsuarioIdUsuarioLikeAndIdPlanillaCataOrderByFechaEnvioAsc(
 							nombreUsuarioSesion, variable, fecha1, fecha2,
 							codigoMarca, codigoUsuario, codigo);
 	}
