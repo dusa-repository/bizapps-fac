@@ -1,6 +1,5 @@
 package controlador.portal;
 
-import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -22,19 +21,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.image.AImage;
 import org.zkoss.spring.security.SecurityUtil;
-import org.zkoss.web.servlet.dsp.action.Page;
-import org.zkoss.zk.ui.Execution;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
-import org.zkoss.zk.ui.select.Selectors;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
-import org.zkoss.zul.Borderlayout;
 import org.zkoss.zul.Button;
-import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Image;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
@@ -72,6 +66,8 @@ public class CInicio extends CGenerico {
 	private Image imagenes;
 	@Wire
 	private Label lblEntorno;
+	@Wire
+	private Label lblNombre;
 	private String tipo = "";
 	List<Button> botonesAgregados = new ArrayList<Button>();
 	@Wire
@@ -97,14 +93,14 @@ public class CInicio extends CGenerico {
 		}
 		ltbRoles.setModel(new ListModelList<Grupo>(grupos));
 
-		btnCataInduccion.setSrc("/public/imagenes/botones/planillaP.png");
-		btnEvento.setSrc("/public/imagenes/botones/planillaP.png");
-		btnFachada.setSrc("/public/imagenes/botones/planillaP.png");
-		btnPromocion.setSrc("/public/imagenes/botones/planillaP.png");
-		btnSolicitudArte.setSrc("/public/imagenes/botones/planillaP.png");
-		btnUniforme.setSrc("/public/imagenes/botones/planillaP.png");
-		btnCruds.setSrc("/public/imagenes/botones/adminP.png");
-		btnInBox.setSrc("/public/imagenes/botones/inboxP.png");
+		btnCataInduccion.setImage("/public/imagenes/botones/planillaP.png");
+		btnEvento.setImage("/public/imagenes/botones/planillaP.png");
+		btnFachada.setImage("/public/imagenes/botones/planillaP.png");
+		btnPromocion.setImage("/public/imagenes/botones/planillaP.png");
+		btnSolicitudArte.setImage("/public/imagenes/botones/planillaP.png");
+		btnUniforme.setImage("/public/imagenes/botones/planillaP.png");
+		btnCruds.setImage("/public/imagenes/botones/adminP.png");
+		btnInBox.setImage("/public/imagenes/botones/inboxP.png");
 
 		Over(btnCruds, "adminG");
 		Out(btnCruds, "adminP");
@@ -160,7 +156,6 @@ public class CInicio extends CGenerico {
 						if (!botones.get(i).getId().equals("btnInBox")
 								&& !botones.get(i).getId().equals("btnCruds"))
 							botonesAgregados.add(botones.get(i));
-						final int j = i;
 						botones.get(i).setVisible(true);
 						botones.get(i).addEventListener(Events.ON_CLICK,
 								new EventListener<Event>() {
@@ -191,7 +186,7 @@ public class CInicio extends CGenerico {
 			}
 		}
 		if (SecurityUtil.isAnyGranted("Solicitante")) {
-			Map params = new HashMap();
+			Map<String, String> params = new HashMap<String, String>();
 			params.put("width", "500px");
 			params.put("height", "800px");
 			params.put("style", "top:100px;");
@@ -231,7 +226,7 @@ public class CInicio extends CGenerico {
 				new EventListener<Event>() {
 					@Override
 					public void onEvent(Event arg0) throws Exception {
-						boton.setSrc("/public/imagenes/botones/" + imagen
+						boton.setImage("/public/imagenes/botones/" + imagen
 								+ ".png");
 						boton.setStyle("color:black");
 					}
@@ -242,7 +237,7 @@ public class CInicio extends CGenerico {
 		boton.addEventListener(Events.ON_MOUSE_OUT, new EventListener<Event>() {
 			@Override
 			public void onEvent(Event arg0) throws Exception {
-				boton.setSrc("/public/imagenes/botones/" + imagen + ".png");
+				boton.setImage("/public/imagenes/botones/" + imagen + ".png");
 				boton.setStyle("color:white");
 			}
 		});
@@ -265,10 +260,24 @@ public class CInicio extends CGenerico {
 	}
 
 	public void asignarLabel(String tipo2) {
-		if (tipo2.equals("Marca"))
+		if (tipo2.equals("Marca")) {
+			lblNombre.setValue("Usted se encuentra bajo el entorno de MARCA");
 			lblEntorno.setValue("Entorno: MARCA");
-		else
+			if (btnActualizar != null) {
+				btnActualizar.setLabel("Cambiar a TRADEMARKETING");
+				btnActualizar
+						.setTooltiptext("Presione el boton para cambiar al entorno de TRADEMARKETING");
+			}
+		} else {
+			lblNombre
+					.setValue("Usted se encuentra bajo el entorno de TRADEMARKETING");
 			lblEntorno.setValue("Entorno: TRADE MARKETING");
+			if (btnActualizar != null) {
+				btnActualizar.setLabel("Cambiar a MARCA");
+				btnActualizar
+						.setTooltiptext("Presione el boton para cambiar al entorno de MARCA");
+			}
+		}
 	}
 
 	public void trade() {

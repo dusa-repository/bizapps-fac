@@ -54,7 +54,8 @@ public class CInbox extends CGenerico {
 	private Button btnFinalizada;
 	@Wire
 	private Label lblInbox;
-
+	@Wire
+	private Label lblNombre;
 	@Wire
 	private Image imagenes;
 	@Wire
@@ -161,13 +162,13 @@ public class CInbox extends CGenerico {
 
 	@Override
 	public void inicializar() throws IOException {
-		btnPendiente.setSrc("/public/imagenes/botones/pendiente.png");
-		btnAprobada.setSrc("/public/imagenes/botones/procesada.png");
-		btnCancelada.setSrc("/public/imagenes/botones/cancelada.png");
-		btnRechazada.setSrc("/public/imagenes/botones/rechazada.png");
-		btnEdicion.setSrc("/public/imagenes/botones/planillaP.png");
-		btnPagada.setSrc("/public/imagenes/botones/pagada.png");
-		btnFinalizada.setSrc("/public/imagenes/botones/finalizada.png");
+		btnPendiente.setImage("/public/imagenes/botones/pendiente.png");
+		btnAprobada.setImage("/public/imagenes/botones/procesada.png");
+		btnCancelada.setImage("/public/imagenes/botones/cancelada.png");
+		btnRechazada.setImage("/public/imagenes/botones/rechazada.png");
+		btnEdicion.setImage("/public/imagenes/botones/planillaP.png");
+		btnPagada.setImage("/public/imagenes/botones/pagada.png");
+		btnFinalizada.setImage("/public/imagenes/botones/finalizada.png");
 
 		Over(btnCancelada, "canceladaG");
 		Out(btnCancelada, "cancelada");
@@ -229,7 +230,6 @@ public class CInbox extends CGenerico {
 				for (int i = 0; i < botones.size(); i++) {
 					if (("btn" + arbol.getNombre()).equals(botones.get(i)
 							.getId())) {
-						final int j = i;
 						botones.get(i).setVisible(true);
 						botones.get(i).addEventListener(Events.ON_CLICK,
 								new EventListener<Event>() {
@@ -255,10 +255,15 @@ public class CInbox extends CGenerico {
 		if (valor.equals(""))
 			lblInbox.setValue("Entorno: No especificado");
 		else {
-			if (valor.equals("Marca"))
+			if (valor.equals("Marca")) {
 				lblInbox.setValue("Entorno: MARCA");
-			else
+				lblNombre
+						.setValue("Usted se encuentra bajo el entorno de MARCA");
+			} else {
 				lblInbox.setValue("Entorno: TRADE MARKETING");
+				lblNombre
+						.setValue("Usted se encuentra bajo el entorno de TRADEMARKETING");
+			}
 		}
 	}
 
@@ -272,7 +277,7 @@ public class CInbox extends CGenerico {
 				new EventListener<Event>() {
 					@Override
 					public void onEvent(Event arg0) throws Exception {
-						boton.setSrc("/public/imagenes/botones/" + imagen
+						boton.setImage("/public/imagenes/botones/" + imagen
 								+ ".png");
 						boton.setStyle("color:black");
 					}
@@ -283,7 +288,7 @@ public class CInbox extends CGenerico {
 		boton.addEventListener(Events.ON_MOUSE_OUT, new EventListener<Event>() {
 			@Override
 			public void onEvent(Event arg0) throws Exception {
-				boton.setSrc("/public/imagenes/botones/" + imagen + ".png");
+				boton.setImage("/public/imagenes/botones/" + imagen + ".png");
 				boton.setStyle("color:white");
 			}
 		});

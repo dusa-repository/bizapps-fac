@@ -172,14 +172,10 @@
 			<south border="0" height="7%" collapsible="false">
 				<div width="100%" height="100%" style="background:#500101">
 					<div align="center" sclass="footer">
-						<a href="../j_spring_security_logout">
-							<label style="color:white; font-size: 16px; font-weight:bold;"
-								value="INICIO">
-							</label>
-						</a>
+						<label id="lblNombre" style="color:white; font-weight: bold; font-size: 14px" />
 						<separator />
 						<label
-							style="color:#DAD3D3; font-size: 14px; font-weight:bold;padding-center:35%; "
+							style="color:#DAD3D3; font-size: 10px; font-weight:bold;padding-center:35%; "
 							value="© 2014 Destilería Unidas S.A | RIF: J-30940783-0 | Todos los derechos reservados | Desarrollado por BIZAPPS,C.A">
 						</label>
 					</div>
