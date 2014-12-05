@@ -67,6 +67,8 @@ public class CCruds extends CGenerico {
 	private Listbox ltbRoles;
 	@Wire
 	private Label lblCrud;
+	@Wire
+	private Label lblNombre;
 
 	URL url = getClass().getResource("/controlador/maestros/usuario.png");
 
@@ -120,7 +122,7 @@ public class CCruds extends CGenerico {
 							.getId())) {
 						final int j = i;
 						botones.get(i).setVisible(true);
-						botones.get(i).setSrc(
+						botones.get(i).setImage(
 								"/public/imagenes/botones/crudP.png");
 						botones.get(i).addEventListener(Events.ON_MOUSE_OVER,
 								new EventListener<Event>() {
@@ -128,7 +130,8 @@ public class CCruds extends CGenerico {
 									public void onEvent(Event arg0)
 											throws Exception {
 										botones.get(j)
-												.setSrc("/public/imagenes/botones/crudG.png");
+												.setImage(
+														"/public/imagenes/botones/crudG.png");
 										botones.get(j).setStyle("color:black");
 									}
 								});
@@ -138,7 +141,8 @@ public class CCruds extends CGenerico {
 									public void onEvent(Event arg0)
 											throws Exception {
 										botones.get(j)
-												.setSrc("/public/imagenes/botones/crudP.png");
+												.setImage(
+														"/public/imagenes/botones/crudP.png");
 										botones.get(j).setStyle("color:white");
 									}
 								});
@@ -161,10 +165,15 @@ public class CCruds extends CGenerico {
 		if (valor.equals(""))
 			lblCrud.setValue("Entorno: No especificado");
 		else {
-			if (valor.equals("Marca"))
+			if (valor.equals("Marca")) {
 				lblCrud.setValue("Entorno: MARCA");
-			else
+				lblNombre
+						.setValue("Usted se encuentra bajo el entorno de MARCA");
+			} else {
 				lblCrud.setValue("Entorno: TRADE MARKETING");
+				lblNombre
+						.setValue("Usted se encuentra bajo el entorno de TRADEMARKETING");
+			}
 		}
 	}
 
