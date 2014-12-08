@@ -157,7 +157,7 @@
 											visible="false" autodisable="self" />
 										<zk if="${sec:isAnyGranted('Solicitante')}">
 											<button id="btnActualizar" class="btn"
-												label="Cambiar Entorno de Solicitudes" orient="vertical"
+												label="Cambiar Entorno" orient="vertical"
 												autodisable="self" image="/public/imagenes/botones/refresh.png" />
 										</zk>
 									</vbox>
@@ -172,7 +172,7 @@
 			<south border="0" height="7%" collapsible="false">
 				<div width="100%" height="100%" style="background:#500101">
 					<div align="center" sclass="footer">
-						<label id="lblNombre" style="color:white; font-weight: bold; font-size: 14px" />
+						<label id="lblNombre" style="color:yellow; font-weight: bold; font-size: 20px" />
 						<separator />
 						<label
 							style="color:#DAD3D3; font-size: 10px; font-weight:bold;padding-center:35%; "
