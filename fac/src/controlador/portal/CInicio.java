@@ -130,7 +130,6 @@ public class CInicio extends CGenerico {
 				e.printStackTrace();
 			}
 		}
-
 		final List<Button> botones = new ArrayList<Button>();
 		botones.add(btnEvento);
 		botones.add(btnUniforme);
@@ -186,29 +185,7 @@ public class CInicio extends CGenerico {
 			}
 		}
 		if (SecurityUtil.isAnyGranted("Solicitante")) {
-			Map<String, String> params = new HashMap<String, String>();
-			params.put("width", "500px");
-			params.put("height", "800px");
-			params.put("style", "top:100px;");
-			String[] arreglo = { "TRADE MARKETING", "MARCA" };
-
-			Messagebox.Button[] boton = { Messagebox.Button.OK,
-					Messagebox.Button.CANCEL };
-
-			Messagebox.show("¿SU SOLICITUD SERA CARGADA A?", "", boton,
-					arreglo, "", null,
-					new org.zkoss.zk.ui.event.EventListener() {
-						public void onEvent(Event evt)
-								throws InterruptedException {
-							if (evt.getName().equals("onOK")) {
-								trade();
-							} else {
-								if (evt.getName().equals("onCancel")) {
-									marca();
-								}
-							}
-						}
-					}, params);
+			continuar();
 		} else {
 			if (SecurityUtil.isAnyGranted("TRADE MARKETING"))
 				trade();
@@ -219,6 +196,32 @@ public class CInicio extends CGenerico {
 					lblEntorno.setValue("Entorno: No especificado");
 			}
 		}
+	}
+
+	private void continuar() {
+
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("width", "500px");
+		params.put("height", "800px");
+		params.put("style", "top:100px;");
+		String[] arreglo = { "TRADE MARKETING", "MARCA" };
+
+		Messagebox.Button[] boton = { Messagebox.Button.OK,
+				Messagebox.Button.CANCEL };
+
+		Messagebox.show("¿SU SOLICITUD SERA CARGADA A?", "", boton, arreglo,
+				"", null, new org.zkoss.zk.ui.event.EventListener() {
+					public void onEvent(Event evt) throws InterruptedException {
+						if (evt.getData().toString().contains("OK")) {
+							trade();
+						} else {
+							if (evt.getData().toString().contains("CANCEL")) {
+								marca();
+							}
+						}
+					}
+				}, params);
+
 	}
 
 	public void Over(final Button boton, final String imagen) {
@@ -283,9 +286,9 @@ public class CInicio extends CGenerico {
 	public void trade() {
 		List<Configuracion> configuracion = servicioConfiguracion
 				.buscar("TradeMark");
-		recorrer(configuracion);
-		asignarLabel(tipo);
 		tipo = "TradeMark";
+		asignarLabel(tipo);
+		recorrer(configuracion);
 	}
 
 	private void recorrer(List<Configuracion> configuracion) {
@@ -299,11 +302,13 @@ public class CInicio extends CGenerico {
 			}
 			if (!entro)
 				botonesAgregados.get(i).setVisible(false);
+			else
+				botonesAgregados.get(i).setVisible(true);
 		}
 	}
 
 	@Listen("onClick=#btnActualizar")
 	public void actualizar() {
-		Executions.sendRedirect("/vistas/inicio.zul");
+		continuar();
 	}
 }
