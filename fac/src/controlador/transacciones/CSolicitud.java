@@ -186,24 +186,24 @@ public class CSolicitud extends CGenerico {
 
 				for (PlanillaGenerica planilla : listPlanilla) {
 					if (planilla.getUsuario().toLowerCase()
-							.startsWith(valores.get(0).toLowerCase())
+							.contains(valores.get(0).toLowerCase())
 							&& planilla.getEstado().toLowerCase()
-									.startsWith(valores.get(1).toLowerCase())
+									.contains(valores.get(1).toLowerCase())
 							&& String.valueOf(planilla.getId()).toLowerCase()
-									.startsWith(valores.get(2))
+									.contains(valores.get(2))
 							&& String
 									.valueOf(
 											formatoFecha.format(planilla
 													.getFecha())).toLowerCase()
-									.startsWith(valores.get(3))
+									.contains(valores.get(3))
 							&& planilla.getMarca().toLowerCase()
-									.startsWith(valores.get(4).toLowerCase())
+									.contains(valores.get(4).toLowerCase())
 							&& planilla.getNombreActividad().toLowerCase()
-									.startsWith(valores.get(5).toLowerCase())
+									.contains(valores.get(5).toLowerCase())
 							&& planilla.getTipoPlanilla().toLowerCase()
-									.startsWith(valores.get(6).toLowerCase())
+									.contains(valores.get(6).toLowerCase())
 							&& planilla.getOrigen().toLowerCase()
-									.startsWith(valores.get(7).toLowerCase())) {
+									.contains(valores.get(7).toLowerCase())) {
 						lista.add(planilla);
 					}
 				}
@@ -213,15 +213,15 @@ public class CSolicitud extends CGenerico {
 			@Override
 			protected String[] crearRegistros(PlanillaGenerica planilla) {
 				String[] registros = new String[8];
-				registros[0] = planilla.getUsuario().toLowerCase();
-				registros[1] = planilla.getEstado().toLowerCase();
+				registros[0] = planilla.getUsuario();
+				registros[1] = planilla.getEstado();
 				registros[2] = String.valueOf(planilla.getId());
 				registros[3] = String.valueOf(formatoFecha.format(planilla
 						.getFecha()));
-				registros[4] = planilla.getMarca().toLowerCase();
-				registros[5] = planilla.getNombreActividad().toLowerCase();
-				registros[6] = planilla.getTipoPlanilla().toLowerCase();
-				registros[7] = planilla.getOrigen().toLowerCase();
+				registros[4] = planilla.getMarca();
+				registros[5] = planilla.getNombreActividad();
+				registros[6] = planilla.getTipoPlanilla();
+				registros[7] = planilla.getOrigen();
 				return registros;
 			}
 		};
@@ -551,7 +551,8 @@ public class CSolicitud extends CGenerico {
 
 	public void cambiarEstado(List<PlanillaGenerica> procesadas, String estado,
 			String estadoDefecto, String estadoNuevo) {
-
+		pendiente = true;
+		buscado = false;
 		String tipoConfig = "";
 		if (tradeMark)
 			tipoConfig = "TradeMark";

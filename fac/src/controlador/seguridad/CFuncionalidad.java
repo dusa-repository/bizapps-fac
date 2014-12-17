@@ -119,15 +119,15 @@ public class CFuncionalidad extends CGenerico {
 
 						for (Arbol arbol : listArbol) {
 							if (arbol.getNombre().toLowerCase()
-									.startsWith(valores.get(0).toLowerCase())
+									.contains(valores.get(0).toLowerCase())
 									&& arbol.getNombreBoton()
 											.toLowerCase()
-											.startsWith(
+											.contains(
 													valores.get(1)
 															.toLowerCase())
 									&& arbol.getUrl()
 											.toLowerCase()
-											.startsWith(
+											.contains(
 													valores.get(2)
 															.toLowerCase())) {
 								lista.add(arbol);
@@ -139,9 +139,9 @@ public class CFuncionalidad extends CGenerico {
 					@Override
 					protected String[] crearRegistros(Arbol arbol) {
 						String[] registros = new String[3];
-						registros[0] = arbol.getNombre().toLowerCase();
-						registros[1] = arbol.getNombreBoton().toLowerCase();
-						registros[2] = arbol.getUrl().toLowerCase();
+						registros[0] = arbol.getNombre();
+						registros[1] = arbol.getNombreBoton();
+						registros[2] = arbol.getUrl();
 						return registros;
 					}
 				};

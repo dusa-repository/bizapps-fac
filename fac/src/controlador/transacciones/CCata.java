@@ -647,17 +647,17 @@ public class CCata extends CGenerico {
 
 				for (PlanillaCata planillaCata : listPlanilla) {
 					if (planillaCata.getNombreActividad().toLowerCase()
-							.startsWith(valores.get(0).toLowerCase())
+							.contains(valores.get(0).toLowerCase())
 							&& planillaCata.getCiudad().toLowerCase()
-									.startsWith(valores.get(1).toLowerCase())
+									.contains(valores.get(1).toLowerCase())
 							&& planillaCata.getMarca().getDescripcion()
 									.toLowerCase()
-									.startsWith(valores.get(2).toLowerCase())
+									.contains(valores.get(2).toLowerCase())
 							&& String
 									.valueOf(
 											formatoFecha.format(planillaCata
 													.getFechaAuditoria()))
-									.toLowerCase().startsWith(valores.get(3))) {
+									.toLowerCase().contains(valores.get(3))) {
 						lista.add(planillaCata);
 					}
 				}
@@ -667,10 +667,9 @@ public class CCata extends CGenerico {
 			@Override
 			protected String[] crearRegistros(PlanillaCata planillaCata) {
 				String[] registros = new String[4];
-				registros[0] = planillaCata.getNombreActividad().toLowerCase();
-				registros[1] = planillaCata.getCiudad().toLowerCase();
-				registros[2] = planillaCata.getMarca().getDescripcion()
-						.toLowerCase();
+				registros[0] = planillaCata.getNombreActividad();
+				registros[1] = planillaCata.getCiudad();
+				registros[2] = planillaCata.getMarca().getDescripcion();
 				registros[3] = String.valueOf(formatoFecha.format(planillaCata
 						.getFechaAuditoria()));
 				return registros;

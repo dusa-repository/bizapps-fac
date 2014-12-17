@@ -145,7 +145,7 @@ public class CGrupo extends CGenerico {
 
 						for (Grupo grupo : listGrupo) {
 							if (grupo.getNombre().toLowerCase()
-									.startsWith(valores.get(0).toLowerCase())) {
+									.contains(valores.get(0).toLowerCase())) {
 								lista.add(grupo);
 							}
 						}
@@ -155,7 +155,7 @@ public class CGrupo extends CGenerico {
 					@Override
 					protected String[] crearRegistros(Grupo grupo) {
 						String[] registros = new String[1];
-						registros[0] = grupo.getNombre().toLowerCase();
+						registros[0] = grupo.getNombre();
 						return registros;
 					}
 				};

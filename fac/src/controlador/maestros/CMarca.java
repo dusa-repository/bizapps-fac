@@ -174,9 +174,9 @@ public class CMarca extends CGenerico {
 
 				for (Marca marca : listMarca) {
 					if (marca.getIdMarca().toLowerCase()
-							.startsWith(valores.get(0).toLowerCase())
+							.contains(valores.get(0).toLowerCase())
 							&& marca.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1).toLowerCase())) {
+									.contains(valores.get(1).toLowerCase())) {
 						lista.add(marca);
 					}
 				}
@@ -186,8 +186,8 @@ public class CMarca extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Marca marca) {
 				String[] registros = new String[2];
-				registros[0] = marca.getIdMarca().toLowerCase();
-				registros[1] = marca.getDescripcion().toLowerCase();
+				registros[0] = marca.getIdMarca();
+				registros[1] = marca.getDescripcion();
 				return registros;
 			}
 		};

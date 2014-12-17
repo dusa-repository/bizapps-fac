@@ -716,17 +716,17 @@ public class CEvento extends CGenerico {
 
 				for (PlanillaEvento planillaEvento : listPlanilla) {
 					if (planillaEvento.getNombreActividad().toLowerCase()
-							.startsWith(valores.get(0).toLowerCase())
+							.contains(valores.get(0).toLowerCase())
 							&& planillaEvento.getCiudad().toLowerCase()
-									.startsWith(valores.get(1).toLowerCase())
+									.contains(valores.get(1).toLowerCase())
 							&& planillaEvento.getMarca().getDescripcion()
 									.toLowerCase()
-									.startsWith(valores.get(2).toLowerCase())
+									.contains(valores.get(2).toLowerCase())
 							&& String
 									.valueOf(
 											formatoFecha.format(planillaEvento
 													.getFechaAuditoria()))
-									.toLowerCase().startsWith(valores.get(3))) {
+									.toLowerCase().contains(valores.get(3))) {
 						lista.add(planillaEvento);
 					}
 				}
@@ -736,11 +736,9 @@ public class CEvento extends CGenerico {
 			@Override
 			protected String[] crearRegistros(PlanillaEvento planillaEvento) {
 				String[] registros = new String[4];
-				registros[0] = planillaEvento.getNombreActividad()
-						.toLowerCase();
-				registros[1] = planillaEvento.getCiudad().toLowerCase();
-				registros[2] = planillaEvento.getMarca().getDescripcion()
-						.toLowerCase();
+				registros[0] = planillaEvento.getNombreActividad();
+				registros[1] = planillaEvento.getCiudad();
+				registros[2] = planillaEvento.getMarca().getDescripcion();
 				registros[3] = String.valueOf(formatoFecha
 						.format(planillaEvento.getFechaAuditoria()));
 				return registros;

@@ -207,17 +207,17 @@ public class CF0004 extends CGenerico {
 
 				for (F0004 f0004 : listF0004) {
 					if (f0004.getId().getDtsy().toLowerCase()
-							.startsWith(valores.get(0).toLowerCase())
+							.contains(valores.get(0).toLowerCase())
 							&& f0004.getId().getDtrt().toLowerCase()
-									.startsWith(valores.get(1).toLowerCase())
+									.contains(valores.get(1).toLowerCase())
 							&& f0004.getDtdl01().toLowerCase()
-									.startsWith(valores.get(2).toLowerCase())
+									.contains(valores.get(2).toLowerCase())
 							&& String.valueOf(f0004.getDtcdl()).toLowerCase()
-									.startsWith(valores.get(3))
+									.contains(valores.get(3))
 							&& f0004.getDtln2().toLowerCase()
-									.startsWith(valores.get(4))
+									.contains(valores.get(4))
 							&& f0004.getDtcnum().toLowerCase()
-									.startsWith(valores.get(5))) {
+									.contains(valores.get(5))) {
 						lista.add(f0004);
 					}
 				}
@@ -227,9 +227,9 @@ public class CF0004 extends CGenerico {
 			@Override
 			protected String[] crearRegistros(F0004 f0004) {
 				String[] registros = new String[6];
-				registros[0] = f0004.getId().getDtsy().toLowerCase();
-				registros[1] = f0004.getId().getDtrt().toLowerCase();
-				registros[2] = f0004.getDtdl01().toLowerCase();
+				registros[0] = f0004.getId().getDtsy();
+				registros[1] = f0004.getId().getDtrt();
+				registros[2] = f0004.getDtdl01();
 				registros[3] = String.valueOf(f0004.getDtcdl());
 				registros[4] = f0004.getDtln2();
 				registros[5] = f0004.getDtcnum();
