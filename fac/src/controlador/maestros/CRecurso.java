@@ -151,7 +151,7 @@ public class CRecurso extends CGenerico {
 
 				for (Recurso recurso : listRecurso) {
 					if (recurso.getDescripcion().toLowerCase()
-							.startsWith(valores.get(0).toLowerCase())) {
+							.contains(valores.get(0).toLowerCase())) {
 						lista.add(recurso);
 					}
 				}
@@ -161,7 +161,7 @@ public class CRecurso extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Recurso recurso) {
 				String[] registros = new String[1];
-				registros[0] = recurso.getDescripcion().toLowerCase();
+				registros[0] = recurso.getDescripcion();
 				return registros;
 			}
 		};

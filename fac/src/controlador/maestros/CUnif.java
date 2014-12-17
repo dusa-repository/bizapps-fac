@@ -143,7 +143,7 @@ public class CUnif extends CGenerico {
 				for (Uniforme recurso : listUniforme) {
 
 					if (recurso.getDescripcion().toLowerCase()
-							.startsWith(valores.get(0).toLowerCase())) {
+							.contains(valores.get(0).toLowerCase())) {
 						lista.add(recurso);
 					}
 				}
@@ -153,7 +153,7 @@ public class CUnif extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Uniforme recurso) {
 				String[] registros = new String[1];
-				registros[0] = recurso.getDescripcion().toLowerCase();
+				registros[0] = recurso.getDescripcion();
 				return registros;
 			}
 		};

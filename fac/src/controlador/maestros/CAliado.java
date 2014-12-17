@@ -143,11 +143,11 @@ public class CAliado extends CGenerico {
 
 				for (Aliado aliado : listAliado) {
 					if (aliado.getNombre().toLowerCase()
-							.startsWith(valores.get(0).toLowerCase())
+							.contains(valores.get(0).toLowerCase())
 							&& aliado.getZona().getDescripcion().toLowerCase()
-									.startsWith(valores.get(1).toLowerCase())
+									.contains(valores.get(1).toLowerCase())
 							&& aliado.getAnexo().toLowerCase()
-									.startsWith(valores.get(2).toLowerCase())) {
+									.contains(valores.get(2).toLowerCase())) {
 						lista.add(aliado);
 					}
 				}
@@ -157,9 +157,9 @@ public class CAliado extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Aliado aliado) {
 				String[] registros = new String[3];
-				registros[0] = aliado.getNombre().toLowerCase();
-				registros[1] = aliado.getZona().getDescripcion().toLowerCase();
-				registros[2] = aliado.getAnexo().toLowerCase();
+				registros[0] = aliado.getNombre();
+				registros[1] = aliado.getZona().getDescripcion();
+				registros[2] = aliado.getAnexo();
 				return registros;
 			}
 		};
@@ -180,9 +180,9 @@ public class CAliado extends CGenerico {
 
 				for (Zona zona : listZona) {
 					if (zona.getIdZona().toLowerCase()
-							.startsWith(valores.get(0).toLowerCase())
+							.contains(valores.get(0).toLowerCase())
 							&& zona.getDescripcion().toLowerCase()
-									.startsWith(valores.get(2).toLowerCase())) {
+									.contains(valores.get(1).toLowerCase())) {
 						lista.add(zona);
 					}
 				}
@@ -192,8 +192,8 @@ public class CAliado extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Zona zona) {
 				String[] registros = new String[2];
-				registros[0] = zona.getIdZona().toLowerCase();
-				registros[1] = zona.getDescripcion().toLowerCase();
+				registros[0] = zona.getIdZona();
+				registros[1] = zona.getDescripcion();
 				return registros;
 			}
 		};

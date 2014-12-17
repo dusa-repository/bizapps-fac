@@ -163,11 +163,11 @@ public class CSku extends CGenerico {
 
 				for (Sku sku : listSku) {
 					if (sku.getIdSku().toLowerCase()
-							.startsWith(valores.get(0).toLowerCase())
+							.contains(valores.get(0).toLowerCase())
 							&& sku.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1).toLowerCase())
+									.contains(valores.get(1).toLowerCase())
 							&& sku.getMarca().getDescripcion().toLowerCase()
-									.startsWith(valores.get(2).toLowerCase())) {
+									.contains(valores.get(2).toLowerCase())) {
 						lista.add(sku);
 					}
 				}
@@ -177,9 +177,9 @@ public class CSku extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Sku sku) {
 				String[] registros = new String[3];
-				registros[0] = sku.getIdSku().toLowerCase();
-				registros[1] = sku.getDescripcion().toLowerCase();
-				registros[2] = sku.getMarca().getDescripcion().toLowerCase();
+				registros[0] = sku.getIdSku();
+				registros[1] = sku.getDescripcion();
+				registros[2] = sku.getMarca().getDescripcion();
 				return registros;
 			}
 		};
@@ -200,9 +200,9 @@ public class CSku extends CGenerico {
 
 				for (Marca marca : listMarca) {
 					if (marca.getIdMarca().toLowerCase()
-							.startsWith(valores.get(0).toLowerCase())
+							.contains(valores.get(0).toLowerCase())
 							&& marca.getDescripcion().toLowerCase()
-									.startsWith(valores.get(1).toLowerCase())) {
+									.contains(valores.get(1).toLowerCase())) {
 						lista.add(marca);
 					}
 				}
@@ -212,8 +212,8 @@ public class CSku extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Marca marca) {
 				String[] registros = new String[2];
-				registros[0] = marca.getIdMarca().toLowerCase();
-				registros[1] = marca.getDescripcion().toLowerCase();
+				registros[0] = marca.getIdMarca();
+				registros[1] = marca.getDescripcion();
 				return registros;
 			}
 		};

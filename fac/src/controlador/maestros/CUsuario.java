@@ -314,15 +314,15 @@ public class CUsuario extends CGenerico {
 
 				for (Usuario usuario : listUsuario) {
 					if (usuario.getIdUsuario().toLowerCase()
-							.startsWith(valores.get(0).toLowerCase())
+							.contains(valores.get(0).toLowerCase())
 							&& usuario.getNombre().toLowerCase()
-									.startsWith(valores.get(1).toLowerCase())
+									.contains(valores.get(1).toLowerCase())
 							&& usuario.getMail().toLowerCase()
-									.startsWith(valores.get(2).toLowerCase())
+									.contains(valores.get(2).toLowerCase())
 							&& usuario.getSupervisor().toLowerCase()
-									.startsWith(valores.get(3).toLowerCase())
+									.contains(valores.get(3).toLowerCase())
 							&& usuario.getZona().getDescripcion().toLowerCase()
-									.startsWith(valores.get(4).toLowerCase())) {
+									.contains(valores.get(4).toLowerCase())) {
 						lista.add(usuario);
 					}
 				}
@@ -332,11 +332,11 @@ public class CUsuario extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Usuario usuario) {
 				String[] registros = new String[5];
-				registros[0] = usuario.getIdUsuario().toLowerCase();
-				registros[1] = usuario.getNombre().toLowerCase();
-				registros[2] = usuario.getMail().toLowerCase();
-				registros[3] = usuario.getSupervisor().toLowerCase();
-				registros[4] = usuario.getZona().getDescripcion().toLowerCase();
+				registros[0] = usuario.getIdUsuario();
+				registros[1] = usuario.getNombre();
+				registros[2] = usuario.getMail();
+				registros[3] = usuario.getSupervisor();
+				registros[4] = usuario.getZona().getDescripcion();
 				return registros;
 			}
 		};
@@ -433,9 +433,9 @@ public class CUsuario extends CGenerico {
 
 				for (Zona zona : listZona) {
 					if (zona.getIdZona().toLowerCase()
-							.startsWith(valores.get(0).toLowerCase())
+							.contains(valores.get(0).toLowerCase())
 							&& zona.getDescripcion().toLowerCase()
-									.startsWith(valores.get(2).toLowerCase())) {
+									.contains(valores.get(1).toLowerCase())) {
 						lista.add(zona);
 					}
 				}
@@ -445,8 +445,8 @@ public class CUsuario extends CGenerico {
 			@Override
 			protected String[] crearRegistros(Zona zona) {
 				String[] registros = new String[2];
-				registros[0] = zona.getIdZona().toLowerCase();
-				registros[1] = zona.getDescripcion().toLowerCase();
+				registros[0] = zona.getIdZona();
+				registros[1] = zona.getDescripcion();
 				return registros;
 			}
 		};
