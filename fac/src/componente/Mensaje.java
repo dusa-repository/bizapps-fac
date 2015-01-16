@@ -36,6 +36,7 @@ public class Mensaje {
 	public static String faltaMarca = "Debe seleccionar una Marca para cada Recurso en la lista de Recursos";
 	public static String listaVaciaMotivo = "Debe añadir un motivo de Cancelacion o Rechazo para cada Solicitud";
 	public static String faltaCampoLista = "Debe seleccionar una Talla y un Genero para cada uniforme Agregado";
+	public static String reinicioContrasenna = "Se envio un Correo Indicando los datos del Usuario";
 	
 	
 	public void mensajeInformacion(String msj) {

@@ -9,6 +9,7 @@ import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
@@ -62,15 +63,23 @@ public class CReinicioPassword extends CGenerico {
 			public void guardar() {
 				String password = KeyGenerators.string().generateKey();
 				String correo;
+//				if (validar()) {
+//					Usuario usuario = servicioUsuario.buscar(txtNombreUsuario
+//							.getValue());
+//					if (usuario != null) {
+//						if (usuario.getMail().equals(
+//								txtCorreoUsuario.getValue())) {
+//							correo = usuario.getMail();
+//							usuario.setPassword(password);
+//							servicioUsuario.guardar(usuario);
 				if (validar()) {
-					Usuario usuario = servicioUsuario.buscar(txtNombreUsuario
-							.getValue());
+					Usuario usuario = servicioUsuario.buscarPorLoginyCorreo(
+							txtNombreUsuario.getValue(),
+							txtCorreoUsuario.getValue());
 					if (usuario != null) {
-						if (usuario.getMail().equals(
-								txtCorreoUsuario.getValue())) {
-							correo = usuario.getMail();
-							usuario.setPassword(password);
-							servicioUsuario.guardar(usuario);
+						correo = usuario.getMail();
+						usuario.setPassword(password);
+						servicioUsuario.guardar(usuario);
 							enviarEmailNotificacion(
 									correo,
 									"Ha Solicitado Reiniciar su Password, sus nuevos datos para el inicio de sesion son: "
@@ -79,13 +88,11 @@ public class CReinicioPassword extends CGenerico {
 											+ "  "
 											+ " Password: " + password);
 							limpiar();
+							msj.mensajeInformacion(Mensaje.reinicioContrasenna);
 						} else
 							msj.mensajeAlerta(Mensaje.correoNoConcuerda);
 
-					} else {
-						msj.mensajeAlerta(Mensaje.usuarioNoRegistrado);
 					}
-				}
 
 			}
 
@@ -116,6 +123,9 @@ public class CReinicioPassword extends CGenerico {
 		botonera.getChildren().get(5).setVisible(false);
 		botonera.getChildren().get(7).setVisible(false);
 		botonera.getChildren().get(8).setVisible(false);
+		
+		Button guardar = (Button) botonera.getChildren().get(0);
+		guardar.setLabel("Enviar");
 		botoneraReinicio.appendChild(botonera);
 
 	}
