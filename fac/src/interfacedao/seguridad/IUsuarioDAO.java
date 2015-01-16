@@ -26,4 +26,6 @@ public interface IUsuarioDAO extends JpaRepository<Usuario, String> {
 	Usuario findByIdUsuarioAllIgnoreCase(String nombre);
 
 	List<Usuario> findBySupervisor(String nombreUsuarioSesion);
+
+	Usuario findByIdUsuarioAndMail(String value, String value2);
 }

@@ -74,4 +74,8 @@ public class SUsuario {
 			String nombreUsuarioSesion) {
 		return usuarioDAO.findBySupervisor(nombreUsuarioSesion);
 	}
+
+	public Usuario buscarPorLoginyCorreo(String value, String value2) {
+		return usuarioDAO.findByIdUsuarioAndMail(value,value2);
+	}
 }

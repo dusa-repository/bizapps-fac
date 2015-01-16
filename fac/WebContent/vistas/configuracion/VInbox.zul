@@ -152,7 +152,7 @@
 						<label id="lblNombre" style="color:white; font-weight: bold; font-size: 14px" />
 						<separator />
 						<label
-							style="color:#DAD3D3; font-size: 10px; font-weight:bold;padding-center:35%; "
+							style="color:#DAD3D3; font-size: 12px; font-weight:bold;padding-center:35%; "
 							value="© 2014 Destilería Unidas S.A | RIF: J-30940783-0 | Todos los derechos reservados | Desarrollado por BIZAPPS,C.A">
 						</label>
 					</div>
