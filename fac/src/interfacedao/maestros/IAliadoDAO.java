@@ -16,4 +16,6 @@ public interface IAliadoDAO extends JpaRepository<Aliado, Long> {
 	Aliado findByNombre(String value);
 
 	List<Aliado> findByZona(Zona zona);
+
+	Aliado findByCodigo(String value);
 }

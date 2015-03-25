@@ -33,14 +33,14 @@ public abstract class Botonera extends Hbox {
 		this.appendChild(espacio);
 		this.appendChild(btnEnviar);
 
-		btnAdelante.setSrc("/public/imagenes/botones/adelante.png");
-		btnAtras.setSrc("/public/imagenes/botones/atras.png");
-		btnGuardar.setSrc("/public/imagenes/botones/guardar.png");
-		btnEliminar.setSrc("/public/imagenes/botones/eliminar.png");
-		btnLimpiar.setSrc("/public/imagenes/botones/limpiar.png");
-		btnBuscar.setSrc("/public/imagenes/botones/buscar.png");
-		btnSalir.setSrc("/public/imagenes/botones/salir.png");
-		btnEnviar.setSrc("/public/imagenes/botones/guardar.png");
+		btnAdelante.setImage("/public/imagenes/botones/adelante.png");
+		btnAtras.setImage("/public/imagenes/botones/atras.png");
+		btnGuardar.setImage("/public/imagenes/botones/guardar.png");
+		btnEliminar.setImage("/public/imagenes/botones/eliminar.png");
+		btnLimpiar.setImage("/public/imagenes/botones/limpiar.png");
+		btnBuscar.setImage("/public/imagenes/botones/buscar.png");
+		btnSalir.setImage("/public/imagenes/botones/salir.png");
+		btnEnviar.setImage("/public/imagenes/botones/guardar.png");
 
 		btnAtras.setStyle("font-size: 12px ;width: 93px; height: 30px");
 		btnEliminar.setStyle("font-size: 12px ;width: 93px; height: 30px");

@@ -13,6 +13,16 @@
 				<rows>
 					<row>
 						<hbox>
+							<label class="etiqueta" value="Codigo: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtCodigo" hflex="1" maxlength="500"
+							tooltiptext="Ingrese el codigo del Aliado" />
+						<hbox />
+					</row>
+					<row>
+						<hbox>
 							<label class="etiqueta" value="Descripcion: " />
 							<space />
 							<label value="*" style="font-weight:bold;color:red" />
@@ -28,7 +38,7 @@
 							<label value="*" style="font-weight:bold;color:red" />
 						</hbox>
 						<textbox id="txtZonaAliado" hflex="1" maxlength="50"
-							tooltiptext="Ingrese el Codigo o Seleccione del Catalogo la Zona del Aliado"  />
+							tooltiptext="Ingrese el Codigo o Seleccione del Catalogo la Zona del Aliado" />
 						<button id="btnBuscarZonas" label="" tooltiptext="Catalogo Zonas"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>

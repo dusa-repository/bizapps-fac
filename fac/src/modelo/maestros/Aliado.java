@@ -2,6 +2,7 @@ package modelo.maestros;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import modelo.transacciones.notas.NotaCredito;
 
 @Entity
 @Table(name = "aliado")
@@ -32,6 +36,9 @@ public class Aliado implements Serializable {
 	private String nombre;
 	
 	@Column(length = 500)
+	private String codigo;
+	
+	@Column(length = 500)
 	private String anexo;
 	
 	@Column(name = "fecha_auditoria")
@@ -42,6 +49,9 @@ public class Aliado implements Serializable {
 
 	@Column(name = "usuario_auditoria", length = 50)
 	private String usuarioAuditoria;
+	
+	@OneToMany(mappedBy="aliado")
+	private Set<NotaCredito> notasCredito;
 
 	public Aliado() {
 		super();
@@ -50,7 +60,7 @@ public class Aliado implements Serializable {
 
 	public Aliado(long idAliado, Zona zona, String descripcion, String anexo,
 			Timestamp fechaAuditoria, String horaAuditoria,
-			String usuarioAuditoria) {
+			String usuarioAuditoria, String codigo) {
 		super();
 		this.idAliado = idAliado;
 		this.zona = zona;
@@ -59,6 +69,7 @@ public class Aliado implements Serializable {
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
 		this.usuarioAuditoria = usuarioAuditoria;
+		this.codigo = codigo;
 	}
 
 	public long getIdAliado() {
@@ -115,6 +126,22 @@ public class Aliado implements Serializable {
 
 	public void setUsuarioAuditoria(String usuarioAuditoria) {
 		this.usuarioAuditoria = usuarioAuditoria;
+	}
+
+	public Set<NotaCredito> getNotasCredito() {
+		return notasCredito;
+	}
+
+	public void setNotasCredito(Set<NotaCredito> notasCredito) {
+		this.notasCredito = notasCredito;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 	
 	

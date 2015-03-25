@@ -65,6 +65,8 @@ import servicio.transacciones.SRecursoPlanillaCata;
 import servicio.transacciones.SRecursoPlanillaEvento;
 import servicio.transacciones.SRecursoPlanillaFachada;
 import servicio.transacciones.SUniformePlanillaUniforme;
+import servicio.transacciones.notas.SDetalleNotaCredito;
+import servicio.transacciones.notas.SNotaCredito;
 import componente.Mensaje;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
@@ -135,6 +137,10 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SF0005 servicioF0005;
 	@WireVariable("SPlanillaGenerica")
 	protected SPlanillaGenerica servicioPlanillaGenerica;
+	@WireVariable("SNotaCredito")
+	protected SNotaCredito servicioNotaCredito;
+	@WireVariable("SDetalleNotaCredito")
+	protected SDetalleNotaCredito servicioDetalleCredito;
 	static public String variable = "";
 	static public String grupoDominante = "";
 	protected DateFormat df = new SimpleDateFormat("HH:mm:ss");
@@ -275,6 +281,50 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			//
 			// t.close();
 
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean enviarEmailNota(String tipo, String usuario, long id,
+			String... mails) {
+		try {
+			String destinatario = "";
+			String cc = "NOTIFICACION DE NUEVA SOLICITUD DE FORMATO DE ACTIVIDAD";
+			String mensaje = "El USUARIO: " + usuario
+					+ " HA ENVIADO UNA SOLICITUD DE NOTA DE CREDITO DE "
+					+ tipo.toUpperCase() + ", CON EL ID: " + id;
+			Usuario user = servicioUsuario.buscar(usuario);
+			user = servicioUsuario.buscar(user.getSupervisor());
+			String correoSupervisor = "";
+			if (user != null)
+				correoSupervisor = user.getMail();
+			for (int i = 0; i < mails.length; i++) {
+				destinatario += mails[i] + ",";
+			}
+			Properties props = new Properties();
+			props.setProperty("mail.smtp.host", "172.23.20.66");
+			props.setProperty("mail.smtp.starttls.enable", "true");
+			props.setProperty("mail.smtp.port", "2525");
+			props.setProperty("mail.smtp.auth", "true");
+			Authenticator auth = new SMTPAuthenticator();
+			Session session = Session.getInstance(props, auth);
+			String remitente = "cdusa@dusa.com.ve";
+			String destinos[] = destinatario.split(",");
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(remitente));
+			Address[] receptores = new Address[destinos.length];
+			int j = 0;
+			while (j < destinos.length) {
+				receptores[j] = new InternetAddress(destinos[j]);
+				j++;
+			}
+			message.addRecipients(Message.RecipientType.TO, receptores);
+			message.setSubject(cc);
+			message.setText(mensaje);
+			Transport.send(message);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

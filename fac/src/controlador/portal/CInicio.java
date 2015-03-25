@@ -57,9 +57,13 @@ public class CInicio extends CGenerico {
 	@Wire
 	private Button btnFachada;
 	@Wire
+	private Button btnNotaCredito;
+	@Wire
 	private Button btnInBox;
 	@Wire
 	private Button btnCruds;
+	@Wire
+	private Button btnProcesarNota;
 	@Wire
 	private Button btnActualizar;
 	@Wire
@@ -96,14 +100,18 @@ public class CInicio extends CGenerico {
 		btnCataInduccion.setImage("/public/imagenes/botones/planillaP.png");
 		btnEvento.setImage("/public/imagenes/botones/planillaP.png");
 		btnFachada.setImage("/public/imagenes/botones/planillaP.png");
+		btnNotaCredito.setImage("/public/imagenes/botones/planillaP.png");
 		btnPromocion.setImage("/public/imagenes/botones/planillaP.png");
 		btnSolicitudArte.setImage("/public/imagenes/botones/planillaP.png");
 		btnUniforme.setImage("/public/imagenes/botones/planillaP.png");
 		btnCruds.setImage("/public/imagenes/botones/adminP.png");
+		btnProcesarNota.setImage("/public/imagenes/botones/checkP.png");
 		btnInBox.setImage("/public/imagenes/botones/inboxP.png");
 
 		Over(btnCruds, "adminG");
 		Out(btnCruds, "adminP");
+		Over(btnProcesarNota, "checkG");
+		Out(btnProcesarNota, "checkP");
 		Over(btnInBox, "inboxG");
 		Out(btnInBox, "inboxP");
 		Over(btnCataInduccion, "planillaG");
@@ -112,6 +120,8 @@ public class CInicio extends CGenerico {
 		Out(btnEvento, "planillaP");
 		Over(btnFachada, "planillaG");
 		Out(btnFachada, "planillaP");
+		Over(btnNotaCredito, "planillaG");
+		Out(btnNotaCredito, "planillaP");
 		Over(btnPromocion, "planillaG");
 		Out(btnPromocion, "planillaP");
 		Over(btnSolicitudArte, "planillaG");
@@ -136,8 +146,10 @@ public class CInicio extends CGenerico {
 		botones.add(btnPromocion);
 		botones.add(btnCataInduccion);
 		botones.add(btnFachada);
+		botones.add(btnNotaCredito);
 		botones.add(btnSolicitudArte);
 		botones.add(btnInBox);
+		botones.add(btnProcesarNota);
 		botones.add(btnCruds);
 
 		Authentication auth = SecurityContextHolder.getContext()
@@ -153,7 +165,11 @@ public class CInicio extends CGenerico {
 					if (("btn" + arbol.getNombre()).equals(botones.get(i)
 							.getId())) {
 						if (!botones.get(i).getId().equals("btnInBox")
-								&& !botones.get(i).getId().equals("btnCruds"))
+								&& !botones.get(i).getId().equals("btnCruds")
+								&& !botones.get(i).getId()
+										.equals("btnProcesarNota")
+								&& !botones.get(i).getId()
+										.equals("btnNotaCredito"))
 							botonesAgregados.add(botones.get(i));
 						botones.get(i).setVisible(true);
 						botones.get(i).addEventListener(Events.ON_CLICK,

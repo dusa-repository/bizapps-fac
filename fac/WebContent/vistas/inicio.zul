@@ -132,8 +132,12 @@
 												label="Fachadas y Decoraciones" orient="vertical" visible="false"
 												autodisable="self" />
 											<space />
+											<button id="btnNotaCredito" class="btn" label="Nota de Credito"
+												orient="vertical" visible="false" autodisable="self" />
+											<space />
 											<button id="btnMarca" class="btn" label="Marca"
 												orient="vertical" visible="false" autodisable="self" />
+
 										</hbox>
 									</vbox>
 								</center>
@@ -146,19 +150,16 @@
 							<borderlayout style="background:#661313">
 								<center border="none" autoscroll="true" style="background:#661313">
 									<vbox pack="center">
-										<separator />
-										<separator />
 										<button id="btnInBox" class="btn" label="Inbox" orient="vertical"
 											visible="false" autodisable="self" />
-										<separator />
-										<separator />
-										<separator />
+										<button id="btnProcesarNota" class="btn" label="Procesar N.C." orient="vertical"
+											visible="false" autodisable="self" />
 										<button id="btnCruds" class="btn" label="Admin" orient="vertical"
 											visible="false" autodisable="self" />
 										<zk if="${sec:isAnyGranted('Solicitante')}">
-											<button id="btnActualizar" class="btn"
-												label="Cambiar Entorno" orient="vertical"
-												autodisable="self" image="/public/imagenes/botones/refresh.png" />
+											<button id="btnActualizar" class="btn" label="Cambiar Entorno"
+												orient="vertical" autodisable="self"
+												image="/public/imagenes/botones/refresh.png" />
 										</zk>
 									</vbox>
 								</center>
