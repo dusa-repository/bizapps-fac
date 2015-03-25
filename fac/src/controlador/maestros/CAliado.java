@@ -29,6 +29,8 @@ public class CAliado extends CGenerico {
 	@Wire
 	private Textbox txtZonaAliado;
 	@Wire
+	private Textbox txtCodigo;
+	@Wire
 	private Textbox txtAnexoAliado;
 	@Wire
 	private Div botoneraAliado;
@@ -59,6 +61,7 @@ public class CAliado extends CGenerico {
 			public void limpiar() {
 				txtAnexoAliado.setValue("");
 				txtDescripcionAliado.setValue("");
+				txtCodigo.setValue("");
 				txtZonaAliado.setValue("");
 				id = 0;
 				idZona = "";
@@ -69,9 +72,11 @@ public class CAliado extends CGenerico {
 				if (validar()) {
 					String descripcion = txtDescripcionAliado.getValue();
 					String anexo = txtAnexoAliado.getValue();
+					String codigo = txtCodigo.getValue();
 					Zona zona = servicioZona.buscar(idZona);
 					Aliado aliado = new Aliado(id, zona, descripcion, anexo,
-							fechaHora, horaAuditoria, nombreUsuarioSesion());
+							fechaHora, horaAuditoria, nombreUsuarioSesion(),
+							codigo);
 					servicioAliado.guardar(aliado);
 					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
@@ -123,7 +128,8 @@ public class CAliado extends CGenerico {
 	protected boolean validar() {
 		if (txtAnexoAliado.getText().compareTo("") == 0
 				|| txtDescripcionAliado.getText().compareTo("") == 0
-				|| txtZonaAliado.getText().compareTo("") == 0) {
+				|| txtZonaAliado.getText().compareTo("") == 0
+				|| txtCodigo.getText().compareTo("") == 0) {
 			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else
@@ -242,9 +248,23 @@ public class CAliado extends CGenerico {
 
 	public void llenarCamposPropios(Aliado aliado) {
 		txtAnexoAliado.setValue(aliado.getAnexo());
+		if (aliado.getCodigo() != null)
+			txtCodigo.setValue(aliado.getCodigo());
+		else
+			txtCodigo.setValue("");
 		txtDescripcionAliado.setValue(aliado.getNombre());
 		txtZonaAliado.setValue(aliado.getZona().getDescripcion());
 		idZona = aliado.getZona().getIdZona();
 		id = aliado.getIdAliado();
+	}
+
+	@Listen("onChange = #txtCodigo; onOK = #txtCodigo")
+	public void buscarPorCodigo() {
+		Aliado aliado = servicioAliado.buscarPorCodigo(txtCodigo.getValue());
+		if (aliado != null) {
+			txtCodigo.setValue("");
+			txtCodigo.setFocus(true);
+			msj.mensajeAlerta("El codigo ya esta siendo empleado por otro Aliado");
+		}
 	}
 }

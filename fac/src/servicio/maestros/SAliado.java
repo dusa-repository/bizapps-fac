@@ -35,4 +35,12 @@ public class SAliado {
 	public List<Aliado> buscarPorZona(Zona zona) {
 		return aliadoDAO.findByZona(zona);
 	}
+
+	public Aliado buscarPorCodigo(String value) {
+		return aliadoDAO.findByCodigo(value);
+	}
+
+	public Aliado buscar(Long idAliado) {
+		return aliadoDAO.findOne(idAliado);
+	}
 }
