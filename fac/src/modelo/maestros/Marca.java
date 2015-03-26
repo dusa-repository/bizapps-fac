@@ -20,6 +20,7 @@ import modelo.transacciones.RecursoPlanillaCata;
 import modelo.transacciones.RecursoPlanillaEvento;
 import modelo.transacciones.RecursoPlanillaFachada;
 import modelo.transacciones.notas.DetalleNotaCredito;
+import modelo.transacciones.notas.Planificacion;
 
 @Entity
 @Table(name = "marca")
@@ -51,6 +52,9 @@ public class Marca implements Serializable {
 	
 	@OneToMany(mappedBy="marca")
 	private Set<PlanillaEvento> planillasEvento;
+	
+	@OneToMany(mappedBy="marca")
+	private Set<Planificacion> planificaciones;
 	
 	@OneToMany(mappedBy="marca")
 	private Set<PlanillaFachada> planillasFachada;
@@ -231,6 +235,14 @@ public class Marca implements Serializable {
 
 	public void setDetallesNota(Set<DetalleNotaCredito> detallesNota) {
 		this.detallesNota = detallesNota;
+	}
+
+	public Set<Planificacion> getPlanificaciones() {
+		return planificaciones;
+	}
+
+	public void setPlanificaciones(Set<Planificacion> planificaciones) {
+		this.planificaciones = planificaciones;
 	}
 	
 	

@@ -1,0 +1,230 @@
+<zk>
+	<window width="70em" closable="false" id="wdwPlanificacion"
+		apply="controlador.transacciones.notas.CPlanificacion" position="center,top">
+		<caption label="Planificacion"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div>
+			<separator />
+			<tabbox height="auto" orient="horizontal">
+				<tabs id="tbsConsulta" width="auto">
+					<tab label="Datos generales" id="tabDatos" />
+					<tab label="Informacion PDV" id="tabPdv" />
+					<tab label="Detalles Actividades" id="tabActividad" />
+				</tabs>
+				<tabpanels>
+					<tabpanel>
+						<grid width="100%">
+							<columns visible="false">
+								<column label="" width="20%" />
+								<column label="" width="30%" />
+								<column label="" width="20%" />
+								<column label="" width="30%" />
+							</columns>
+							<rows>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Marca: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<combobox tooltiptext="Seleccione la Marca Sugerida"
+										model="${$composer.marcas}" placeholder="Seleccione una Marca"
+										id="cmbMarca" readonly="true" width="100%">
+										<template name="model">
+											<comboitem label="${each.descripcion}" context="${each.idMarca}" />
+										</template>
+									</combobox>
+									<hbox>
+										<label class="etiqueta" value="Zona: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<combobox tooltiptext="Seleccione una Zona"
+										placeholder="Seleccione una Zona" id="cmbZona" readonly="true"
+										width="100%" model="${$composer.zonas}">
+										<template name="model">
+											<comboitem label="${each.descripcion}" context="${each.idZona}" />
+										</template>
+									</combobox>
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Desde: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<datebox readonly="true" width="100%" id="dtbDesde" />
+									<hbox>
+										<label class="etiqueta" value="Hasta: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<datebox readonly="true" width="100%" id="dtbHasta" />
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Mes: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<combobox tooltiptext="Seleccione un Mes" placeholder="Seleccione un Mes"
+										id="cmbMes" readonly="true" width="100%">
+										<comboitem label="Enero" />
+										<comboitem label="Febrero" />
+										<comboitem label="Marzo" />
+										<comboitem label="Abril" />
+										<comboitem label="Mayo" />
+										<comboitem label="Junio" />
+										<comboitem label="Julio" />
+										<comboitem label="Agosto" />
+										<comboitem label="Septiembre" />
+										<comboitem label="Octubre" />
+										<comboitem label="Noviembre" />
+										<comboitem label="Diciembre" />
+									</combobox>
+									<hbox>
+										<label class="etiqueta" value="Tipo de Inversion: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<combobox tooltiptext="Seleccione un Tipo de Inversion"
+										placeholder="Seleccione un Tipo de Inversion" id="cmbInversion"
+										readonly="true" width="100%">
+										<comboitem label="Fija" />
+										<comboitem label="Variable" />
+									</combobox>
+								</row>
+							</rows>
+						</grid>
+					</tabpanel>
+					<tabpanel>
+						<grid width="100%">
+							<columns visible="false">
+								<column label="" width="20%" />
+								<column label="" width="30%" />
+								<column label="" width="20%" />
+								<column label="" width="30%" />
+							</columns>
+							<rows>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Cliente PDV o Proveedor: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<cell colspan="3">
+										<textbox id="txtNombrePdv" multiline="true" hflex="1"
+											maxlength="500" tooltiptext="Ingrese el Nombre de la Actividad" />
+									</cell>
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Tipo PDV: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<combobox tooltiptext="Seleccione un Tipo PDV"
+										placeholder="Seleccione un Tipo PDV" id="cmbPDV" readonly="true"
+										width="100%">
+										<comboitem label="ON TRADE" />
+										<comboitem label="OFF TRADE" />
+									</combobox>
+									<hbox>
+										<label class="etiqueta" value="Cantidad PDV: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<spinner id="spnPDV" value="0" constraint="min 0 max 10000"
+										tooltiptext="Ingrese el numero de PDV" step="1" width="90%" />
+								</row>
+							</rows>
+						</grid>
+					</tabpanel>
+					<tabpanel>
+						<grid width="100%">
+							<columns visible="false">
+								<column label="" width="20%" />
+								<column label="" width="30%" />
+								<column label="" width="20%" />
+								<column label="" width="30%" />
+							</columns>
+							<rows>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Detalle de la Actividad: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<cell colspan="3">
+										<textbox id="txtActividad" multiline="true" hflex="1"
+											maxlength="1500" tooltiptext="Ingrese el Nombre de la Actividad" />
+									</cell>
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Tipos de Actividades: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<cell colspan="3">
+										<textbox id="txtTiposActividad" multiline="true"
+											hflex="1" maxlength="2000" tooltiptext="Ingrese los tipos de actividades" />
+									</cell>
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Cantidad Actividades: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<spinner id="spnActividades" value="0" constraint="min 0 max 100000"
+										tooltiptext="Ingrese la cantidad de Actividades" step="1"
+										width="90%" />
+									<hbox>
+										<label class="etiqueta" value="Actividades a Pagar: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<spinner id="spnPagar" value="0" constraint="min 0 max 100000"
+										tooltiptext="Ingrese la cantidad de Actividades a Pagar" step="1"
+										width="90%" />
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Costo por Actividad: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<doublebox value="0" id="txtCosto" hflex="1" 
+										tooltiptext="Ingrese el costo unitario de la actividad" />
+									<hbox>
+										<label class="etiqueta" value="Costo Inversion: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<doublebox value="0" readonly="true" id="txtCostoInversion"
+										hflex="1" 
+										tooltiptext="Costo total de la inversion (cantidad de actividades * costo por actividad)" />
+								</row>
+								<row>
+									<hbox>
+										<label class="etiqueta" value="Inversion Real: " />
+										<space />
+										<label value="*" style="font-weight:bold;color:red" />
+									</hbox>
+									<doublebox value="0" id="txtCostoInversionReal"
+										hflex="1" tooltiptext="Ingrese la inversion real" />
+									<hbox />
+									<hbox />
+								</row>
+							</rows>
+						</grid>
+					</tabpanel>
+				</tabpanels>
+			</tabbox>
+			<separator />
+			<div id="botoneraPlan" />
+			<div id="catalogoPlan" />
+		</div>
+	</window>
+</zk>

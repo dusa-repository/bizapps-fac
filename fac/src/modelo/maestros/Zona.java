@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import modelo.seguridad.Usuario;
+import modelo.transacciones.notas.Planificacion;
 
 @Entity
 @Table(name = "zona")
@@ -39,6 +40,9 @@ public class Zona implements Serializable {
 	
 	@OneToMany(mappedBy="zona")
 	private Set<Aliado> aliados;
+	
+	@OneToMany(mappedBy="zona")
+	private Set<Planificacion> planificaciones;
 
 	public Zona() {
 		super();
@@ -109,6 +113,14 @@ public class Zona implements Serializable {
 
 	public void setAliados(Set<Aliado> aliados) {
 		this.aliados = aliados;
+	}
+
+	public Set<Planificacion> getPlanificaciones() {
+		return planificaciones;
+	}
+
+	public void setPlanificaciones(Set<Planificacion> planificaciones) {
+		this.planificaciones = planificaciones;
 	}
 	
 	

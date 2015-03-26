@@ -135,7 +135,7 @@
 											<button id="btnNotaCredito" class="btn" label="Nota de Credito"
 												orient="vertical" visible="false" autodisable="self" />
 											<space />
-											<button id="btnMarca" class="btn" label="Marca"
+											<button id="btnPlan" class="btn" label="Planificacion"
 												orient="vertical" visible="false" autodisable="self" />
 
 										</hbox>

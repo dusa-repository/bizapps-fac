@@ -67,6 +67,7 @@ import servicio.transacciones.SRecursoPlanillaFachada;
 import servicio.transacciones.SUniformePlanillaUniforme;
 import servicio.transacciones.notas.SDetalleNotaCredito;
 import servicio.transacciones.notas.SNotaCredito;
+import servicio.transacciones.notas.SPlanificacion;
 import componente.Mensaje;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
@@ -141,6 +142,8 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SNotaCredito servicioNotaCredito;
 	@WireVariable("SDetalleNotaCredito")
 	protected SDetalleNotaCredito servicioDetalleCredito;
+	@WireVariable("SPlanificacion")
+	protected SPlanificacion servicioPlanificacion;
 	static public String variable = "";
 	static public String grupoDominante = "";
 	protected DateFormat df = new SimpleDateFormat("HH:mm:ss");
