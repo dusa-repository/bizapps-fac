@@ -61,6 +61,8 @@ public class CInicio extends CGenerico {
 	@Wire
 	private Button btnInBox;
 	@Wire
+	private Button btnPlan;
+	@Wire
 	private Button btnCruds;
 	@Wire
 	private Button btnProcesarNota;
@@ -107,6 +109,7 @@ public class CInicio extends CGenerico {
 		btnCruds.setImage("/public/imagenes/botones/adminP.png");
 		btnProcesarNota.setImage("/public/imagenes/botones/checkP.png");
 		btnInBox.setImage("/public/imagenes/botones/inboxP.png");
+		btnPlan.setImage("/public/imagenes/botones/planP.png");
 
 		Over(btnCruds, "adminG");
 		Out(btnCruds, "adminP");
@@ -114,6 +117,8 @@ public class CInicio extends CGenerico {
 		Out(btnProcesarNota, "checkP");
 		Over(btnInBox, "inboxG");
 		Out(btnInBox, "inboxP");
+		Over(btnPlan, "planG");
+		Out(btnPlan, "planP");
 		Over(btnCataInduccion, "planillaG");
 		Out(btnCataInduccion, "planillaP");
 		Over(btnEvento, "planillaG");
@@ -149,6 +154,7 @@ public class CInicio extends CGenerico {
 		botones.add(btnNotaCredito);
 		botones.add(btnSolicitudArte);
 		botones.add(btnInBox);
+		botones.add(btnPlan);
 		botones.add(btnProcesarNota);
 		botones.add(btnCruds);
 
@@ -169,7 +175,8 @@ public class CInicio extends CGenerico {
 								&& !botones.get(i).getId()
 										.equals("btnProcesarNota")
 								&& !botones.get(i).getId()
-										.equals("btnNotaCredito"))
+										.equals("btnNotaCredito")
+								&& !botones.get(i).getId().equals("btnPlan"))
 							botonesAgregados.add(botones.get(i));
 						botones.get(i).setVisible(true);
 						botones.get(i).addEventListener(Events.ON_CLICK,
