@@ -46,7 +46,8 @@
 								</vbox>
 								<vbox width="100%" height="100%">
 									<separator />
-									<label id="lblCrud" style="color:white; font-weight: bold; font-size: 12px"/>
+									<label id="lblCrud"
+										style="color:white; font-weight: bold; font-size: 12px" />
 									<label style="color:white; font-weight: bold; font-size: 12px"
 										value="Usuario: ${desktop.execution.userPrincipal.name}" />
 									<a href="../j_spring_security_logout" style="color:white">
@@ -108,6 +109,8 @@
 											<button id="btnMarca" class="btn" label="Marca"
 												orient="vertical" visible="false" autodisable="self" />
 											<button id="btnZona" class="btn" label="Zona" orient="vertical"
+												visible="false" autodisable="self" />
+											<button id="btnConfigurarMarca" class="btn" label="Conf. Marca" orient="vertical"
 												visible="false" autodisable="self" />
 										</hbox>
 										<separator />

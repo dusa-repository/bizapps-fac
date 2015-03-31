@@ -1,0 +1,67 @@
+<zk>
+	<window width="95%" closable="false" id="wdwConfigurarMarca"
+		apply="controlador.transacciones.notas.CConfigurarMarca">
+		<caption label="Configurar las marcas (Definir Bs y/o Cantidad de cajas)"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<vbox height="100%">
+			<label class="etiqueta"
+				value="PARA INDICAR QUE UNA MARCA PERTENECE AL POTE MK DEBE MARCARLA Y AÑADIR SU MONTO EN BS" />
+			<hbox height="100%" width="100%">
+				<!-- <div height="100%" width="100%" id="catalogoNotas" /> -->
+				<listbox id="ltbLista" mold="paging" pageSize="10" span="true"
+					rows="10" width="100%">
+					<listhead>
+						<listheader label="Cod. Marca" hflex="min" />
+						<listheader label="Marca" hflex="min" />
+						<listheader label="Cantidad Cajas" hflex="min" />
+						<listheader label="Monto en Bs" hflex="min" />
+						<listheader label="% Cajas" hflex="min" />
+						<listheader label="% Bs" hflex="min" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell label="${each.id.marca.idMarca}" />
+							<listcell label="${each.id.marca.descripcion}" />
+							<listcell>
+								<intbox value="${each.cajas}" onChanging='$composer.cambio'
+									onChange='$composer.cambio' />
+							</listcell>
+							<listcell>
+								<doublebox value="${each.costo}" onChanging='$composer.cambio'
+									onChange='$composer.cambio' />
+							</listcell>
+
+							<listcell>
+								<doublebox value="${each.porcentajePlan}" readonly="true"
+									format="#.##" />
+							</listcell>
+							<listcell>
+								<doublebox value="${each.porcentajeCosto}" readonly="true"
+									format="#.##" />
+							</listcell>
+						</listitem>
+					</template>
+				</listbox>
+			</hbox>
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="25%" />
+					<column label="" width="25%" />
+					<column label="" width="25%" />
+					<column label="" width="25%" />
+				</columns>
+				<rows>
+					<row>
+						<label class="etiqueta" value="Total Cajas Planificadas: " />
+						<intbox value="0" readonly="true" width="100%" id="txtCantidad" />
+						<label class="etiqueta" value="Total Bs Planificados para PoteMK: " />
+						<doublebox value="0" readonly="true" width="100%" id="txtBs"
+							format="#.##" />
+					</row>
+				</rows>
+			</grid>
+		</vbox>
+		<space />
+		<div id="botoneraConfigurar" />
+	</window>
+</zk>

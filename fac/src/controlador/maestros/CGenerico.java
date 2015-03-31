@@ -1,6 +1,8 @@
 package controlador.maestros;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -65,6 +67,8 @@ import servicio.transacciones.SRecursoPlanillaCata;
 import servicio.transacciones.SRecursoPlanillaEvento;
 import servicio.transacciones.SRecursoPlanillaFachada;
 import servicio.transacciones.SUniformePlanillaUniforme;
+import servicio.transacciones.notas.SConfiguracionMarca;
+import servicio.transacciones.notas.SCostoNotaCredito;
 import servicio.transacciones.notas.SDetalleNotaCredito;
 import servicio.transacciones.notas.SNotaCredito;
 import servicio.transacciones.notas.SPlanificacion;
@@ -144,6 +148,10 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SDetalleNotaCredito servicioDetalleCredito;
 	@WireVariable("SPlanificacion")
 	protected SPlanificacion servicioPlanificacion;
+	@WireVariable("SConfiguracionMarca")
+	protected SConfiguracionMarca servicioConfiguracionMarca;
+	@WireVariable("SCostoNotaCredito")
+	protected SCostoNotaCredito servicioCostoNotaCredito;
 	static public String variable = "";
 	static public String grupoDominante = "";
 	protected DateFormat df = new SimpleDateFormat("HH:mm:ss");
@@ -388,7 +396,6 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Error Sending Mail");
 			return false;
 		}
 	}
@@ -416,5 +423,14 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 				if (((Combobox) cajas[i]).getSelectedItem() == null)
 					cajas[i].setStyle("border: 1px solid red");
 		}
+	}
+	
+	public static double round(double value, int places) {
+		if (places < 0)
+			throw new IllegalArgumentException();
+
+		BigDecimal bd = new BigDecimal(value);
+		bd = bd.setScale(places, RoundingMode.HALF_UP);
+		return bd.doubleValue();
 	}
 }

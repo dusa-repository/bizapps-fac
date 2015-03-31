@@ -5,6 +5,7 @@ import java.util.List;
 import modelo.maestros.Marca;
 import modelo.maestros.Sku;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -14,4 +15,6 @@ public interface IMarcaDAO extends JpaRepository<Marca, String> {
 	List<Marca> findAllOrderByDescripcion();
 
 	List<Marca> findByItems(Sku sku);
+
+	List<Marca> findByIdMarcaNotIn(List<String> ids, Sort o);
 }

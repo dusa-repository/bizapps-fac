@@ -49,6 +49,9 @@ public class DetalleNotaCredito implements	Serializable{
 	
 	@Column(name="observacion",length = 500)
 	private String observacion;
+
+	@Column(name = "porcentaje_aplicado_distribucion")
+	private Double porcentajeAplicado;
 	
 	@Column(name = "fecha_creacion")
 	private Timestamp fechaCreacion;
@@ -78,7 +81,7 @@ public class DetalleNotaCredito implements	Serializable{
 			Double costo, String estado, String observacion,
 			Timestamp fechaCreacion, Timestamp fechaAprobacion,
 			Timestamp fechaConfirmacion, Timestamp fechaAuditoria,
-			String horaAuditoria, String usuarioAuditoria) {
+			String horaAuditoria, String usuarioAuditoria, Double porcentaje) {
 		super();
 		this.id = id;
 		this.marca = marca;
@@ -94,6 +97,7 @@ public class DetalleNotaCredito implements	Serializable{
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
 		this.usuarioAuditoria = usuarioAuditoria;
+		this.porcentajeAplicado = porcentaje;
 	}
 
 	public DetalleNotaCreditoId getId() {
@@ -211,6 +215,14 @@ public class DetalleNotaCredito implements	Serializable{
 	public String traerFecha() {
 		DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
 		return String.valueOf(formatoFecha.format(fechaCreacion));
+	}
+
+	public Double getPorcentajeAplicado() {
+		return porcentajeAplicado;
+	}
+
+	public void setPorcentajeAplicado(Double porcentajeAplicado) {
+		this.porcentajeAplicado = porcentajeAplicado;
 	}
 
 }

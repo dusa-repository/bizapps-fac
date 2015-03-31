@@ -15,4 +15,7 @@ public interface  IF0005DAO extends JpaRepository<F0005, F0005PK> {
 
 	List<F0005> findByIdDrsyAndIdDrrtOrderByIdDrsyAscIdDrrtAsc(String string, String string2);
 
+	List<F0005> findByIdDrsyAndIdDrrtAndDrsphdLikeOrderByDrdl01Asc(
+			String string, String string2, String string3);
+
 }

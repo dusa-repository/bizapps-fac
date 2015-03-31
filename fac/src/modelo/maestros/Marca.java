@@ -2,6 +2,7 @@ package modelo.maestros;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -19,6 +20,8 @@ import modelo.transacciones.PlanillaUniforme;
 import modelo.transacciones.RecursoPlanillaCata;
 import modelo.transacciones.RecursoPlanillaEvento;
 import modelo.transacciones.RecursoPlanillaFachada;
+import modelo.transacciones.notas.ConfiguracionMarca;
+import modelo.transacciones.notas.CostoNotaCredito;
 import modelo.transacciones.notas.DetalleNotaCredito;
 import modelo.transacciones.notas.Planificacion;
 
@@ -82,6 +85,12 @@ public class Marca implements Serializable {
 	
 	@OneToMany(mappedBy="marca")
 	private Set<DetalleNotaCredito> detallesNota;
+	
+	@OneToMany(mappedBy = "id.marca")
+	private List<ConfiguracionMarca> configuracionesMarca;
+	
+	@OneToMany(mappedBy = "id.marca")
+	private List<CostoNotaCredito> costoNotas;
 
 	public Marca() {
 		super();
@@ -243,6 +252,23 @@ public class Marca implements Serializable {
 
 	public void setPlanificaciones(Set<Planificacion> planificaciones) {
 		this.planificaciones = planificaciones;
+	}
+
+	public List<ConfiguracionMarca> getConfiguracionesMarca() {
+		return configuracionesMarca;
+	}
+
+	public void setConfiguracionesMarca(
+			List<ConfiguracionMarca> configuracionesMarca) {
+		this.configuracionesMarca = configuracionesMarca;
+	}
+
+	public List<CostoNotaCredito> getCostoNotas() {
+		return costoNotas;
+	}
+
+	public void setCostoNotas(List<CostoNotaCredito> costoNotas) {
+		this.costoNotas = costoNotas;
 	}
 	
 	
