@@ -1,6 +1,5 @@
 package servicio.maestros;
 
-
 import interfacedao.maestros.IF0005DAO;
 
 import java.util.List;
@@ -13,13 +12,13 @@ import org.springframework.stereotype.Service;
 
 @Service("SF0005")
 public class SF0005 {
-	
+
 	@Autowired
 	private IF0005DAO f0005DAO;
 
 	public void guardar(F0005 fooo5) {
-		 f0005DAO.save(fooo5);
-		
+		f0005DAO.save(fooo5);
+
 	}
 
 	public List<F0005> buscarTodosOrdenados() {
@@ -28,12 +27,12 @@ public class SF0005 {
 
 	public void eliminarVarios(List<F0005> eliminarLista) {
 		f0005DAO.delete(eliminarLista);
-		
+
 	}
 
 	public void eliminarUno(F0005PK clave) {
 		f0005DAO.delete(clave);
-		
+
 	}
 
 	public F0005 buscar(String value, String value2, String value3) {
@@ -45,7 +44,14 @@ public class SF0005 {
 	}
 
 	public List<F0005> buscarParaUDCOrdenados(String string, String string2) {
-		return f0005DAO.findByIdDrsyAndIdDrrtOrderByIdDrsyAscIdDrrtAsc(string, string2);
+		return f0005DAO.findByIdDrsyAndIdDrrtOrderByIdDrsyAscIdDrrtAsc(string,
+				string2);
+	}
+
+	public List<F0005> buscarParaUDCOrdenadosYTipo(String string,
+			String string2, String string3) {
+		return f0005DAO.findByIdDrsyAndIdDrrtAndDrsphdLikeOrderByDrdl01Asc(
+				string, string2, string3);
 	}
 
 }

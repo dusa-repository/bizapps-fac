@@ -3,6 +3,8 @@ package componente;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelo.transacciones.notas.ConfiguracionMarca;
+
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -10,6 +12,7 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.KeyEvent;
 import org.zkoss.zul.Auxhead;
 import org.zkoss.zul.Auxheader;
+import org.zkoss.zul.Div;
 import org.zkoss.zul.Hbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
@@ -38,7 +41,24 @@ public abstract class Catalogo<Clase> extends Window {
 		super("", "2", false);
 		this.setId("cmpCatalogo" + titulo);
 		this.setStyle("background-header:#661313; background: #f4f2f2");
-		crearLista(lista, campos, emergente, titulo);
+		crearLista(lista, campos, emergente, titulo, true);
+		lsbCatalogo.addEventListener(Events.ON_SELECT,
+				new EventListener<Event>() {
+
+					@Override
+					public void onEvent(Event arg0) throws Exception {
+						Events.postEvent(cGenerico, new Event("onSeleccion"));
+					}
+				});
+	}
+
+	public Catalogo(final Component cGenerico, String titulo,
+			List<Clase> lista, boolean emergente, boolean boolean2,
+			String... campos) {
+		super("", "2", false);
+		this.setId("cmpCatalogo" + titulo);
+		this.setStyle("background-header:#661313; background: #f4f2f2");
+		crearLista(lista, campos, emergente, titulo, boolean2);
 		lsbCatalogo.addEventListener(Events.ON_SELECT,
 				new EventListener<Event>() {
 
@@ -50,7 +70,7 @@ public abstract class Catalogo<Clase> extends Window {
 	}
 
 	public void crearLista(List<Clase> lista, String[] campos,
-			final boolean emergente, String titulo) {
+			final boolean emergente, String titulo, boolean boolean2) {
 		Hbox box = new Hbox();
 		final Separator separador1 = new Separator();
 		final Separator separador2 = new Separator();
@@ -64,47 +84,51 @@ public abstract class Catalogo<Clase> extends Window {
 		lhdEncabezado.setSizable(true);
 		for (int i = 0; i < campos.length; i++) {
 			final Textbox cajaTexto = new Textbox();
-			cajaTexto.setContext(campos[i]);
-			cajaTexto.setHflex("1");
-			cajaTexto.setWidth("auto");
-			cajaTexto.addEventListener(Events.ON_OK,
-					new EventListener<KeyEvent>() {
-						@Override
-						public void onEvent(KeyEvent e) throws Exception {
-							List<String> valores = new ArrayList<>();
-							for (int i = 0; i < cabecera.getChildren().size(); i++) {
-								Auxheader cabeceraFila = (Auxheader) cabecera
-										.getChildren().get(i);
-								Textbox te = (Textbox) cabeceraFila
-										.getChildren().get(0);
-								valores.add(te.getValue());
+			if (boolean2) {
+				cajaTexto.setContext(campos[i]);
+				cajaTexto.setHflex("1");
+				cajaTexto.setWidth("auto");
+
+				cajaTexto.addEventListener(Events.ON_OK,
+						new EventListener<KeyEvent>() {
+							@Override
+							public void onEvent(KeyEvent e) throws Exception {
+								List<String> valores = new ArrayList<>();
+								for (int i = 0; i < cabecera.getChildren()
+										.size(); i++) {
+									Auxheader cabeceraFila = (Auxheader) cabecera
+											.getChildren().get(i);
+									Textbox te = (Textbox) cabeceraFila
+											.getChildren().get(0);
+									valores.add(te.getValue());
+								}
+								;
+								String valor = cajaTexto.getValue();
+								List<Clase> listaNueva = buscar(valores);
+								lsbCatalogo.setModel(new ListModelList<Clase>(
+										listaNueva));
+								if (!emergente) {
+									lsbCatalogo.setMultiple(false);
+									lsbCatalogo.setCheckmark(false);
+									lsbCatalogo.setMultiple(true);
+									lsbCatalogo.setCheckmark(true);
+								}
+								cajaTexto.setValue(valor);
 							}
-							;
-							String valor = cajaTexto.getValue();
-							List<Clase> listaNueva = buscar(valores);
-							lsbCatalogo.setModel(new ListModelList<Clase>(
-									listaNueva));
-							if (!emergente) {
-								lsbCatalogo.setMultiple(false);
-								lsbCatalogo.setCheckmark(false);
-								lsbCatalogo.setMultiple(true);
-								lsbCatalogo.setCheckmark(true);
-							}
-							cajaTexto.setValue(valor);
-						}
-					});
-			cajaTexto.setPlaceholder("Buscar....");
-			cajaTexto
-					.setTooltiptext("Presione Enter para Filtrar la Informacion");
-			Auxheader cabeceraFila = new Auxheader();
-			cabeceraFila.appendChild(cajaTexto);
-			cabecera.appendChild(cabeceraFila);
+						});
+				cajaTexto.setPlaceholder("Buscar....");
+				cajaTexto
+						.setTooltiptext("Presione Enter para Filtrar la Informacion");
+				Auxheader cabeceraFila = new Auxheader();
+				cabeceraFila.appendChild(cajaTexto);
+				cabecera.appendChild(cabeceraFila);
+			}
 			Listheader listheader = new Listheader(campos[i]);
 			listheader.setHflex("min");
 			lhdEncabezado.appendChild(listheader);
 		}
 		lsbCatalogo.appendChild(cabecera);
-		
+
 		if (!emergente)
 			lsbCatalogo.setHflex("1");
 		else
@@ -140,14 +164,22 @@ public abstract class Catalogo<Clase> extends Window {
 			lsbCatalogo.setMultiple(false);
 			lsbCatalogo.setCheckmark(false);
 		} else {
-			this.setHflex("1");
-			lsbCatalogo.setHeight("450px");
-			this.setClosable(false);
-			this.appendChild(lsbCatalogo);
-			lsbCatalogo.setMultiple(false);
-			lsbCatalogo.setCheckmark(false);
-			lsbCatalogo.setMultiple(true);
-			lsbCatalogo.setCheckmark(true);
+			if (boolean2) {
+				this.setHflex("1");
+				lsbCatalogo.setHeight("450px");
+				this.setClosable(false);
+				this.appendChild(lsbCatalogo);
+				lsbCatalogo.setMultiple(false);
+				lsbCatalogo.setCheckmark(false);
+				lsbCatalogo.setMultiple(true);
+				lsbCatalogo.setCheckmark(true);
+			} else {
+				this.setHflex("1");
+				lsbCatalogo.setPageSize(10);
+				lsbCatalogo.setHeight("350px");
+				this.setClosable(false);
+				this.appendChild(lsbCatalogo);
+			}
 		}
 	}
 

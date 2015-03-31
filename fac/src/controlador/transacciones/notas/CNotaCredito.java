@@ -3,16 +3,22 @@ package controlador.transacciones.notas;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import modelo.maestros.Aliado;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
+import modelo.pk.ConfiguracionMarcaId;
+import modelo.pk.CostoNotaCreditoId;
 import modelo.pk.DetalleNotaCreditoId;
 import modelo.seguridad.Usuario;
+import modelo.transacciones.notas.ConfiguracionMarca;
+import modelo.transacciones.notas.CostoNotaCredito;
 import modelo.transacciones.notas.DetalleNotaCredito;
 import modelo.transacciones.notas.NotaCredito;
 
+import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -21,12 +27,16 @@ import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublebox;
 import org.zkoss.zul.Doublespinner;
+import org.zkoss.zul.Intbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Listcell;
+import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Spinner;
+import org.zkoss.zul.Tab;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
@@ -44,6 +54,12 @@ public class CNotaCredito extends CGenerico {
 	private static final long serialVersionUID = 1L;
 	@Wire
 	private Window wdwNotaCredito;
+	@Wire
+	private Tab tabDatos;
+	@Wire
+	private Tab tabDistribucion;
+	@Wire
+	private Tab tabPote;
 	@Wire
 	private Textbox txtAliado;
 	@Wire
@@ -71,11 +87,24 @@ public class CNotaCredito extends CGenerico {
 	@Wire
 	private Div divCatalogoAliado;
 	@Wire
+	private Div divCatalogoDistribucion;
+	@Wire
+	private Div divCatalogoPote;
+	@Wire
 	private Listbox ltbLista;
+	@Wire
+	private Intbox txtPlan;
+	@Wire
+	private Doublebox txtDistribuir;
+	@Wire
+	private Doublebox txtPlanPote;
+	@Wire
+	private Doublebox txtDistribuirPote;
 	Botonera botonera;
-	ListModelList<Marca> marcas;
 	Catalogo<NotaCredito> catalogo;
 	Catalogo<Aliado> catalogoAliado;
+	Catalogo<ConfiguracionMarca> catalogoDistribucion;
+	Catalogo<ConfiguracionMarca> catalogoPote;
 	List<DetalleNotaCredito> listaDetalle = new ArrayList<DetalleNotaCredito>();
 	long contador = 0;
 	boolean editar = true;
@@ -85,9 +114,29 @@ public class CNotaCredito extends CGenerico {
 	@Override
 	public void inicializar() throws IOException {
 		txtAliado.setFocus(true);
-		List<F0005> udc = servicioF0005.buscarParaUDCOrdenados("00", "17");
+		List<F0005> udc = new ArrayList<F0005>();
+		if (valor.equals("Marca"))
+			udc = servicioF0005
+					.buscarParaUDCOrdenadosYTipo("00", "18", "Marca");
+		else
+			udc = servicioF0005.buscarParaUDCOrdenadosYTipo("00", "18",
+					"Trademark");
 		cmbActividad.setModel(new ListModelList<F0005>(udc));
 		dtbFecha.setValue(fechaHora);
+		ArrayList<String> strings = new ArrayList<String>();
+		strings.add("Marca");
+		strings.add("Plan Caja");
+		strings.add("Peso %");
+		strings.add("Consolidado");
+		for (int i = 0; i < udc.size(); i++) {
+			if (!udc.get(i).getDrdl01().contains("Pote"))
+				strings.add(udc.get(i).getDrdl01());
+
+		}
+		String[] stockArr = new String[strings.size()];
+		stockArr = strings.toArray(stockArr);
+		mostrarCatalogoPote();
+		mostrarCatalogoDistribucion(stockArr);
 		botonera = new Botonera() {
 
 			@Override
@@ -136,6 +185,8 @@ public class CNotaCredito extends CGenerico {
 														.equals("onOK")) {
 													NotaCredito planilla = servicioNotaCredito
 															.buscar(id);
+													servicioCostoNotaCredito
+															.limpiar(planilla);
 													servicioDetalleCredito
 															.limpiar(planilla);
 													servicioNotaCredito
@@ -159,19 +210,90 @@ public class CNotaCredito extends CGenerico {
 
 			@Override
 			public void atras() {
-				// TODO Auto-generated method stub
-
+				if (tabDistribucion.isSelected())
+					tabDatos.setSelected(true);
+				if (tabPote.isSelected())
+					tabDistribucion.setSelected(true);
 			}
 
 			@Override
 			public void adelante() {
-				// TODO Auto-generated method stub
+				if (tabDistribucion.isSelected())
+					tabPote.setSelected(true);
+				if (tabDatos.isSelected())
+					tabDistribucion.setSelected(true);
 
 			}
 		};
-		botonera.getChildren().get(4).setVisible(false);
-		botonera.getChildren().get(5).setVisible(false);
 		botoneraNota.appendChild(botonera);
+	}
+
+	private void mostrarCatalogoPote() {
+		final List<ConfiguracionMarca> listAliado = servicioConfiguracionMarca
+				.buscarTodosParaPoteYTipo(valor);
+		catalogoPote = new Catalogo<ConfiguracionMarca>(divCatalogoPote,
+				"Catalogo de Pote", listAliado, false, false, "Marca", "Bs",
+				"Peso %", "Suma Pote Comercial", "Monto a Distribuir") {
+
+			@Override
+			protected List<ConfiguracionMarca> buscar(List<String> valores) {
+				return listAliado;
+			}
+
+			@Override
+			protected String[] crearRegistros(ConfiguracionMarca aliado) {
+				String[] registros = new String[5];
+				registros[4] = String.valueOf(0);
+				registros[3] = String.valueOf(0);
+				registros[0] = aliado.getId().getMarca().getDescripcion();
+				registros[1] = String.valueOf(aliado.getCosto());
+				registros[2] = String.valueOf(round(
+						aliado.getPorcentajeCosto(), 2));
+				return registros;
+			}
+		};
+		catalogoPote.setParent(divCatalogoPote);
+	}
+
+	private void mostrarCatalogoDistribucion(final String[] strings) {
+		final List<ConfiguracionMarca> listAliado = servicioConfiguracionMarca
+				.buscarTodosParaDistribucionYTipo(valor);
+		catalogoDistribucion = new Catalogo<ConfiguracionMarca>(
+				divCatalogoDistribucion, "Catalogo de Distribucion",
+				listAliado, false, false, strings) {
+
+			@Override
+			protected List<ConfiguracionMarca> buscar(List<String> valores) {
+				return listAliado;
+			}
+
+			@Override
+			protected String[] crearRegistros(ConfiguracionMarca aliado) {
+				String[] registros = new String[strings.length];
+				for (int i = 0; i < strings.length; i++) {
+					switch (strings[i]) {
+					case "Plan Caja":
+						registros[i] = String.valueOf(aliado.getCajas());
+						break;
+					case "Peso %":
+						registros[i] = String.valueOf(round(
+								aliado.getPorcentajePlan(), 2));
+						break;
+					case "Marca":
+						registros[i] = aliado.getId().getMarca()
+								.getDescripcion();
+						break;
+					default:
+						registros[i] = String.valueOf(0);
+						break;
+					}
+
+				}
+				return registros;
+			}
+		};
+		catalogoDistribucion.setParent(divCatalogoDistribucion);
+
 	}
 
 	protected void limpiarCampos() {
@@ -191,6 +313,33 @@ public class CNotaCredito extends CGenerico {
 		listaDetalle.clear();
 		ltbLista.renderAll();
 		ltbLista.getItems().clear();
+		catalogoPote.setId(null);
+		catalogoPote.setParent(null);
+		catalogoPote = null;
+		catalogoDistribucion.setId(null);
+		catalogoDistribucion.setParent(null);
+		catalogoDistribucion = null;
+		List<F0005> udc = new ArrayList<F0005>();
+		if (valor.equals("Marca"))
+			udc = servicioF0005
+					.buscarParaUDCOrdenadosYTipo("00", "18", "Marca");
+		else
+			udc = servicioF0005.buscarParaUDCOrdenadosYTipo("00", "18",
+					"Trademark");
+		ArrayList<String> strings = new ArrayList<String>();
+		strings.add("Marca");
+		strings.add("Plan Caja");
+		strings.add("Peso %");
+		strings.add("Consolidado");
+		for (int i = 0; i < udc.size(); i++) {
+			if (!udc.get(i).getDrdl01().contains("Pote"))
+				strings.add(udc.get(i).getDrdl01());
+
+		}
+		String[] stockArr = new String[strings.size()];
+		stockArr = strings.toArray(stockArr);
+		mostrarCatalogoPote();
+		mostrarCatalogoDistribucion(stockArr);
 	}
 
 	protected void guardarDatos(String estado) {
@@ -210,6 +359,7 @@ public class CNotaCredito extends CGenerico {
 		else
 			nota = servicioNotaCredito.buscarUltima();
 
+		servicioCostoNotaCredito.limpiar(nota);
 		DetalleNotaCreditoId clave = new DetalleNotaCreditoId();
 		clave.setNotaCredito(nota);
 		Integer contador = 0;
@@ -223,6 +373,17 @@ public class CNotaCredito extends CGenerico {
 			detalle.setFechaAuditoria(fechaHora);
 			detalle.setHoraAuditoria(horaAuditoria);
 			detalle.setUsuarioAuditoria(nombreUsuarioSesion());
+			detalle.setPorcentajeAplicado(null);
+			if (detalle.getTipoActividad().contains("Pote"))
+				guardarCostos(nota, detalle.getCosto(), contador.longValue());
+			else {
+				ConfiguracionMarcaId claveConfig = new ConfiguracionMarcaId();
+				claveConfig.setMarca(detalle.getMarca());
+				claveConfig.setTipo(valor);
+				ConfiguracionMarca objeto = servicioConfiguracionMarca
+						.buscarClave(claveConfig);
+				detalle.setPorcentajeAplicado(objeto.getPorcentajePlan());
+			}
 			servicioDetalleCredito.guardar(detalle);
 		}
 		Usuario usuario = servicioUsuario
@@ -237,6 +398,25 @@ public class CNotaCredito extends CGenerico {
 						udc.getDrdl01());
 		}
 
+	}
+
+	private void guardarCostos(NotaCredito nota, Double costo, long cont) {
+		List<ConfiguracionMarca> listaFija = servicioConfiguracionMarca
+				.buscarTodosParaPoteYTipo(valor);
+		CostoNotaCreditoId clave = new CostoNotaCreditoId();
+		clave.setNotaCredito(nota);
+		clave.setIdLinea(cont);
+		for (Iterator<ConfiguracionMarca> iterator = listaFija.iterator(); iterator
+				.hasNext();) {
+			ConfiguracionMarca configuracionMarca = (ConfiguracionMarca) iterator
+					.next();
+			clave.setMarca(configuracionMarca.getId().getMarca());
+			CostoNotaCredito objeto = new CostoNotaCredito(clave, costo
+					* configuracionMarca.getPorcentajeCosto() / 100,
+					configuracionMarca.getPorcentajeCosto(), fechaHora,
+					horaAuditoria, nombreUsuarioSesion());
+			servicioCostoNotaCredito.guardar(objeto);
+		}
 	}
 
 	protected boolean validar() {
@@ -365,6 +545,25 @@ public class CNotaCredito extends CGenerico {
 		catalogoAliado.setParent(null);
 	}
 
+	@Listen("onSelect=#cmbActividad")
+	public void seleccionarCombo() {
+		cmbMarca.setValue("");
+		if (cmbActividad.getValue().contains("Pote")) {
+			List<Marca> marcas = new ArrayList<Marca>();
+			List<ConfiguracionMarca> configuracion = servicioConfiguracionMarca
+					.buscarTodosParaPoteYTipo(valor);
+			for (Iterator<ConfiguracionMarca> iterator = configuracion
+					.iterator(); iterator.hasNext();) {
+				ConfiguracionMarca configuracionMarca = (ConfiguracionMarca) iterator
+						.next();
+				marcas.add(configuracionMarca.getId().getMarca());
+			}
+			cmbMarca.setModel(new ListModelList<Marca>(marcas));
+		} else
+			cmbMarca.setModel(new ListModelList<Marca>(servicioMarca
+					.buscarTodosOrdenados()));
+	}
+
 	@Listen("onChange = #txtAliado; onOK = #txtAliado")
 	public void buscarPorNombrePropio() {
 		Aliado aliado = servicioAliado.buscarPorCodigo(txtAliado.getValue());
@@ -400,6 +599,15 @@ public class CNotaCredito extends CGenerico {
 		listaDetalle = servicioDetalleCredito.buscarPorNota(nota);
 		ltbLista.setModel(new ListModelList<DetalleNotaCredito>(listaDetalle));
 		ltbLista.renderAll();
+		for (int i = 0; i < listaDetalle.size(); i++) {
+			if (listaDetalle.get(i).getTipoActividad().contains("Pote"))
+				modificarPote(listaDetalle.get(i).getCosto(),
+						listaDetalle.get(i).getMarca());
+			else
+				modificarDistribucion(listaDetalle.get(i).getCosto(),
+						listaDetalle.get(i).getMarca(), listaDetalle.get(i)
+								.getTipoActividad());
+		}
 	}
 
 	private void limpiarCamposItem() {
@@ -430,23 +638,28 @@ public class CNotaCredito extends CGenerico {
 					cmbActividad.getValue(), txtDescripcion.getValue(),
 					spnCantidad.getValue(), spnCostoLinea.getValue(),
 					"Pendiente", "", fechaHora, null, null, fechaHora,
-					horaAuditoria, nombreUsuarioSesion());
+					horaAuditoria, nombreUsuarioSesion(), null);
 			listaDetalle.add(objeto);
 			ltbLista.setModel(new ListModelList<DetalleNotaCredito>(
 					listaDetalle));
 			ltbLista.renderAll();
+			calcularCostoTotal(spnCostoLinea.getValue(), marca,
+					cmbActividad.getValue());
 			limpiarCamposItem();
-			calcularCostoTotal();
 		} else
 			msj.mensajeError("Debe llenar todos los campos de la seccion de detalle");
 	}
 
-	private void calcularCostoTotal() {
+	private void calcularCostoTotal(Double double1, Marca marca, String string) {
 		double costo = 0;
 		for (int i = 0; i < listaDetalle.size(); i++) {
 			costo = costo + listaDetalle.get(i).getCosto();
 		}
 		txtCosto.setValue(costo);
+		if (string.contains("Pote"))
+			modificarPote(double1, marca);
+		else
+			modificarDistribucion(double1, marca, string);
 	}
 
 	@Listen("onClick = #btnVer")
@@ -463,7 +676,8 @@ public class CNotaCredito extends CGenerico {
 				ltbLista.removeItemAt(listItem.getIndex());
 				listaDetalle.remove(modelo);
 				ltbLista.renderAll();
-				calcularCostoTotal();
+				calcularCostoTotal(-modelo.getCosto(), modelo.getMarca(),
+						modelo.getTipoActividad());
 			} else
 				msj.mensajeAlerta(Mensaje.editarSoloUno);
 		} else
@@ -480,15 +694,94 @@ public class CNotaCredito extends CGenerico {
 				ltbLista.removeItemAt(i);
 				listaDetalle.remove(modelo);
 				ltbLista.renderAll();
-				calcularCostoTotal();
+				calcularCostoTotal(-modelo.getCosto(), modelo.getMarca(),
+						modelo.getTipoActividad());
 			} else
 				msj.mensajeAlerta(Mensaje.editarSoloUno);
 		} else
 			msj.mensajeAlerta(Mensaje.noHayRegistros);
 	}
 
-	public ListModelList<Marca> getMarcas() {
-		marcas = new ListModelList<Marca>(servicioMarca.buscarTodosOrdenados());
-		return marcas;
+	public void modificarPote(Double precio, Marca marca) {
+		Double cantidad = (double) 0;
+		Double total = (double) 0;
+		Listbox list = (Listbox) catalogoPote.getChildren().get(0);
+		list.renderAll();
+		for (int i = 0; i < list.getItemCount(); i++) {
+			Listitem listItem = list.getItemAtIndex(i);
+			ConfiguracionMarca marca2 = listItem.getValue();
+			Listcell celda = (Listcell) listItem.getChildren().get(1);
+			total = total + Double.valueOf(celda.getLabel());
+			celda = (Listcell) listItem.getChildren().get(2);
+			Double porcentaje = Double.valueOf(celda.getLabel());
+			celda = (Listcell) listItem.getChildren().get(4);
+			Double distribuido = Double.valueOf(celda.getLabel());
+			distribuido = distribuido + round(precio * porcentaje / 100, 2);
+			celda.setLabel(String.valueOf(distribuido));
+			if (marca2.getId().getMarca().getIdMarca()
+					.equals(marca.getIdMarca())) {
+				celda = (Listcell) listItem.getChildren().get(3);
+				Double suma = Double.valueOf(celda.getLabel());
+				suma = suma + precio;
+				celda.setLabel(String.valueOf(suma));
+			}
+		}
+		for (int i = 0; i < list.getItemCount(); i++) {
+			Listitem listItem = list.getItemAtIndex(i);
+			Listcell celda = (Listcell) listItem.getChildren().get(4);
+			Double suma = Double.valueOf(celda.getLabel());
+			cantidad = cantidad + suma;
+		}
+		txtDistribuirPote.setValue(cantidad);
+		txtPlanPote.setValue(total);
+	}
+
+	public void modificarDistribucion(Double precio, Marca marca,
+			String tipoActividad) {
+		Double cantidad = (double) 0;
+		Integer total = 0;
+		Listbox list = (Listbox) catalogoDistribucion.getChildren().get(0);
+		list.renderAll();
+		List<Component> lista = list.getChildren().get(1).getChildren();
+		int index = 0;
+		for (int i = 0; i < lista.size(); i++) {
+			Component component = lista.get(i);
+			if (component instanceof Listheader) {
+				Listheader cabeza1 = (Listheader) component;
+				if (cabeza1.getLabel().equals(tipoActividad)) {
+					index = i;
+					i = lista.size();
+				}
+			}
+		}
+
+		for (int i = 0; i < list.getItemCount(); i++) {
+			Listitem listItem = list.getItemAtIndex(i);
+			ConfiguracionMarca marca2 = listItem.getValue();
+			Listcell celda = (Listcell) listItem.getChildren().get(1);
+			total = total + Integer.valueOf(celda.getLabel());
+			if (marca2.getId().getMarca().getIdMarca()
+					.equals(marca.getIdMarca())) {
+				celda = (Listcell) listItem.getChildren().get(3);
+				Double suma = Double.valueOf(celda.getLabel());
+				suma = suma + precio;
+				celda.setLabel(String.valueOf(suma));
+				if (index != 0) {
+					celda = (Listcell) listItem.getChildren().get(index);
+					suma = Double.valueOf(celda.getLabel());
+					suma = suma + precio;
+					celda.setLabel(String.valueOf(suma));
+				}
+			}
+		}
+		for (int i = 0; i < list.getItemCount(); i++) {
+			Listitem listItem = list.getItemAtIndex(i);
+			Listcell celda = (Listcell) listItem.getChildren().get(3);
+			Double suma = Double.valueOf(celda.getLabel());
+			cantidad = cantidad + suma;
+		}
+		txtDistribuir.setValue(cantidad);
+		txtPlan.setValue(total);
+
 	}
 }

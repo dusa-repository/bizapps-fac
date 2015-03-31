@@ -58,6 +58,9 @@ public class NotaCredito implements Serializable{
 	
 	@OneToMany(mappedBy = "id.notaCredito")
 	private List<DetalleNotaCredito> existencias;
+	
+	@OneToMany(mappedBy = "id.notaCredito")
+	private List<CostoNotaCredito> costoNotaCredito;
 
 	public NotaCredito() {
 		super();
@@ -158,6 +161,14 @@ public class NotaCredito implements Serializable{
 
 	public void setEstado(String estado) {
 		this.estado = estado;
+	}
+
+	public List<CostoNotaCredito> getCostoNotaCredito() {
+		return costoNotaCredito;
+	}
+
+	public void setCostoNotaCredito(List<CostoNotaCredito> costoNotaCredito) {
+		this.costoNotaCredito = costoNotaCredito;
 	}
 	
 	
