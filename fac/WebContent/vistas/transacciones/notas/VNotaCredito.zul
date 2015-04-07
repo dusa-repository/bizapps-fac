@@ -1,5 +1,5 @@
 <zk>
-	<window width="70em" closable="false" id="wdwNotaCredito"
+	<window width="75em" closable="false" id="wdwNotaCredito"
 		apply="controlador.transacciones.notas.CNotaCredito" position="center,top">
 		<caption label="Formato de Notas de Credito"
 			style="color:white; font-size: 16px; font-weight:bold; " />
@@ -15,13 +15,10 @@
 					<tabpanel>
 						<grid width="100%">
 							<columns visible="false">
-								<column label="" width="14%" />
-								<column label="" width="17%" />
-								<column label="" width="12.6%" />
-								<column label="" width="18%" />
-								<column label="" width="11.6%" />
-								<column label="" width="13.4%" />
-								<column label="" width="13.4%" />
+								<column label="" width="25%" />
+								<column label="" width="25%" />
+								<column label="" width="25%" />
+								<column label="" width="25%" />
 							</columns>
 							<rows>
 								<row>
@@ -34,6 +31,9 @@
 										tooltiptext="Ingrese el Codigo o Seleccione del Catalogo el Aliado" />
 									<button id="btnBuscarAliado" label="" tooltiptext="Catalogo Aliados"
 										image="/public/imagenes/botones/buscar.png" />
+									<hbox />
+								</row>
+								<row>
 									<label class="etiqueta" value="Nombre Aliado: " />
 									<label id="lblNombre" />
 									<label class="etiqueta" value="Zona: " />
@@ -48,9 +48,6 @@
 									<datebox readonly="true" width="100%" id="dtbFecha" />
 									<label class="etiqueta" value="Costo: " />
 									<doublebox id="txtCosto" hflex="1" readonly="true" />
-									<hbox />
-									<hbox />
-									<hbox />
 								</row>
 
 							</rows>
@@ -61,12 +58,10 @@
 						<separator />
 						<grid width="100%">
 							<columns visible="false">
-								<column label="" width="14%" />
-								<column label="" width="17%" />
-								<column label="" width="12.6%" />
-								<column label="" width="18%" />
-								<column label="" width="11.6%" />
-								<column label="" width="13.4%" />
+								<column label="" width="25%" />
+								<column label="" width="25%" />
+								<column label="" width="25%" />
+								<column label="" width="25%" />
 							</columns>
 							<rows>
 								<row>
@@ -83,26 +78,26 @@
 										</template>
 									</combobox>
 									<hbox>
-										<label class="etiqueta" value="Marca Sugerida: " />
+										<label class="etiqueta" value="Marca: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox><!-- model="${$composer.marcas}" -->
-									<combobox tooltiptext="Seleccione la Marca Sugerida"
+									<combobox tooltiptext="Seleccione la Marca"
 										placeholder="Seleccione una Marca" id="cmbMarca" readonly="true"
 										width="100%">
 										<template name="model">
 											<comboitem label="${each.descripcion}" context="${each.idMarca}" />
 										</template>
 									</combobox>
+								</row>
+								<row>
 									<hbox>
 										<label class="etiqueta" value="Descripcion: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<textbox multiline="true" class="multilinea" id="txtDescripcion"
-										maxlength="500" tooltiptext="Ingrese la Descripcion" />
-								</row>
-								<row>
+									<textbox width="100%" multiline="true" class="multilinea"
+										id="txtDescripcion" maxlength="500" tooltiptext="Ingrese la Descripcion" />
 									<hbox>
 										<label class="etiqueta" value="Cantidad de Botellas: " />
 										<space />
@@ -110,6 +105,8 @@
 									</hbox>
 									<spinner id="spnCantidad" value="0" constraint="min 0 max 1000000"
 										tooltiptext="Ingrese la cantidad de Botellas" step="1" width="98%" />
+								</row>
+								<row>
 									<hbox>
 										<label class="etiqueta" value="Costo Total Linea: " />
 										<space />
@@ -118,7 +115,15 @@
 									<doublespinner id="spnCostoLinea" value="0"
 										constraint="min 0 max 10000000" tooltiptext="Ingrese el costo total de la linea"
 										step="1.0" format="#.##" width="98%" />
-									<hbox />
+									<hbox>
+										<hbox>
+											<label class="etiqueta" value="ID Ref.: " />
+											<space />
+											<label value="*" style="font-weight:bold;color:red" />
+										</hbox>
+										<textbox width="100%" id="txtRef" maxlength="100"
+											tooltiptext="Ingrese el Id de Referencia" />
+									</hbox>
 									<button width="130px" label="Agregar" id="btnAgregar"
 										autodisable="self" image="/public/imagenes/botones/annadir.png"
 										tooltiptext="Presione para Agregar un Item" />
@@ -128,8 +133,8 @@
 						<separator />
 						<div width="100%">
 							<hbox widths="95%,5%">
-								<listbox id="ltbLista" mold="paging" pageSize="10" span="true"
-									width="100%">
+								<listbox id="ltbLista" mold="paging" rows="6" pageSize="10"
+									span="true" width="100%">
 									<listhead>
 										<listheader label="Id Ref." hflex="min" />
 										<listheader label="Marca" hflex="min" />
@@ -142,7 +147,7 @@
 									<template name="model">
 										<listitem>
 											<listcell
-												label="${each.id.idDetalleCredito}${each.id.notaCredito.idNotaCredito}" />
+												label="${each.idReferencia}" />
 											<listcell label="${each.marca.descripcion}" />
 											<listcell label="${each.tipoActividad}" />
 											<listcell label="${each.descripcion}" />

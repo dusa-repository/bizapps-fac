@@ -70,6 +70,9 @@ public class DetalleNotaCredito implements	Serializable{
 
 	@Column(name = "usuario_auditoria", length = 50)
 	private String usuarioAuditoria;
+	
+	@Column(name="id_referencia",length = 100)
+	private String idReferencia;
 
 	public DetalleNotaCredito() {
 		super();
@@ -81,7 +84,7 @@ public class DetalleNotaCredito implements	Serializable{
 			Double costo, String estado, String observacion,
 			Timestamp fechaCreacion, Timestamp fechaAprobacion,
 			Timestamp fechaConfirmacion, Timestamp fechaAuditoria,
-			String horaAuditoria, String usuarioAuditoria, Double porcentaje) {
+			String horaAuditoria, String usuarioAuditoria, Double porcentaje, String idre) {
 		super();
 		this.id = id;
 		this.marca = marca;
@@ -98,6 +101,7 @@ public class DetalleNotaCredito implements	Serializable{
 		this.horaAuditoria = horaAuditoria;
 		this.usuarioAuditoria = usuarioAuditoria;
 		this.porcentajeAplicado = porcentaje;
+		this.idReferencia = idre;
 	}
 
 	public DetalleNotaCreditoId getId() {
@@ -223,6 +227,14 @@ public class DetalleNotaCredito implements	Serializable{
 
 	public void setPorcentajeAplicado(Double porcentajeAplicado) {
 		this.porcentajeAplicado = porcentajeAplicado;
+	}
+
+	public String getIdReferencia() {
+		return idReferencia;
+	}
+
+	public void setIdReferencia(String idReferencia) {
+		this.idReferencia = idReferencia;
 	}
 
 }

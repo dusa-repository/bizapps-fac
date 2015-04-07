@@ -63,6 +63,8 @@ public class CNotaCredito extends CGenerico {
 	@Wire
 	private Textbox txtAliado;
 	@Wire
+	private Textbox txtRef;
+	@Wire
 	private Label lblNombre;
 	@Wire
 	private Label lblZona;
@@ -129,7 +131,7 @@ public class CNotaCredito extends CGenerico {
 		strings.add("Peso %");
 		strings.add("Consolidado");
 		for (int i = 0; i < udc.size(); i++) {
-			if (!udc.get(i).getDrdl01().contains("Pote"))
+			if (!udc.get(i).getDrdl01().toUpperCase().contains("POTE"))
 				strings.add(udc.get(i).getDrdl01());
 
 		}
@@ -304,7 +306,7 @@ public class CNotaCredito extends CGenerico {
 		txtCosto.setValue(0);
 		limpiarCamposItem();
 		limpiarColores(txtAliado, txtCosto, txtDescripcion, cmbActividad,
-				cmbMarca, spnCantidad, spnCostoLinea);
+				cmbMarca, spnCantidad, spnCostoLinea, txtRef);
 		lblNombre.setValue("");
 		lblZona.setValue("");
 		editar = true;
@@ -332,7 +334,7 @@ public class CNotaCredito extends CGenerico {
 		strings.add("Peso %");
 		strings.add("Consolidado");
 		for (int i = 0; i < udc.size(); i++) {
-			if (!udc.get(i).getDrdl01().contains("Pote"))
+			if (!udc.get(i).getDrdl01().toUpperCase().contains("POTE"))
 				strings.add(udc.get(i).getDrdl01());
 
 		}
@@ -374,7 +376,7 @@ public class CNotaCredito extends CGenerico {
 			detalle.setHoraAuditoria(horaAuditoria);
 			detalle.setUsuarioAuditoria(nombreUsuarioSesion());
 			detalle.setPorcentajeAplicado(null);
-			if (detalle.getTipoActividad().contains("Pote"))
+			if (detalle.getTipoActividad().toUpperCase().contains("POTE"))
 				guardarCostos(nota, detalle.getCosto(), contador.longValue());
 			else {
 				ConfiguracionMarcaId claveConfig = new ConfiguracionMarcaId();
@@ -548,7 +550,7 @@ public class CNotaCredito extends CGenerico {
 	@Listen("onSelect=#cmbActividad")
 	public void seleccionarCombo() {
 		cmbMarca.setValue("");
-		if (cmbActividad.getValue().contains("Pote")) {
+		if (cmbActividad.getValue().toUpperCase().contains("POTE")) {
 			List<Marca> marcas = new ArrayList<Marca>();
 			List<ConfiguracionMarca> configuracion = servicioConfiguracionMarca
 					.buscarTodosParaPoteYTipo(valor);
@@ -600,7 +602,8 @@ public class CNotaCredito extends CGenerico {
 		ltbLista.setModel(new ListModelList<DetalleNotaCredito>(listaDetalle));
 		ltbLista.renderAll();
 		for (int i = 0; i < listaDetalle.size(); i++) {
-			if (listaDetalle.get(i).getTipoActividad().contains("Pote"))
+			if (listaDetalle.get(i).getTipoActividad().toUpperCase()
+					.contains("POTE"))
 				modificarPote(listaDetalle.get(i).getCosto(),
 						listaDetalle.get(i).getMarca());
 			else
@@ -614,6 +617,7 @@ public class CNotaCredito extends CGenerico {
 		spnCantidad.setValue(0);
 		spnCostoLinea.setValue((double) 0);
 		txtDescripcion.setValue("");
+		txtRef.setValue("");
 		cmbActividad.setValue("");
 		cmbMarca.setValue("");
 	}
@@ -623,7 +627,7 @@ public class CNotaCredito extends CGenerico {
 				|| cmbActividad.getText().compareTo("") == 0
 				|| dtbFecha.getText().compareTo("") == 0
 				|| txtDescripcion.getText().compareTo("") == 0) {
-			aplicarColores(cmbMarca, cmbActividad, txtDescripcion);
+			aplicarColores(cmbMarca, cmbActividad, txtDescripcion, txtRef);
 			return false;
 		} else
 			return true;
@@ -638,7 +642,8 @@ public class CNotaCredito extends CGenerico {
 					cmbActividad.getValue(), txtDescripcion.getValue(),
 					spnCantidad.getValue(), spnCostoLinea.getValue(),
 					"Pendiente", "", fechaHora, null, null, fechaHora,
-					horaAuditoria, nombreUsuarioSesion(), null);
+					horaAuditoria, nombreUsuarioSesion(), null,
+					txtRef.getValue());
 			listaDetalle.add(objeto);
 			ltbLista.setModel(new ListModelList<DetalleNotaCredito>(
 					listaDetalle));
@@ -656,7 +661,7 @@ public class CNotaCredito extends CGenerico {
 			costo = costo + listaDetalle.get(i).getCosto();
 		}
 		txtCosto.setValue(costo);
-		if (string.contains("Pote"))
+		if (string.toUpperCase().contains("POTE"))
 			modificarPote(double1, marca);
 		else
 			modificarDistribucion(double1, marca, string);
@@ -670,6 +675,7 @@ public class CNotaCredito extends CGenerico {
 				DetalleNotaCredito modelo = listItem.getValue();
 				spnCantidad.setValue(modelo.getBotellas());
 				txtDescripcion.setValue(modelo.getDescripcion());
+				txtRef.setValue(modelo.getIdReferencia());
 				cmbActividad.setValue(modelo.getTipoActividad());
 				spnCostoLinea.setValue(modelo.getCosto());
 				cmbMarca.setValue(modelo.getMarca().getDescripcion());
