@@ -424,7 +424,7 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 					cajas[i].setStyle("border: 1px solid red");
 		}
 	}
-	
+
 	public static double round(double value, int places) {
 		if (places < 0)
 			throw new IllegalArgumentException();
@@ -432,5 +432,19 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 		BigDecimal bd = new BigDecimal(value);
 		bd = bd.setScale(places, RoundingMode.HALF_UP);
 		return bd.doubleValue();
+	}
+
+	public Date agregarDia(Date fecha) {
+		Calendar calendario = Calendar.getInstance();
+		calendario.setTime(fecha);
+		calendario.add(Calendar.DAY_OF_YEAR, +1);
+		return fecha = calendario.getTime();
+	}
+
+	public Date restarDia(Date fecha) {
+		Calendar calendario = Calendar.getInstance();
+		calendario.setTime(fecha);
+		calendario.add(Calendar.DAY_OF_YEAR, -1);
+		return fecha = calendario.getTime();
 	}
 }

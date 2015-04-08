@@ -86,6 +86,7 @@ public class CProcesarNota extends CGenerico {
 					btnRechazar.setVisible(true);
 			}
 		}
+		refresh();
 	}
 
 	public ListModelList<Marca> getMarcas() {
@@ -270,8 +271,14 @@ public class CProcesarNota extends CGenerico {
 
 	@Listen("onClick = #btnRefrescar")
 	public void refresh() {
-		Date desde = dtbDesde.getValue();
-		Date hasta = dtbHasta.getValue();
+		Date desde = new Date();
+		if (dtbDesde.getValue() != null)
+			desde = dtbDesde.getValue();
+		desde = restarDia(desde);
+		Date hasta = new Date();
+		if (dtbHasta.getValue() != null)
+			hasta = dtbHasta.getValue();
+		hasta = agregarDia(hasta);
 		String codigoMarca = "%";
 		if (cmbMarca.getSelectedItem() != null)
 			codigoMarca = cmbMarca.getSelectedItem().getContext();
