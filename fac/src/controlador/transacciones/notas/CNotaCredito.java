@@ -371,7 +371,8 @@ public class CNotaCredito extends CGenerico {
 			DetalleNotaCredito detalle = listaDetalle.get(i);
 			detalle.setId(clave);
 			detalle.setEstado(estado);
-			detalle.setFechaCreacion(fechaHora);
+			detalle.setFechaCreacion(new Timestamp(dtbFecha.getValue()
+					.getTime()));
 			detalle.setFechaAuditoria(fechaHora);
 			detalle.setHoraAuditoria(horaAuditoria);
 			detalle.setUsuarioAuditoria(nombreUsuarioSesion());
