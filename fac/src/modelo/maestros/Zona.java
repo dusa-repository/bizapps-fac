@@ -26,6 +26,15 @@ public class Zona implements Serializable {
 	@Column(length = 500)
 	private String descripcion;
 	
+	@Column(name="monto_original")
+	private Double original;
+	
+	@Column(name="monto_consumido")
+	private Double consumido;
+	
+	@Column(name="monto_saldo")
+	private Double saldo;
+	
 	@Column(name = "fecha_auditoria")
 	private Timestamp fechaAuditoria;
 
@@ -50,13 +59,16 @@ public class Zona implements Serializable {
 	}
 
 	public Zona(String idZona, String descripcion, Timestamp fechaAuditoria,
-			String horaAuditoria, String usuarioAuditoria) {
+			String horaAuditoria, String usuarioAuditoria, Double ori, Double consu, Double saldo) {
 		super();
 		this.idZona = idZona;
 		this.descripcion = descripcion;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
 		this.usuarioAuditoria = usuarioAuditoria;
+		this.original = ori;
+		this.consumido = consu;
+		this.saldo = saldo;
 	}
 
 	public String getIdZona() {
@@ -122,6 +134,29 @@ public class Zona implements Serializable {
 	public void setPlanificaciones(Set<Planificacion> planificaciones) {
 		this.planificaciones = planificaciones;
 	}
-	
+
+	public Double getOriginal() {
+		return original;
+	}
+
+	public void setOriginal(Double original) {
+		this.original = original;
+	}
+
+	public Double getConsumido() {
+		return consumido;
+	}
+
+	public void setConsumido(Double consumido) {
+		this.consumido = consumido;
+	}
+
+	public Double getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(Double saldo) {
+		this.saldo = saldo;
+	}
 	
 }

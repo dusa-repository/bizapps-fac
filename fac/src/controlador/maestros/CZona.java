@@ -12,6 +12,8 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Div;
+import org.zkoss.zul.Doublebox;
+import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
@@ -29,6 +31,12 @@ public class CZona extends CGenerico {
 	private Textbox txtCodigoZona;
 	@Wire
 	private Textbox txtDescripcionZona;
+	@Wire
+	private Doublespinner spnOriginal;
+	@Wire
+	private Doublespinner spnConsumido;
+	@Wire
+	private Doublebox txtSaldo;
 	@Wire
 	private Div botoneraZona;
 	@Wire
@@ -55,6 +63,9 @@ public class CZona extends CGenerico {
 			public void limpiar() {
 				txtCodigoZona.setValue("");
 				txtDescripcionZona.setValue("");
+				spnConsumido.setValue((double) 0);
+				spnOriginal.setValue((double) 0);
+				txtSaldo.setValue(0);
 				id = "";
 			}
 
@@ -64,7 +75,9 @@ public class CZona extends CGenerico {
 					String descripcion = txtDescripcionZona.getValue();
 					String codigo = txtCodigoZona.getValue();
 					Zona zona = new Zona(codigo, descripcion, fechaHora,
-							horaAuditoria, nombreUsuarioSesion());
+							horaAuditoria, nombreUsuarioSesion(),
+							spnOriginal.getValue(), spnConsumido.getValue(),
+							txtSaldo.getValue());
 					servicioZona.guardar(zona);
 					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
@@ -131,11 +144,20 @@ public class CZona extends CGenerico {
 
 	protected boolean validar() {
 		if (txtCodigoZona.getText().compareTo("") == 0
-				|| txtDescripcionZona.getText().compareTo("") == 0) {
+				|| txtDescripcionZona.getText().compareTo("") == 0
+				|| txtSaldo.getText().compareTo("") == 0
+				|| spnConsumido.getText().compareTo("") == 0
+				|| spnOriginal.getText().compareTo("") == 0) {
 			msj.mensajeError(Mensaje.camposVacios);
 			return false;
-		} else
-			return true;
+		} else {
+			if (spnConsumido.getValue() > spnOriginal.getValue()) {
+				msj.mensajeAlerta("El monto consumido no puede ser mayor al monto original");
+				return false;
+			} else
+				return true;
+		}
+
 	}
 
 	public void buscarCatalogoPropio() {
@@ -189,6 +211,26 @@ public class CZona extends CGenerico {
 		txtCodigoZona.setValue(zona.getIdZona());
 		txtDescripcionZona.setValue(zona.getDescripcion());
 		id = zona.getIdZona();
+		if (zona.getSaldo() != null) {
+			spnConsumido.setValue(zona.getConsumido());
+			spnOriginal.setValue(zona.getOriginal());
+			txtSaldo.setValue(zona.getSaldo());
+		} else {
+			spnConsumido.setValue((double) 0);
+			spnOriginal.setValue((double) 0);
+			txtSaldo.setValue(0);
+		}
+	}
+
+	@Listen("onChange = #spnConsumido,#spnOriginal; onOK = #spnConsumido,#spnOriginal ")
+	public void actualizarSaldo() {
+		if (spnConsumido.getValue() != null && spnOriginal.getValue() != null) {
+			if (spnConsumido.getValue() <= spnOriginal.getValue()) {
+				txtSaldo.setValue(spnOriginal.getValue()
+						- spnConsumido.getValue());
+			} else
+				msj.mensajeAlerta("El monto consumido no puede ser mayor al monto original");
+		}
 	}
 
 }

@@ -8,6 +8,9 @@ import modelo.transacciones.notas.DetalleNotaCredito;
 import modelo.transacciones.notas.NotaCredito;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 @Service("SDetalleNotaCredito")
@@ -15,6 +18,12 @@ public class SDetalleNotaCredito {
 
 	@Autowired
 	private IDetalleNotaCreditoDAO detalleDAO;
+	private Sort o = new Sort(new Order(Direction.ASC, "fechaCreacion"),
+			new Order(Direction.ASC, "idNotaCreditoAliadoNombre"), new Order(
+					Direction.ASC, "marcaDescripcion"));
+	private Sort o2 = new Sort(new Order(Direction.ASC,
+			"idNotaCreditoAliadoNombre"), new Order(Direction.ASC,
+			"marcaDescripcion"));
 
 	public void limpiar(NotaCredito planilla) {
 		List<DetalleNotaCredito> lista = detalleDAO
@@ -37,19 +46,26 @@ public class SDetalleNotaCredito {
 
 	public List<DetalleNotaCredito> buscarLikeCodigoMarcaCodigoAliadoCodigoZonaYTipoYFechasEntre(
 			String codigoMarca, String codigoAliado, String codigoZona,
-			String tipo, Date desde, Date hasta, String estado) {
+			String tipo, Date desde, Date hasta, String estado, boolean reporte) {
+		Sort nuevo = o;
+		if (reporte)
+			nuevo = o2;
 		return detalleDAO
-				.findByMarcaIdMarcaLikeAndIdNotaCreditoAliadoNombreLikeAndIdNotaCreditoAliadoZonaIdZonaLikeAndIdNotaCreditoTipoAndEstadoLikeAndFechaCreacionBetweenAndEstadoNot(
+				.findByMarcaIdMarcaLikeAndIdNotaCreditoAliadoNombreLikeAndIdNotaCreditoAliadoZonaIdZonaLikeAndIdNotaCreditoTipoLikeAndEstadoLikeAndFechaCreacionBetween(
 						codigoMarca, codigoAliado, codigoZona, tipo, estado,
-						desde, hasta, "Pendiente");
+						desde, hasta, nuevo);
 	}
 
 	public List<DetalleNotaCredito> buscarLikeCodigoMarcaCodigoAliadoCodigoZonaYCodigoNotaYTipoYFechasEntre(
 			String codigoMarca, String codigoAliado, String codigoZona,
-			long codigo, String tipo, Date desde, Date hasta, String estado) {
+			long codigo, String tipo, Date desde, Date hasta, String estado,
+			boolean reporte) {
+		Sort nuevo = o;
+		if (reporte)
+			nuevo = o2;
 		return detalleDAO
-				.findByMarcaIdMarcaLikeAndIdNotaCreditoAliadoNombreLikeAndIdNotaCreditoAliadoZonaIdZonaLikeAndIdNotaCreditoTipoAndEstadoLikeAndIdNotaCreditoIdNotaCreditoAndFechaCreacionBetweenAndEstadoNot(
+				.findByMarcaIdMarcaLikeAndIdNotaCreditoAliadoNombreLikeAndIdNotaCreditoAliadoZonaIdZonaLikeAndIdNotaCreditoTipoLikeAndEstadoLikeAndIdNotaCreditoIdNotaCreditoAndFechaCreacionBetween(
 						codigoMarca, codigoAliado, codigoZona, tipo, estado,
-						codigo, desde, hasta, "Pendiente");
+						codigo, desde, hasta, nuevo);
 	}
 }

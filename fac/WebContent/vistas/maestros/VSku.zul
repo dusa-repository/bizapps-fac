@@ -42,6 +42,18 @@
 						<button id="btnBuscarMarcas" label="" tooltiptext="Catalogo Marcas"
 							image="/public/imagenes/botones/buscar.png" />
 					</row>
+					<row>
+						<hbox>
+							<label value="Estado:" class="etiqueta" />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<radiogroup id="rdgEstatus">
+							<radio label="Activo" value="Activo" id="rdoSi" />
+							<radio label="Inactivo" value="Inactivo" id="rdoNo" />
+						</radiogroup>
+
+					</row>
 				</rows>
 			</grid>
 			<separator />

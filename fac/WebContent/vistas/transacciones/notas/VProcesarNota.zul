@@ -1,9 +1,9 @@
 <zk>
-	<window height="100%" width="95%" closable="false" id="wdwProcesar"
+	<window height="95%" width="95%" closable="false" id="wdwProcesar"
 		apply="controlador.transacciones.notas.CProcesarNota">
 		<caption label="Procesar Solicitudes de Notas de Credito"
 			style="color:white; font-size: 16px; font-weight:bold; " />
-		<vbox height="100%" heights="15%,1%,84%">
+		<vbox height="95%" heights="15%,85%">
 			<hbox height="100%" width="100%">
 				<grid width="100%">
 					<columns visible="false">
@@ -27,6 +27,7 @@
 								placeholder="Seleccione un Tipo" id="cmbEstado" readonly="true"
 								width="100%">
 								<comboitem label="TODOS" />
+								<comboitem label="En Edicion" />
 								<comboitem label="Enviada" />
 								<comboitem label="Aprobada" />
 								<comboitem label="Certificada" />
@@ -72,11 +73,10 @@
 					</rows>
 				</grid>
 			</hbox>
-			<space height="100%" />
 			<hbox height="100%" widths="95%,5%" width="100%">
 				<!-- <div height="100%" width="100%" id="catalogoNotas" /> -->
 				<listbox id="ltbLista" mold="paging" pageSize="10" span="true"
-					rows="10" width="100%">
+					width="100%">
 					<listhead>
 						<listheader label="Id N.C." hflex="min" />
 						<listheader label="Aliado" hflex="min" />
@@ -85,7 +85,8 @@
 						<listheader label="Fecha Creacion" hflex="min" />
 						<listheader label="Actividad" hflex="min" />
 						<listheader label="Estado" hflex="min" />
-						<listheader label="Observacion" hflex="min" />
+						<listheader label="Tipo N.C" hflex="min" />
+						<listheader label="Total Importe" hflex="min" />
 					</listhead>
 					<template name="model">
 						<listitem>
@@ -96,14 +97,29 @@
 							<listcell label="${each.traerFecha()}" />
 							<listcell label="${each.tipoActividad}" />
 							<listcell label="${each.estado}" />
-							<listcell>
-								<textbox value="${each.observacion}" class="multilinea"
-									multiline="true" maxlength="500" />
-							</listcell>
+							<listcell label="${each.id.notaCredito.tipo}" />
+							<listcell label="${each.costo}" />
 						</listitem>
 					</template>
+					<listfoot>
+						<listfooter />
+						<listfooter />
+						<listfooter />
+						<listfooter />
+						<listfooter />
+						<listfooter />
+						<listfooter />
+						<listfooter>
+							<label class="etiqueta" value="Total importe seleccionado:" />
+						</listfooter>
+						<listfooter>
+							<label id="lblFooter" value="0" />
+						</listfooter>
+					</listfoot>
 				</listbox>
 				<vbox width="100%">
+					<button id="btnVer" label="Ver N.C." autodisable="self"
+						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/ver.png" />
 					<button visible="false" id="btnAprobar" label="Aprobar"
 						autodisable="self" style="font-size: 13px ;width: 132px; height: 35px"
 						image="/public/imagenes/botones/procesar.png" />
@@ -113,11 +129,14 @@
 					<button visible="false" id="btnRechazar" label="Rechazar"
 						autodisable="self" style="font-size: 13px ;width: 132px; height: 35px"
 						image="/public/imagenes/botones/rechazar.png" />
+					<button id="btnReporte" label="Reporte" autodisable="self"
+						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/reporte.png" />
 					<button id="btnCerrar" label="Salir" autodisable="self"
 						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/salir.png" />
 				</vbox>
 			</hbox>
 		</vbox>
-		<space />
+		<separator />
+		<separator />
 	</window>
 </zk>

@@ -85,9 +85,8 @@
 			</north>
 			<center border="none">
 				<div vflex="true" hflex="true" style="background:#500101">
-					<hbox widths="10%,80%,10%" height="95%" width="100%" align="center"
+					<hbox widths="95%,5%" height="95%" width="100%" align="center"
 						pack="center" vflex="true" hflex="true">
-						<separator spacing="100%" />
 						<groupbox closable="false" height="100%" width="100%"
 							mold="3d">
 							<caption label="PANEL ADMINISTRATIVO"
@@ -110,8 +109,11 @@
 												orient="vertical" visible="false" autodisable="self" />
 											<button id="btnZona" class="btn" label="Zona" orient="vertical"
 												visible="false" autodisable="self" />
-											<button id="btnConfigurarMarca" class="btn" label="Conf. Marca" orient="vertical"
-												visible="false" autodisable="self" />
+											<button id="btnConfigurarMarca" class="btn" label="Conf. Marca"
+												orient="vertical" visible="false" autodisable="self" />
+											<button id="btnConfiguracionEnvio" class="btn"
+												label="Conf. Boton Envio" orient="vertical" visible="false"
+												autodisable="self" />
 										</hbox>
 										<separator />
 										<separator />
@@ -130,6 +132,11 @@
 												orient="vertical" visible="false" autodisable="self" />
 											<button id="btnConfiguracion" class="btn" label="Configuracion"
 												orient="vertical" visible="false" autodisable="self" />
+											<button id="btnEmpresa" class="btn" label="Empresa"
+												orient="vertical" visible="false" autodisable="self" />
+											<button id="btnActivarDesactivar" class="btn"
+												label="Activar/Desactivar Marca/Sku" orient="vertical"
+												visible="false" autodisable="self" />
 										</hbox>
 									</vbox>
 								</center>

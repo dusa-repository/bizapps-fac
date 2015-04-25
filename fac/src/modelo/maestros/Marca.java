@@ -7,9 +7,14 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 import modelo.transacciones.PlanillaArte;
 import modelo.transacciones.PlanillaCata;
@@ -46,6 +51,10 @@ public class Marca implements Serializable {
 
 	@Column(name = "usuario_auditoria", length = 50)
 	private String usuarioAuditoria;
+	
+	@Column(name = "estado")
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private Boolean estado;
 	
 	@OneToMany(mappedBy="marca")
 	private Set<PlanillaArte> planillasArte;
@@ -91,6 +100,10 @@ public class Marca implements Serializable {
 	
 	@OneToMany(mappedBy = "id.marca")
 	private List<CostoNotaCredito> costoNotas;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="id_empresa")
+	private Empresa empresa;
 
 	public Marca() {
 		super();
@@ -98,13 +111,15 @@ public class Marca implements Serializable {
 	}
 
 	public Marca(String idMarca, String descripcion, Timestamp fechaAuditoria,
-			String horaAuditoria, String usuarioAuditoria) {
+			String horaAuditoria, String usuarioAuditoria, Empresa empresa, Boolean estado) {
 		super();
 		this.idMarca = idMarca;
 		this.descripcion = descripcion;
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
 		this.usuarioAuditoria = usuarioAuditoria;
+		this.empresa = empresa;
+		this.estado = estado;
 	}
 
 	public String getIdMarca() {
@@ -269,6 +284,22 @@ public class Marca implements Serializable {
 
 	public void setCostoNotas(List<CostoNotaCredito> costoNotas) {
 		this.costoNotas = costoNotas;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	public Boolean getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Boolean estado) {
+		this.estado = estado;
 	}
 	
 	

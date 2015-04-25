@@ -1,0 +1,51 @@
+<zk>
+	<window width="70em" closable="false" id="wdwRechazo"
+		apply="controlador.transacciones.notas.CRechazoNota">
+		<caption label="Notas de Credito a Rechazar"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div width="100%">
+			<space />
+			<vbox width="100%">
+				<listbox id="ltbRechazo" mold="paging" pageSize="10" span="true"
+					width="100%">
+					<listhead>
+						<listheader label="Id N.C." hflex="min" />
+						<listheader label="Aliado" hflex="min" />
+						<listheader label="Zona" hflex="min" />
+						<listheader label="Marca" hflex="min" />
+						<listheader label="Fecha Creacion" hflex="min" />
+						<listheader label="Actividad" hflex="min" />
+						<listheader label="Estado" hflex="min" />
+						<listheader label="Tipo N.C" hflex="min" />
+						<listheader label="Total Importe" hflex="min" />
+						<listheader label="Observacion" hflex="min" />
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell label="${each.id.notaCredito.idNotaCredito}" />
+							<listcell label="${each.id.notaCredito.aliado.nombre}" />
+							<listcell label="${each.id.notaCredito.aliado.zona.descripcion}" />
+							<listcell label="${each.marca.descripcion}" />
+							<listcell label="${each.traerFecha()}" />
+							<listcell label="${each.tipoActividad}" />
+							<listcell label="${each.estado}" />
+							<listcell label="${each.id.notaCredito.tipo}" />
+							<listcell label="${each.costo}" />
+							<listcell>
+								<textbox value="${each.observacion}" class="multilinea"
+									multiline="true" maxlength="500" />
+							</listcell>
+						</listitem>
+					</template>
+				</listbox>
+				<space />
+				<hbox>
+					<button id="btnAceptarRechazo" label="Aceptar"
+						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/guardar.png" />
+					<button id="btnSalirRechazo" label="Salir"
+						style="font-size: 13px ;width: 132px; height: 35px" image="/public/imagenes/botones/salir.png" />
+				</hbox>
+			</vbox>
+		</div>
+	</window>
+</zk>

@@ -21,6 +21,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import modelo.seguridad.Configuracion;
+import modelo.seguridad.ConfiguracionEnvio;
 import modelo.seguridad.Usuario;
 
 import org.springframework.security.core.Authentication;
@@ -30,6 +31,7 @@ import org.zkoss.zk.ui.HtmlBasedComponent;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
@@ -43,6 +45,7 @@ import servicio.estado.SBitacoraPromocion;
 import servicio.estado.SBitacoraUniforme;
 import servicio.generico.SPlanillaGenerica;
 import servicio.maestros.SAliado;
+import servicio.maestros.SEmpresa;
 import servicio.maestros.SF0004;
 import servicio.maestros.SF0005;
 import servicio.maestros.SMarca;
@@ -52,6 +55,7 @@ import servicio.maestros.SUniforme;
 import servicio.maestros.SZona;
 import servicio.seguridad.SArbol;
 import servicio.seguridad.SConfiguracion;
+import servicio.seguridad.SConfiguracionEnvio;
 import servicio.seguridad.SGrupo;
 import servicio.seguridad.SUsuario;
 import servicio.transacciones.SItemDegustacionPlanillaEvento;
@@ -72,6 +76,7 @@ import servicio.transacciones.notas.SCostoNotaCredito;
 import servicio.transacciones.notas.SDetalleNotaCredito;
 import servicio.transacciones.notas.SNotaCredito;
 import servicio.transacciones.notas.SPlanificacion;
+import componente.Botonera;
 import componente.Mensaje;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
@@ -96,6 +101,10 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 	protected SBitacoraUniforme servicioBitacoraUniforme;
 	@WireVariable("SConfiguracion")
 	protected SConfiguracion servicioConfiguracion;
+	@WireVariable("SConfiguracionEnvio")
+	protected SConfiguracionEnvio servicioConfiguracionEnvio;
+	@WireVariable("SEmpresa")
+	protected SEmpresa servicioEmpresa;
 	@WireVariable("SGrupo")
 	protected SGrupo servicioGrupo;
 	@WireVariable("SItemDegustacionPlanillaEvento")
@@ -193,6 +202,16 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 
 	public Usuario usuarioSesion(String valor) {
 		return servicioUsuario.buscar(valor);
+	}
+
+	public void notificarInactivacion(String titulo, String valor) {
+		List<Configuracion> grupos = servicioConfiguracion.buscarTipo(valor);
+		System.out.println(titulo);
+		String destinatario = "";
+		if (!grupos.isEmpty()) {
+			destinatario = grupos.get(0).getCorreo();
+		}
+		enviarEmailNotificacion(destinatario, titulo);
 	}
 
 	/* Metodo que permite enviar un correo electronico a cualquier destinatario */
@@ -446,5 +465,14 @@ public abstract class CGenerico extends SelectorComposer<Component> {
 		calendario.setTime(fecha);
 		calendario.add(Calendar.DAY_OF_YEAR, -1);
 		return fecha = calendario.getTime();
+	}
+
+	public void validarBotonEnviar(ConfiguracionEnvio objeto, Botonera botonera2) {
+		Calendar calendario = Calendar.getInstance();
+		calendario.setTime(new Date());
+		if (calendario.get(Calendar.DAY_OF_MONTH) < objeto.getDesde()
+				|| calendario.get(Calendar.DAY_OF_MONTH) > objeto.getHasta())
+			((Button) botonera2.getChildren().get(8)).setDisabled(true);
+
 	}
 }

@@ -15,6 +15,7 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Messagebox;
+import org.zkoss.zul.Radio;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
@@ -33,6 +34,10 @@ public class CSku extends CGenerico {
 	private Textbox txtDescripcionSku;
 	@Wire
 	private Textbox txtCodigoMarca;
+	@Wire
+	private Radio rdoNo;
+	@Wire
+	private Radio rdoSi;
 	@Wire
 	private Div botoneraSku;
 	@Wire
@@ -63,6 +68,8 @@ public class CSku extends CGenerico {
 				txtCodigoMarca.setValue("");
 				txtCodigoSku.setValue("");
 				txtDescripcionSku.setValue("");
+				rdoSi.setChecked(false);
+				rdoNo.setChecked(false);
 				id = "";
 			}
 
@@ -72,11 +79,19 @@ public class CSku extends CGenerico {
 					String descripcion = txtDescripcionSku.getValue();
 					String codigo = txtCodigoSku.getValue();
 					Marca marca = servicioMarca.buscar(idMarca);
+					Boolean estado = false;
+					if (rdoSi.isChecked())
+						estado = true;
 					Sku sku = new Sku(codigo, marca, descripcion, fechaHora,
-							horaAuditoria, nombreUsuarioSesion());
+							horaAuditoria, nombreUsuarioSesion(), estado);
 					servicioSku.guardar(sku);
 					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
+					if (!estado) {
+						notificarInactivacion(
+								"Los siguientes SKU han sido inactivados: "
+										+ descripcion, valor);
+					}
 				}
 			}
 
@@ -144,7 +159,8 @@ public class CSku extends CGenerico {
 	protected boolean validar() {
 		if (txtCodigoMarca.getText().compareTo("") == 0
 				|| txtCodigoSku.getText().compareTo("") == 0
-				|| txtDescripcionSku.getText().compareTo("") == 0) {
+				|| txtDescripcionSku.getText().compareTo("") == 0
+				|| (!rdoSi.isChecked() && !rdoNo.isChecked())) {
 			msj.mensajeError(Mensaje.camposVacios);
 			return false;
 		} else
@@ -154,7 +170,7 @@ public class CSku extends CGenerico {
 	public void buscarCatalogoPropio() {
 		final List<Sku> listSku = servicioSku.buscarTodosOrdenados();
 		catalogo = new Catalogo<Sku>(DivCatalogoSku, "Catalogo de Sku",
-				listSku, true, "Id", "Descripcion", "Marca") {
+				listSku, true, "Id", "Descripcion", "Marca", "Estado") {
 
 			@Override
 			protected List<Sku> buscar(List<String> valores) {
@@ -162,12 +178,18 @@ public class CSku extends CGenerico {
 				List<Sku> lista = new ArrayList<Sku>();
 
 				for (Sku sku : listSku) {
+					String estado = "Activo";
+					if (sku.getEstado() != null)
+						if (!sku.getEstado())
+							estado = "Inactivo";
 					if (sku.getIdSku().toLowerCase()
 							.contains(valores.get(0).toLowerCase())
 							&& sku.getDescripcion().toLowerCase()
 									.contains(valores.get(1).toLowerCase())
 							&& sku.getMarca().getDescripcion().toLowerCase()
-									.contains(valores.get(2).toLowerCase())) {
+									.contains(valores.get(2).toLowerCase())
+							&& estado.toLowerCase().contains(
+									valores.get(3).toLowerCase())) {
 						lista.add(sku);
 					}
 				}
@@ -176,10 +198,15 @@ public class CSku extends CGenerico {
 
 			@Override
 			protected String[] crearRegistros(Sku sku) {
-				String[] registros = new String[3];
+				String estado = "Activo";
+				if (sku.getEstado() != null)
+					if (!sku.getEstado())
+						estado = "Inactivo";
+				String[] registros = new String[4];
 				registros[0] = sku.getIdSku();
 				registros[1] = sku.getDescripcion();
 				registros[2] = sku.getMarca().getDescripcion();
+				registros[3] = estado;
 				return registros;
 			}
 		};
@@ -260,6 +287,15 @@ public class CSku extends CGenerico {
 	public void llenarCamposPropios(Sku sku) {
 		txtCodigoSku.setValue(sku.getIdSku());
 		txtDescripcionSku.setValue(sku.getDescripcion());
+		if (sku.getEstado() != null)
+			if (sku.getEstado())
+				rdoSi.setChecked(true);
+			else
+				rdoNo.setChecked(true);
+		else {
+			rdoSi.setChecked(false);
+			rdoNo.setChecked(false);
+		}
 		txtCodigoMarca.setValue(sku.getMarca().getDescripcion());
 		idMarca = sku.getMarca().getIdMarca();
 		id = sku.getIdSku();

@@ -31,11 +31,34 @@
 							multiline="true" class="multilinea" tooltiptext="Ingrese el Nombre de la Marca" />
 						<hbox />
 					</row>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Empresa:" />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtNombreEmpresa" hflex="1" maxlength="250"
+							tooltiptext="Ingrese el Nombre o Seleccione del Catalogo la Empresa de la Marca" />
+						<button id="btnBuscarEmpresas" label="" tooltiptext="Catalogo Empresas"
+							image="/public/imagenes/botones/buscar.png" />
+					</row>
+					<row>
+						<hbox>
+							<label value="Estado:" class="etiqueta" />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<radiogroup id="rdgEstatus">
+							<radio label="Activo" value="Activo" id="rdoSi" />
+							<radio label="Inactivo" value="Inactivo" id="rdoNo" />
+						</radiogroup>
+					</row>
 				</rows>
 			</grid>
 			<separator />
 			<div id="botoneraMarca" />
 			<div id="DivCatalogoMarca" />
+			<div id="divCatalogoEmpresa" />
 		</div>
 	</window>
 </zk>

@@ -1,7 +1,7 @@
 <zk>
 	<window width="75em" closable="false" id="wdwNotaCredito"
 		apply="controlador.transacciones.notas.CNotaCredito" position="center,top">
-		<caption label="Formato de Notas de Credito"
+		<caption label="Solicitud de Notas de Credito"
 			style="color:white; font-size: 16px; font-weight:bold; " />
 		<div>
 			<separator />
@@ -23,18 +23,18 @@
 							<rows>
 								<row>
 									<hbox>
-										<label class="etiqueta" value="Aliado: " />
+										<label class="etiqueta" value="Cliente: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
 									<textbox id="txtAliado" hflex="1" maxlength="50"
-										tooltiptext="Ingrese el Codigo o Seleccione del Catalogo el Aliado" />
-									<button id="btnBuscarAliado" label="" tooltiptext="Catalogo Aliados"
+										tooltiptext="Ingrese el Codigo o Seleccione del Catalogo el Cliente" />
+									<button id="btnBuscarAliado" label="" tooltiptext="Catalogo Cliente"
 										image="/public/imagenes/botones/buscar.png" />
 									<hbox />
 								</row>
 								<row>
-									<label class="etiqueta" value="Nombre Aliado: " />
+									<label class="etiqueta" value="Nombre Cliente: " />
 									<label id="lblNombre" />
 									<label class="etiqueta" value="Zona: " />
 									<label id="lblZona" />
@@ -98,13 +98,14 @@
 									</hbox>
 									<textbox width="100%" multiline="true" class="multilinea"
 										id="txtDescripcion" maxlength="500" tooltiptext="Ingrese la Descripcion" />
-									<hbox>
+									<hbox visible="false">
 										<label class="etiqueta" value="Cantidad de Botellas: " />
 										<space />
 										<label value="*" style="font-weight:bold;color:red" />
 									</hbox>
-									<spinner id="spnCantidad" value="0" constraint="min 0 max 1000000"
-										tooltiptext="Ingrese la cantidad de Botellas" step="1" width="98%" />
+									<spinner visible="false" id="spnCantidad" value="0"
+										constraint="min 0 max 1000000" tooltiptext="Ingrese la cantidad de Botellas"
+										step="1" width="98%" />
 								</row>
 								<row>
 									<hbox>
@@ -117,7 +118,7 @@
 										step="1.0" format="#.##" width="98%" />
 									<hbox>
 										<hbox>
-											<label class="etiqueta" value="ID Ref.: " />
+											<label class="etiqueta" value="# Referencia: " />
 											<space />
 											<label value="*" style="font-weight:bold;color:red" />
 										</hbox>
@@ -136,22 +137,19 @@
 								<listbox id="ltbLista" mold="paging" rows="6" pageSize="10"
 									span="true" width="100%">
 									<listhead>
-										<listheader label="Id Ref." hflex="min" />
+										<listheader label="# Referencia" hflex="min" />
 										<listheader label="Marca" hflex="min" />
 										<listheader label="Tipo Actividad" hflex="min" />
 										<listheader label="Descripcion" hflex="min" />
-										<listheader label="Botellas" hflex="min" />
-										<listheader label="Costo" hflex="min" />
+										<listheader label="Total Importe" hflex="min" />
 										<listheader label="Estado" hflex="min" />
 									</listhead>
 									<template name="model">
 										<listitem>
-											<listcell
-												label="${each.idReferencia}" />
+											<listcell label="${each.idReferencia}" />
 											<listcell label="${each.marca.descripcion}" />
 											<listcell label="${each.tipoActividad}" />
 											<listcell label="${each.descripcion}" />
-											<listcell label="${each.botellas}" />
 											<listcell label="${each.costo}" />
 											<listcell label="${each.estado}" />
 										</listitem>
