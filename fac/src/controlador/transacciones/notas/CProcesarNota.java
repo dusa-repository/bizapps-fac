@@ -3,9 +3,12 @@ package controlador.transacciones.notas;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import modelo.generico.PlanillaGenerica;
 import modelo.maestros.Aliado;
+import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.maestros.Zona;
 import modelo.seguridad.Arbol;
@@ -14,20 +17,30 @@ import modelo.transacciones.notas.DetalleNotaCredito;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
+import org.zkoss.zul.Filedownload;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Listcell;
+import org.zkoss.zul.Listhead;
+import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Longbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
+import org.zkoss.zul.impl.LabelElement;
 
+import servicio.transacciones.notas.SDetalleNotaCredito;
+import componente.Catalogo;
 import componente.Mensaje;
 import componente.Validador;
 import controlador.maestros.CGenerico;
@@ -62,10 +75,14 @@ public class CProcesarNota extends CGenerico {
 	private Button btnCertificar;
 	@Wire
 	private Button btnRechazar;
+	@Wire
+	private Label lblFooter;
 	List<DetalleNotaCredito> listaGeneral = new ArrayList<DetalleNotaCredito>();
 	ListModelList<Marca> marcas;
 	ListModelList<Aliado> aliados;
 	ListModelList<Zona> zonas;
+	boolean certificadas = false;
+	boolean reporte = false;
 
 	@Override
 	public void inicializar() throws IOException {
@@ -80,8 +97,10 @@ public class CProcesarNota extends CGenerico {
 				arbol = servicioArbol.buscar(Long.parseLong(nombre));
 				if (arbol.getNombre().equals("Aprobar NC"))
 					btnAprobar.setVisible(true);
-				if (arbol.getNombre().equals("Certificar NC"))
+				if (arbol.getNombre().equals("Certificar NC")) {
+					certificadas = true;
 					btnCertificar.setVisible(true);
+				}
 				if (arbol.getNombre().equals("Rechazar NC"))
 					btnRechazar.setVisible(true);
 			}
@@ -127,6 +146,25 @@ public class CProcesarNota extends CGenerico {
 		cerrarVentana(wdwProcesar);
 	}
 
+	@Listen("onClick= #btnVer")
+	public void ver() {
+		List<DetalleNotaCredito> procesadas = obtenerSeleccionados();
+		if (validarSeleccion(procesadas)) {
+			if (procesadas.size() == 1) {
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("id", procesadas.get(0).getId().getNotaCredito()
+						.getIdNotaCredito());
+				Sessions.getCurrent().setAttribute("consulta", map);
+				Window window = (Window) Executions.createComponents(
+						"/vistas/transacciones/notas/VNotaCredito.zul", null,
+						map);
+				window.doModal();
+			} else
+				msj.mensajeAlerta(Mensaje.editarSoloUno);
+
+		}
+	}
+
 	@Listen("onClick= #btnAprobar, #btnCertificar, #btnRechazar")
 	public void procesar(Event evento) {
 		final List<DetalleNotaCredito> procesadas = obtenerSeleccionados();
@@ -157,14 +195,61 @@ public class CProcesarNota extends CGenerico {
 							public void onEvent(Event evt)
 									throws InterruptedException {
 								if (evt.getName().equals("onOK")) {
-									cambiarEstado(siguiente);
-									refresh();
+									if (siguiente.equals("Rechazada"))
+										abrirVentanaRechazo(siguiente,
+												procesadas);
+									else {
+										if (siguiente.equals("Aprobada"))
+											verificarSaldo(siguiente,
+													procesadas);
+										else
+											cambiarEstado(siguiente, procesadas);
+									}
+
 								}
 							}
 						});
 			}
 		}
 
+	}
+
+	protected void verificarSaldo(String estado,
+			List<DetalleNotaCredito> procesadas) {
+		List<DetalleNotaCredito> reales = new ArrayList<DetalleNotaCredito>();
+		String zonas = "";
+		for (int w = 0; w < procesadas.size(); w++) {
+			DetalleNotaCredito detalle = procesadas.get(w);
+			if (detalle.getId().getNotaCredito().getAliado().getZona() != null) {
+				Zona zona = detalle.getId().getNotaCredito().getAliado()
+						.getZona();
+				if (zona.getSaldo() != null) {
+					if (zona.getSaldo() - detalle.getCosto() >= 0) {
+						zona.setConsumido(zona.getConsumido()
+								+ detalle.getCosto());
+						zona.setSaldo(zona.getSaldo() - detalle.getCosto());
+						servicioZona.guardar(zona);
+						reales.add(detalle);
+					} else
+						zonas += zona.getDescripcion() + ". ";
+				} else
+					zonas += zona.getDescripcion() + ". ";
+			}
+		}
+		if (reales.isEmpty())
+			msj.mensajeAlerta("Las solicitudes no pudieron ser aprobadas, ya que las siguientes zonas no cuentan con saldo disponible: "
+					+ zonas);
+		else {
+			if (zonas.equals(""))
+				cambiarEstado(estado, reales);
+			else {
+				msj.mensajeAlerta("Algunas solicitudes no pudieron ser aprobadas, ya que las siguientes zonas no cuentan con saldo disponible: "
+						+ zonas
+						+ "El resto de las mismas fueron aprobadas correctamente");
+				cambiarEstado(estado, reales);
+			}
+
+		}
 	}
 
 	private List<DetalleNotaCredito> obtenerSeleccionados() {
@@ -182,28 +267,23 @@ public class CProcesarNota extends CGenerico {
 			return null;
 	}
 
-	protected void cambiarEstado(String siguiente) {
+	protected void cambiarEstado(String siguiente,
+			List<DetalleNotaCredito> procesadas) {
 		List<DetalleNotaCredito> listaEditar = new ArrayList<DetalleNotaCredito>();
-		for (int i = 0; i < ltbLista.getItemCount(); i++) {
-			Listitem listItem = ltbLista.getItemAtIndex(i);
-			DetalleNotaCredito detalle = listItem.getValue();
-			if (listItem.isSelected()) {
-				Textbox text = (Textbox) listItem.getChildren().get(7)
-						.getChildren().get(0);
-				String observacion = text.getValue();
-				detalle.setEstado(siguiente);
-				detalle.setObservacion(observacion);
-				detalle.setFechaAuditoria(fechaHora);
-				detalle.setHoraAuditoria(horaAuditoria);
-				detalle.setUsuarioAuditoria(nombreUsuarioSesion());
-				if (siguiente.equals("Aprobada"))
-					detalle.setFechaAprobacion(fechaHora);
-				if (siguiente.equals("Certificada"))
-					detalle.setFechaConfirmacion(fechaHora);
-				listaEditar.add(detalle);
-			}
+		for (int i = 0; i < procesadas.size(); i++) {
+			DetalleNotaCredito detalle = procesadas.get(i);
+			detalle.setEstado(siguiente);
+			detalle.setFechaAuditoria(fechaHora);
+			detalle.setHoraAuditoria(horaAuditoria);
+			detalle.setUsuarioAuditoria(nombreUsuarioSesion());
+			if (siguiente.equals("Aprobada"))
+				detalle.setFechaAprobacion(fechaHora);
+			if (siguiente.equals("Certificada"))
+				detalle.setFechaConfirmacion(fechaHora);
+			listaEditar.add(detalle);
 		}
 		servicioDetalleCredito.guardarVarios(listaEditar);
+		refresh();
 	}
 
 	private boolean validarEstatus(List<DetalleNotaCredito> procesadas,
@@ -211,6 +291,7 @@ public class CProcesarNota extends CGenerico {
 		int contadorAprobada = 0, contadorPendiente = 0, contadorCetificada = 0;
 		boolean error = false;
 		boolean errorTrans = false;
+		boolean errorEdicion = false;
 		for (int i = 0; i < procesadas.size(); i++) {
 			if (procesadas.get(i).getEstado().equals("Enviada"))
 				contadorPendiente++;
@@ -222,6 +303,8 @@ public class CProcesarNota extends CGenerico {
 				error = true;
 			if (procesadas.get(i).getEstado().equals("Transferida"))
 				errorTrans = true;
+			if (procesadas.get(i).getEstado().equals("En Edicion"))
+				errorEdicion = true;
 		}
 		if (error) {
 			msj.mensajeAlerta(Mensaje.estadoIncorrectoRechazada);
@@ -229,6 +312,10 @@ public class CProcesarNota extends CGenerico {
 		}
 		if (errorTrans) {
 			msj.mensajeAlerta("No puede cambiar de estado las solicitudes transferidas, verifique su seleccion");
+			return false;
+		}
+		if (errorEdicion) {
+			msj.mensajeAlerta("No puede cambiar de estado las solicitudes en edicion, verifique su seleccion");
 			return false;
 		}
 		switch (estatus) {
@@ -271,6 +358,9 @@ public class CProcesarNota extends CGenerico {
 
 	@Listen("onClick = #btnRefrescar")
 	public void refresh() {
+		String tipo = "%";
+		if (!certificadas)
+			tipo = valor;
 		Date desde = new Date();
 		if (dtbDesde.getValue() != null)
 			desde = dtbDesde.getValue();
@@ -301,17 +391,122 @@ public class CProcesarNota extends CGenerico {
 		if (codigo == 0)
 			listaGeneral = servicioDetalleCredito
 					.buscarLikeCodigoMarcaCodigoAliadoCodigoZonaYTipoYFechasEntre(
-							codigoMarca, codigoAliado, codigoZona, valor,
-							desde, hasta, estado);
+							codigoMarca, codigoAliado, codigoZona, tipo, desde,
+							hasta, estado, reporte);
 		else
 			listaGeneral = servicioDetalleCredito
 					.buscarLikeCodigoMarcaCodigoAliadoCodigoZonaYCodigoNotaYTipoYFechasEntre(
 							codigoMarca, codigoAliado, codigoZona, codigo,
-							valor, desde, hasta, estado);
+							tipo, desde, hasta, estado, reporte);
 		ltbLista.setModel(new ListModelList<DetalleNotaCredito>(listaGeneral));
 		ltbLista.setMultiple(false);
 		ltbLista.setMultiple(true);
 		ltbLista.setCheckmark(false);
 		ltbLista.setCheckmark(true);
 	}
+
+	@Listen("onSelect = #ltbLista")
+	public void actualizarCosto() {
+		if (ltbLista != null)
+			if (ltbLista.getItemCount() != 0) {
+				Double costo = (double) 0;
+				for (int i = 0; i < ltbLista.getItemCount(); i++) {
+					Listitem listItem = ltbLista.getItemAtIndex(i);
+					if (listItem.isSelected()) {
+						Listcell celda = (Listcell) listItem.getChildren().get(
+								8);
+						costo = costo + Double.valueOf(celda.getLabel());
+					}
+				}
+				lblFooter.setValue(String.valueOf(costo));
+			}
+	}
+
+	// Ventana de Rechazo
+	protected void abrirVentanaRechazo(String siguiente,
+			List<DetalleNotaCredito> procesadas) {
+		HashMap<String, Object> mapaRechazo = new HashMap<String, Object>();
+		mapaRechazo.put("estado", siguiente);
+		mapaRechazo.put("listaGeneral", listaGeneral);
+		mapaRechazo.put("procesadas", procesadas);
+		mapaRechazo.put("dtbDesde", dtbDesde);
+		mapaRechazo.put("dtbHasta", dtbHasta);
+		mapaRechazo.put("ltbLista", ltbLista);
+		mapaRechazo.put("cmbEstado", cmbEstado);
+		mapaRechazo.put("cmbAliado", cmbAliado);
+		mapaRechazo.put("cmbMarca", cmbMarca);
+		mapaRechazo.put("cmbZona", cmbZona);
+		mapaRechazo.put("txtCodigo", txtCodigo);
+		mapaRechazo.put("certificadas", certificadas);
+		mapaRechazo.put("reporte", reporte);
+		Sessions.getCurrent().setAttribute("rechazado", mapaRechazo);
+		Window window = (Window) Executions.createComponents(
+				"/vistas/transacciones/notas/VRechazoNota.zul", wdwProcesar,
+				mapaRechazo);
+		window.doModal();
+	}
+
+	public void recibirParametros(String estado,
+			List<DetalleNotaCredito> listaRechazada, Datebox dtbDesde2,
+			Datebox dtbHasta2, Listbox ltbLista2, Combobox cmbEstado2,
+			Combobox cmbAliado2, Combobox cmbMarca2, Combobox cmbZona2,
+			Longbox txtCodigo2, SDetalleNotaCredito servicioDetalleCredito2,
+			List<DetalleNotaCredito> listaGeneral2, boolean certificadas2,
+			boolean reporte2) {
+		dtbDesde = dtbDesde2;
+		dtbHasta = dtbHasta2;
+		ltbLista = ltbLista2;
+		cmbEstado = cmbEstado2;
+		cmbAliado = cmbAliado2;
+		cmbMarca = cmbMarca2;
+		cmbZona = cmbZona2;
+		txtCodigo = txtCodigo2;
+		listaGeneral = listaGeneral2;
+		servicioDetalleCredito = servicioDetalleCredito2;
+		certificadas = certificadas2;
+		reporte = reporte2;
+		cambiarEstado(estado, listaRechazada);
+	}
+
+	@Listen("onClick = #btnReporte")
+	public void reporte() {
+		if (ltbLista.getItemCount() != 0) {
+			reporte = true;
+			refresh();
+			ltbLista.renderAll();
+			String s = ";";
+			final StringBuffer sb = new StringBuffer();
+
+			for (Object head : ltbLista.getHeads()) {
+				String h = "";
+				if (head instanceof Listhead) {
+					for (Object header : ((Listhead) head).getChildren()) {
+						h += ((Listheader) header).getLabel() + s;
+					}
+					sb.append(h + "\n");
+				}
+			}
+			for (Object item : ltbLista.getItems()) {
+				String i = "";
+				for (Object cell : ((Listitem) item).getChildren()) {
+					i += ((Listcell) cell).getLabel() + s;
+				}
+				sb.append(i + "\n");
+			}
+			Messagebox.show(Mensaje.exportar, "Alerta", Messagebox.OK
+					| Messagebox.CANCEL, Messagebox.QUESTION,
+					new org.zkoss.zk.ui.event.EventListener<Event>() {
+						public void onEvent(Event evt)
+								throws InterruptedException {
+							if (evt.getName().equals("onOK")) {
+								Filedownload.save(sb.toString().getBytes(),
+										"text/plain", "datos.csv");
+							}
+						}
+					});
+			reporte = false;
+		} else
+			msj.mensajeAlerta(Mensaje.noHayRegistros);
+	}
+
 }

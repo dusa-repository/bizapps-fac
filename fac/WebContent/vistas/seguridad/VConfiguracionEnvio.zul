@@ -1,0 +1,53 @@
+<zk>
+	<window width="30em" closable="false" id="wdwConfiguracionEnvio"
+		apply="controlador.seguridad.CConfiguracionEnvio">
+		<caption label="Configuracion de Portal TradeMarketing/Marca"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div>
+			<grid>
+				<columns visible="false">
+					<column label="" width="25%" />
+					<column label="" width="25%" />
+					<column label="" width="25%" />
+					<column label="" width="25%" />
+				</columns>
+				<rows>
+					<row>
+						<cell colspan="2">
+							<hbox>
+								<label value="Estado del Boton de envio de NC:" class="etiqueta" />
+								<space />
+								<label value="*" style="font-weight:bold;color:red" />
+							</hbox>
+						</cell>
+						<cell colspan="2">
+							<radiogroup id="rdgEstatus">
+								<radio label="Activo" value="Activo" id="rdoSi" />
+								<radio label="Inactivo" value="Inactivo" id="rdoNo" />
+							</radiogroup>
+						</cell>
+
+					</row>
+					<row>
+						<hbox>
+							<label value="Dia Inicio:" class="etiqueta" />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<intbox id="txtDesde" hflex="1" value="1"
+							tooltiptext="Ingrese el dia de inicio en el que el boton estara activo" />
+						<hbox>
+							<label value="Dia Final:" class="etiqueta" />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<intbox id="txtHasta" hflex="1" value="10"
+							tooltiptext="Ingrese el dia final en el que el boton estara activo" />
+
+					</row>
+				</rows>
+			</grid>
+			<div id="botoneraConfiguracionEnvio" />
+		</div>
+	</window>
+</zk>

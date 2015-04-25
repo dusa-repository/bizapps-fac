@@ -3,25 +3,34 @@ package controlador.transacciones.notas;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import modelo.generico.PlanillaGenerica;
 import modelo.maestros.Aliado;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
+import modelo.maestros.Zona;
 import modelo.pk.ConfiguracionMarcaId;
 import modelo.pk.CostoNotaCreditoId;
 import modelo.pk.DetalleNotaCreditoId;
+import modelo.seguridad.ConfiguracionEnvio;
 import modelo.seguridad.Usuario;
+import modelo.transacciones.PlanillaEvento;
 import modelo.transacciones.notas.ConfiguracionMarca;
 import modelo.transacciones.notas.CostoNotaCredito;
 import modelo.transacciones.notas.DetalleNotaCredito;
 import modelo.transacciones.notas.NotaCredito;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
@@ -112,9 +121,15 @@ public class CNotaCredito extends CGenerico {
 	boolean editar = true;
 	private Long id = null;
 	private Long idAliado = null;
+	private Zona zonaFiltro = null;
 
 	@Override
 	public void inicializar() throws IOException {
+		Authentication authe = SecurityContextHolder.getContext()
+				.getAuthentication();
+		Usuario u = servicioUsuario.buscarUsuarioPorNombre(authe.getName());
+		if (u.getZona() != null)
+			zonaFiltro = u.getZona();
 		txtAliado.setFocus(true);
 		List<F0005> udc = new ArrayList<F0005>();
 		if (valor.equals("Marca"))
@@ -154,7 +169,7 @@ public class CNotaCredito extends CGenerico {
 			@Override
 			public void guardar() {
 				if (validar()) {
-					guardarDatos("Pendiente");
+					guardarDatos("En Edicion");
 					msj.mensajeInformacion(Mensaje.guardado);
 					limpiar();
 					salir();
@@ -164,10 +179,12 @@ public class CNotaCredito extends CGenerico {
 			@Override
 			public void enviar() {
 				if (validar()) {
-					guardarDatos("Enviada");
-					msj.mensajeInformacion(Mensaje.guardado);
-					limpiar();
-					salir();
+					if (validarMarcasActivas()) {
+						guardarDatos("Enviada");
+						msj.mensajeInformacion(Mensaje.guardado);
+						limpiar();
+						salir();
+					}
 				}
 			}
 
@@ -228,6 +245,47 @@ public class CNotaCredito extends CGenerico {
 			}
 		};
 		botoneraNota.appendChild(botonera);
+		ConfiguracionEnvio objeto = servicioConfiguracionEnvio.buscar((long) 1);
+		if (objeto != null)
+			if (objeto.getEstado())
+				validarBotonEnviar(objeto, botonera);
+
+		HashMap<String, Object> map = (HashMap<String, Object>) Sessions
+				.getCurrent().getAttribute("consulta");
+		if (map != null) {
+			if (map.get("id") != null) {
+				NotaCredito nota = servicioNotaCredito.buscar((Long) map
+						.get("id"));
+				llenarCamposPropios(nota);
+				botonera.getChildren().get(0).setVisible(false);
+				botonera.getChildren().get(1).setVisible(false);
+				botonera.getChildren().get(2).setVisible(false);
+				botonera.getChildren().get(3).setVisible(false);
+				botonera.getChildren().get(7).setVisible(false);
+				botonera.getChildren().get(8).setVisible(false);
+				map.clear();
+				map = null;
+			}
+		}
+	}
+
+	protected boolean validarMarcasActivas() {
+		String marcas = "";
+		for (int i = 0; i < listaDetalle.size(); i++) {
+			if (listaDetalle.get(i).getMarca().getEstado() != null)
+				if (!listaDetalle.get(i).getMarca().getEstado()) {
+					marcas += listaDetalle.get(i).getMarca().getDescripcion()
+							+ ". ";
+				}
+
+		}
+		if (marcas.equals(""))
+			return true;
+		else {
+			msj.mensajeAlerta("La solicitud no pudo ser enviada, porque las siguientes marcas se encuentran inactivas: "
+					+ marcas + "Por favor contacte al administrador");
+			return false;
+		}
 	}
 
 	private void mostrarCatalogoPote() {
@@ -499,7 +557,10 @@ public class CNotaCredito extends CGenerico {
 
 	@Listen("onClick = #btnBuscarAliado")
 	public void buscarCatalogoAjeno() {
-		final List<Aliado> listZona = servicioAliado.buscarTodosOrdenados();
+		List<Aliado> aliados = new ArrayList<Aliado>();
+		if (zonaFiltro != null)
+			aliados = servicioAliado.buscarPorZona(zonaFiltro);
+		final List<Aliado> listZona = aliados;
 		catalogoAliado = new Catalogo<Aliado>(divCatalogoAliado,
 				"Catalogo de Aliados", listZona, true, "Codigo", "Nombre",
 				"Zona") {
@@ -593,7 +654,7 @@ public class CNotaCredito extends CGenerico {
 		llenarCamposAjenos(nota.getAliado());
 		txtCosto.setValue(nota.getCosto());
 		dtbFecha.setValue(nota.getFechaNota());
-		if (!nota.getEstado().contains("Pendiente")) {
+		if (!nota.getEstado().contains("En Edicion")) {
 			botonera.getChildren().get(0).setVisible(false);
 			botonera.getChildren().get(3).setVisible(false);
 			botonera.getChildren().get(8).setVisible(false);
@@ -642,7 +703,7 @@ public class CNotaCredito extends CGenerico {
 			DetalleNotaCredito objeto = new DetalleNotaCredito(null, marca,
 					cmbActividad.getValue(), txtDescripcion.getValue(),
 					spnCantidad.getValue(), spnCostoLinea.getValue(),
-					"Pendiente", "", fechaHora, null, null, fechaHora,
+					"En Edicion", "", fechaHora, null, null, fechaHora,
 					horaAuditoria, nombreUsuarioSesion(), null,
 					txtRef.getValue());
 			listaDetalle.add(objeto);

@@ -1,0 +1,94 @@
+<zk>
+	<window width="70em" closable="false" id="wdwDesactivar"
+		apply="controlador.maestros.CDesactivar">
+		<caption label="Activar/Desactivar Marca o Sku"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div>
+			<separator />
+			<tabbox height="auto" orient="horizontal">
+				<tabs id="tbsConsulta" width="auto">
+					<tab label="Marca" id="tabMarca" />
+					<tab label="Sku" id="tabSku" />
+				</tabs>
+				<tabpanels>
+					<tabpanel>
+						<hbox width="100%" widths="35%,5%,60%">
+							<listbox mold="paging" pageSize="10" id="ltbMarcas" rows="10"
+								width="100%" emptyMessage="No hay Marcas Registradas">
+								<listhead>
+									<listheader label="ID" width="30%" />
+									<listheader label="Marcas Activas" width="70%" />
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell label="${each.idMarca}" />
+										<listcell label="${each.descripcion}" />
+									</listitem>
+								</template>
+							</listbox>
+							<vbox width="100%">
+								<button id="pasar1Marca" image="/public/imagenes/botones/adelante.png"
+									tooltiptext="Agregar Marca" width="33px" />
+								<separator />
+								<button id="pasar2Marca" image="/public/imagenes/botones/atras.png"
+									tooltiptext="Quitar Marca" width="33px" />
+							</vbox>
+							<listbox mold="paging" pageSize="10" width="100%"
+								id="ltbMarcasInactivas" rows="10" emptyMessage="No ha Seleccionado ninguna Marca">
+								<listhead>
+									<listheader label="ID" width="30%" />
+									<listheader label="Marcas Inactivas" width="70%" />
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell label="${each.idMarca}" />
+										<listcell label="${each.descripcion}" />
+									</listitem>
+								</template>
+							</listbox>
+						</hbox>
+					</tabpanel>
+					<tabpanel>
+						<hbox width="100%" widths="35%,5%,60%">
+							<listbox mold="paging" pageSize="10" id="ltbProductos"
+								rows="10" width="100%" emptyMessage="No hay Productos Registrados">
+								<listhead>
+									<listheader label="ID" width="30%" />
+									<listheader label="SKU Activos" width="70%" />
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell label="${each.idSku}" />
+										<listcell label="${each.descripcion}" />
+									</listitem>
+								</template>
+							</listbox>
+							<vbox width="100%">
+								<button id="pasar1Sku" image="/public/imagenes/botones/adelante.png"
+									tooltiptext="Agregar Producto" width="33px" />
+								<separator />
+								<button id="pasar2Sku" image="/public/imagenes/botones/atras.png"
+									tooltiptext="Quitar Producto" width="33px" />
+							</vbox>
+							<listbox mold="paging" pageSize="10" width="100%"
+								id="ltbProductosInactivos" rows="10"
+								emptyMessage="No ha Seleccionado ningun Producto">
+								<listhead>
+									<listheader label="ID" width="30%" />
+									<listheader label="SKU Inactivos" width="70%" />
+								</listhead>
+								<template name="model">
+									<listitem>
+										<listcell label="${each.idSku}" />
+										<listcell label="${each.descripcion}" />
+									</listitem>
+								</template>
+							</listbox>
+						</hbox>
+					</tabpanel>
+				</tabpanels>
+			</tabbox>
+			<div id="botoneraDesactivar" />
+		</div>
+	</window>
+</zk>

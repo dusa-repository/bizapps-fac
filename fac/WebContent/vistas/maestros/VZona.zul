@@ -31,6 +31,39 @@
 							multiline="true" class="multilinea" tooltiptext="Ingrese la descripcion de la Zona" />
 						<hbox />
 					</row>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Monto Original: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<doublespinner id="spnOriginal" value="0"
+							constraint="min 0 max 100000000" tooltiptext="Ingrese el Monto original"
+							step="1.0" format="#.##" width="98%" />
+						<hbox />
+
+					</row>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Monto Consumido: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<doublespinner id="spnConsumido" value="0"
+							constraint="min 0 max 100000000" tooltiptext="Ingrese el monto consumido"
+							step="1.0" format="#.##" width="98%" />
+						<hbox />
+					</row>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Saldo: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<doublebox value="0" id="txtSaldo" hflex="1"
+							tooltiptext="Saldo en la zona" readonly="true" />
+						<hbox />
+					</row>
 				</rows>
 			</grid>
 			<separator />

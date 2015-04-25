@@ -58,11 +58,17 @@ public class CCruds extends CGenerico {
 	@Wire
 	private Button btnConfiguracion;
 	@Wire
+	private Button btnConfiguracionEnvio;
+	@Wire
 	private Button btnConfigurarMarca;
 	@Wire
 	private Button btnFuncionalidad;
 	@Wire
 	private Button btnGrupo;
+	@Wire
+	private Button btnEmpresa;
+	@Wire
+	private Button btnActivarDesactivar;
 	@Wire
 	private Image imagenes;
 	@Wire
@@ -108,9 +114,12 @@ public class CCruds extends CGenerico {
 		botones.add(btnTiposUDC);
 		botones.add(btnUDC);
 		botones.add(btnGrupo);
+		botones.add(btnEmpresa);
 		botones.add(btnFuncionalidad);
 		botones.add(btnConfiguracion);
+		botones.add(btnConfiguracionEnvio);
 		botones.add(btnConfigurarMarca);
+		botones.add(btnActivarDesactivar);
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(

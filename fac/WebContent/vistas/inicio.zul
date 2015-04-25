@@ -95,7 +95,7 @@
 			<center border="none">
 				<div height="100%" width="100%" style="background:#500101">
 					<hbox style="border: none" align="center" pack="center"
-						height="95%" width="100%" widths="10%,60%,20%,10%">
+						height="95%" width="100%" widths="5%,65%,20%,10%">
 						<separator spacing="100%" />
 						<groupbox closable="false" width="100%" height="100%"
 							mold="3d">
@@ -152,8 +152,8 @@
 									<vbox pack="center">
 										<button id="btnInBox" class="btn" label="Inbox" orient="vertical"
 											visible="false" autodisable="self" />
-										<button id="btnProcesarNota" class="btn" label="Procesar N.C." orient="vertical"
-											visible="false" autodisable="self" />
+										<button id="btnProcesarNota" class="btn" label="Procesar N.C."
+											orient="vertical" visible="false" autodisable="self" />
 										<button id="btnCruds" class="btn" label="Admin" orient="vertical"
 											visible="false" autodisable="self" />
 										<zk if="${sec:isAnyGranted('Solicitante')}">

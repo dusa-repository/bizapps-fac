@@ -6,6 +6,7 @@ import interfacedao.transacciones.IItemEstimadoPlanillaEventoDAO;
 import interfacedao.transacciones.IItemPlanillaCataDAO;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import modelo.maestros.Marca;
@@ -17,6 +18,9 @@ import modelo.transacciones.PlanillaCata;
 import modelo.transacciones.PlanillaEvento;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 @Service("SSku")
@@ -30,6 +34,8 @@ public class SSku {
 	private IItemDegustacionPlanillaEventoDAO itemDegustacionPlanillaDAO;
 	@Autowired
 	private IItemEstimadoPlanillaEventoDAO itemEstimadoPlanillaDAO;
+	private Sort o = new Sort(new Order(Direction.ASC, "idSku"), new Order(
+			Direction.ASC, "descripcion"));
 
 	public void guardar(Sku sku) {
 		skuDAO.save(sku);
@@ -48,12 +54,13 @@ public class SSku {
 	}
 
 	public List<Sku> buscarDisponibles(PlanillaCata planilla) {
-		List<ItemPlanillaCata> itemPlanilla = itemPlanillaCataDAO.findByPlanillaCata(planilla);
+		List<ItemPlanillaCata> itemPlanilla = itemPlanillaCataDAO
+				.findByPlanillaCata(planilla);
 		List<String> ids = new ArrayList<String>();
-		if(itemPlanilla.isEmpty())
+		if (itemPlanilla.isEmpty())
 			return skuDAO.findAllOrderByDescripcion();
-		else{
-			for(int i=0; i<itemPlanilla.size();i++){
+		else {
+			for (int i = 0; i < itemPlanilla.size(); i++) {
 				ids.add(itemPlanilla.get(i).getSku().getIdSku());
 			}
 			return skuDAO.findByIdSkuNotIn(ids);
@@ -61,12 +68,13 @@ public class SSku {
 	}
 
 	public List<Sku> buscarDisponiblesDegustacion(PlanillaEvento planilla) {
-		List<ItemDegustacionPlanillaEvento> itemPlanilla = itemDegustacionPlanillaDAO.findByPlanillaEvento(planilla);
+		List<ItemDegustacionPlanillaEvento> itemPlanilla = itemDegustacionPlanillaDAO
+				.findByPlanillaEvento(planilla);
 		List<String> ids = new ArrayList<String>();
-		if(itemPlanilla.isEmpty())
+		if (itemPlanilla.isEmpty())
 			return skuDAO.findAllOrderByDescripcion();
-		else{
-			for(int i=0; i<itemPlanilla.size();i++){
+		else {
+			for (int i = 0; i < itemPlanilla.size(); i++) {
 				ids.add(itemPlanilla.get(i).getSku().getIdSku());
 			}
 			return skuDAO.findByIdSkuNotIn(ids);
@@ -75,12 +83,13 @@ public class SSku {
 
 	public List<Sku> buscarDisponiblesEstimacion(PlanillaEvento planilla) {
 		// TODO Auto-generated method stub
-		List<ItemEstimadoPlanillaEvento> itemPlanilla = itemEstimadoPlanillaDAO.findByPlanillaEvento(planilla);
+		List<ItemEstimadoPlanillaEvento> itemPlanilla = itemEstimadoPlanillaDAO
+				.findByPlanillaEvento(planilla);
 		List<String> ids = new ArrayList<String>();
-		if(itemPlanilla.isEmpty())
+		if (itemPlanilla.isEmpty())
 			return skuDAO.findAllOrderByDescripcion();
-		else{
-			for(int i=0; i<itemPlanilla.size();i++){
+		else {
+			for (int i = 0; i < itemPlanilla.size(); i++) {
 				ids.add(itemPlanilla.get(i).getSku().getIdSku());
 			}
 			return skuDAO.findByIdSkuNotIn(ids);
@@ -90,5 +99,13 @@ public class SSku {
 	public List<Sku> buscarPorMarca(Marca marca) {
 		// TODO Auto-generated method stub
 		return skuDAO.findByMarca(marca);
+	}
+
+	public List<Sku> buscarPorEstado(boolean b) {
+		return skuDAO.findByEstado(b, o);
+	}
+
+	public void guardarVarios(List<Sku> productos) {
+		skuDAO.save(productos);
 	}
 }

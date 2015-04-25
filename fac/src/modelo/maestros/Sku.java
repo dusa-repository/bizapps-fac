@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 import modelo.transacciones.ItemDegustacionPlanillaEvento;
 import modelo.transacciones.ItemEstimadoPlanillaEvento;
 import modelo.transacciones.ItemPlanillaCata;
@@ -43,6 +45,10 @@ public class Sku implements Serializable {
 	@Column(name = "usuario_auditoria", length = 50)
 	private String usuarioAuditoria;
 	
+	@Column(name = "estado")
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private Boolean estado;
+	
 	@OneToMany(mappedBy="sku")
 	private Set<ItemEstimadoPlanillaEvento> itemsEstimados;
 	
@@ -59,7 +65,7 @@ public class Sku implements Serializable {
 
 	public Sku(String idSku, Marca marca, String descripcion,
 			Timestamp fechaAuditoria, String horaAuditoria,
-			String usuarioAuditoria) {
+			String usuarioAuditoria, Boolean estado) {
 		super();
 		this.idSku = idSku;
 		this.marca = marca;
@@ -67,6 +73,7 @@ public class Sku implements Serializable {
 		this.fechaAuditoria = fechaAuditoria;
 		this.horaAuditoria = horaAuditoria;
 		this.usuarioAuditoria = usuarioAuditoria;
+		this.estado = estado;
 	}
 
 	public String getIdSku() {
@@ -141,6 +148,13 @@ public class Sku implements Serializable {
 	public void setItemsCatas(Set<ItemPlanillaCata> itemsCatas) {
 		this.itemsCatas = itemsCatas;
 	}
-	
+
+	public Boolean getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Boolean estado) {
+		this.estado = estado;
+	}
 	
 }

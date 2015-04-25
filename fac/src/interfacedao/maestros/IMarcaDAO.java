@@ -17,4 +17,8 @@ public interface IMarcaDAO extends JpaRepository<Marca, String> {
 	List<Marca> findByItems(Sku sku);
 
 	List<Marca> findByIdMarcaNotIn(List<String> ids, Sort o);
+
+	List<Marca> findByEmpresaIdEmpresa(Long id);
+
+	List<Marca> findByEstado(boolean b, Sort o);
 }

@@ -1,0 +1,41 @@
+<zk>
+	<window width="40em" closable="false" id="wdwEmpresa"
+		apply="controlador.maestros.CEmpresa">
+		<caption label="Empresa"
+			style="color:white; font-size: 16px; font-weight:bold; " />
+		<div>
+			<grid width="100%">
+				<columns visible="false">
+					<column label="" width="25%" />
+					<column label="" width="45%" />
+					<column label="" width="30%" />
+				</columns>
+				<rows>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Nombre:" />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtNombre" hflex="1" maxlength="250"
+							tooltiptext="Ingrese el Nombre de la Empresa" />
+						<hbox />
+					</row>
+					<row>
+						<hbox>
+							<label class="etiqueta" value="Descripcion: " />
+							<space />
+							<label value="*" style="font-weight:bold;color:red" />
+						</hbox>
+						<textbox id="txtDescripcion" hflex="1" maxlength="500"
+							multiline="true" class="multilinea" tooltiptext="Ingrese la Descripcion de la Empresa" />
+						<hbox />
+					</row>
+				</rows>
+			</grid>
+			<separator />
+			<div id="botoneraEmpresa" />
+			<div id="divCatalogoEmpresa" />
+		</div>
+	</window>
+</zk>
