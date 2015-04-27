@@ -146,7 +146,7 @@ public class CInicio extends CGenerico {
 			}
 		}
 		final List<Button> botones = new ArrayList<Button>();
-		botones.add(btnUniforme);
+		botones.add(btnEvento);
 		botones.add(btnUniforme);
 		botones.add(btnPromocion);
 		botones.add(btnCataInduccion);
