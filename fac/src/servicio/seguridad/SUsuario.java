@@ -4,7 +4,6 @@ import interfacedao.seguridad.IGrupoDAO;
 import interfacedao.seguridad.IUsuarioDAO;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import modelo.maestros.Zona;

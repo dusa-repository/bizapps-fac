@@ -1,13 +1,13 @@
 package servicio.transacciones.notas;
 
+import interfacedao.maestros.IMarcaDAO;
+import interfacedao.transacciones.notas.IConfiguracionMarcaDAO;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import interfacedao.maestros.IMarcaDAO;
-import interfacedao.transacciones.notas.IConfiguracionMarcaDAO;
 import modelo.maestros.Marca;
 import modelo.pk.ConfiguracionMarcaId;
-import modelo.seguridad.Configuracion;
 import modelo.transacciones.notas.ConfiguracionMarca;
 
 import org.springframework.beans.factory.annotation.Autowired;

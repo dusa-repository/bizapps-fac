@@ -12,6 +12,7 @@ import org.zkoss.zul.Window;
 
 import componente.Botonera;
 import componente.Mensaje;
+
 import controlador.maestros.CGenerico;
 
 public class CConfiguracionEnvio extends CGenerico {

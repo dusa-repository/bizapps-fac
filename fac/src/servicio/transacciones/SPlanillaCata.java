@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import modelo.maestros.Marca;
-import modelo.maestros.Recurso;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaCata;
 

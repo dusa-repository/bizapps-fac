@@ -1,11 +1,6 @@
 package controlador.transacciones;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -32,6 +27,7 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Window;
 
 import componente.Botonera;
+
 import controlador.maestros.CGenerico;
 
 public class CBitacora extends CGenerico {

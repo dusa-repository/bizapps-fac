@@ -19,11 +19,11 @@ public class SUniformePlanillaUniforme {
 
 	public List<UniformePlanillaUniforme> buscarPorPlanilla(
 			PlanillaUniforme planilla) {
-		return uniformePlanillaDAO.findByPlanillaUniforme(planilla);
+		return uniformePlanillaDAO.findByIdPlanillaUniforme(planilla);
 	}
 
 	public void limpiar(PlanillaUniforme planilla) {
-		List<UniformePlanillaUniforme> eliminados = uniformePlanillaDAO.findByPlanillaUniforme(planilla);
+		List<UniformePlanillaUniforme> eliminados = uniformePlanillaDAO.findByIdPlanillaUniforme(planilla);
 		if(!eliminados.isEmpty())
 			uniformePlanillaDAO.delete(eliminados);
 	}
@@ -33,6 +33,6 @@ public class SUniformePlanillaUniforme {
 	}
 
 	public List<UniformePlanillaUniforme> buscarPorUniforme(Uniforme uni) {
-		return uniformePlanillaDAO.findByUniforme(uni);
+		return uniformePlanillaDAO.findByIdUniforme(uni);
 	}
 }

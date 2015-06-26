@@ -11,8 +11,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IRecursoPlanillaFachadaDAO extends JpaRepository<RecursoPlanillaFachada, RecursoPlanillaFachadaId> {
 
-	List<RecursoPlanillaFachada> findByPlanillaFachada(PlanillaFachada planilla);
+	List<RecursoPlanillaFachada> findByIdPlanillaFachada(PlanillaFachada planilla);
 
-	List<RecursoPlanillaFachada> findByRecurso(Recurso recurso);
+	List<RecursoPlanillaFachada> findByIdRecurso(Recurso recurso);
 
 }

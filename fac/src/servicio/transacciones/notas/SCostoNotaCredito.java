@@ -1,8 +1,9 @@
 package servicio.transacciones.notas;
 
+import interfacedao.transacciones.notas.ICostoNotaCreditoDAO;
+
 import java.util.List;
 
-import interfacedao.transacciones.notas.ICostoNotaCreditoDAO;
 import modelo.transacciones.notas.CostoNotaCredito;
 import modelo.transacciones.notas.NotaCredito;
 

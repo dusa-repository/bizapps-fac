@@ -1,35 +1,29 @@
 package modelo.transacciones;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import modelo.maestros.Sku;
 import modelo.pk.ItemPlanillaCataId;
 
 @Entity
 @Table(name = "item_planilla_cata")
-@IdClass(ItemPlanillaCataId.class)
-public class ItemPlanillaCata {
-	
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_item", referencedColumnName = "id_item")
-	private Sku sku;
-	
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_planilla_cata", referencedColumnName = "id_planilla_cata")
-	private PlanillaCata planillaCata;
+public class ItemPlanillaCata implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private ItemPlanillaCataId id;
 
 	@Column(name = "solicitado")
 	private Integer solicitado;
-	
+
 	@Column(name = "aprobado")
 	private Integer aprobado;
 
@@ -38,29 +32,20 @@ public class ItemPlanillaCata {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ItemPlanillaCata(Sku sku, PlanillaCata planillaCata,
-			Integer solicitado, Integer aprobado) {
+	public ItemPlanillaCata(ItemPlanillaCataId id, Integer solicitado,
+			Integer aprobado) {
 		super();
-		this.sku = sku;
-		this.planillaCata = planillaCata;
+		this.id = id;
 		this.solicitado = solicitado;
 		this.aprobado = aprobado;
 	}
 
-	public Sku getSku() {
-		return sku;
+	public ItemPlanillaCataId getId() {
+		return id;
 	}
 
-	public void setSku(Sku sku) {
-		this.sku = sku;
-	}
-
-	public PlanillaCata getPlanillaCata() {
-		return planillaCata;
-	}
-
-	public void setPlanillaCata(PlanillaCata planillaCata) {
-		this.planillaCata = planillaCata;
+	public void setId(ItemPlanillaCataId id) {
+		this.id = id;
 	}
 
 	public Integer getSolicitado() {
@@ -78,5 +63,5 @@ public class ItemPlanillaCata {
 	public void setAprobado(Integer aprobado) {
 		this.aprobado = aprobado;
 	}
-	
+
 }

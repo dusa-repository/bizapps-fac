@@ -6,8 +6,6 @@ import interfacedao.seguridad.IGrupoDAO;
 import java.util.List;
 
 import modelo.seguridad.Configuracion;
-import modelo.seguridad.Grupo;
-import modelo.seguridad.Usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

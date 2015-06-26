@@ -1,31 +1,25 @@
 package modelo.transacciones;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import modelo.maestros.Sku;
 import modelo.pk.ItemEstimadoPlanillaEventoId;
 
 @Entity
 @Table(name = "item_estimado_planilla_evento")
-@IdClass(ItemEstimadoPlanillaEventoId.class)
-public class ItemEstimadoPlanillaEvento {
-
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_item", referencedColumnName = "id_item")
-	private Sku sku;
+public class ItemEstimadoPlanillaEvento implements Serializable{
 	
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_planilla_evento", referencedColumnName = "id_planilla_evento")
-	private PlanillaEvento planillaEvento;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private ItemEstimadoPlanillaEventoId id;
 	
 	@Column(name = "estimado")
 	private Integer estimado;
@@ -35,28 +29,19 @@ public class ItemEstimadoPlanillaEvento {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ItemEstimadoPlanillaEvento(Sku sku, PlanillaEvento planillaEvento,
+	public ItemEstimadoPlanillaEvento(ItemEstimadoPlanillaEventoId id,
 			Integer estimado) {
 		super();
-		this.sku = sku;
-		this.planillaEvento = planillaEvento;
+		this.id = id;
 		this.estimado = estimado;
 	}
 
-	public Sku getSku() {
-		return sku;
+	public ItemEstimadoPlanillaEventoId getId() {
+		return id;
 	}
 
-	public void setSku(Sku sku) {
-		this.sku = sku;
-	}
-
-	public PlanillaEvento getPlanillaEvento() {
-		return planillaEvento;
-	}
-
-	public void setPlanillaEvento(PlanillaEvento planillaEvento) {
-		this.planillaEvento = planillaEvento;
+	public void setId(ItemEstimadoPlanillaEventoId id) {
+		this.id = id;
 	}
 
 	public Integer getEstimado() {

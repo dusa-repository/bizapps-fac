@@ -3,8 +3,6 @@ package componente;
 import java.util.ArrayList;
 import java.util.List;
 
-import modelo.transacciones.notas.ConfiguracionMarca;
-
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
@@ -12,7 +10,6 @@ import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.KeyEvent;
 import org.zkoss.zul.Auxhead;
 import org.zkoss.zul.Auxheader;
-import org.zkoss.zul.Div;
 import org.zkoss.zul.Hbox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;

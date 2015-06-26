@@ -27,13 +27,11 @@ import modelo.seguridad.Usuario;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.HtmlBasedComponent;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 import org.zkoss.zul.impl.InputElement;
 
@@ -76,6 +74,7 @@ import servicio.transacciones.notas.SCostoNotaCredito;
 import servicio.transacciones.notas.SDetalleNotaCredito;
 import servicio.transacciones.notas.SNotaCredito;
 import servicio.transacciones.notas.SPlanificacion;
+
 import componente.Botonera;
 import componente.Mensaje;
 

@@ -4,27 +4,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelo.transacciones.notas.ConfiguracionMarca;
+
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.Doublebox;
-import org.zkoss.zul.Doublespinner;
 import org.zkoss.zul.Intbox;
-import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
-import org.zkoss.zul.Spinner;
-import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
-import org.zkoss.zul.impl.InputElement;
-import org.zkoss.zul.impl.XulElement;
 
 import componente.Botonera;
 import componente.Mensaje;
-import modelo.maestros.Marca;
-import modelo.seguridad.Arbol;
-import modelo.transacciones.notas.ConfiguracionMarca;
-import modelo.transacciones.notas.DetalleNotaCredito;
+
 import controlador.maestros.CGenerico;
 
 public class CConfigurarMarca extends CGenerico {

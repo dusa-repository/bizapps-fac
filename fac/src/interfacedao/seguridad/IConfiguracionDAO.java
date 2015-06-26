@@ -3,7 +3,6 @@ package interfacedao.seguridad;
 import java.util.List;
 
 import modelo.seguridad.Configuracion;
-import modelo.seguridad.Usuario;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

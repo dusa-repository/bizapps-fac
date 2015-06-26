@@ -11,9 +11,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IItemEstimadoPlanillaEventoDAO extends JpaRepository<ItemEstimadoPlanillaEvento, ItemEstimadoPlanillaEventoId> {
 
-	List<ItemEstimadoPlanillaEvento> findByPlanillaEvento(
+	List<ItemEstimadoPlanillaEvento> findByIdPlanillaEvento(
 			PlanillaEvento planilla);
 
-	List<ItemEstimadoPlanillaEvento> findBySku(Sku sku);
+	List<ItemEstimadoPlanillaEvento> findByIdSku(Sku sku);
 
 }

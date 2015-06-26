@@ -135,7 +135,7 @@ public class PlanillaFachada implements Serializable {
 	@Column(name="estado_planilla",length = 500)
 	private String estado;
 	
-	@OneToMany(mappedBy="planillaFachada")
+	@OneToMany(mappedBy="id.planillaFachada")
 	private Set<RecursoPlanillaFachada> recursosFachadas;
 
 	@Column(name="id_zona",length = 500)

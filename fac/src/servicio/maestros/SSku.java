@@ -6,7 +6,6 @@ import interfacedao.transacciones.IItemEstimadoPlanillaEventoDAO;
 import interfacedao.transacciones.IItemPlanillaCataDAO;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import modelo.maestros.Marca;
@@ -55,13 +54,13 @@ public class SSku {
 
 	public List<Sku> buscarDisponibles(PlanillaCata planilla) {
 		List<ItemPlanillaCata> itemPlanilla = itemPlanillaCataDAO
-				.findByPlanillaCata(planilla);
+				.findByIdPlanillaCata(planilla);
 		List<String> ids = new ArrayList<String>();
 		if (itemPlanilla.isEmpty())
 			return skuDAO.findAllOrderByDescripcion();
 		else {
 			for (int i = 0; i < itemPlanilla.size(); i++) {
-				ids.add(itemPlanilla.get(i).getSku().getIdSku());
+				ids.add(itemPlanilla.get(i).getId().getSku().getIdSku());
 			}
 			return skuDAO.findByIdSkuNotIn(ids);
 		}
@@ -69,13 +68,13 @@ public class SSku {
 
 	public List<Sku> buscarDisponiblesDegustacion(PlanillaEvento planilla) {
 		List<ItemDegustacionPlanillaEvento> itemPlanilla = itemDegustacionPlanillaDAO
-				.findByPlanillaEvento(planilla);
+				.findByIdPlanillaEvento(planilla);
 		List<String> ids = new ArrayList<String>();
 		if (itemPlanilla.isEmpty())
 			return skuDAO.findAllOrderByDescripcion();
 		else {
 			for (int i = 0; i < itemPlanilla.size(); i++) {
-				ids.add(itemPlanilla.get(i).getSku().getIdSku());
+				ids.add(itemPlanilla.get(i).getId().getSku().getIdSku());
 			}
 			return skuDAO.findByIdSkuNotIn(ids);
 		}
@@ -84,13 +83,13 @@ public class SSku {
 	public List<Sku> buscarDisponiblesEstimacion(PlanillaEvento planilla) {
 		// TODO Auto-generated method stub
 		List<ItemEstimadoPlanillaEvento> itemPlanilla = itemEstimadoPlanillaDAO
-				.findByPlanillaEvento(planilla);
+				.findByIdPlanillaEvento(planilla);
 		List<String> ids = new ArrayList<String>();
 		if (itemPlanilla.isEmpty())
 			return skuDAO.findAllOrderByDescripcion();
 		else {
 			for (int i = 0; i < itemPlanilla.size(); i++) {
-				ids.add(itemPlanilla.get(i).getSku().getIdSku());
+				ids.add(itemPlanilla.get(i).getId().getSku().getIdSku());
 			}
 			return skuDAO.findByIdSkuNotIn(ids);
 		}

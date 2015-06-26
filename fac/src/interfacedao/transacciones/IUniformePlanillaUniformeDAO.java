@@ -11,9 +11,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IUniformePlanillaUniformeDAO extends JpaRepository<UniformePlanillaUniforme, UniformePlanillaUniformeId> {
 
-	List<UniformePlanillaUniforme> findByPlanillaUniforme(
+	List<UniformePlanillaUniforme> findByIdPlanillaUniforme(
 			PlanillaUniforme planilla);
 
-	List<UniformePlanillaUniforme> findByUniforme(Uniforme uni);
+	List<UniformePlanillaUniforme> findByIdUniforme(Uniforme uni);
 
 }

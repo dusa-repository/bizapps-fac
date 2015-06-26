@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import modelo.maestros.Aliado;
 import modelo.maestros.Empresa;
 import modelo.maestros.Marca;
 import modelo.maestros.Sku;
-import modelo.maestros.Zona;
 import modelo.transacciones.PlanillaArte;
 import modelo.transacciones.PlanillaCata;
 import modelo.transacciones.PlanillaEvento;

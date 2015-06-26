@@ -98,10 +98,10 @@ public class PlanillaCata implements Serializable {
 	@Column(name="estado_planilla",length = 500)
 	private String estado;
 	
-	@OneToMany(mappedBy="planillaCata")
+	@OneToMany(mappedBy="id.planillaCata")
 	private Set<ItemPlanillaCata> planillasCatas;
 	
-	@OneToMany(mappedBy="planillaCata")
+	@OneToMany(mappedBy="id.planillaCata")
 	private Set<RecursoPlanillaCata> recursosCatas;
 
 	@Column(name="id_zona",length = 500)

@@ -12,10 +12,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IRecursoPlanillaEventoDAO extends JpaRepository<RecursoPlanillaEvento, RecursoPlanillaEventoId> {
 
-	List<RecursoPlanillaEvento> findByPlanillaEvento(PlanillaEvento planilla);
+	List<RecursoPlanillaEvento> findByIdPlanillaEvento(PlanillaEvento planilla);
 
-	List<RecursoPlanillaEvento> findByRecurso(Recurso recurso);
+	List<RecursoPlanillaEvento> findByIdRecurso(Recurso recurso);
 
-	List<RecursoPlanillaEvento> findByMarca(Marca marca);
+	List<RecursoPlanillaEvento> findByIdMarca(Marca marca);
 
 }

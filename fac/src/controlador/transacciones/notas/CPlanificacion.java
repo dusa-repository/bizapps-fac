@@ -8,8 +8,6 @@ import java.util.List;
 
 import modelo.maestros.Marca;
 import modelo.maestros.Zona;
-import modelo.seguridad.Usuario;
-import modelo.transacciones.PlanillaEvento;
 import modelo.transacciones.notas.Planificacion;
 
 import org.zkoss.zk.ui.event.Event;
@@ -29,6 +27,7 @@ import org.zkoss.zul.Window;
 import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
+
 import controlador.maestros.CGenerico;
 
 public class CPlanificacion extends CGenerico {

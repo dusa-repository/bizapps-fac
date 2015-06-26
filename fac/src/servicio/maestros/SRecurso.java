@@ -13,7 +13,6 @@ import modelo.transacciones.PlanillaCata;
 import modelo.transacciones.PlanillaEvento;
 import modelo.transacciones.PlanillaFachada;
 import modelo.transacciones.RecursoPlanillaCata;
-import modelo.transacciones.RecursoPlanillaEvento;
 import modelo.transacciones.RecursoPlanillaFachada;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,13 +47,13 @@ public class SRecurso {
 	}
 
 	public List<Recurso> buscarDisponibles(PlanillaCata planilla) {
-		List<RecursoPlanillaCata> recursoPlanilla = recursoPlanillaCataDAO.findByPlanillaCata(planilla);
+		List<RecursoPlanillaCata> recursoPlanilla = recursoPlanillaCataDAO.findByIdPlanillaCata(planilla);
 		List<Long> ids = new ArrayList<Long>();
 		if(recursoPlanilla.isEmpty())
 			return recursoDAO.findAllOrderByDescripcion();
 		else{
 			for(int i=0; i<recursoPlanilla.size();i++){
-				ids.add(recursoPlanilla.get(i).getRecurso().getIdRecurso());
+				ids.add(recursoPlanilla.get(i).getId().getRecurso().getIdRecurso());
 			}
 			return recursoDAO.findByIdRecursoNotIn(ids);
 		}
@@ -78,13 +77,13 @@ public class SRecurso {
 	}
 
 	public List<Recurso> buscarDisponiblesFachada(PlanillaFachada planilla) {
-		List<RecursoPlanillaFachada> recursoPlanilla = recursoPlanillaFachadaDAO.findByPlanillaFachada(planilla);
+		List<RecursoPlanillaFachada> recursoPlanilla = recursoPlanillaFachadaDAO.findByIdPlanillaFachada(planilla);
 		List<Long> ids = new ArrayList<Long>();
 		if(recursoPlanilla.isEmpty())
 			return recursoDAO.findAllOrderByDescripcion();
 		else{
 			for(int i=0; i<recursoPlanilla.size();i++){
-				ids.add(recursoPlanilla.get(i).getRecurso().getIdRecurso());
+				ids.add(recursoPlanilla.get(i).getId().getRecurso().getIdRecurso());
 			}
 			return recursoDAO.findByIdRecursoNotIn(ids);
 		}

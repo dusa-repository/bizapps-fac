@@ -19,12 +19,12 @@ public class SRecursoPlanillaFachada {
 
 	public List<RecursoPlanillaFachada> buscarPorPlanilla(
 			PlanillaFachada planilla) {
-		return recursoPlanillaFachadaDAO.findByPlanillaFachada(planilla);
+		return recursoPlanillaFachadaDAO.findByIdPlanillaFachada(planilla);
 	}
 
 	public void limpiar(PlanillaFachada planilla) {
 		List<RecursoPlanillaFachada> eliminados = recursoPlanillaFachadaDAO
-				.findByPlanillaFachada(planilla);
+				.findByIdPlanillaFachada(planilla);
 		if (!eliminados.isEmpty())
 			recursoPlanillaFachadaDAO.delete(eliminados);
 	}
@@ -34,6 +34,6 @@ public class SRecursoPlanillaFachada {
 	}
 
 	public List<RecursoPlanillaFachada> buscarPorRecurso(Recurso recurso) {
-		return recursoPlanillaFachadaDAO.findByRecurso(recurso);
+		return recursoPlanillaFachadaDAO.findByIdRecurso(recurso);
 	}
 }

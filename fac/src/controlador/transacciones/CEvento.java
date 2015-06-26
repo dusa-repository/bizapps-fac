@@ -15,7 +15,9 @@ import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.maestros.Recurso;
 import modelo.maestros.Sku;
-import modelo.seguridad.Configuracion;
+import modelo.pk.ItemDegustacionPlanillaEventoId;
+import modelo.pk.ItemEstimadoPlanillaEventoId;
+import modelo.pk.RecursoPlanillaEventoId;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.ItemDegustacionPlanillaEvento;
@@ -49,6 +51,7 @@ import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
 import componente.Validador;
+
 import controlador.maestros.CGenerico;
 
 public class CEvento extends CGenerico {
@@ -427,9 +430,9 @@ public class CEvento extends CGenerico {
 				string, usuario.getZona().getDescripcion(), tipoConfig, "", 0,
 				"");
 		String origenPlanilla = valor;
-		if(!tipoConfig.equals(""))
+		if (!tipoConfig.equals(""))
 			origenPlanilla = tipoConfig;
-		if(origenPlanilla.equals("TradeMark"))
+		if (origenPlanilla.equals("TradeMark"))
 			origenPlanilla = "Trade Marketing";
 		planillaEvento.setOrigen(origenPlanilla);
 		servicioPlanillaEvento.guardar(planillaEvento);
@@ -533,8 +536,11 @@ public class CEvento extends CGenerico {
 			String skyId = ((Textbox) ((listItem.getChildren().get(2)))
 					.getFirstChild()).getValue();
 			Sku sku = servicioSku.buscar(skyId);
+			ItemEstimadoPlanillaEventoId clave = new ItemEstimadoPlanillaEventoId();
+			clave.setPlanillaEvento(planillaEvento);
+			clave.setSku(sku);
 			ItemEstimadoPlanillaEvento planillaItem = new ItemEstimadoPlanillaEvento(
-					sku, planillaEvento, estimado);
+					clave, estimado);
 			recursosPlanilla.add(planillaItem);
 		}
 		servicioItemEstimadoPlanillaEvento.guardar(recursosPlanilla);
@@ -552,8 +558,11 @@ public class CEvento extends CGenerico {
 			String skyId = ((Textbox) ((listItem.getChildren().get(3)))
 					.getFirstChild()).getValue();
 			Sku sku = servicioSku.buscar(skyId);
+			ItemDegustacionPlanillaEventoId clave = new ItemDegustacionPlanillaEventoId();
+			clave.setPlanillaEvento(planillaEvento);
+			clave.setSku(sku);
 			ItemDegustacionPlanillaEvento planillaItem = new ItemDegustacionPlanillaEvento(
-					sku, planillaEvento, solicitado, aprobado);
+					clave, solicitado, aprobado);
 			recursosPlanilla.add(planillaItem);
 		}
 		servicioItemDegustacionPlanillaEvento.guardar(recursosPlanilla);
@@ -573,8 +582,12 @@ public class CEvento extends CGenerico {
 			long recursoId = ((Spinner) ((listItem.getChildren().get(4)))
 					.getFirstChild()).getValue();
 			Recurso recurso = servicioRecurso.buscar(recursoId);
+			RecursoPlanillaEventoId clave = new RecursoPlanillaEventoId();
+			clave.setMarca(marca);
+			clave.setPlanillaEvento(planillaEvento);
+			clave.setRecurso(recurso);
 			RecursoPlanillaEvento recursoPlanilla = new RecursoPlanillaEvento(
-					recurso, planillaEvento, marca, solicitado, aprobado);
+					clave, solicitado, aprobado);
 			recursosPlanilla.add(recursoPlanilla);
 		}
 		servicioRecursoPlanillaEvento.guardar(recursosPlanilla);
@@ -804,7 +817,9 @@ public class CEvento extends CGenerico {
 					Sku sku = listItem.get(i).getValue();
 					itemsDegustacion.remove(sku);
 					ItemDegustacionPlanillaEvento itemPlanilla = new ItemDegustacionPlanillaEvento();
-					itemPlanilla.setSku(sku);
+					ItemDegustacionPlanillaEventoId clave2 = new ItemDegustacionPlanillaEventoId();
+					clave2.setSku(sku);
+					itemPlanilla.setId(clave2);
 					itemsDegustacionAgregados.clear();
 					for (int j = 0; j < ltbProductosDegustacionAgregados
 							.getItemCount(); j++) {
@@ -818,8 +833,10 @@ public class CEvento extends CGenerico {
 						String skyId = ((Textbox) ((listItemj.getChildren()
 								.get(3))).getFirstChild()).getValue();
 						Sku skus = servicioSku.buscar(skyId);
+						ItemDegustacionPlanillaEventoId clave = new ItemDegustacionPlanillaEventoId();
+						clave.setSku(skus);
 						ItemDegustacionPlanillaEvento planillaItem = new ItemDegustacionPlanillaEvento(
-								skus, null, solicitado, aprobado);
+								clave, solicitado, aprobado);
 						itemsDegustacionAgregados.add(planillaItem);
 					}
 					itemsDegustacionAgregados.add(itemPlanilla);
@@ -848,7 +865,7 @@ public class CEvento extends CGenerico {
 					ItemDegustacionPlanillaEvento itemPlanilla = listItem2.get(
 							i).getValue();
 					itemsDegustacionAgregados.remove(itemPlanilla);
-					itemsDegustacion.add(itemPlanilla.getSku());
+					itemsDegustacion.add(itemPlanilla.getId().getSku());
 					ltbProductosDegustacion.setModel(new ListModelList<Sku>(
 							itemsDegustacion));
 					listitemEliminar.add(listItem2.get(i));
@@ -872,7 +889,9 @@ public class CEvento extends CGenerico {
 					Sku sku = listItem.get(i).getValue();
 					itemsEstimacion.remove(sku);
 					ItemEstimadoPlanillaEvento itemPlanilla = new ItemEstimadoPlanillaEvento();
-					itemPlanilla.setSku(sku);
+					ItemEstimadoPlanillaEventoId clave2 = new ItemEstimadoPlanillaEventoId();
+					clave2.setSku(sku);
+					itemPlanilla.setId(clave2);
 					itemsEstimacionAgregados.clear();
 					for (int j = 0; j < ltbProductosVentaAgregados
 							.getItemCount(); j++) {
@@ -883,8 +902,10 @@ public class CEvento extends CGenerico {
 						String skyId = ((Textbox) ((listItemj.getChildren()
 								.get(2))).getFirstChild()).getValue();
 						Sku skus = servicioSku.buscar(skyId);
+						ItemEstimadoPlanillaEventoId clave = new ItemEstimadoPlanillaEventoId();
+						clave.setSku(skus);
 						ItemEstimadoPlanillaEvento planillaItem = new ItemEstimadoPlanillaEvento(
-								skus, null, estimado);
+								clave, estimado);
 						itemsEstimacionAgregados.add(planillaItem);
 					}
 					itemsEstimacionAgregados.add(itemPlanilla);
@@ -912,7 +933,7 @@ public class CEvento extends CGenerico {
 					ItemEstimadoPlanillaEvento itemPlanilla = listItem2.get(i)
 							.getValue();
 					itemsEstimacionAgregados.remove(itemPlanilla);
-					itemsEstimacion.add(itemPlanilla.getSku());
+					itemsEstimacion.add(itemPlanilla.getId().getSku());
 					ltbProductosVenta.setModel(new ListModelList<Sku>(
 							itemsEstimacion));
 					listitemEliminar.add(listItem2.get(i));
@@ -936,7 +957,9 @@ public class CEvento extends CGenerico {
 					Recurso recurso = listItem.get(i).getValue();
 					recursos.remove(recurso);
 					RecursoPlanillaEvento recursoPlanilla = new RecursoPlanillaEvento();
-					recursoPlanilla.setRecurso(recurso);
+					RecursoPlanillaEventoId clave2 = new RecursoPlanillaEventoId();
+					clave2.setRecurso(recurso);
+					recursoPlanilla.setId(clave2);
 					recursosAgregados.clear();
 					for (int j = 0; j < ltbRecursosAgregados.getItemCount(); j++) {
 						Listitem listItemj = ltbRecursosAgregados
@@ -957,8 +980,11 @@ public class CEvento extends CGenerico {
 						long recursoId = ((Spinner) ((listItemj.getChildren()
 								.get(4))).getFirstChild()).getValue();
 						Recurso recursos = servicioRecurso.buscar(recursoId);
+						RecursoPlanillaEventoId clave = new RecursoPlanillaEventoId();
+						clave.setMarca(marca);
+						clave.setRecurso(recursos);
 						RecursoPlanillaEvento recursoPlanillaj = new RecursoPlanillaEvento(
-								recursos, null, marca, solicitado, aprobado);
+								clave, solicitado, aprobado);
 						recursosAgregados.add(recursoPlanillaj);
 					}
 					recursosAgregados.add(recursoPlanilla);
@@ -986,7 +1012,7 @@ public class CEvento extends CGenerico {
 					RecursoPlanillaEvento recursoPlanilla = listItem2.get(i)
 							.getValue();
 					recursosAgregados.remove(recursoPlanilla);
-					recursos.add(recursoPlanilla.getRecurso());
+					recursos.add(recursoPlanilla.getId().getRecurso());
 					ltbRecursos.setModel(new ListModelList<Recurso>(recursos));
 					listitemEliminar.add(listItem2.get(i));
 				}

@@ -19,11 +19,11 @@ public class SItemEstimadoPlanillaEvento {
 
 	public List<ItemEstimadoPlanillaEvento> buscarPorPlanilla(
 			PlanillaEvento planilla) {
-		return itemEstimadoDAO.findByPlanillaEvento(planilla);
+		return itemEstimadoDAO.findByIdPlanillaEvento(planilla);
 	}
 
 	public void limpiar(PlanillaEvento planilla) {
-		List<ItemEstimadoPlanillaEvento> eliminados = itemEstimadoDAO.findByPlanillaEvento(planilla);
+		List<ItemEstimadoPlanillaEvento> eliminados = itemEstimadoDAO.findByIdPlanillaEvento(planilla);
 		if(!eliminados.isEmpty())
 			itemEstimadoDAO.delete(eliminados);
 	}
@@ -34,6 +34,6 @@ public class SItemEstimadoPlanillaEvento {
 
 	public List<ItemEstimadoPlanillaEvento> buscarPorSku(Sku sku) {
 		// TODO Auto-generated method stub
-		return itemEstimadoDAO.findBySku(sku);
+		return itemEstimadoDAO.findByIdSku(sku);
 	}
 }

@@ -11,8 +11,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IItemPlanillaCataDAO extends JpaRepository<ItemPlanillaCata, ItemPlanillaCataId> {
 
-	List<ItemPlanillaCata> findByPlanillaCata(PlanillaCata planilla);
+	List<ItemPlanillaCata> findByIdPlanillaCata(PlanillaCata planilla);
 
-	List<ItemPlanillaCata> findBySku(Sku sku);
+	List<ItemPlanillaCata> findByIdSku(Sku sku);
 
 }

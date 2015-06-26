@@ -238,7 +238,7 @@
 								</listhead>
 								<template id="template" name="model">
 									<listitem>
-										<listcell label="${each.uniforme.descripcion}">
+										<listcell label="${each.id.uniforme.descripcion}">
 										</listcell>
 										<listcell>
 											<combobox value="${each.genero}" width="100%"
@@ -249,7 +249,7 @@
 											</combobox>
 										</listcell>
 										<listcell>
-											<combobox value="${each.talla}" model="${$composer.tallas}"
+											<combobox value="${each.id.talla}" model="${$composer.tallas}"
 												width="100%" readonly="true">
 												<template name="model">
 													<comboitem label="${each.drdl01}" context="${each.id.drky}" />
@@ -274,7 +274,7 @@
 												format="#.#" step="1" buttonVisible="false" />
 										</listcell>
 										<listcell>
-											<spinner value="${each.uniforme.idUniforme}" width="98%"
+											<spinner value="${each.id.uniforme.idUniforme}" width="98%"
 												visible="false" disabled="true" />
 										</listcell>
 									</listitem>

@@ -251,7 +251,7 @@
 								</listhead>
 								<template name="model">
 									<listitem>
-										<listcell label="${each.sku.descripcion}">
+										<listcell label="${each.id.sku.descripcion}">
 										</listcell>
 										<listcell>
 											<spinner value="${each.solicitado}" constraint="min 0 max 10000"
@@ -264,7 +264,7 @@
 												step="1" width="98%" />
 										</listcell>
 										<listcell>
-											<textbox value="${each.sku.idSku}" width="98%"
+											<textbox value="${each.id.sku.idSku}" width="98%"
 												visible="false" disabled="true" />
 										</listcell>
 									</listitem>
@@ -326,10 +326,10 @@
 								</listhead>
 								<template name="model">
 									<listitem>
-										<listcell label="${each.recurso.descripcion}">
+										<listcell label="${each.id.recurso.descripcion}">
 										</listcell>
 										<listcell>
-											<combobox value="${each.marca.descripcion}" model="${$composer.marcas}"
+											<combobox value="${each.id.marca.descripcion}" model="${$composer.marcas}"
 												width="100%" readonly="true">
 												<template name="model">
 													<comboitem label="${each.descripcion}" context="${each.idMarca}" />
@@ -347,7 +347,7 @@
 												width="98%" />
 										</listcell>
 										<listcell>
-											<spinner value="${each.recurso.idRecurso}" width="98%"
+											<spinner value="${each.id.recurso.idRecurso}" width="98%"
 												visible="false" disabled="true" />
 										</listcell>
 									</listitem>

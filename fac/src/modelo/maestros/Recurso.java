@@ -39,13 +39,13 @@ public class Recurso implements Serializable {
 	@Column(name = "usuario_auditoria", length = 50)
 	private String usuarioAuditoria;
 	
-	@OneToMany(mappedBy="recurso")
+	@OneToMany(mappedBy="id.recurso")
 	private Set<RecursoPlanillaEvento> recursos;
 	
-	@OneToMany(mappedBy="recurso")
+	@OneToMany(mappedBy="id.recurso")
 	private Set<RecursoPlanillaCata> recursosCatas;
 	
-	@OneToMany(mappedBy="recurso")
+	@OneToMany(mappedBy="id.recurso")
 	private Set<RecursoPlanillaFachada> recursosFachadas;
 
 	public Recurso() {

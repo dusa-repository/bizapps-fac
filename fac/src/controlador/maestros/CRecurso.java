@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelo.maestros.Recurso;
-import modelo.transacciones.PlanillaCata;
-import modelo.transacciones.PlanillaEvento;
-import modelo.transacciones.PlanillaFachada;
 import modelo.transacciones.RecursoPlanillaCata;
 import modelo.transacciones.RecursoPlanillaEvento;
 import modelo.transacciones.RecursoPlanillaFachada;

@@ -17,7 +17,7 @@ import modelo.generico.PlanillaGenerica;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.maestros.Recurso;
-import modelo.seguridad.Configuracion;
+import modelo.pk.RecursoPlanillaFachadaId;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaFachada;
@@ -51,6 +51,7 @@ import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
 import componente.Validador;
+
 import controlador.maestros.CGenerico;
 
 public class CFachada extends CGenerico {
@@ -489,9 +490,9 @@ public class CFachada extends CGenerico {
 				string, usuario.getZona().getDescripcion(), tipoConfig, "", 0,
 				"");
 		String origenPlanilla = valor;
-		if(!tipoConfig.equals(""))
+		if (!tipoConfig.equals(""))
 			origenPlanilla = tipoConfig;
-		if(origenPlanilla.equals("TradeMark"))
+		if (origenPlanilla.equals("TradeMark"))
 			origenPlanilla = "Trade Marketing";
 		planillaFachada.setOrigen(origenPlanilla);
 		servicioPlanillaFachada.guardar(planillaFachada);
@@ -542,8 +543,12 @@ public class CFachada extends CGenerico {
 			long recursoId = ((Spinner) ((listItem.getChildren().get(4)))
 					.getFirstChild()).getValue();
 			Recurso recurso = servicioRecurso.buscar(recursoId);
+			RecursoPlanillaFachadaId clave = new RecursoPlanillaFachadaId();
+			clave.setMarca(marca);
+			clave.setPlanillaFachada(planillaFachada);
+			clave.setRecurso(recurso);
 			RecursoPlanillaFachada recursoPlanilla = new RecursoPlanillaFachada(
-					recurso, planillaFachada, marca, solicitado, aprobado);
+					clave, solicitado, aprobado);
 			recursosPlanilla.add(recursoPlanilla);
 		}
 		servicioRecursoPlanillaFachada.guardar(recursosPlanilla);
@@ -717,7 +722,9 @@ public class CFachada extends CGenerico {
 					Recurso recurso = listItem.get(i).getValue();
 					recursos.remove(recurso);
 					RecursoPlanillaFachada recursoPlanilla = new RecursoPlanillaFachada();
-					recursoPlanilla.setRecurso(recurso);
+					RecursoPlanillaFachadaId clave2 = new RecursoPlanillaFachadaId();
+					clave2.setRecurso(recurso);
+					recursoPlanilla.setId(clave2);
 					recursosAgregados.clear();
 					for (int j = 0; j < ltbRecursosAgregados.getItemCount(); j++) {
 						Listitem listItemj = ltbRecursosAgregados
@@ -738,8 +745,11 @@ public class CFachada extends CGenerico {
 						long recursoId = ((Spinner) ((listItemj.getChildren()
 								.get(4))).getFirstChild()).getValue();
 						Recurso recursoj = servicioRecurso.buscar(recursoId);
+						RecursoPlanillaFachadaId clave = new RecursoPlanillaFachadaId();
+						clave.setRecurso(recursoj);
+						clave.setMarca(marca);
 						RecursoPlanillaFachada recursoPlanillaj = new RecursoPlanillaFachada(
-								recursoj, null, marca, solicitado, aprobado);
+								clave, solicitado, aprobado);
 						recursosAgregados.add(recursoPlanillaj);
 					}
 					recursosAgregados.add(recursoPlanilla);
@@ -767,7 +777,7 @@ public class CFachada extends CGenerico {
 					RecursoPlanillaFachada recursoPlanilla = listItem2.get(i)
 							.getValue();
 					recursosAgregados.remove(recursoPlanilla);
-					recursos.add(recursoPlanilla.getRecurso());
+					recursos.add(recursoPlanilla.getId().getRecurso());
 					ltbRecursos.setModel(new ListModelList<Recurso>(recursos));
 					listitemEliminar.add(listItem2.get(i));
 				}
