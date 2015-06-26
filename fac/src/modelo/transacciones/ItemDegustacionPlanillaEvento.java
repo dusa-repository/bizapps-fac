@@ -1,32 +1,26 @@
 package modelo.transacciones;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import modelo.maestros.Sku;
 import modelo.pk.ItemDegustacionPlanillaEventoId;
 
 
 @Entity
 @Table(name = "item_degustacion_planilla_evento")
-@IdClass(ItemDegustacionPlanillaEventoId.class)
-public class ItemDegustacionPlanillaEvento {
+public class ItemDegustacionPlanillaEvento implements Serializable{
 	
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_item", referencedColumnName = "id_item")
-	private Sku sku;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_planilla_evento", referencedColumnName = "id_planilla_evento")
-	private PlanillaEvento planillaEvento;
+	@EmbeddedId
+	private ItemDegustacionPlanillaEventoId id;
 	
 	@Column(name = "solicitado")
 	private Integer solicitado;
@@ -39,29 +33,19 @@ public class ItemDegustacionPlanillaEvento {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ItemDegustacionPlanillaEvento(Sku sku,
-			PlanillaEvento planillaEvento, Integer solicitado, Integer aprobado) {
+	public ItemDegustacionPlanillaEvento(ItemDegustacionPlanillaEventoId id, Integer solicitado, Integer aprobado) {
 		super();
-		this.sku = sku;
-		this.planillaEvento = planillaEvento;
+		this.id = id;
 		this.solicitado = solicitado;
 		this.aprobado = aprobado;
 	}
 
-	public Sku getSku() {
-		return sku;
+	public ItemDegustacionPlanillaEventoId getId() {
+		return id;
 	}
 
-	public void setSku(Sku sku) {
-		this.sku = sku;
-	}
-
-	public PlanillaEvento getPlanillaEvento() {
-		return planillaEvento;
-	}
-
-	public void setPlanillaEvento(PlanillaEvento planillaEvento) {
-		this.planillaEvento = planillaEvento;
+	public void setId(ItemDegustacionPlanillaEventoId id) {
+		this.id = id;
 	}
 
 	public Integer getSolicitado() {

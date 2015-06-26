@@ -19,11 +19,11 @@ public class SRecursoPlanillaEvento {
 	private IRecursoPlanillaEventoDAO recursoPlanillaEventoDAO;
 
 	public List<RecursoPlanillaEvento> buscarPorPlanilla(PlanillaEvento planilla) {
-		return recursoPlanillaEventoDAO.findByPlanillaEvento(planilla);
+		return recursoPlanillaEventoDAO.findByIdPlanillaEvento(planilla);
 	}
 
 	public void limpiar(PlanillaEvento planilla) {
-		List<RecursoPlanillaEvento> eliminados = recursoPlanillaEventoDAO.findByPlanillaEvento(planilla);
+		List<RecursoPlanillaEvento> eliminados = recursoPlanillaEventoDAO.findByIdPlanillaEvento(planilla);
 		if(!eliminados.isEmpty())
 			recursoPlanillaEventoDAO.delete(eliminados);
 	}
@@ -33,10 +33,10 @@ public class SRecursoPlanillaEvento {
 	}
 
 	public List<RecursoPlanillaEvento> buscarPorRecurso(Recurso recurso) {
-		return recursoPlanillaEventoDAO.findByRecurso(recurso);
+		return recursoPlanillaEventoDAO.findByIdRecurso(recurso);
 	}
 
 	public List<RecursoPlanillaEvento> buscarPorMarca(Marca marca) {
-		return recursoPlanillaEventoDAO.findByMarca(marca);
+		return recursoPlanillaEventoDAO.findByIdMarca(marca);
 	}
 }

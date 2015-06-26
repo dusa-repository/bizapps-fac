@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import modelo.generico.PlanillaGenerica;
 import modelo.maestros.Aliado;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
@@ -17,7 +16,6 @@ import modelo.pk.CostoNotaCreditoId;
 import modelo.pk.DetalleNotaCreditoId;
 import modelo.seguridad.ConfiguracionEnvio;
 import modelo.seguridad.Usuario;
-import modelo.transacciones.PlanillaEvento;
 import modelo.transacciones.notas.ConfiguracionMarca;
 import modelo.transacciones.notas.CostoNotaCredito;
 import modelo.transacciones.notas.DetalleNotaCredito;
@@ -30,7 +28,6 @@ import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Div;
@@ -52,7 +49,7 @@ import org.zkoss.zul.Window;
 import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
-import componente.Validador;
+
 import controlador.maestros.CGenerico;
 
 public class CNotaCredito extends CGenerico {

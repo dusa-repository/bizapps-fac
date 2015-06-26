@@ -6,12 +6,9 @@ import java.util.List;
 
 import modelo.seguridad.Arbol;
 import modelo.seguridad.Configuracion;
-import modelo.seguridad.Usuario;
 
-import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
-import org.zkoss.zul.Button;
 import org.zkoss.zul.Div;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
@@ -20,7 +17,6 @@ import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 import componente.Botonera;
-import componente.Catalogo;
 import componente.Mensaje;
 import componente.Validador;
 

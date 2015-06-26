@@ -19,11 +19,11 @@ public class SItemDegustacionPlanillaEvento {
 
 	public List<ItemDegustacionPlanillaEvento> buscarPorPlanilla(
 			PlanillaEvento planilla) {
-		return itemDegustacionDAO.findByPlanillaEvento(planilla);
+		return itemDegustacionDAO.findByIdPlanillaEvento(planilla);
 	}
 
 	public void limpiar(PlanillaEvento planilla) {
-		List<ItemDegustacionPlanillaEvento> eliminados = itemDegustacionDAO.findByPlanillaEvento(planilla);
+		List<ItemDegustacionPlanillaEvento> eliminados = itemDegustacionDAO.findByIdPlanillaEvento(planilla);
 		if(!eliminados.isEmpty())
 			itemDegustacionDAO.delete(eliminados);
 	}
@@ -34,6 +34,6 @@ public class SItemDegustacionPlanillaEvento {
 
 	public List<ItemDegustacionPlanillaEvento> buscarPorSku(Sku sku) {
 		// TODO Auto-generated method stub
-		return itemDegustacionDAO.findBySku(sku);
+		return itemDegustacionDAO.findByIdSku(sku);
 	}
 }

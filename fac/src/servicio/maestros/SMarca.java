@@ -2,7 +2,6 @@ package servicio.maestros;
 
 import interfacedao.maestros.IMarcaDAO;
 
-import java.util.Collection;
 import java.util.List;
 
 import modelo.maestros.Marca;

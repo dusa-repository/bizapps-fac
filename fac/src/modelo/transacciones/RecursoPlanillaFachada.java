@@ -1,37 +1,25 @@
 package modelo.transacciones;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import modelo.maestros.Marca;
-import modelo.maestros.Recurso;
 import modelo.pk.RecursoPlanillaFachadaId;
 
 @Entity
 @Table(name = "recurso_planilla_fachada")
-@IdClass(RecursoPlanillaFachadaId.class)
-public class RecursoPlanillaFachada {
+public class RecursoPlanillaFachada implements Serializable {
 	
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_recurso", referencedColumnName = "id_recurso")
-	private Recurso recurso;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_planilla_fachada", referencedColumnName = "id_planilla_fachada")
-	private PlanillaFachada planillaFachada;
-	
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name="id_marca")
-	private Marca marca;
+	@EmbeddedId
+	private RecursoPlanillaFachadaId id;
 	
 	@Column(name = "solicitado")
 	private Integer solicitado;
@@ -44,31 +32,20 @@ public class RecursoPlanillaFachada {
 		// TODO Auto-generated constructor stub
 	}
 
-	public RecursoPlanillaFachada(Recurso recurso,
-			PlanillaFachada planillaFachada, Marca marca, Integer solicitado,
+	public RecursoPlanillaFachada(RecursoPlanillaFachadaId id, Integer solicitado,
 			Integer aprobado) {
 		super();
-		this.marca = marca;
-		this.recurso = recurso;
-		this.planillaFachada = planillaFachada;
+		this.id = id;
 		this.solicitado = solicitado;
 		this.aprobado = aprobado;
 	}
 
-	public Recurso getRecurso() {
-		return recurso;
+	public RecursoPlanillaFachadaId getId() {
+		return id;
 	}
 
-	public void setRecurso(Recurso recurso) {
-		this.recurso = recurso;
-	}
-
-	public PlanillaFachada getPlanillaFachada() {
-		return planillaFachada;
-	}
-
-	public void setPlanillaFachada(PlanillaFachada planillaFachada) {
-		this.planillaFachada = planillaFachada;
+	public void setId(RecursoPlanillaFachadaId id) {
+		this.id = id;
 	}
 
 	public Integer getSolicitado() {
@@ -85,14 +62,6 @@ public class RecursoPlanillaFachada {
 
 	public void setAprobado(Integer aprobado) {
 		this.aprobado = aprobado;
-	}
-
-	public Marca getMarca() {
-		return marca;
-	}
-
-	public void setMarca(Marca marca) {
-		this.marca = marca;
 	}
 
 }

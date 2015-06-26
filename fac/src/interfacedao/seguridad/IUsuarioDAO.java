@@ -1,6 +1,5 @@
 package interfacedao.seguridad;
 
-import java.util.Collection;
 import java.util.List;
 
 import modelo.maestros.Zona;

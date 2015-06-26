@@ -14,7 +14,8 @@ import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.maestros.Recurso;
 import modelo.maestros.Sku;
-import modelo.seguridad.Configuracion;
+import modelo.pk.ItemPlanillaCataId;
+import modelo.pk.RecursoPlanillaCataId;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.ItemPlanillaCata;
@@ -23,7 +24,6 @@ import modelo.transacciones.RecursoPlanillaCata;
 
 import org.zkforge.ckez.CKeditor;
 import org.zkoss.image.AImage;
-import org.zkoss.zk.ui.HtmlBasedComponent;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.Listen;
@@ -46,6 +46,7 @@ import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
 import componente.Validador;
+
 import controlador.maestros.CGenerico;
 
 public class CCata extends CGenerico {
@@ -398,9 +399,9 @@ public class CCata extends CGenerico {
 				horaAuditoria, nombreUsuarioSesion(), string, usuario.getZona()
 						.getDescripcion(), tipoConfig, "", 0, "");
 		String origenPlanilla = valor;
-		if(!tipoConfig.equals(""))
+		if (!tipoConfig.equals(""))
 			origenPlanilla = tipoConfig;
-		if(origenPlanilla.equals("TradeMark"))
+		if (origenPlanilla.equals("TradeMark"))
 			origenPlanilla = "Trade Marketing";
 		planilla.setOrigen(origenPlanilla);
 		servicioPlanillaCata.guardar(planilla);
@@ -507,8 +508,12 @@ public class CCata extends CGenerico {
 			long recursoId = ((Spinner) ((listItem.getChildren().get(4)))
 					.getFirstChild()).getValue();
 			Recurso recurso = servicioRecurso.buscar(recursoId);
+			RecursoPlanillaCataId clave = new RecursoPlanillaCataId();
+			clave.setMarca(marca);
+			clave.setPlanillaCata(planilla);
+			clave.setRecurso(recurso);
 			RecursoPlanillaCata recursoPlanilla = new RecursoPlanillaCata(
-					recurso, planilla, marca, solicitado, aprobado);
+					clave, solicitado, aprobado);
 			recursosPlanilla.add(recursoPlanilla);
 		}
 		servicioRecursoPlanillaCata.guardar(recursosPlanilla);
@@ -526,7 +531,10 @@ public class CCata extends CGenerico {
 			String skyId = ((Textbox) ((listItem.getChildren().get(3)))
 					.getFirstChild()).getValue();
 			Sku sku = servicioSku.buscar(skyId);
-			ItemPlanillaCata planillaCata = new ItemPlanillaCata(sku, planilla,
+			ItemPlanillaCataId clave = new ItemPlanillaCataId();
+			clave.setPlanillaCata(planilla);
+			clave.setSku(sku);
+			ItemPlanillaCata planillaCata = new ItemPlanillaCata(clave,
 					solicitado, aprobado);
 			recursosPlanilla.add(planillaCata);
 		}
@@ -724,7 +732,10 @@ public class CCata extends CGenerico {
 					Sku sku = listItem.get(i).getValue();
 					items.remove(sku);
 					ItemPlanillaCata itemPlanilla = new ItemPlanillaCata();
-					itemPlanilla.setSku(sku);
+					ItemPlanillaCataId clave2 = new ItemPlanillaCataId();
+					clave2.setPlanillaCata(null);
+					clave2.setSku(sku);
+					itemPlanilla.setId(clave2);
 					itemsAgregados.clear();
 					for (int j = 0; j < ltbProductosAgregados.getItemCount(); j++) {
 
@@ -738,8 +749,11 @@ public class CCata extends CGenerico {
 						String skyId = ((Textbox) ((listItemj.getChildren()
 								.get(3))).getFirstChild()).getValue();
 						Sku sku2 = servicioSku.buscar(skyId);
+						ItemPlanillaCataId clave = new ItemPlanillaCataId();
+						clave.setPlanillaCata(null);
+						clave.setSku(sku2);
 						ItemPlanillaCata planillaCata = new ItemPlanillaCata(
-								sku2, null, solicitado, aprobado);
+								clave, solicitado, aprobado);
 						itemsAgregados.add(planillaCata);
 					}
 					itemsAgregados.add(itemPlanilla);
@@ -766,7 +780,7 @@ public class CCata extends CGenerico {
 				if (listItem2.get(i).isSelected()) {
 					ItemPlanillaCata itemPlanilla = listItem2.get(i).getValue();
 					itemsAgregados.remove(itemPlanilla);
-					items.add(itemPlanilla.getSku());
+					items.add(itemPlanilla.getId().getSku());
 					ltbProductos.setModel(new ListModelList<Sku>(items));
 					listitemEliminar.add(listItem2.get(i));
 				}
@@ -789,7 +803,11 @@ public class CCata extends CGenerico {
 					Recurso recurso = listItem.get(i).getValue();
 					recursos.remove(recurso);
 					RecursoPlanillaCata recursoPlanilla = new RecursoPlanillaCata();
-					recursoPlanilla.setRecurso(recurso);
+					RecursoPlanillaCataId clave2 = new RecursoPlanillaCataId();
+					clave2.setMarca(null);
+					clave2.setPlanillaCata(null);
+					clave2.setRecurso(recurso);
+					recursoPlanilla.setId(clave2);
 					recursosAgregados.clear();
 					for (int j = 0; j < ltbRecursosAgregados.getItemCount(); j++) {
 						Listitem listItemj = ltbRecursosAgregados
@@ -810,8 +828,12 @@ public class CCata extends CGenerico {
 						long recursoId = ((Spinner) ((listItemj.getChildren()
 								.get(4))).getFirstChild()).getValue();
 						Recurso recursoa = servicioRecurso.buscar(recursoId);
+						RecursoPlanillaCataId clave = new RecursoPlanillaCataId();
+						clave.setMarca(marca);
+						clave.setPlanillaCata(null);
+						clave.setRecurso(recursoa);
 						RecursoPlanillaCata recursoPlanillas = new RecursoPlanillaCata(
-								recursoa, null, marca, solicitado, aprobado);
+								clave, solicitado, aprobado);
 						recursosAgregados.add(recursoPlanillas);
 					}
 					recursosAgregados.add(recursoPlanilla);
@@ -839,7 +861,7 @@ public class CCata extends CGenerico {
 					RecursoPlanillaCata recursoPlanilla = listItem2.get(i)
 							.getValue();
 					recursosAgregados.remove(recursoPlanilla);
-					recursos.add(recursoPlanilla.getRecurso());
+					recursos.add(recursoPlanilla.getId().getRecurso());
 					ltbRecursos.setModel(new ListModelList<Recurso>(recursos));
 					listitemEliminar.add(listItem2.get(i));
 				}

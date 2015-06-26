@@ -13,7 +13,7 @@ import modelo.generico.PlanillaGenerica;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.maestros.Uniforme;
-import modelo.seguridad.Configuracion;
+import modelo.pk.UniformePlanillaUniformeId;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaUniforme;
@@ -45,6 +45,7 @@ import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
 import componente.Validador;
+
 import controlador.maestros.CGenerico;
 
 public class CUniforme extends CGenerico {
@@ -378,9 +379,9 @@ public class CUniforme extends CGenerico {
 				nombreUsuarioSesion(), string, usuario.getZona()
 						.getDescripcion(), tipoConfig, "", 0, "");
 		String origenPlanilla = valor;
-		if(!tipoConfig.equals(""))
+		if (!tipoConfig.equals(""))
 			origenPlanilla = tipoConfig;
-		if(origenPlanilla.equals("TradeMark"))
+		if (origenPlanilla.equals("TradeMark"))
 			origenPlanilla = "Trade Marketing";
 		planillaUniforme.setOrigen(origenPlanilla);
 		servicioPlanillaUniforme.guardar(planillaUniforme);
@@ -431,9 +432,12 @@ public class CUniforme extends CGenerico {
 			long idUniforme = ((Spinner) ((listItem.getChildren().get(6)))
 					.getFirstChild()).getValue();
 			Uniforme uniforme = servicioUniforme.buscar(idUniforme);
+			UniformePlanillaUniformeId clave = new UniformePlanillaUniformeId();
+			clave.setPlanillaUniforme(planillaUniforme);
+			clave.setTalla(talla);
+			clave.setUniforme(uniforme);
 			UniformePlanillaUniforme uniformePlanilla = new UniformePlanillaUniforme(
-					uniforme, planillaUniforme, genero, talla, cantidad,
-					precioUnitario);
+					clave, genero, cantidad, precioUnitario);
 			recursosPlanilla.add(uniformePlanilla);
 		}
 		servicioUniformePlanillaUniforme.guardar(recursosPlanilla);
@@ -606,7 +610,9 @@ public class CUniforme extends CGenerico {
 					Uniforme uniforme = listItem.get(i).getValue();
 					uniformes.remove(uniforme);
 					UniformePlanillaUniforme uniformePlanilla = new UniformePlanillaUniforme();
-					uniformePlanilla.setUniforme(uniforme);
+					UniformePlanillaUniformeId clave2 = new UniformePlanillaUniformeId();
+					clave2.setUniforme(uniforme);
+					uniformePlanilla.setId(clave2);
 					uniformesAgregados.clear();
 					for (int j = 0; j < ltbUniformesAgregados.getItemCount(); j++) {
 						Listitem listItemj = ltbUniformesAgregados
@@ -624,9 +630,12 @@ public class CUniforme extends CGenerico {
 								.get(6))).getFirstChild()).getValue();
 						Uniforme uniformej = servicioUniforme
 								.buscar(idUniforme);
+						UniformePlanillaUniformeId clave = new UniformePlanillaUniformeId();
+						clave.setPlanillaUniforme(null);
+						clave.setTalla(talla);
+						clave.setUniforme(uniformej);
 						UniformePlanillaUniforme uniformePlanillaj = new UniformePlanillaUniforme(
-								uniformej, null, genero, talla, cantidad,
-								precioUnitario);
+								clave, genero, cantidad, precioUnitario);
 						uniformesAgregados.add(uniformePlanillaj);
 					}
 					uniformesAgregados.add(uniformePlanilla);
@@ -654,7 +663,7 @@ public class CUniforme extends CGenerico {
 					UniformePlanillaUniforme uniformePlanilla = listItem2
 							.get(i).getValue();
 					uniformesAgregados.remove(uniformePlanilla);
-					uniformes.add(uniformePlanilla.getUniforme());
+					uniformes.add(uniformePlanilla.getId().getUniforme());
 					ltbUniformes
 							.setModel(new ListModelList<Uniforme>(uniformes));
 					listitemEliminar.add(listItem2.get(i));

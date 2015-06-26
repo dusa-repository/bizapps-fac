@@ -6,9 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import modelo.generico.PlanillaGenerica;
 import modelo.maestros.Aliado;
-import modelo.maestros.F0005;
 import modelo.maestros.Marca;
 import modelo.maestros.Zona;
 import modelo.seguridad.Arbol;
@@ -35,14 +33,13 @@ import org.zkoss.zul.Listheader;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Longbox;
 import org.zkoss.zul.Messagebox;
-import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
-import org.zkoss.zul.impl.LabelElement;
 
 import servicio.transacciones.notas.SDetalleNotaCredito;
-import componente.Catalogo;
+
 import componente.Mensaje;
 import componente.Validador;
+
 import controlador.maestros.CGenerico;
 
 public class CProcesarNota extends CGenerico {

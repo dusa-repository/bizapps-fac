@@ -12,7 +12,6 @@ import modelo.estado.BitacoraPromocion;
 import modelo.generico.PlanillaGenerica;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
-import modelo.seguridad.Configuracion;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaPromocion;
@@ -38,6 +37,7 @@ import componente.Botonera;
 import componente.Catalogo;
 import componente.Mensaje;
 import componente.Validador;
+
 import controlador.maestros.CGenerico;
 
 public class CPromocion extends CGenerico {

@@ -12,7 +12,6 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import modelo.maestros.Zona;
-import modelo.seguridad.Configuracion;
 import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.PlanillaArte;

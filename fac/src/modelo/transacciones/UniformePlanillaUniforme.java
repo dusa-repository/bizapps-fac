@@ -1,35 +1,25 @@
 package modelo.transacciones;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import modelo.maestros.Uniforme;
 import modelo.pk.UniformePlanillaUniformeId;
 
 @Entity
 @Table(name = "uniforme_planilla_uniforme")
-@IdClass(UniformePlanillaUniformeId.class)
-public class UniformePlanillaUniforme {
+public class UniformePlanillaUniforme implements Serializable {
 	
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_uniforme", referencedColumnName = "id_uniforme")
-	private Uniforme uniforme;
-	
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_planilla_uniforme", referencedColumnName = "id_planilla_uniforme")
-	private PlanillaUniforme planillaUniforme;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name="talla",length = 500)
-	private String talla;
+	@EmbeddedId
+	private UniformePlanillaUniformeId id;
 	
 	@Column(name="genero",length = 500)
 	private String genero;
@@ -45,32 +35,21 @@ public class UniformePlanillaUniforme {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UniformePlanillaUniforme(Uniforme uniforme,
-			PlanillaUniforme planillaUniforme, String genero, String talla,
+	public UniformePlanillaUniforme(UniformePlanillaUniformeId id, String genero,
 			Integer personas, Double precioUnitario) {
 		super();
-		this.uniforme = uniforme;
-		this.planillaUniforme = planillaUniforme;
+		this.id = id;
 		this.genero = genero;
-		this.talla = talla;
 		this.cantidad = personas;
 		this.precioUnitario = precioUnitario;
 	}
 
-	public Uniforme getUniforme() {
-		return uniforme;
+	public UniformePlanillaUniformeId getId() {
+		return id;
 	}
 
-	public void setUniforme(Uniforme uniforme) {
-		this.uniforme = uniforme;
-	}
-
-	public PlanillaUniforme getPlanillaUniforme() {
-		return planillaUniforme;
-	}
-
-	public void setPlanillaUniforme(PlanillaUniforme planillaUniforme) {
-		this.planillaUniforme = planillaUniforme;
+	public void setId(UniformePlanillaUniformeId id) {
+		this.id = id;
 	}
 
 	public String getGenero() {
@@ -79,14 +58,6 @@ public class UniformePlanillaUniforme {
 
 	public void setGenero(String genero) {
 		this.genero = genero;
-	}
-
-	public String getTalla() {
-		return talla;
-	}
-
-	public void setTalla(String talla) {
-		this.talla = talla;
 	}
 
 	public Integer getCantidad() {

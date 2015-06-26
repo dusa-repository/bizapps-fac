@@ -38,13 +38,13 @@ public class SUniforme {
 	}
 
 	public List<Uniforme> buscarDisponibles(PlanillaUniforme planilla) {
-		List<UniformePlanillaUniforme> uniformePlanilla = uniformePlanillaDAO.findByPlanillaUniforme(planilla);
+		List<UniformePlanillaUniforme> uniformePlanilla = uniformePlanillaDAO.findByIdPlanillaUniforme(planilla);
 		List<Long> ids = new ArrayList<Long>();
 		if(uniformePlanilla.isEmpty())
 			return uniformeDAO.findAllOrderByDescripcion();
 		else{
 			for(int i=0; i<uniformePlanilla.size();i++){
-				ids.add(uniformePlanilla.get(i).getUniforme().getIdUniforme());
+				ids.add(uniformePlanilla.get(i).getId().getUniforme().getIdUniforme());
 			}
 			return uniformeDAO.findByIdUniformeNotIn(ids);
 		}

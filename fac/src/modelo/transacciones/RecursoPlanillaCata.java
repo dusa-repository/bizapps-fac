@@ -1,37 +1,25 @@
 package modelo.transacciones;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import modelo.maestros.Marca;
-import modelo.maestros.Recurso;
 import modelo.pk.RecursoPlanillaCataId;
 
 @Entity
 @Table(name = "recurso_planilla_cata")
-@IdClass(RecursoPlanillaCataId.class)
-public class RecursoPlanillaCata {
+public class RecursoPlanillaCata implements Serializable {
 
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_recurso", referencedColumnName = "id_recurso")
-	private Recurso recurso;
-	
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_planilla_cata", referencedColumnName = "id_planilla_cata")
-	private PlanillaCata planillaCata;
-	
-	@Id
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name="id_marca")
-	private Marca marca;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private RecursoPlanillaCataId id;
 	
 	@Column(name = "solicitado")
 	private Integer solicitado;
@@ -44,30 +32,20 @@ public class RecursoPlanillaCata {
 		// TODO Auto-generated constructor stub
 	}
 
-	public RecursoPlanillaCata(Recurso recurso, PlanillaCata planillaCata, Marca marca,
+	public RecursoPlanillaCata(RecursoPlanillaCataId id,
 			Integer solicitado, Integer aprobado) {
 		super();
-		this.marca = marca;
-		this.recurso = recurso;
-		this.planillaCata = planillaCata;
+		this.id = id;
 		this.solicitado = solicitado;
 		this.aprobado = aprobado;
 	}
 
-	public Recurso getRecurso() {
-		return recurso;
+	public RecursoPlanillaCataId getId() {
+		return id;
 	}
 
-	public void setRecurso(Recurso recurso) {
-		this.recurso = recurso;
-	}
-
-	public PlanillaCata getPlanillaCata() {
-		return planillaCata;
-	}
-
-	public void setPlanillaCata(PlanillaCata planillaCata) {
-		this.planillaCata = planillaCata;
+	public void setId(RecursoPlanillaCataId id) {
+		this.id = id;
 	}
 
 	public Integer getSolicitado() {
@@ -84,14 +62,6 @@ public class RecursoPlanillaCata {
 
 	public void setAprobado(Integer aprobado) {
 		this.aprobado = aprobado;
-	}
-
-	public Marca getMarca() {
-		return marca;
-	}
-
-	public void setMarca(Marca marca) {
-		this.marca = marca;
 	}
 	
 }

@@ -14,8 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Type;
-
 import modelo.transacciones.PlanillaArte;
 import modelo.transacciones.PlanillaCata;
 import modelo.transacciones.PlanillaEvento;
@@ -29,6 +27,8 @@ import modelo.transacciones.notas.ConfiguracionMarca;
 import modelo.transacciones.notas.CostoNotaCredito;
 import modelo.transacciones.notas.DetalleNotaCredito;
 import modelo.transacciones.notas.Planificacion;
+
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "marca")
@@ -80,13 +80,13 @@ public class Marca implements Serializable {
 	@OneToMany(mappedBy="marca")
 	private Set<PlanillaUniforme> planillasUniforme;
 	
-	@OneToMany(mappedBy="marca")
+	@OneToMany(mappedBy="id.marca")
 	private Set<RecursoPlanillaEvento> recursosPlanillasEvento;
 	
-	@OneToMany(mappedBy="marca")
+	@OneToMany(mappedBy="id.marca")
 	private Set<RecursoPlanillaCata> recursosPlanillasCata;
 	
-	@OneToMany(mappedBy="marca")
+	@OneToMany(mappedBy="id.marca")
 	private Set<RecursoPlanillaFachada> recursosPlanillasFachada;
 	
 	@OneToMany(mappedBy="marca")

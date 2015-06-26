@@ -104,13 +104,13 @@ public class PlanillaEvento implements Serializable {
 	@Column(name="estado_planilla",length = 500)
 	private String estado;
 
-	@OneToMany(mappedBy="planillaEvento")
+	@OneToMany(mappedBy="id.planillaEvento")
 	private Set<ItemDegustacionPlanillaEvento> itemsDegustados;
 	
-	@OneToMany(mappedBy="planillaEvento")
+	@OneToMany(mappedBy="id.planillaEvento")
 	private Set<ItemEstimadoPlanillaEvento> itemsEstimados;
 	
-	@OneToMany(mappedBy="planillaEvento")
+	@OneToMany(mappedBy="id.planillaEvento")
 	private Set<RecursoPlanillaEvento> recursos;
 	
 	@Column(name="id_zona",length = 500)

@@ -95,7 +95,7 @@ public class PlanillaUniforme implements Serializable {
 	@Column(name="estado_planilla",length = 500)
 	private String estado;
 	
-	@OneToMany(mappedBy="planillaUniforme")
+	@OneToMany(mappedBy="id.planillaUniforme")
 	private Set<UniformePlanillaUniforme> uniformePlanillas;
 	
 	@Column(name="id_zona",length = 500)

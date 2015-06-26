@@ -13,11 +13,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Type;
-
 import modelo.transacciones.ItemDegustacionPlanillaEvento;
 import modelo.transacciones.ItemEstimadoPlanillaEvento;
 import modelo.transacciones.ItemPlanillaCata;
+
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "item")
@@ -49,13 +49,13 @@ public class Sku implements Serializable {
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private Boolean estado;
 	
-	@OneToMany(mappedBy="sku")
+	@OneToMany(mappedBy="id.sku")
 	private Set<ItemEstimadoPlanillaEvento> itemsEstimados;
 	
-	@OneToMany(mappedBy="sku")
+	@OneToMany(mappedBy="id.sku")
 	private Set<ItemDegustacionPlanillaEvento> itemsDegustados;
 	
-	@OneToMany(mappedBy="sku")
+	@OneToMany(mappedBy="id.sku")
 	private Set<ItemPlanillaCata> itemsCatas;
 
 	public Sku() {

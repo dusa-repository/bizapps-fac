@@ -37,7 +37,7 @@ public class Uniforme implements Serializable {
 	@Column(name = "usuario_auditoria", length = 50)
 	private String usuarioAuditoria;
 	
-	@OneToMany(mappedBy="uniforme")
+	@OneToMany(mappedBy="id.uniforme")
 	private Set<UniformePlanillaUniforme> uniformePlanillas;
 
 	public Uniforme() {

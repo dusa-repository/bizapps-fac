@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.Semaphore;
 
 import modelo.estado.BitacoraArte;
 import modelo.estado.BitacoraCata;
@@ -19,9 +18,6 @@ import modelo.estado.BitacoraUniforme;
 import modelo.generico.PlanillaGenerica;
 import modelo.maestros.F0005;
 import modelo.maestros.Marca;
-import modelo.seguridad.Arbol;
-import modelo.seguridad.Configuracion;
-import modelo.seguridad.Grupo;
 import modelo.seguridad.Usuario;
 import modelo.transacciones.ItemDegustacionPlanillaEvento;
 import modelo.transacciones.ItemEstimadoPlanillaEvento;
@@ -60,6 +56,7 @@ import org.zkoss.zul.Window;
 
 import componente.Catalogo;
 import componente.Mensaje;
+
 import controlador.maestros.CGenerico;
 
 public class CSolicitud extends CGenerico {
@@ -667,19 +664,19 @@ public class CSolicitud extends CGenerico {
 					List<ItemDegustacionPlanillaEvento> itemsDegustacionAgregados = servicioItemDegustacionPlanillaEvento
 							.buscarPorPlanilla(planillaEvento);
 					for (int j = 0; j < itemsDegustacionAgregados.size(); j++) {
-						itemsDegustacionAgregados.get(j).setPlanillaEvento(
+						itemsDegustacionAgregados.get(j).getId().setPlanillaEvento(
 								nueva);
 					}
 					List<ItemEstimadoPlanillaEvento> itemsEstimacionAgregados = servicioItemEstimadoPlanillaEvento
 							.buscarPorPlanilla(planillaEvento);
 					for (int j = 0; j < itemsEstimacionAgregados.size(); j++) {
-						itemsEstimacionAgregados.get(j)
+						itemsEstimacionAgregados.get(j).getId()
 								.setPlanillaEvento(nueva);
 					}
 					List<RecursoPlanillaEvento> recursosAgregados = servicioRecursoPlanillaEvento
 							.buscarPorPlanilla(planillaEvento);
 					for (int j = 0; j < recursosAgregados.size(); j++) {
-						recursosAgregados.get(j).setPlanillaEvento(nueva);
+						recursosAgregados.get(j).getId().setPlanillaEvento(nueva);
 					}
 
 					servicioItemEstimadoPlanillaEvento
@@ -770,7 +767,7 @@ public class CSolicitud extends CGenerico {
 					List<UniformePlanillaUniforme> uniformesAgregados = servicioUniformePlanillaUniforme
 							.buscarPorPlanilla(planillaUniforme);
 					for (int j = 0; j < uniformesAgregados.size(); j++) {
-						uniformesAgregados.get(j).setPlanillaUniforme(nueva);
+						uniformesAgregados.get(j).getId().setPlanillaUniforme(nueva);
 					}
 					servicioUniformePlanillaUniforme
 							.guardar(uniformesAgregados);
@@ -1016,14 +1013,14 @@ public class CSolicitud extends CGenerico {
 					List<ItemPlanillaCata> itemsAgregados = servicioItemPlanillaCata
 							.buscarPorPlanilla(planillaCata);
 					for (int j = 0; j < itemsAgregados.size(); j++) {
-						itemsAgregados.get(j).setPlanillaCata(nueva);
+						itemsAgregados.get(j).getId().setPlanillaCata(nueva);
 					}
 
 					List<RecursoPlanillaCata> recursosAgregados = servicioRecursoPlanillaCata
 							.buscarPorPlanilla(planillaCata);
 
 					for (int j = 0; j < recursosAgregados.size(); j++) {
-						recursosAgregados.get(j).setPlanillaCata(nueva);
+						recursosAgregados.get(j).getId().setPlanillaCata(nueva);
 					}
 
 					servicioItemPlanillaCata.guardar(itemsAgregados);
@@ -1120,7 +1117,7 @@ public class CSolicitud extends CGenerico {
 					List<RecursoPlanillaFachada> recursosAgregados = servicioRecursoPlanillaFachada
 							.buscarPorPlanilla(planillaFachada);
 					for (int j = 0; j < recursosAgregados.size(); j++) {
-						recursosAgregados.get(j).setPlanillaFachada(nueva);
+						recursosAgregados.get(j).getId().setPlanillaFachada(nueva);
 					}
 					servicioRecursoPlanillaFachada.guardar(recursosAgregados);
 					enviarEmail("Marca", nombreUsuarioSesion(),

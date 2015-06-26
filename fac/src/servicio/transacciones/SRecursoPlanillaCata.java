@@ -18,11 +18,11 @@ public class SRecursoPlanillaCata {
 	private IRecursoPlanillaCataDAO recursoPlanillaCataDAO;
 
 	public List<RecursoPlanillaCata> buscarPorPlanilla(PlanillaCata planilla) {
-		return recursoPlanillaCataDAO.findByPlanillaCata(planilla);
+		return recursoPlanillaCataDAO.findByIdPlanillaCata(planilla);
 	}
 
 	public void limpiar(PlanillaCata planilla) {
-		List<RecursoPlanillaCata> eliminados = recursoPlanillaCataDAO.findByPlanillaCata(planilla);
+		List<RecursoPlanillaCata> eliminados = recursoPlanillaCataDAO.findByIdPlanillaCata(planilla);
 		if(!eliminados.isEmpty())
 			recursoPlanillaCataDAO.delete(eliminados);
 	}
@@ -32,6 +32,6 @@ public class SRecursoPlanillaCata {
 	}
 
 	public List<RecursoPlanillaCata> buscarPorRecurso(Recurso recurso) {
-		return recursoPlanillaCataDAO.findByRecurso(recurso);
+		return recursoPlanillaCataDAO.findByIdRecurso(recurso);
 	}
 }

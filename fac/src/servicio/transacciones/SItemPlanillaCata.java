@@ -18,12 +18,12 @@ public class SItemPlanillaCata {
 	private IItemPlanillaCataDAO itemPlanillaCataDAO;
 
 	public List<ItemPlanillaCata> buscarPorPlanilla(PlanillaCata planilla) {
-		return itemPlanillaCataDAO.findByPlanillaCata(planilla);
+		return itemPlanillaCataDAO.findByIdPlanillaCata(planilla);
 	}
 
 	public void limpiar(PlanillaCata planilla) {
 		List<ItemPlanillaCata> eliminados = itemPlanillaCataDAO
-				.findByPlanillaCata(planilla);
+				.findByIdPlanillaCata(planilla);
 		if (!eliminados.isEmpty())
 			itemPlanillaCataDAO.delete(eliminados);
 	}
@@ -34,6 +34,6 @@ public class SItemPlanillaCata {
 
 	public List<ItemPlanillaCata> buscarPorSku(Sku sku) {
 		// TODO Auto-generated method stub
-		return 	itemPlanillaCataDAO.findBySku(sku);
+		return 	itemPlanillaCataDAO.findByIdSku(sku);
 	}
 }
